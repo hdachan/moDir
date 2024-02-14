@@ -1,16 +1,85 @@
-# test_qwe
+# 프로젝트1 기본 세팅
 
-A new Flutter project.
+## 1. 헤더
+### 프로젝트1
 
-## Getting Started
+## 2. 작성자 및 날짜
+작성자: (이름)  
+작성일: 2024년 2월 14일
 
-This project is a starting point for a Flutter application.
+## 3. 목차
+- [프로젝트 개요](#프로젝트-개요)
+- [환경 설정](#환경-설정)
+- [작업 단계](#작업-단계)
+- [참고자료](#참고자료)
 
-A few resources to get you started if this is your first Flutter project:
+## 4. 프로젝트 개요
+### 4.1. 프로젝트 목표
+- 목표 1:
+- 목표 2:
+- 목표 3:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### 4.2. 프로젝트 범위
+- 범위 1:
+- 범위 2:
+- 범위 3:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### 4.3. 주요 일정
+- 2024년 2월:
+- 2024년 3월:
+- 2024년 4월:
+
+## 5. 환경 설정
+### 5.1. 필요한 소프트웨어
+- 소프트웨어 1: 버전, [다운로드 링크](링크)
+- 소프트웨어 2: 버전, [다운로드 링크](링크)
+- 소프트웨어 3: 버전, [다운로드 링크](링크)
+
+### 5.2. 설치 방법
+- 소프트웨어 1 설치 방법:
+- 소프트웨어 2 설치 방법:
+- 소프트웨어 3 설치 방법:
+
+### 5.3. 사용 방법
+- 소프트웨어 1 사용 방법:
+- 소프트웨어 2 사용 방법:
+- 소프트웨어 3 사용 방법:
+
+## 6. 작업 단계
+### 6.1. 단계 1:
+#### 세부 작업 1:
+- 1-1. 세부 작업 1 내용
+- 1-2. 세부 작업 1 내용
+
+#### 세부 작업 2:
+- 2-1. 세부 작업 2 내용
+- 2-2. 세부 작업 2 내용
+
+### 6.2. 단계 2:
+#### 세부 작업 1:
+- 1-1. 세부 작업 1 내용
+- 1-2. 세부 작업 1 내용
+
+#### 세부 작업 2:
+- 2-1. 세부 작업 2 내용
+- 2-2. 세부 작업 2 내용
+
+## 7. 참고자료
+- 링크 1:
+- 링크 2:
+- 링크 3:
+
+## 8. 추가 정보
+테이블, 이미지, 코드 등을 필요에 따라 추가할 수 있습니다.  
+마크다운 문법을 사용하여 문서를 정리하면 가독성을 높일 수 있습니다.
+
+## 9. 변경 기록
+2024년 2월 14일: 첫 번째 버전 작성
+
+## 10. 주의 사항
+이 문서는 프로젝트1의 기본 세팅을 위한 템플릿입니다.  
+프로젝트 특성에 따라 내용을 수정 및 추가해야 합니다.
+
+## 11. 마무리
+이 문서는 프로젝트1을 진행하기 위한 기본적인 정보를 제공합니다.  
+프로젝트 진행 과정에서 변경 사항이나 추가 정보가 발생하면 이 문서를 업데이트하여 최신 정보를 유지하는 것이 좋습니다.
