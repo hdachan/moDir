@@ -1,8 +1,11 @@
+// main.dart
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'main2.dart'; // SecondPage를 사용하기 위해 import 해야합니다.
 
-void main() async { //이건 테스입니다 껄껄껄
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: const FirebaseOptions(
@@ -13,7 +16,7 @@ void main() async { //이건 테스입니다 껄껄껄
       storageBucket: 'modir-d8182.appspot.com',
     ),
   );
-  runApp(MyApp());
+  runApp(MaterialApp(home: MyApp())); // MaterialApp added here
 }
 
 class MyApp extends StatefulWidget {
@@ -25,6 +28,8 @@ class _MyAppState extends State<MyApp> {
   final auth = FirebaseAuth.instance;
   String email = '';
   String password = '';
+  String value1 = '';
+  String value2 = '';
 
   Future<void> signupEmail() async {
     try {
@@ -42,47 +47,109 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
+  Future<String> fetchData() async { // Changed the return type to Future<String>
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+    DocumentSnapshot doc = await firestore.collection('test').doc('hi').get();
+
+    return doc['field1']; // Here we return the value of 'field1'
+  }
+
+  Future<void> saveData() async {
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    try {
+      await firestore.collection('test').doc('hi').set({
+        'field1': value1,
+        'field2': value2,
+      });
+
+      print('Data saved to Firestore.');
+    } catch (e) {
+      print('Failed to save data: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'My App',
-      home: Scaffold(
-        appBar: AppBar(title: Text('My App')),
-        body: Center(
-          child: Column(
-            children: <Widget>[
-              Image.network('https://i.ibb.co/vXK0dK7/1.png'),
-              TextField(
-                decoration: InputDecoration(
-                  labelText: "Email",
-                ),
-                onChanged: (value) {
-                  setState(() {
-                    email = value;
-                  });
-                },
+    return Scaffold( // MaterialApp removed from here
+      appBar: AppBar(title: Text('My App')),
+      body: Center(
+        child: Column(
+          children: <Widget>[
+            TextField(
+              decoration: InputDecoration(
+                labelText: "Email",
               ),
-              TextField(
-                decoration: InputDecoration(
-                  labelText: "Password",
-                ),
-                obscureText: true,
-                onChanged: (value) {
-                  setState(() {
-                    password = value;
-                  });
-                },
+              onChanged: (value) {
+                setState(() {
+                  email = value;
+                });
+              },
+            ),
+            TextField(
+              decoration: InputDecoration(
+                labelText: "Password",
               ),
-              ElevatedButton(
-                onPressed: signupEmail,
-                child: Text('Sign up'),
-              ),
-              ElevatedButton(
-                onPressed: loginEmail,
-                child: Text('Log in'),
-              ),
-            ],
-          ),
+              obscureText: true,
+              onChanged: (value) {
+                setState(() {
+                  password = value;
+                });
+              },
+            ),
+            ElevatedButton(
+              onPressed: signupEmail,
+              child: Text('Sign up'),
+            ),
+            ElevatedButton(
+              onPressed: loginEmail,
+              child: Text('Log in'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SecondPage()),
+                );
+              },
+              child: Text('Go to Second Page'),
+            ),
+            FutureBuilder<String>( // Added FutureBuilder
+              future: fetchData(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator();
+                } else {
+                  if (snapshot.hasError)
+                    return Text('Error: ${snapshot.error}');
+                  else
+                    return Text('Fetched Data: ${snapshot.data}'); // Text widget displays the fetched data
+                }
+              },
+            ),
+            TextField(
+              decoration: InputDecoration(labelText: "Field 1"),
+              onChanged: (value) {
+                setState(() {
+                  value1 = value;
+                });
+              },
+            ),
+
+            TextField(
+              decoration: InputDecoration(labelText: "Field 2"),
+              onChanged: (value) {
+                setState(() {
+                  value2 = value;
+                });
+              },
+            ),
+
+            ElevatedButton(
+              onPressed: saveData,
+              child: Text('Save Data'),
+            ),
+          ],
         ),
       ),
     );
