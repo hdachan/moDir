@@ -27,37 +27,77 @@ class SecondPage extends StatelessWidget {
             body: Center(
               child: Column(
                 children: [
-                  Container(
+                  Container(//아이디 입력
                     width: 312.w,
                     height: 48.h,
                     margin: EdgeInsets.fromLTRB(24, 116, 24, 0),
+                    padding: EdgeInsets.fromLTRB(46, 18, 0, 18),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(
                         color: Color(0xFF8C8C8C),
                       ),
                     ),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        hintText: '아이디',
+                        border: InputBorder.none, // Underline 제거
+                      ),
+                      style: TextStyle(
+                        color: Color(0xFF767676),
+                        fontSize: 12.0,
+                        fontFamily: 'Pretendard',
+                        fontWeight: FontWeight.w400,
+                        letterSpacing: 0.28,
+                      ),
+                    ),
                   ),
-                  Container(
+                  Container( // 비밀번호 입력
                     width: 312.w,
                     height: 48.h,
                     margin: EdgeInsets.fromLTRB(24, 12, 24, 0),
+                    padding: EdgeInsets.fromLTRB(46, 18, 0, 18),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(
                         color: Color(0xFF8C8C8C),
                       ),
                     ),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        hintText: '비밀번호',
+                        border: InputBorder.none, // Underline 제거
+                      ),
+                      style: TextStyle(
+                        color: Color(0xFF767676),
+                        fontSize: 12.0,
+                        fontFamily: 'Pretendard',
+                        fontWeight: FontWeight.w400,
+                        letterSpacing: 0.28,
+                      ),
+                    ),
                   ),
-                  Container(
+                  Container( // 로그인 버튼
                     width: 312.w,
                     height: 48.h,
                     margin: EdgeInsets.fromLTRB(24, 24, 24, 0),
+                    padding: EdgeInsets.fromLTRB(135, 16, 135, 16),
                     decoration: BoxDecoration(
                       color: Color(0xFFE85884),
                       borderRadius: BorderRadius.circular(4),
                       border: Border.all(
                         color: Color(0xFFE85884),
+                      ),
+                    ),
+                    child: Text(
+                      '로그인',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16.0,
+                        fontFamily: 'Pretendard',
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 0.28,
                       ),
                     ),
                   )
