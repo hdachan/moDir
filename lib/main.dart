@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'main2.dart';
+import 'main5.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -164,6 +165,39 @@ class _MyHomePageState extends State<MyHomePage> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.white,
+                          fontSize: 16.0,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: 0.28,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    // 회원가입 버튼
+                    width: 312.w,
+                    height: 48.h,
+                    margin: EdgeInsets.fromLTRB(24, 24, 24, 0),
+                    decoration: BoxDecoration(
+                      color: Colors.transparent,
+                      borderRadius: BorderRadius.circular(4),
+                      border: Border.all(
+                        color: Color(0xFFE85884),
+                      ),
+                    ),
+                    child: TextButton(
+                      onPressed: () {
+                        // Main5 페이지로 이동
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Main5()),
+                        );
+                      },
+                      child: Text(
+                        '회원가입',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Color(0xFFE85884),
                           fontSize: 16.0,
                           fontFamily: 'Pretendard',
                           fontWeight: FontWeight.w600,
