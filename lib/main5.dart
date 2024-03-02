@@ -1,93 +1,114 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'main2.dart';
-import 'main.dart';
 
-class Main5 extends StatelessWidget {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+import 'main6.dart';
+
+// 약관동의 화면
+void main() {
+  runApp(MaterialApp(
+    home: Main5(),
+  ));
+}
+
+class Main5 extends StatefulWidget {
+  @override
+  _Main5State createState() => _Main5State();
+}
+
+class _Main5State extends State<Main5> {
+  bool _isChecked1 = false;
+  bool _isChecked2 = false;
+  bool _isChecked3 = false;
+  bool _isAllChecked = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Main5'),
-        automaticallyImplyLeading: false,
+        title: Text('서비스 이용 약관 동의'),
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              TextField(
-                controller: emailController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: '이메일 입력',
-                ),
-              ),
-              SizedBox(height: 20),
-              TextField(
-                controller: passwordController,
-                obscureText: true,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: '비밀번호 입력',
-                ),
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () async {
-                  try {
-                    UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                        email: emailController.text,
-                        password: passwordController.text
-                    );
-
-                    User? user = userCredential.user;
-
-                    // 이메일 인증 메일 보내기
-                    if (user != null) {
-                      await user.sendEmailVerification();
-                    }
-                  } on FirebaseAuthException catch (e) {
-                    if (e.code == 'weak-password') {
-                      print('The password provided is too weak.');
-                    } else if (e.code == 'email-already-in-use') {
-                      print('The account already exists for that email.');
-                    }
-                  } catch (e) {
-                    print(e);
-                  }
-                },
-                child: Text('인증 메일 보내기'),
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () async {
-                  try {
-                    User? user = FirebaseAuth.instance.currentUser;
-
-                    if (user != null) {
-                      // User 상태 업데이트
-                      await user.reload();
-                      if (user.emailVerified) {
-                        // 이메일 인증이 완료되었으면 메인 페이지로 이동
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => MyHomePage()));
-                      } else {
-                        print('Email is not verified');
-                      }
-                    }
-                  } catch (e) {
-                    print(e);
-                  }
-                },
-                child: Text('다음'),
-              ),
-            ],
+      body: Column(
+        children: <Widget>[
+          Text('서비스 이용 약관'),
+          InkWell(
+            onTap: () {
+              // 약관 내용 페이지로 이동
+            },
+            child: Text(
+              '전체 약관 보기',
+              style: TextStyle(color: Colors.blue),
+            ),
           ),
-        ),
+          CheckboxListTile(
+            title: Text('전체 동의하기'),
+            value: _isAllChecked,
+            onChanged: (bool? value) {
+              setState(() {
+                _isAllChecked = value ?? false;
+                _isChecked1 = _isAllChecked;
+                _isChecked2 = _isAllChecked;
+                _isChecked3 = _isAllChecked;
+              });
+            },
+          ),
+          CheckboxListTile(
+            title: Text('약관1에 동의합니다.'),
+            value: _isChecked1,
+            onChanged: (bool? value) {
+              setState(() {
+                _isChecked1 = value ?? false;
+              });
+            },
+          ),
+          CheckboxListTile(
+            title: Text('약관2에 동의합니다.'),
+            value: _isChecked2,
+            onChanged: (bool? value) {
+              setState(() {
+                _isChecked2 = value ?? false;
+              });
+            },
+          ),
+          CheckboxListTile(
+            title: Text('약관3에 동의합니다.'),
+            value: _isChecked3,
+            onChanged: (bool? value) {
+              setState(() {
+                _isChecked3 = value ?? false;
+              });
+            },
+          ),
+          ElevatedButton(
+            onPressed: () {
+              if (_isChecked1 && _isChecked2 && _isChecked3) {
+                // 약관 모두에 동의하였을 때 처리
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Main6()),
+                );
+              } else {
+                // 약관 모두에 동의하지 않았을 때 처리
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: new Text("알림"),
+                      content: new Text("모든 약관에 동의해주세요."),
+                      actions: <Widget>[
+                        new TextButton(
+                          child: new Text("닫기"),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }
+            },
+            child: Text('확인'),
+          ),
+        ],
       ),
     );
   }
