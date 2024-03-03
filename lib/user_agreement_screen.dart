@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 
-import 'main6.dart';
+import 'email_verification_screen.dart';
 
 // 약관동의 화면
 void main() {
   runApp(MaterialApp(
-    home: Main5(),
+    home: user_agreement_screen(),
   ));
 }
 
-class Main5 extends StatefulWidget {
+class user_agreement_screen extends StatefulWidget {
   @override
   _Main5State createState() => _Main5State();
 }
 
-class _Main5State extends State<Main5> {
+class _Main5State extends State<user_agreement_screen> {
   bool _isChecked1 = false;
   bool _isChecked2 = false;
   bool _isChecked3 = false;
@@ -83,7 +83,7 @@ class _Main5State extends State<Main5> {
                 // 약관 모두에 동의하였을 때 처리
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Main6()),
+                  MaterialPageRoute(builder: (context) => email_verification_screen()),
                 );
               } else {
                 // 약관 모두에 동의하지 않았을 때 처리

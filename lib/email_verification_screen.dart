@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'main7.dart';
+import 'user_data_screen.dart';
 
-class Main6 extends StatefulWidget {
+//이메일 인증화면
+class email_verification_screen extends StatefulWidget {
   @override
   _Main6State createState() => _Main6State();
 }
 
-class _Main6State extends State<Main6> {
+class _Main6State extends State<email_verification_screen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool isEmailSent = false;
@@ -84,7 +85,7 @@ class _Main6State extends State<Main6> {
                     if (user != null) {
                       await user.reload();
                       if (user.emailVerified) {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => Main7(email: user.email)));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => user_data_screen(email: user.email)));
                       } else {
                         print('Email is not verified');
                       }

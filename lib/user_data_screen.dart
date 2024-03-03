@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class Main7 extends StatelessWidget {
+class user_data_screen extends StatelessWidget {
   final TextEditingController nicknameController = TextEditingController();
   final TextEditingController birthdateController = TextEditingController();
   final String? email;

@@ -25,6 +25,8 @@ dependencies:
   firebase_storage: ^11.6.5 #파이어베이스 스토리지를 위한 storage
   cupertino_icons: ^1.0.2 # 구글 아이콘
   cloud_firestore: ^4.15.4 # 파이어베이스 데이터 베이스
+  carousel_slider: ^4.2.1 # 화면 넘기기
+  dots_indicator: ^3.0.0  # 슬라이딩 이미지 찾기
 
 dev_dependencies:
   flutter_test:
@@ -45,6 +47,9 @@ flutter:
 
   assets:
     - assets/image/logo.png
+    - assets/image/fox.png
+    - assets/image/bad.png
+    - assets/image/tog.png
 
   uses-material-design: true
   fonts:
