@@ -6,7 +6,7 @@ class user_data_screen extends StatelessWidget {
   final TextEditingController birthdateController = TextEditingController();
   final String? email;
 
-  Main7({Key? key, this.email}) : super(key: key);
+  user_data_screen({Key? key, this.email}) : super(key: key);
 
   Future<void> registerUser(String email, String nickname, String birthdate) async {
     try {

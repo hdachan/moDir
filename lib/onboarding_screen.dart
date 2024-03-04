@@ -5,7 +5,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 
 import 'login_screen.dart';
 
-
+// 이거는 걍 나도 모르겠음 해줘 원담 ㅎㅎㅎ
 // 온보딩 화면
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -60,8 +60,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     width: 360.w,
                     height: 54.h,
                     margin: EdgeInsets.fromLTRB(0, 16, 0, 0),
-                    clipBehavior: Clip.antiAlias,
-                    decoration: BoxDecoration(color: Colors.redAccent),
+                    //clipBehavior: Clip.antiAlias,
+                    //decoration: BoxDecoration(color: Colors.redAccent),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -85,7 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     width: 312.w,
                     height: 400.h,
                     margin: EdgeInsets.fromLTRB(24, 24, 24, 0),
-                    decoration: BoxDecoration(color: Colors.cyan),
+                    //decoration: BoxDecoration(color: Colors.cyan),
                     child: Stack(
                         children: [
                           CarouselSlider(
