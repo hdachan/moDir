@@ -28,6 +28,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  // 에러 메시지
+  String errorMessage = '';
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -56,10 +58,9 @@ class _MyHomePageState extends State<MyHomePage> {
       return null;
     }
 
-
-
     // 이메일과 비밀번호 빈 문자열 검사
     if (email.isEmpty || password.isEmpty) {
+      errorMessage = '이메일과 비밀번호는 필수 입력 사항입니다.';
       print('이메일과 비밀번호는 필수 입력 사항입니다.');
       return null;
     }
@@ -72,19 +73,36 @@ class _MyHomePageState extends State<MyHomePage> {
       return userCredential;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'unknown') {
-        if ((e.message ?? '').contains('user-disabled')) {
+        if ((e.message ?? '').contains('auth/user-disabled')) {
+          errorMessage = '해당 사용자 계정은 비활성화 상태입니다.';
           print('해당 사용자 계정은 비활성화 상태입니다.');
         } else if ((e.message ?? '').contains('auth/invalid-credential')) {
+          errorMessage = '이메일 또는 비밀번호 정보가 잘못되었습니다.';
+          print('이메일 또는 비밀번호 정보가 잘못되었습니다.');
+        }
+        else if ((e.message ?? '').contains('auth/invalid-credential')) {
+          errorMessage ='제공된 인증 정보가 잘못되었거나 만료되었습니다.';
           print('제공된 인증 정보가 잘못되었거나 만료되었습니다.');
-        } else {
+        }
+        else if ((e.message ?? '').contains('auth/auth/too-many-requests')) {
+          errorMessage ='제공된 인증 정보가 잘못되었거나 만료되었습니다.';
+          print('제공된 인증 정보가 잘못되었거나 만료되었습니다.');
+        }
+        else if ((e.message ?? '').contains('auth/auth/too-many-requests')) {
+          errorMessage ='너무 많은 요청이 발생하였습니다.';
+          print('너무 많은 요청이 발생하였습니다.');
+        }
+        else if ((e.message ?? '').contains('auth/network-request-failed')) {
+          errorMessage ='네트워크 오류가 발생하였습니다.';
+          print('네트워크 오류가 발생하였습니다.');
+        }
+        else {
           print('알 수 없는 오류가 발생했습니다: ${e.message}');
         }
+        setState(() {});  // 상태를 업데이트하여 UI를 다시 그립니다.
       }
-      if (e.code == 'auth/weak-password') {
-        print('비밀번호가 너무 짧습니다: ${e.message}');
-      }
-
       print('오류 코드: ${e.code}');
+      print('오류 메시지: ${e.message}');
       return null;
     } catch (e) {
       print('로그인 도중 예상치 못한 오류가 발생했습니다: $e');
@@ -242,7 +260,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           margin: EdgeInsets.fromLTRB(140, 8, 0, 8),
                           alignment: Alignment.centerRight,
                           child: Text(
-                            '올바른 이메일을 입력해 주세요',
+                            errorMessage,
                             style: TextStyle(
                               color: Color(0xFFF72828),
                               fontSize: 12,
