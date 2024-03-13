@@ -29,7 +29,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
+            Padding( // 로고 - 완
               padding: EdgeInsets.only(top: 22, left: 30, bottom: 4),
               child: Container(
                 width: 124,
@@ -51,22 +51,34 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   });
                 },
                 itemBuilder: (_, i) {
-                  return SingleChildScrollView( // 이미지 + 텍스트 - 수정
+                  return SingleChildScrollView( // 이미지 + 텍스트 완료
                     child: Padding(
-                      padding: EdgeInsets.only(top: 118, bottom: 100, left: 43, right: 43), // 이미지 크기와 함께 수정 필요
+                      padding: EdgeInsets.only(top: 118, bottom: 100), // 이미지 크기와 함께 수정 필요
                       child: Column(
                         children: [
-                          Image.asset(contents[i].image),
-                          SizedBox(height: 62), // 이미지 크기와 함께 수정 필요
-                          Text(
-                            textAlign: TextAlign.center,
-                            contents[i].text,
-                            style: TextStyle(
-                              color: Color(0xFF3D3D3D),
-                              fontSize: 26,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w600,
-                              height: 1.3,
+                          Container( // 온보딩 이미지 1,2,3 - 완
+                            width: 271,
+                            height: 201,
+                            padding: EdgeInsets.symmetric(horizontal: 43),
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage(contents[i].image)
+                              )
+                            ),
+                          ),
+                          SizedBox(height: 62),
+                          SizedBox( // 온보딩 텍스트 - 완
+                            width: double.infinity,
+                            child: Text(
+                              textAlign: TextAlign.center,
+                              contents[i].text,
+                              style: const TextStyle(
+                                color: Color(0xFF3D3D3D),
+                                fontSize: 26,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w600,
+                                height: 1.3,
+                              ),
                             ),
                           ),
                           SizedBox(height: 100),
@@ -83,7 +95,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     contents.length, (index) => buildPage(index, context)
                 )
             ),
-            Container( // 다음, 시작 하기 버튼 - 완료
+            Container( // 다음, 시작하기 버튼 - 완
               height: 54,
               width: double.infinity,
               margin: EdgeInsets.only(top: 24, left: 24, right: 24, bottom: 48),
@@ -106,7 +118,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: Text(
+                child: Text( // 다음, 시작하기 버튼 텍스트 - 완
                   currentIndex == contents.length - 1
                       ? "시작하기"
                       : "다음",
@@ -127,7 +139,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
   }
 
   Container buildPage(int index, BuildContext context) {
-    return Container( // 코코볼 - 완료
+    return Container( // 코코볼 - 완
       height: 12,
       width: 12,
       margin: EdgeInsets.symmetric(horizontal: 6),
