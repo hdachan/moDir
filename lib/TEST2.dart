@@ -32,8 +32,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
             Padding( // 로고 - 완
               padding: EdgeInsets.only(top: 22, left: 30, bottom: 4),
               child: Container(
-                width: 124,
-                height: 24,
+                width: 136,
+                height: 32,
                 decoration: BoxDecoration(
                   image: DecorationImage(
                       image: AssetImage('assets/image/eng_logo.png')
@@ -75,8 +75,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
                               style: const TextStyle(
                                 color: Color(0xFF3D3D3D),
                                 fontSize: 26,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w600,
+                                fontFamily: 'Pretendard',
+                                fontWeight: FontWeight.w700,
+                                letterSpacing: -0.65,
                                 height: 1.3,
                               ),
                             ),
