@@ -1,12 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-
+import 'package:flutter/material.dart';
 import 'login_screen.dart';
 
-// 이거는 걍 나도 모르겠음 해줘 원담 ㅎㅎㅎ
-// 온보딩 화면
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -21,150 +16,189 @@ void main() async {
   runApp(MyApp());
 }
 
+class OnboardContent {
+  String image;
+  String text;
+
+  OnboardContent({required this.image, required this.text});
+}
+
+List<OnboardContent> contents = [
+  OnboardContent(
+    image: "assets/image/on1.png",
+    text: "쉽고 간단하게\n커뮤니티 정보를 제공합니다.",
+  ),
+  OnboardContent(
+    image: "assets/image/on2.png",
+    text: "당신을 위해 준비한\n맞춤형 교육 정보",
+  ),
+  OnboardContent(
+    image: "assets/image/on3.png",
+    text: "당신의 잠재력을\n모디랑과 함께 깨워 보세요",
+  ),
+];
+
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: '모디랑',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(),
+      debugShowCheckedModeBanner: false,
+      initialRoute: "onboarding",
+      routes: {
+        "onboarding": (context) => OnboardingPage(),
+      },
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
+class OnboardingPage extends StatefulWidget {
+  const OnboardingPage({Key? key}) : super(key: key);
+
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  State<OnboardingPage> createState() => _OnboardingPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  final CarouselController _controller = CarouselController();
-  int _current = 0;
-  List<String> imageList = ['assets/image/bad.png', 'assets/image/fox.png', 'assets/image/tog.png'];
+class _OnboardingPageState extends State<OnboardingPage> {
+  int currentIndex = 0;
+  late PageController _controller;
 
+  @override
+  void initState() {
+    super.initState();
+    _controller = PageController(initialPage: 0);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-        designSize: const Size(360, 740),
-        minTextAdapt: true,
-        splitScreenMode: true,
-        builder: (context, child) {
-          return Scaffold(
-            body: Center(
-              child: Column(
-                children: [
-                  Container(
-                    width: 360.w,
-                    height: 54.h,
-                    margin: EdgeInsets.fromLTRB(0, 16, 0, 0),
-                    //clipBehavior: Clip.antiAlias,
-                    //decoration: BoxDecoration(color: Colors.redAccent),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          '타이포그래피 좋은 거 추천좀\n온보딩 텍스트는 무조건 두 줄',
-                          style: TextStyle(
-                            color: Color(0xFF262626),
-                            fontSize: 21,
-                            fontFamily: 'Pretendard',
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: -0.53,
-                          ),
-                        ),
-                      ],
-                    ),
+    return SafeArea(
+      child: Scaffold(
+        body: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding( // 로고 - 완
+              padding: EdgeInsets.only(top: 22, left: 30, bottom: 4),
+              child: Container(
+                width: 136,
+                height: 32,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/image/logo.png')
                   ),
-
-                  Container(
-                    width: 312.w,
-                    height: 400.h,
-                    margin: EdgeInsets.fromLTRB(24, 24, 24, 0),
-                    //decoration: BoxDecoration(color: Colors.cyan),
-                    child: Stack(
-                        children: [
-                          CarouselSlider(
-                            carouselController: _controller,
-                            options: CarouselOptions(
-                                autoPlay: true,
-                                onPageChanged: (index, reason) {
-                                  setState(() {
-                                    _current = index;
-                                  });
-                                }
-                            ),
-                            items: imageList.map((item) => Image.asset(item)).toList(),
-                          ),
-                          Positioned(
-                            bottom: 10.0,
-                            left: 0.0,
-                            right: 0.0,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: imageList.map((url) {
-                                int index = imageList.indexOf(url);
-                                return Container(
-                                  width: 14.0.w,
-                                  height: 14.0.h,
-                                  margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: _current == index
-                                          ? Color(0xFF5B14FF)
-                                          : Color(0xFFD9D9D9)
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                          ),
-                        ]
-                    ),
-                  ),
-
-                  Container(
-                    width: 312.w,
-                    height: 54.h,
-                    margin: EdgeInsets.fromLTRB(24, 90, 24, 0),
-                    decoration: BoxDecoration(
-                      color: Color(0xFF4C0EFF),
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(
-                        color: Color(0xFF4C0EFF),
-                      ),
-                    ),
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => login_screen()),
-                        );
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.fromLTRB(0, 12, 0, 12),
-                        child: Text(
-                          '시작하기',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18.0,
-                            fontFamily: 'Pretendard',
-                            fontWeight: FontWeight.w700,
-                            letterSpacing: -0.45,
-                          ),
-                        ),
-                      ),
-                    ),
-                  )
-
-                ],
+                ),
               ),
             ),
-          );
-        });
+            Expanded(
+              child: PageView.builder(
+                controller: _controller,
+                itemCount: contents.length,
+                onPageChanged: (int index) {
+                  setState(() {
+                    currentIndex = index;
+                  });
+                },
+                itemBuilder: (_, i) {
+                  return SingleChildScrollView( // 이미지 + 텍스트 완료
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 118, bottom: 100), // 이미지 크기와 함께 수정 필요
+                      child: Column(
+                        children: [
+                          Container( // 온보딩 이미지 1,2,3 - 완
+                            width: 271,
+                            height: 201,
+                            padding: EdgeInsets.symmetric(horizontal: 43),
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: AssetImage(contents[i].image)
+                                )
+                            ),
+                          ),
+                          SizedBox(height: 62),
+                          SizedBox( // 온보딩 텍스트 - 완
+                            width: double.infinity,
+                            child: Text(
+                              textAlign: TextAlign.center,
+                              contents[i].text,
+                              style: const TextStyle(
+                                color: Color(0xFF3D3D3D),
+                                fontSize: 26,
+                                fontFamily: 'Pretendard',
+                                fontWeight: FontWeight.w700,
+                                letterSpacing: -0.65,
+                                height: 1.3,
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 100),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(
+                    contents.length, (index) => buildPage(index, context)
+                )
+            ),
+            Container( // 다음, 시작하기 버튼 - 완
+              height: 54,
+              width: double.infinity,
+              margin: EdgeInsets.only(top: 24, left: 24, right: 24, bottom: 48),
+              child: MaterialButton(
+                onPressed: () async {
+                  if (currentIndex == contents.length - 1) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => login_screen()
+                      ),
+                    );
+                  }
+                  _controller.nextPage(
+                    duration: Duration(seconds: 1),
+                    curve: Curves.easeInOut,
+                  );
+                },
+                color: Color(0xFF4B0FFF),
+                textColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text( // 다음, 시작하기 버튼 텍스트 - 완
+                  currentIndex == contents.length - 1
+                      ? "시작하기"
+                      : "다음",
+                  style: TextStyle(
+                    fontFamily: 'Pretendard',
+                    fontWeight: FontWeight.w700,
+                    height: 1.1,
+                    letterSpacing: -0.53,
+                    fontSize: 21,
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Container buildPage(int index, BuildContext context) {
+    return Container( // 코코볼 - 완
+      height: 12,
+      width: 12,
+      margin: EdgeInsets.symmetric(horizontal: 6),
+      decoration: ShapeDecoration(
+        shape: OvalBorder(),
+        color:
+        currentIndex == index ? Color(0xFF4B0FFF) : Color(0xFFD1D1D1),
+      ),
+    );
   }
 }
