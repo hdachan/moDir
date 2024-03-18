@@ -6,9 +6,6 @@ import 'package:test_qwe/user_agreement_screen.dart';
 import 'main2.dart';
 import 'password_screen.dart';
 
-// 픽셀 오류 뜰건데 이거는 나도 모르겠더라 + 크기 줄여 보면 바텀 값 안줘서 오류나는데 꼭 줘야됨
-// 크롬창에서 360 740 해보면 테그스트 부분 다깨짐 그거 한번 봐주셈 그거도 고쳐야됨
-
 class login_screen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

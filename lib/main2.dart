@@ -1,51 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-// 회원가입 , 로그인 성공시 들어오는 페이지
 class Main2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(360, 740),
-      minTextAdapt: true,
-      splitScreenMode: true,
-      builder: (context, child) {
-        return Scaffold(
-          backgroundColor: Color(0xFFF2F2F2),
-          appBar: PreferredSize(
-            preferredSize: Size.fromHeight(52.h),
-            child: AppBar(
-              title: Text(
-                '로그인 성공화면',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                  fontFamily: 'Pretendard',
-                  fontWeight: FontWeight.w600,
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Firebase Auth 예제'),
+        ),
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              UserAccountsDrawerHeader(
+                accountName: Text('사용자 이름 또는 이메일'),
+                accountEmail: Text(FirebaseAuth.instance.currentUser?.email ?? 'UID 없음'),
+                currentAccountPicture: CircleAvatar(
+                  child: Icon(Icons.account_circle),
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.blue,
                 ),
               ),
-              centerTitle: true,
-              bottom: PreferredSize(
-                preferredSize: Size.fromHeight(1.0),
-                child: Container(
-                  color: Color(0xFFE5E6E8),
-                  height: 1.0,
-                ),
+              ListTile(
+                leading: Icon(Icons.account_circle),
+                title: Text('프로필'),
+                onTap: () {
+                  // 프로필 버튼을 누르면 발생할 상황 적는 곳
+                },
               ),
-            ),
+            ],
           ),
-          body: Center(
-            child: Text(
-              '로그인에 성공했습니다.',
-              style: TextStyle(
-                fontSize: 16,
-                fontFamily: 'Pretendard',
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-          ),
-        );
-      },
+        ),
+        body: Center(
+          child: Text('로그인 성공 화면'),
+        ),
+      ),
     );
   }
 }

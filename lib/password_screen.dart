@@ -11,7 +11,17 @@ class password_screen extends StatelessWidget {
       await _auth.sendPasswordResetEmail(email: email);
       print('Password Reset Email Sent');
     } catch (e) {
-      print(e);
+      if (e is FirebaseAuthException) {
+        if (e.code == 'invalid-email') {
+          print('입력하신 이메일 주소가 유효하지 않습니다.');
+        } else if (e.code == 'user-not-found') {
+          print('해당 이메일 주소를 가진 사용자를 찾을 수 없습니다.');
+        } else {
+          print('비밀번호 재설정 이메일 전송에 실패하였습니다.');
+        }
+      } else {
+        print('알 수 없는 오류가 발생했습니다: ${e.toString()}');
+      }
     }
   }
 

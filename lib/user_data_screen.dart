@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import 'main2.dart';
+
 class user_data_screen extends StatelessWidget {
   final TextEditingController nicknameController = TextEditingController();
   final TextEditingController birthdateController = TextEditingController();
@@ -10,7 +12,7 @@ class user_data_screen extends StatelessWidget {
 
   Future<void> registerUser(String email, String nickname, String birthdate) async {
     try {
-      await FirebaseFirestore.instance.collection('users').doc(email).set({
+      await FirebaseFirestore.instance.collection('users').doc('information').set({
         'email': email,  // 이메일 필드 추가
         'nickname': nickname,
         'birthdate': birthdate,
@@ -58,8 +60,15 @@ class user_data_screen extends StatelessWidget {
               ),
             ),
             ElevatedButton(
-              onPressed: () {
-                registerUser(email!, nicknameController.text, birthdateController.text);
+              onPressed: () async {
+                // 사용자 등록 로직
+                await registerUser(email!, nicknameController.text, birthdateController.text);
+
+                // Main2 페이지로 이동
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Main2()),
+                );
               },
               child: Text('회원가입'),
             ),
