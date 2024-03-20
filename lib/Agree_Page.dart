@@ -15,6 +15,10 @@ void main() async {
   runApp(AgreePage());
 }
 
+
+//                                            동의 2번 부분에 적어 놓겠음.(메서드)
+
+
 class AgreePage extends StatelessWidget {
   const AgreePage({super.key});
 
@@ -25,7 +29,7 @@ class AgreePage extends StatelessWidget {
         body: SafeArea(
           child: Column(
             children: [
-              Container(
+              Container(// 앱 바 - 완
                 width: double.infinity,
                 height: 54,
                 decoration: BoxDecoration(
@@ -40,7 +44,7 @@ class AgreePage extends StatelessWidget {
                   padding: EdgeInsets.only(top: 15, bottom: 15, left: 24),
                   child: Row(
                     children: [
-                      Container(
+                      Container(// 뒤로가기 버튼 - 완
                         width: 24,
                         height: 24,
                         decoration: BoxDecoration(
@@ -59,7 +63,7 @@ class AgreePage extends StatelessWidget {
                 ),
               ),
               Center(
-                child: Container(
+                child: Container(// 중간 패널
                   width: 428,
                   height: 586,
                   decoration: BoxDecoration(
@@ -76,7 +80,7 @@ class AgreePage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          Text(// 제목 - 완
                             '모디랑\n이용약관 동의',
                             textAlign: TextAlign.left,
                             style: TextStyle(
@@ -89,7 +93,7 @@ class AgreePage extends StatelessWidget {
                             ),
                           ),
                           SizedBox(height: 10),
-                          Text(
+                          Text(// 설명 - 완
                             '모디랑 서비스 시작 및 가입을 위해\n정보 제공에 동의해 주세요!',
                             textAlign: TextAlign.left,
                             style: TextStyle(
@@ -102,7 +106,7 @@ class AgreePage extends StatelessWidget {
                             ),
                           ),
                           SizedBox(height: 48),
-                          Container(
+                          Container(// 전체 동의 부분 - 버튼 기능 추가
                             width: 428,
                             height: 48,
                             decoration: BoxDecoration(
@@ -124,6 +128,7 @@ class AgreePage extends StatelessWidget {
                                   ),
                                   SizedBox(width: 8),
                                   Container(
+                                    height: 28,
                                     padding: EdgeInsets.symmetric(vertical: 3),
                                     child: Row(
                                       children: const [
@@ -135,7 +140,7 @@ class AgreePage extends StatelessWidget {
                                             fontSize: 16,
                                             fontFamily: 'Pretendard',
                                             fontWeight: FontWeight.w600,
-                                            height: 1.4,
+                                            height: 1.375,
                                             letterSpacing: -0.4,
                                           ),
                                         ),
@@ -146,8 +151,10 @@ class AgreePage extends StatelessWidget {
                               ),
                             ),
                           ),
+
                           SizedBox(height: 12),
-                          Row(
+
+                          Row(// 동의 1번 부분 - 아이콘, 텍스트 메서드로 변경 / 버튼 기능 추가
                             children: [
                               Expanded(
                                 child: Container(
@@ -188,7 +195,7 @@ class AgreePage extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              Container(
+                              Container(// 약관 더보기 부분 - 메서드 / 버튼 기능 추가
                                 width: 31,
                                 height: 28,
                                 margin: EdgeInsets.only(right: 12),
@@ -213,11 +220,13 @@ class AgreePage extends StatelessWidget {
 
 
 
-//-------------------------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------여기서 부터는 같은 코드 3개 + 다음 버튼--------------------------------------------------------------
+//                                            동의 2번 부분에 적어 놓겠음.(메서드)
+//           온보딩 처럼 콘텐츠 만들고 불러 오는 식으로 하면 좋을 듯 함 생각하니까 메서드는 아래꺼 그대로 만들고 콘텐츠에서 텍스트만 불러오면 될 듯?
+//                                                       필요하면 부르셈
 
 
-
-                          Row(
+                          Row(// 동의 2번 부분 - 아이콘, 텍스트 메서드로 변경 / 버튼 기능 추가
                             children: [
                               Expanded(
                                 child: Container(
@@ -258,7 +267,7 @@ class AgreePage extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              Container(
+                              Container(// 약관 더보기 부분 - 메서드 / 버튼 기능 추가
                                 width: 31,
                                 height: 28,
                                 margin: EdgeInsets.only(right: 12),
@@ -280,7 +289,8 @@ class AgreePage extends StatelessWidget {
                               ),
                             ],
                           ),
-                          Row(
+
+                          Row(// 동의 3번 부분 - 아이콘, 텍스트 메서드로 변경 / 버튼 기능 추가
                             children: [
                               Expanded(
                                 child: Container(
@@ -321,7 +331,7 @@ class AgreePage extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              Container(
+                              Container(// 약관 더보기 부분 - 메서드 / 버튼 기능 추가
                                 width: 31,
                                 height: 28,
                                 margin: EdgeInsets.only(right: 12),
@@ -343,7 +353,8 @@ class AgreePage extends StatelessWidget {
                               ),
                             ],
                           ),
-                          Row(
+
+                          Row(// 동의 4번 부분 - 아이콘, 텍스트 메서드로 변경 / 버튼 기능 추가
                             children: [
                               Expanded(
                                 child: Container(
@@ -384,7 +395,7 @@ class AgreePage extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              Container(
+                              Container(// 약관 더보기 부분 - 메서드 / 버튼 기능 추가
                                 width: 31,
                                 height: 28,
                                 margin: EdgeInsets.only(right: 12),
@@ -412,7 +423,7 @@ class AgreePage extends StatelessWidget {
                   ),
                 ),
               ),
-              Padding(
+              Padding(// 다음 버튼 - 버튼 기능 추가(필수 항목 체크 완료 시 활성화)
                 padding: EdgeInsets.only(left: 24, right: 24, bottom: 48),
                 child: SizedBox(
                   height: 52,
