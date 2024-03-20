@@ -86,7 +86,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 height: 32,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage('assets/image/logo.png')
+                      image: AssetImage('assets/image/eng_logo.png')
                   ),
                 ),
               ),
@@ -147,7 +147,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 )
             ),
             Container( // 다음, 시작하기 버튼 - 완
-              height: 54,
+              height: 52,
               width: double.infinity,
               margin: EdgeInsets.only(top: 24, left: 24, right: 24, bottom: 48),
               child: MaterialButton(
