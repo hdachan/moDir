@@ -2,25 +2,29 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: const FirebaseOptions(
-      apiKey: 'AIzaSyDogzalL_f-tEOiqOrBSfN8Amzc64l_nLw',
-      appId: '1:531305378076:android:31a98cc7b8d92f337b4ad9',
-      messagingSenderId: '531305378076',
-      projectId: 'modir-d8182',
-      storageBucket: 'modir-d8182.appspot.com',
-    ),
-  );
   runApp(AgreePage());
 }
 
+class AgreePage extends StatefulWidget {
+  const AgreePage({Key? key}) : super(key: key);
 
-//                                            동의 2번 부분에 적어 놓겠음.(메서드)
+  @override
+  _AgreePageState createState() => _AgreePageState();
+}
 
+class _AgreePageState extends State<AgreePage> {
+  bool _isAgreed = false; // 사용자의 동의 상태를 관리하는 변수
+  bool _isTermsAgreed = false; // 이용 약관 동의 상태를 추적하는 변수
+  bool _isPrivacyAgreed = false; // 이용 약관 동의 상태 추적 변수 2
+  bool _isPrivacyAgreed2 = false; // 이용 약관 동의 상태 추적 변수 3
+  bool _isPrivacyAgreed3 = false; // 이용 약관 동의 상태 추적 변수 4
 
-class AgreePage extends StatelessWidget {
-  const AgreePage({super.key});
+  // 동의 처리 메서드 (예시)
+  void _toggleAgreement() {
+    setState(() {
+      _isAgreed = !_isAgreed;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,58 +33,56 @@ class AgreePage extends StatelessWidget {
         body: SafeArea(
           child: Column(
             children: [
-              Container(// 앱 바 - 완
+              Container(
+                // 앱 바 - 완
                 width: double.infinity,
                 height: 54,
                 decoration: BoxDecoration(
                   border: Border(
-                    bottom: BorderSide(
-                        width: 1,
-                        color: Color(0xFFE7E7E7),
-                    )
-                  ),
+                      bottom: BorderSide(
+                    width: 1,
+                    color: Color(0xFFE7E7E7),
+                  )),
                 ),
                 child: Padding(
-                  padding: EdgeInsets.only(top: 15, bottom: 15, left: 24),
-                  child: Row(
-                    children: [
-                      Container(// 뒤로가기 버튼 - 완
-                        width: 24,
-                        height: 24,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage('assets/image/back_icon.png')
-                          )
-                        ),
-                        child: MaterialButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                      )
-                    ],
-                  )
-                ),
+                    padding: EdgeInsets.only(top: 15, bottom: 15, left: 24),
+                    child: Row(
+                      children: [
+                        Container(
+                          // 뒤로가기 버튼 - 완
+                          width: 24,
+                          height: 24,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage(
+                                      'assets/image/back_icon.png'))),
+                          child: MaterialButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                        )
+                      ],
+                    )),
               ),
               Center(
-                child: Container(// 중간 패널
+                child: Container(
+                  // 중간 패널
                   width: 428,
                   height: 586,
-                  decoration: BoxDecoration(
-                    color: Colors.white
-                  ),
+                  decoration: BoxDecoration(color: Colors.white),
                   child: Padding(
-                    padding: EdgeInsets.only(top: 48, bottom: 124, right: 24, left: 24),
+                    padding: EdgeInsets.only(
+                        top: 48, bottom: 124, right: 24, left: 24),
                     child: Container(
                       height: 114,
-                      decoration: BoxDecoration(
-                        color: Colors.white
-                      ),
+                      decoration: BoxDecoration(color: Colors.white),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(// 제목 - 완
+                          Text(
+                            // 제목 - 완
                             '모디랑\n이용약관 동의',
                             textAlign: TextAlign.left,
                             style: TextStyle(
@@ -93,7 +95,8 @@ class AgreePage extends StatelessWidget {
                             ),
                           ),
                           SizedBox(height: 10),
-                          Text(// 설명 - 완
+                          Text(
+                            // 설명 - 완
                             '모디랑 서비스 시작 및 가입을 위해\n정보 제공에 동의해 주세요!',
                             textAlign: TextAlign.left,
                             style: TextStyle(
@@ -106,96 +109,127 @@ class AgreePage extends StatelessWidget {
                             ),
                           ),
                           SizedBox(height: 48),
-                          Container(// 전체 동의 부분 - 버튼 기능 추가
-                            width: 428,
-                            height: 48,
-                            decoration: BoxDecoration(
-                              border: Border.all(width: 1.5,color: Color(0xFF8773FF)),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    width: 28,
-                                    height: 28,
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        image: AssetImage('assets/image/check_icon.png')
-                                      )
-                                    ),
-                                  ),
-                                  SizedBox(width: 8),
-                                  Container(
-                                    height: 28,
-                                    padding: EdgeInsets.symmetric(vertical: 3),
-                                    child: Row(
-                                      children: const [
-                                        Text(
-                                          '전체 약관동의',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            color: Color(0xFF888888),
-                                            fontSize: 16,
-                                            fontFamily: 'Pretendard',
-                                            fontWeight: FontWeight.w600,
-                                            height: 1.375,
-                                            letterSpacing: -0.4,
+                          InkWell(
+                            onTap: () {
+                              setState(() {
+                                _isAgreed = !_isAgreed; // 탭할 때마다 _isAgreed 값 토글
+                              });
+                            },
+                            child: Container(
+                              width: 428,
+                              height: 48,
+                              decoration: BoxDecoration(
+                                color: _isAgreed
+                                    ? Color(0xFF4B0FFF)
+                                    : Colors.transparent, // 여기에서 배경색을 변경합니다.
+                                border: Border.all(
+                                  width: 1.5,
+                                  color: _isAgreed
+                                      ? Color(0xFF4B0FFF)
+                                      : Color(
+                                          0xFF8773FF), // 조건에 따라 테두리 색상을 변경합니다.
+                                ),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 10, horizontal: 12),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: 28,
+                                      height: 28,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          image: AssetImage(
+                                            _isAgreed
+                                                ? 'assets/image/checkOn_icon.png'
+                                                : 'assets/image/check_icon.png', // 조건에 따라 이미지를 변경합니다.
                                           ),
                                         ),
-                                      ],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                    SizedBox(width: 8),
+                                    Text(
+                                      '전체 약관동의',
+                                      style: TextStyle(
+                                        color: _isAgreed
+                                            ? Colors.white
+                                            : Color(0xFF888888),
+                                        // 조건에 따라 텍스트 색상을 변경합니다.
+                                        fontSize: 16,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
 
                           SizedBox(height: 12),
 
-                          Row(// 동의 1번 부분 - 아이콘, 텍스트 메서드로 변경 / 버튼 기능 추가
+                          Row(
+                            // 동의 1번 부분 - 아이콘, 텍스트 메서드로 변경 / 버튼 기능 추가
                             children: [
                               Expanded(
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-                                  height: 48,
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                        width: 28,
-                                        height: 28,
-                                        decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                                image: AssetImage('assets/image/check_icon.png')
-                                            )
-                                        ),
-                                      ),
-                                      SizedBox(width: 8),
-                                      Container(
-                                        padding: EdgeInsets.symmetric(vertical: 3),
+                                  child: InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          _isTermsAgreed =
+                                              !_isTermsAgreed; // 탭할 때마다 _isTermsAgreed 값 토글
+                                        });
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 10, horizontal: 12),
+                                        height: 48,
                                         child: Row(
-                                          children: const [
-                                            Text(
-                                              '(필수) 이용 약관 동의',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                color: Color(0xFF888888),
-                                                fontSize: 14,
-                                                fontFamily: 'Pretendard',
-                                                fontWeight: FontWeight.w500,
-                                                height: 1.3,
-                                                letterSpacing: -0.35,
+                                          children: [
+                                            Container(
+                                              width: 28,
+                                              height: 28,
+                                              decoration: BoxDecoration(
+                                                image: DecorationImage(
+                                                  image: AssetImage(
+                                                    _isTermsAgreed
+                                                        ? 'assets/image/Onbluecheck_icon.png' // 조건에 따라 이미지 변경
+                                                        : 'assets/image/check_icon.png',
+                                                  ),
+                                                ),
                                               ),
                                             ),
+                                            SizedBox(width: 8),
+                                            Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 3),
+                                              child: Row(
+                                                children: [
+                                                  Text(
+                                                    '(필수) 이용 약관 동의',
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                      color: _isTermsAgreed
+                                                          ? Color(0xFF3D3D3D)
+                                                          : Color(0xFF888888),
+                                                      // 조건에 따라 텍스트 색상 변경
+                                                      fontSize: 14,
+                                                      fontFamily: 'Pretendard',
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      height: 1.3,
+                                                      letterSpacing: -0.35,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            )
                                           ],
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Container(// 약관 더보기 부분 - 메서드 / 버튼 기능 추가
+                                      ))),
+                              Container(
+                                // 약관 더보기 부분 - 메서드 / 버튼 기능 추가
                                 width: 31,
                                 height: 28,
                                 margin: EdgeInsets.only(right: 12),
@@ -217,57 +251,67 @@ class AgreePage extends StatelessWidget {
                               ),
                             ],
                           ),
-
-
 
 //-------------------------------------------여기서 부터는 같은 코드 3개 + 다음 버튼--------------------------------------------------------------
 //                                            동의 2번 부분에 적어 놓겠음.(메서드)
 //           온보딩 처럼 콘텐츠 만들고 불러 오는 식으로 하면 좋을 듯 함 생각하니까 메서드는 아래꺼 그대로 만들고 콘텐츠에서 텍스트만 불러오면 될 듯?
 //                                                       필요하면 부르셈
 
-
-                          Row(// 동의 2번 부분 - 아이콘, 텍스트 메서드로 변경 / 버튼 기능 추가
+                          Row(
+                            // 동의 2번 부분 - 아이콘, 텍스트 메서드로 변경 / 버튼 기능 추가
                             children: [
                               Expanded(
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-                                  height: 48,
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                        width: 28,
-                                        height: 28,
-                                        decoration: BoxDecoration(
+                                child: InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      _isPrivacyAgreed = !_isPrivacyAgreed; // 탭할 때마다 _isPrivacyAgreed 값 토글
+                                    });
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+                                    height: 48,
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          width: 28,
+                                          height: 28,
+                                          decoration: BoxDecoration(
                                             image: DecorationImage(
-                                                image: AssetImage('assets/image/check_icon.png')
-                                            )
-                                        ),
-                                      ),
-                                      SizedBox(width: 8),
-                                      Container(
-                                        padding: EdgeInsets.symmetric(vertical: 3),
-                                        child: Row(
-                                          children: const [
-                                            Text(
-                                              '(필수) 개인정보 수집 동의',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                color: Color(0xFF888888),
-                                                fontSize: 14,
-                                                fontFamily: 'Pretendard',
-                                                fontWeight: FontWeight.w500,
-                                                height: 1.3,
-                                                letterSpacing: -0.35,
+                                              image: AssetImage(
+                                                _isPrivacyAgreed ? 'assets/image/Onbluecheck_icon.png' // 조건에 따라 이미지 변경
+                                                    : 'assets/image/check_icon.png',
                                               ),
                                             ),
-                                          ],
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                        SizedBox(width: 8),
+                                        Container(
+                                          padding: EdgeInsets.symmetric(vertical: 3),
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                '(필수) 개인정보 수집 동의',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  color: _isPrivacyAgreed2 ? Color(0xFF3D3D3D) : Color(0xFF888888), // 조건에 따라 텍스트 색상 변경
+                                                  fontSize: 14,
+                                                  fontFamily: 'Pretendard',
+                                                  fontWeight: FontWeight.w500,
+                                                  height: 1.3,
+                                                  letterSpacing: -0.35,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
-                              Container(// 약관 더보기 부분 - 메서드 / 버튼 기능 추가
+
+                              Container(
+                                // 약관 더보기 부분 - 메서드 / 버튼 기능 추가
                                 width: 31,
                                 height: 28,
                                 margin: EdgeInsets.only(right: 12),
@@ -290,48 +334,60 @@ class AgreePage extends StatelessWidget {
                             ],
                           ),
 
-                          Row(// 동의 3번 부분 - 아이콘, 텍스트 메서드로 변경 / 버튼 기능 추가
+                          Row(
+                            // 동의 3번 부분 - 아이콘, 텍스트 메서드로 변경 / 버튼 기능 추가
                             children: [
                               Expanded(
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-                                  height: 48,
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                        width: 28,
-                                        height: 28,
-                                        decoration: BoxDecoration(
+                                child: InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      _isPrivacyAgreed2 = !_isPrivacyAgreed2; // 탭할 때마다 _isPrivacyAgreed 값 토글
+                                    });
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+                                    height: 48,
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          width: 28,
+                                          height: 28,
+                                          decoration: BoxDecoration(
                                             image: DecorationImage(
-                                                image: AssetImage('assets/image/check_icon.png')
-                                            )
-                                        ),
-                                      ),
-                                      SizedBox(width: 8),
-                                      Container(
-                                        padding: EdgeInsets.symmetric(vertical: 3),
-                                        child: Row(
-                                          children: const [
-                                            Text(
-                                              '(필수) 전금 금융 거래 이용 약관 동의',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                color: Color(0xFF888888),
-                                                fontSize: 14,
-                                                fontFamily: 'Pretendard',
-                                                fontWeight: FontWeight.w500,
-                                                height: 1.3,
-                                                letterSpacing: -0.35,
+                                              image: AssetImage(
+                                                _isPrivacyAgreed2 ? 'assets/image/Onbluecheck_icon.png' // 조건에 따라 이미지 변경
+                                                    : 'assets/image/check_icon.png',
                                               ),
                                             ),
-                                          ],
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                        SizedBox(width: 8),
+                                        Container(
+                                          padding: EdgeInsets.symmetric(vertical: 3),
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                '(필수) 전금 금융 거래 이용 약관 동의',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  color: _isPrivacyAgreed2 ? Color(0xFF3D3D3D) : Color(0xFF888888), // 조건에 따라 텍스트 색상 변경
+                                                  fontSize: 14,
+                                                  fontFamily: 'Pretendard',
+                                                  fontWeight: FontWeight.w500,
+                                                  height: 1.3,
+                                                  letterSpacing: -0.35,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
-                              Container(// 약관 더보기 부분 - 메서드 / 버튼 기능 추가
+                              Container(
+                                // 약관 더보기 부분 - 메서드 / 버튼 기능 추가
                                 width: 31,
                                 height: 28,
                                 margin: EdgeInsets.only(right: 12),
@@ -354,48 +410,60 @@ class AgreePage extends StatelessWidget {
                             ],
                           ),
 
-                          Row(// 동의 4번 부분 - 아이콘, 텍스트 메서드로 변경 / 버튼 기능 추가
+                          Row(
+                            // 동의 4번 부분 - 아이콘, 텍스트 메서드로 변경 / 버튼 기능 추가
                             children: [
                               Expanded(
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-                                  height: 48,
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                        width: 28,
-                                        height: 28,
-                                        decoration: BoxDecoration(
+                                child: InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      _isPrivacyAgreed3 = !_isPrivacyAgreed3; // 탭할 때마다 _isPrivacyAgreed 값 토글
+                                    });
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+                                    height: 48,
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          width: 28,
+                                          height: 28,
+                                          decoration: BoxDecoration(
                                             image: DecorationImage(
-                                                image: AssetImage('assets/image/check_icon.png')
-                                            )
-                                        ),
-                                      ),
-                                      SizedBox(width: 8),
-                                      Container(
-                                        padding: EdgeInsets.symmetric(vertical: 3),
-                                        child: Row(
-                                          children: const [
-                                            Text(
-                                              '(선택) 이벤트 및 마케팅 이용 약관 동의',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                color: Color(0xFF888888),
-                                                fontSize: 14,
-                                                fontFamily: 'Pretendard',
-                                                fontWeight: FontWeight.w500,
-                                                height: 1.3,
-                                                letterSpacing: -0.35,
+                                              image: AssetImage(
+                                                _isPrivacyAgreed3 ? 'assets/image/Onbluecheck_icon.png' // 조건에 따라 이미지 변경
+                                                    : 'assets/image/check_icon.png',
                                               ),
                                             ),
-                                          ],
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                        SizedBox(width: 8),
+                                        Container(
+                                          padding: EdgeInsets.symmetric(vertical: 3),
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                '(필수) 개인정보 수집 동의',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  color: _isPrivacyAgreed3 ? Color(0xFF3D3D3D) : Color(0xFF888888), // 조건에 따라 텍스트 색상 변경
+                                                  fontSize: 14,
+                                                  fontFamily: 'Pretendard',
+                                                  fontWeight: FontWeight.w500,
+                                                  height: 1.3,
+                                                  letterSpacing: -0.35,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
-                              Container(// 약관 더보기 부분 - 메서드 / 버튼 기능 추가
+                              Container(
+                                // 약관 더보기 부분 - 메서드 / 버튼 기능 추가
                                 width: 31,
                                 height: 28,
                                 margin: EdgeInsets.only(right: 12),
@@ -423,34 +491,32 @@ class AgreePage extends StatelessWidget {
                   ),
                 ),
               ),
-              Padding(// 다음 버튼 - 버튼 기능 추가(필수 항목 체크 완료 시 활성화)
-                padding: EdgeInsets.only(left: 24, right: 24, bottom: 48),
-                child: SizedBox(
-                  height: 52,
-                  width: 428,
-                  child: MaterialButton(
-                    onPressed: () {
-
-                    },
-                    color: Color(0xFFAFA6FF),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Text(
-                      textAlign: TextAlign.center,
-                      '다음',
-                      style: TextStyle(
-                        color: Color(0xFFF6F6F6),
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w700,
-                        height: 1.1,
-                        letterSpacing: -0.53,
-                        fontSize: 21,
+              Padding(
+                  // 다음 버튼 - 버튼 기능 추가(필수 항목 체크 완료 시 활성화)
+                  padding: EdgeInsets.only(left: 24, right: 24, bottom: 48),
+                  child: SizedBox(
+                    height: 52,
+                    width: 428,
+                    child: MaterialButton(
+                      onPressed: () {},
+                      color: Color(0xFFAFA6FF),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        textAlign: TextAlign.center,
+                        '다음',
+                        style: TextStyle(
+                          color: Color(0xFFF6F6F6),
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w700,
+                          height: 1.1,
+                          letterSpacing: -0.53,
+                          fontSize: 21,
+                        ),
                       ),
                     ),
-                  ),
-                )
-              ),
+                  )),
             ],
           ),
         ),
