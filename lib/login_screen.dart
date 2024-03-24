@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:test_qwe/user_agreement_screen.dart';
+import 'package:test_qwe/Agree_Page.dart';
 
 import 'main2.dart';
 import 'password_screen.dart';
@@ -332,7 +332,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 onPressed: () {
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => user_agreement_screen()),
+                                    MaterialPageRoute(builder: (context) => AgreePage()),
                                   );
                                 },
                                 child: Text(
