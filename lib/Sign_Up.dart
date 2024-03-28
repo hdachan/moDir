@@ -66,6 +66,117 @@ class SignupPage extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: Colors.white
                   ),
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 24, right: 24, top: 48),
+                    child: Container(
+                      height: 62,
+                      width: 426,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '이메일 및 비밀번호 입력',
+                            style: TextStyle(
+                              color: Color(0xFF3D3D3D),
+                              fontSize: 28,
+                              fontFamily: 'Pretendard',
+                              fontWeight: FontWeight.w700,
+                              height: 1.2,
+                              letterSpacing: -0.70,
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            '로그인에 사용할 이메일과 비밀번호를 입력해 주세요.',
+                            style: TextStyle(
+                              color: Color(0xFF888888),
+                              fontSize: 14,
+                              fontFamily: 'Pretendard',
+                              fontWeight: FontWeight.w500,
+                              height: 1.28,
+                              letterSpacing: -0.35,
+                            ),
+                          ),
+                          SizedBox(height: 48),
+                          Container(
+                            height: 70,
+                            width: 426,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(left: 4),
+                                  child: Row(
+                                    children: const [
+                                      Text(
+                                        '이메일',
+                                        style: TextStyle(
+                                          color: Color(0xFF3D3D3D),
+                                          fontSize: 14,
+                                          fontFamily: 'Pretendard',
+                                          fontWeight: FontWeight.w500,
+                                          height: 1.28,
+                                          letterSpacing: -0.35,
+                                        ),
+                                      ),
+                                      SizedBox(width: 2),
+                                      Text(
+                                        '*',
+                                        style: TextStyle(
+                                          color: Color(0xFFFF3333),
+                                          fontSize: 12,
+                                          fontFamily: 'Pretendard',
+                                          fontWeight: FontWeight.w500,
+                                          height: 1.3,
+                                          letterSpacing: -0.30,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(height: 4),
+                                Column(
+                                  children: [
+                                    Container(
+                                      height: 48,
+                                      width: 426,
+                                      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+                                      decoration: ShapeDecoration(
+                                        shape: RoundedRectangleBorder(
+                                          side: BorderSide(width: 1, color: Color(0xFFD1D1D1)),
+                                          borderRadius: BorderRadius.circular(8),
+                                        )
+                                      ),
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(vertical: 2),
+                                        child: TextField(
+                                          textAlignVertical: TextAlignVertical.center,
+                                          textAlign: TextAlign.left,
+                                          style: TextStyle(
+                                            color: Color(0xFF888888),
+                                            fontSize: 16,
+                                            fontFamily: 'Pretendard',
+                                            fontWeight: FontWeight.w600,
+                                            height: 1.5,
+                                            letterSpacing: -0.40,
+                                          ),
+                                          decoration: InputDecoration(
+                                            border: InputBorder.none,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
               ),
 
