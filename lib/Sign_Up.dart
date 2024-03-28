@@ -23,6 +23,7 @@ class SignupPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        resizeToAvoidBottomInset : false,
         body: SafeArea(
           child: Column(
             children: [
@@ -100,7 +101,7 @@ class SignupPage extends StatelessWidget {
                           ),
                           SizedBox(height: 48),
                           Container(
-                            height: 70,
+                            height: 90,
                             width: 426,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -150,29 +151,267 @@ class SignupPage extends StatelessWidget {
                                         )
                                       ),
                                       child: Container(
-                                        padding: EdgeInsets.symmetric(vertical: 2),
-                                        child: TextField(
-                                          textAlignVertical: TextAlignVertical.center,
-                                          textAlign: TextAlign.left,
+                                        color: Colors.white,
+
+                                        child: TextFormField(
                                           style: TextStyle(
-                                            color: Color(0xFF888888),
+                                            color: Color(0xFF3D3D3D),
                                             fontSize: 16,
                                             fontFamily: 'Pretendard',
                                             fontWeight: FontWeight.w600,
                                             height: 1.5,
                                             letterSpacing: -0.40,
                                           ),
+                                          textInputAction: TextInputAction.next,
                                           decoration: InputDecoration(
                                             border: InputBorder.none,
+                                            focusedBorder: InputBorder.none,
+                                            contentPadding: EdgeInsets.only(bottom: 10),
+                                            hintText: '이메일 입력',
+                                            hintStyle: TextStyle(
+                                              color: Color(0xFF888888),
+                                              fontSize: 16,
+                                              fontFamily: 'Pretendard',
+                                              fontWeight: FontWeight.w600,
+                                              height: 1.5,
+                                              letterSpacing: -0.40,
+                                            ),
                                           ),
-                                        ),
+                                        )
                                       ),
                                     )
                                   ],
-                                )
+                                ),
+                                SizedBox(height: 4),
+                                Container(
+                                  height: 16,
+                                  width: 426,
+                                  padding: EdgeInsets.symmetric(horizontal: 4),
+                                  child: Text(
+                                    '이메일이 잘못 입력 됐을 때 경고 문구',
+                                    style: TextStyle(
+                                      color: Color(0xFFB0B0B0),
+                                      fontSize: 12,
+                                      fontFamily: 'Pretendard',
+                                      fontWeight: FontWeight.w500,
+                                      height: 1.33,
+                                      letterSpacing: -0.30,
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
-                          )
+                          ),
+                          SizedBox(height: 16),
+                          Container(
+                            height: 90,
+                            width: 426,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(left: 4),
+                                  child: Row(
+                                    children: const [
+                                      Text(
+                                        '비밀번호',
+                                        style: TextStyle(
+                                          color: Color(0xFF3D3D3D),
+                                          fontSize: 14,
+                                          fontFamily: 'Pretendard',
+                                          fontWeight: FontWeight.w500,
+                                          height: 1.28,
+                                          letterSpacing: -0.35,
+                                        ),
+                                      ),
+                                      SizedBox(width: 2),
+                                      Text(
+                                        '*',
+                                        style: TextStyle(
+                                          color: Color(0xFFFF3333),
+                                          fontSize: 12,
+                                          fontFamily: 'Pretendard',
+                                          fontWeight: FontWeight.w500,
+                                          height: 1.3,
+                                          letterSpacing: -0.30,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(height: 4),
+                                Column(
+                                  children: [
+                                    Container(
+                                      height: 48,
+                                      width: 426,
+                                      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+                                      decoration: ShapeDecoration(
+                                          shape: RoundedRectangleBorder(
+                                            side: BorderSide(width: 1, color: Color(0xFFD1D1D1)),
+                                            borderRadius: BorderRadius.circular(8),
+                                          )
+                                      ),
+                                      child: Container(
+                                          color: Colors.white,
+
+                                          child: TextFormField(
+                                            obscureText: true,
+                                            obscuringCharacter: '●',
+                                            style: TextStyle(
+                                              color: Color(0xFF3D3D3D),
+                                              fontSize: 16,
+                                              fontFamily: 'Pretendard',
+                                              fontWeight: FontWeight.w600,
+                                              height: 1.5,
+                                              letterSpacing: -0.40,
+                                            ),
+                                            textInputAction: TextInputAction.next,
+                                            decoration: InputDecoration(
+                                              border: InputBorder.none,
+                                              focusedBorder: InputBorder.none,
+                                              contentPadding: EdgeInsets.only(bottom: 10),
+                                              hintText: '비밀번호 입력',
+                                              hintStyle: TextStyle(
+                                                color: Color(0xFF888888),
+                                                fontSize: 16,
+                                                fontFamily: 'Pretendard',
+                                                fontWeight: FontWeight.w600,
+                                                height: 1.5,
+                                                letterSpacing: -0.40,
+                                              ),
+                                            ),
+                                          )
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                SizedBox(height: 4),
+                                Container(
+                                  height: 16,
+                                  width: 426,
+                                  padding: EdgeInsets.symmetric(horizontal: 4),
+                                  child: Text(
+                                    '비밀번호 입력 규칙 및 잘못 입력 됐을 때 경고 문구',
+                                    style: TextStyle(
+                                      color: Color(0xFFB0B0B0),
+                                      fontSize: 12,
+                                      fontFamily: 'Pretendard',
+                                      fontWeight: FontWeight.w500,
+                                      height: 1.33,
+                                      letterSpacing: -0.30,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 16),
+                          Container(
+                            height: 90,
+                            width: 426,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(left: 4),
+                                  child: Row(
+                                    children: const [
+                                      Text(
+                                        '비밀번호 재입력',
+                                        style: TextStyle(
+                                          color: Color(0xFF3D3D3D),
+                                          fontSize: 14,
+                                          fontFamily: 'Pretendard',
+                                          fontWeight: FontWeight.w500,
+                                          height: 1.28,
+                                          letterSpacing: -0.35,
+                                        ),
+                                      ),
+                                      SizedBox(width: 2),
+                                      Text(
+                                        '*',
+                                        style: TextStyle(
+                                          color: Color(0xFFFF3333),
+                                          fontSize: 12,
+                                          fontFamily: 'Pretendard',
+                                          fontWeight: FontWeight.w500,
+                                          height: 1.3,
+                                          letterSpacing: -0.30,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(height: 4),
+                                Column(
+                                  children: [
+                                    Container(
+                                      height: 48,
+                                      width: 426,
+                                      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+                                      decoration: ShapeDecoration(
+                                          shape: RoundedRectangleBorder(
+                                            side: BorderSide(width: 1, color: Color(0xFFD1D1D1)),
+                                            borderRadius: BorderRadius.circular(8),
+                                          )
+                                      ),
+                                      child: Container(
+                                          color: Colors.white,
+
+                                          child: TextFormField(
+                                            obscureText: true,
+                                            obscuringCharacter: '●',
+                                            style: TextStyle(
+                                              color: Color(0xFF3D3D3D),
+                                              fontSize: 16,
+                                              fontFamily: 'Pretendard',
+                                              fontWeight: FontWeight.w600,
+                                              height: 1.5,
+                                              letterSpacing: -0.40,
+                                            ),
+                                            textInputAction: TextInputAction.done,
+                                            decoration: InputDecoration(
+                                              border: InputBorder.none,
+                                              focusedBorder: InputBorder.none,
+                                              contentPadding: EdgeInsets.only(bottom: 10),
+                                              hintText: '비밀번호 재입력',
+                                              hintStyle: TextStyle(
+                                                color: Color(0xFF888888),
+                                                fontSize: 16,
+                                                fontFamily: 'Pretendard',
+                                                fontWeight: FontWeight.w600,
+                                                height: 1.5,
+                                                letterSpacing: -0.40,
+                                              ),
+                                            ),
+                                          )
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                SizedBox(height: 4),
+                                Container(
+                                  height: 16,
+                                  width: 426,
+                                  padding: EdgeInsets.symmetric(horizontal: 4),
+                                  child: Text(
+                                    '비밀번호 재입력을 잘못 했을 때 경고 문구',
+                                    style: TextStyle(
+                                      color: Color(0xFFB0B0B0),
+                                      fontSize: 12,
+                                      fontFamily: 'Pretendard',
+                                      fontWeight: FontWeight.w500,
+                                      height: 1.33,
+                                      letterSpacing: -0.30,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ),
