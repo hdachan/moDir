@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'Sign_Up.dart';
+
 void main() async {
   runApp(AgreePage());
 }
@@ -397,7 +399,6 @@ class _AgreePageState extends State<AgreePage> {
                                   onTap: () {
                                     setState(() {
                                       _toggleTermsAgreement2();
-                                      //_isPrivacyAgreed2 = !_isPrivacyAgreed2; // 탭할 때마다 _isPrivacyAgreed 값 토글
                                     });
                                   },
                                   child: Container(
@@ -570,7 +571,10 @@ class _AgreePageState extends State<AgreePage> {
                       // 버튼이 눌렸을 때 수행할 작업을 여기에 구현
                       // 예를 들어, 모든 동의 상태가 true일 때만 다음 화면으로 넘어가는 로직 등
                       if (isButtonPressed) {
-                        // 다음 화면으로 넘어가는 로직
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => SignupPage()),
+                        );
                       }
                     },
                     color: isButtonPressed

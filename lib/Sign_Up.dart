@@ -1,23 +1,65 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: const FirebaseOptions(
-      apiKey: 'AIzaSyDogzalL_f-tEOiqOrBSfN8Amzc64l_nLw',
-      appId: '1:531305378076:android:31a98cc7b8d92f337b4ad9',
-      messagingSenderId: '531305378076',
-      projectId: 'modir-d8182',
-      storageBucket: 'modir-d8182.appspot.com',
-    ),
-  );
-  runApp(SignupPage());
+// 약관동의 화면
+void main() {
+  runApp(MaterialApp(
+    home: SignupPage(),
+  ));
 }
 
+class SignupPage extends StatefulWidget {
+  @override
+  _SignupPageState createState() => _SignupPageState();
+}
 
-class SignupPage extends StatelessWidget {
-  const SignupPage({super.key});
+class _SignupPageState extends State<SignupPage>{
+  final FocusNode _focusNode = FocusNode();
+  Color _borderColor = Color(0xFFD1D1D1); // 기본 테두리 색상
+
+  final FocusNode _passwordFocusNode = FocusNode();
+  Color _passwordBorderColor = Color(0xFFD1D1D1); // 기본 테두리 색상
+
+  final FocusNode _rePasswordFocusNode = FocusNode();
+  Color _rePasswordBorderColor = Color(0xFFD1D1D1); // 기본 테두리 색상
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode.addListener(_onFocusChange);
+    _passwordFocusNode.addListener(_onPasswordFocusChange);
+    _rePasswordFocusNode.addListener(_onRePasswordFocusChange); // 비밀번호 재입력 필드의 FocusNode 상태 변화 감지
+  }
+
+  @override
+  void dispose() {
+    _focusNode.removeListener(_onFocusChange);
+    _focusNode.dispose();
+    _passwordFocusNode.removeListener(_onPasswordFocusChange);
+    _passwordFocusNode.dispose();
+    _rePasswordFocusNode.removeListener(_onRePasswordFocusChange); // 메서드 제거
+    _rePasswordFocusNode.dispose();
+
+    super.dispose();
+  }
+
+  void _onFocusChange() {
+    setState(() {
+      _borderColor = _focusNode.hasFocus ? Color(0xFF4B0FFF) : Color(0xFFD1D1D1);
+    });
+  }
+
+  void _onPasswordFocusChange() {
+    setState(() {
+      _passwordBorderColor = _passwordFocusNode.hasFocus ? Color(0xFF4B0FFF) : Color(0xFFD1D1D1);
+    });
+  }
+
+  void _onRePasswordFocusChange() {
+    setState(() {
+      _rePasswordBorderColor = _rePasswordFocusNode.hasFocus ? Color(0xFF4B0FFF) : Color(0xFFD1D1D1);
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -146,38 +188,35 @@ class SignupPage extends StatelessWidget {
                                       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
                                       decoration: ShapeDecoration(
                                         shape: RoundedRectangleBorder(
-                                          side: BorderSide(width: 1, color: Color(0xFFD1D1D1)),
+                                          side: BorderSide(width: 1, color: _borderColor), // 포커스 상태에 따른 테두리 색상 변경
                                           borderRadius: BorderRadius.circular(8),
-                                        )
+                                        ),
                                       ),
-                                      child: Container(
-                                        color: Colors.white,
-
-                                        child: TextFormField(
-                                          style: TextStyle(
-                                            color: Color(0xFF3D3D3D),
+                                      child: TextFormField(
+                                        focusNode: _focusNode, // 포커스 노드 사용
+                                        style: TextStyle(
+                                          color: Color(0xFF3D3D3D),
+                                          fontSize: 16,
+                                          fontFamily: 'Pretendard',
+                                          fontWeight: FontWeight.w600,
+                                          height: 1.5,
+                                          letterSpacing: -0.40,
+                                        ),
+                                        textInputAction: TextInputAction.next,
+                                        decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          focusedBorder: InputBorder.none,
+                                          contentPadding: EdgeInsets.only(bottom: 10),
+                                          hintText: '이메일 입력',
+                                          hintStyle: TextStyle(
+                                            color: Color(0xFF888888),
                                             fontSize: 16,
                                             fontFamily: 'Pretendard',
                                             fontWeight: FontWeight.w600,
                                             height: 1.5,
                                             letterSpacing: -0.40,
                                           ),
-                                          textInputAction: TextInputAction.next,
-                                          decoration: InputDecoration(
-                                            border: InputBorder.none,
-                                            focusedBorder: InputBorder.none,
-                                            contentPadding: EdgeInsets.only(bottom: 10),
-                                            hintText: '이메일 입력',
-                                            hintStyle: TextStyle(
-                                              color: Color(0xFF888888),
-                                              fontSize: 16,
-                                              fontFamily: 'Pretendard',
-                                              fontWeight: FontWeight.w600,
-                                              height: 1.5,
-                                              letterSpacing: -0.40,
-                                            ),
-                                          ),
-                                        )
+                                        ),
                                       ),
                                     )
                                   ],
@@ -249,16 +288,16 @@ class SignupPage extends StatelessWidget {
                                       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
                                       decoration: ShapeDecoration(
                                           shape: RoundedRectangleBorder(
-                                            side: BorderSide(width: 1, color: Color(0xFFD1D1D1)),
+                                            side: BorderSide(width: 1, color: _passwordBorderColor), // 포커스 상태에 따른 테두리 색상 변경
                                             borderRadius: BorderRadius.circular(8),
                                           )
                                       ),
                                       child: Container(
                                           color: Colors.white,
-
                                           child: TextFormField(
                                             obscureText: true,
                                             obscuringCharacter: '●',
+                                            focusNode: _passwordFocusNode, // 포커스 노드 사용
                                             style: TextStyle(
                                               color: Color(0xFF3D3D3D),
                                               fontSize: 16,
@@ -284,7 +323,7 @@ class SignupPage extends StatelessWidget {
                                             ),
                                           )
                                       ),
-                                    )
+                                    ),
                                   ],
                                 ),
                                 SizedBox(height: 4),
@@ -354,16 +393,16 @@ class SignupPage extends StatelessWidget {
                                       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
                                       decoration: ShapeDecoration(
                                           shape: RoundedRectangleBorder(
-                                            side: BorderSide(width: 1, color: Color(0xFFD1D1D1)),
+                                            side: BorderSide(width: 1, color: _rePasswordBorderColor), // 포커스 상태에 따른 테두리 색상 변경
                                             borderRadius: BorderRadius.circular(8),
                                           )
                                       ),
                                       child: Container(
                                           color: Colors.white,
-
                                           child: TextFormField(
                                             obscureText: true,
                                             obscuringCharacter: '●',
+                                            focusNode: _rePasswordFocusNode, // 포커스 노드 사용
                                             style: TextStyle(
                                               color: Color(0xFF3D3D3D),
                                               fontSize: 16,
@@ -372,7 +411,7 @@ class SignupPage extends StatelessWidget {
                                               height: 1.5,
                                               letterSpacing: -0.40,
                                             ),
-                                            textInputAction: TextInputAction.done,
+                                            textInputAction: TextInputAction.next,
                                             decoration: InputDecoration(
                                               border: InputBorder.none,
                                               focusedBorder: InputBorder.none,
@@ -389,7 +428,7 @@ class SignupPage extends StatelessWidget {
                                             ),
                                           )
                                       ),
-                                    )
+                                    ),
                                   ],
                                 ),
                                 SizedBox(height: 4),
@@ -455,4 +494,5 @@ class SignupPage extends StatelessWidget {
       ),
     );
   }
+
 }
