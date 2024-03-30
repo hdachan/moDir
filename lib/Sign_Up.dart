@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 // 약관동의 화면
@@ -13,6 +14,61 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage>{
+  String errorMessage = ''; // 클래스 멤버 변수로 선언
+
+  Future<void> signUp() async {
+    try {
+      final UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      );
+
+      // 계정 생성 성공 시, 이곳에서 후속 처리
+      print('계정 생성 성공: ${userCredential.user}');
+      setState(() {
+        errorMessage = ''; // 성공 시 에러 메시지 초기화
+        // 성공 시 테두리 색상을 기본값으로 재설정
+        _borderColor = Color(0xFFD1D1D1);
+        _passwordBorderColor = Color(0xFFD1D1D1);
+        _rePasswordBorderColor = Color(0xFFD1D1D1);
+      });
+    } on FirebaseAuthException catch (e) {
+      // 에러 메시지 처리
+      String newErrorMessage;
+      if (e.code == 'unknown') {
+        newErrorMessage = '알 수 없는 오류가 발생했습니다: ${e.message}';
+      } else {
+        newErrorMessage = '알 수 없는 오류가 발생했습니다: ${e.message}';
+      }
+
+      setState(() {
+        errorMessage = newErrorMessage;
+        // 에러 발생 시 테두리 색상을 빨간색으로 변경
+        _borderColor = Color(0xFFFF3333);
+        _passwordBorderColor = Color(0xFFFF3333);
+        _rePasswordBorderColor = Color(0xFFFF3333);
+      });
+    } catch (e) {
+      setState(() {
+        errorMessage = '예외가 발생했습니다: ${e.toString()}';
+        // 에러 발생 시 테두리 색상을 빨간색으로 변경
+        _borderColor = Color(0xFFFF3333);
+        _passwordBorderColor = Color(0xFFFF3333);
+        _rePasswordBorderColor = Color(0xFFFF3333);
+      });
+    }
+  }
+
+
+
+
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController repasswordController =TextEditingController();
+
+
+
+
   final FocusNode _focusNode = FocusNode();
   Color _borderColor = Color(0xFFD1D1D1); // 기본 테두리 색상
 
@@ -193,6 +249,7 @@ class _SignupPageState extends State<SignupPage>{
                                           ),
                                         ),
                                         child: TextFormField(
+                                          controller: emailController,
                                           focusNode: _focusNode, // 포커스 노드 사용
                                           style: TextStyle(
                                             color: Color(0xFF3D3D3D),
@@ -222,14 +279,15 @@ class _SignupPageState extends State<SignupPage>{
                                     ],
                                   ),
                                   SizedBox(height: 4),
+                                  if (errorMessage.isNotEmpty)
                                   Container(
                                     height: 16,
                                     width: 426,
                                     padding: EdgeInsets.symmetric(horizontal: 4),
                                     child: Text(
-                                      '이메일이 잘못 입력 됐을 때 경고 문구',
+                                      errorMessage, // 이전에 정의한 errorMessage 변수 사용
                                       style: TextStyle(
-                                        color: Color(0xFFB0B0B0),
+                                        color: Color(0xFFFF3333),
                                         fontSize: 12,
                                         fontFamily: 'Pretendard',
                                         fontWeight: FontWeight.w500,
@@ -295,6 +353,7 @@ class _SignupPageState extends State<SignupPage>{
                                         child: Container(
                                             color: Colors.white,
                                             child: TextFormField(
+                                              controller: passwordController,
                                               obscureText: true,
                                               obscuringCharacter: '●',
                                               focusNode: _passwordFocusNode, // 포커스 노드 사용
@@ -400,6 +459,7 @@ class _SignupPageState extends State<SignupPage>{
                                         child: Container(
                                             color: Colors.white,
                                             child: TextFormField(
+                                              controller: repasswordController,
                                               obscureText: true,
                                               obscuringCharacter: '●',
                                               focusNode: _rePasswordFocusNode, // 포커스 노드 사용
@@ -467,7 +527,7 @@ class _SignupPageState extends State<SignupPage>{
                       width: 428,
                       child: MaterialButton(
                         onPressed: () {
-
+                          signUp();
                         },
                         color: Color(0xFFAFA6FF),
                         shape: RoundedRectangleBorder(
