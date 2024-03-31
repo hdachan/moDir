@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'user_data_screen.dart';
 
-//이메일 인증화면
+//이메일 인증 참고자료 및 곧 삭제
 class email_verification_screen extends StatefulWidget {
   @override
   _Main6State createState() => _Main6State();
@@ -80,16 +79,16 @@ class _Main6State extends State<email_verification_screen> {
               ElevatedButton(
                 onPressed: isEmailSent ? () async {
                   try {
-                    User? user = FirebaseAuth.instance.currentUser;
-
-                    if (user != null) {
-                      await user.reload();
-                      if (user.emailVerified) {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => user_data_screen(email: user.email)));
-                      } else {
-                        print('Email is not verified');
-                      }
-                    }
+                    // User? user = FirebaseAuth.instance.currentUser;
+                    //
+                    // if (user != null) {
+                    //   await user.reload();
+                    //   if (user.emailVerified) {
+                    //     Navigator.push(context, MaterialPageRoute(builder: (context) => user_data_screen(email: user.email)));
+                    //   } else {
+                    //     print('Email is not verified');
+                    //   }
+                    // }
                   } catch (e) {
                     print(e);
                   }

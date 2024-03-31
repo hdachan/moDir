@@ -77,14 +77,6 @@ class _MyHomePageState extends State<MyHomePage> {
           errorMessage = '이메일 또는 비밀번호 정보가 잘못되었습니다.';
           print('이메일 또는 비밀번호 정보가 잘못되었습니다.');
         }
-        else if ((e.message ?? '').contains('auth/invalid-credential')) {
-          errorMessage ='제공된 인증 정보가 잘못되었거나 만료되었습니다.';
-          print('제공된 인증 정보가 잘못되었거나 만료되었습니다.');
-        }
-        else if ((e.message ?? '').contains('auth/auth/too-many-requests')) {
-          errorMessage ='제공된 인증 정보가 잘못되었거나 만료되었습니다.';
-          print('제공된 인증 정보가 잘못되었거나 만료되었습니다.');
-        }
         else if ((e.message ?? '').contains('auth/auth/too-many-requests')) {
           errorMessage ='너무 많은 요청이 발생하였습니다.';
           print('너무 많은 요청이 발생하였습니다.');

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-
 import 'Sign_Up.dart';
 
+
+//동의하기 화면 (코드 리뷰떄 메서드 수정 )
 void main() async {
   runApp(AgreePage());
 }
