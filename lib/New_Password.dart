@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 // 약관동의 화면
 void main() {
   runApp(MaterialApp(
-    home: IdMaking(),
+    home: NewPassword(),
   ));
 }
 
-class IdMaking extends StatefulWidget {
+class NewPassword extends StatefulWidget {
   @override
-  _IdMaking createState() => _IdMaking();
+  _NewPassword createState() => _NewPassword();
 }
 
-class _IdMaking extends State<IdMaking> {
+class _NewPassword extends State<NewPassword> {
   String emailErrorMessage = ''; // 클래스 멤버 변수 이름 변경
   String passwordErrorMessage = ''; // 패스워드 에러 메시지
 
@@ -95,29 +95,16 @@ class _IdMaking extends State<IdMaking> {
   final FocusNode _focusNode = FocusNode();
   Color _borderColor = Color(0xFFD1D1D1); // 기본 테두리 색상
 
-  final FocusNode _passwordFocusNode = FocusNode();
-  Color _passwordBorderColor = Color(0xFFD1D1D1); // 기본 테두리 색상
-
-  final FocusNode _rePasswordFocusNode = FocusNode();
-  Color _rePasswordBorderColor = Color(0xFFD1D1D1); // 기본 테두리 색상
-
   @override
   void initState() {
     super.initState();
     _focusNode.addListener(_onFocusChange);
-    _passwordFocusNode.addListener(_onPasswordFocusChange);
-    _rePasswordFocusNode.addListener(
-        _onRePasswordFocusChange); // 비밀번호 재입력 필드의 FocusNode 상태 변화 감지
   }
 
   @override
   void dispose() {
     _focusNode.removeListener(_onFocusChange);
     _focusNode.dispose();
-    _passwordFocusNode.removeListener(_onPasswordFocusChange);
-    _passwordFocusNode.dispose();
-    _rePasswordFocusNode.removeListener(_onRePasswordFocusChange); // 메서드 제거
-    _rePasswordFocusNode.dispose();
 
     super.dispose();
   }
@@ -126,20 +113,6 @@ class _IdMaking extends State<IdMaking> {
     setState(() {
       _borderColor =
       _focusNode.hasFocus ? Color(0xFF4B0FFF) : Color(0xFFD1D1D1);
-    });
-  }
-
-  void _onPasswordFocusChange() {
-    setState(() {
-      _passwordBorderColor =
-      _passwordFocusNode.hasFocus ? Color(0xFF4B0FFF) : Color(0xFFD1D1D1);
-    });
-  }
-
-  void _onRePasswordFocusChange() {
-    setState(() {
-      _rePasswordBorderColor =
-      _rePasswordFocusNode.hasFocus ? Color(0xFF4B0FFF) : Color(0xFFD1D1D1);
     });
   }
 
