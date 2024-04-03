@@ -1,7 +1,18 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-// 약관동의 화면
+// 회원가입 화면
+
+//남은 오류들
+//emailErrorMessage = '요청이 너무 많습니다. 나중에 다시 시도해주세요.';
+//passwordErrorMessage = '';
+//print('오류: 요청이 너무 많습니다. 나중에 다시 시도해주세요.');
+
+//emailErrorMessage = '회원가입 실패: ${e.message}';
+//passwordErrorMessage = '';
+//print('오류: 회원가입 실패: ${e.message}');
+//}
+
 void main() {
   runApp(MaterialApp(
     home: SignupPage(),
@@ -36,7 +47,8 @@ class _SignupPageState extends State<SignupPage> {
         return;
       }
 
-      final UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      final UserCredential userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
@@ -48,35 +60,35 @@ class _SignupPageState extends State<SignupPage> {
       });
     } on FirebaseAuthException catch (e) {
       setState(() {
-        if (e.message == 'invalid-email') {
-          emailErrorMessage = '유효하지 않은 이메일 형식입니다.';
-          passwordErrorMessage = '';
-          print('오류: 유효하지 않은 이메일 형식입니다.');
-        } else if (e.code == 'email-already-in-use') {
-          emailErrorMessage = '이미 사용 중인 이메일입니다.';
-          passwordErrorMessage = '';
-          print('오류: 이미 사용 중인 이메일입니다.');
-        } else if (e.code == 'weak-password') {
-          passwordErrorMessage = '비밀번호가 너무 약합니다.';
-          emailErrorMessage = '';
-          print('오류: 비밀번호가 너무 약합니다.');
-        } else if (e.code == 'operation-not-allowed') {
-          emailErrorMessage = '이메일과 비밀번호로 로그인하는 것이 현재 비활성화되어 있습니다.';
-          passwordErrorMessage = '';
-          print('오류: 이메일과 비밀번호로 로그인하는 것이 현재 비활성화되어 있습니다.');
-        } else if (e.code == 'too-many-requests') {
-          emailErrorMessage = '요청이 너무 많습니다. 나중에 다시 시도해주세요.';
-          passwordErrorMessage = '';
-          print('오류: 요청이 너무 많습니다. 나중에 다시 시도해주세요.');
-        } else if (e.code == 'user-disabled') {
-          emailErrorMessage = '사용자 계정이 비활성화되었습니다.';
-          passwordErrorMessage = '';
-          print('오류: 사용자 계정이 비활성화되었습니다.');
-        } else {
-          emailErrorMessage = '회원가입 실패: ${e.message}';
-          passwordErrorMessage = '';
-          print('오류: 회원가입 실패: ${e.message}');
+        if (e.code == 'unknown') {
+          if ((e.message ?? '').contains(
+              'An unknown error occurred: FirebaseError: Firebase: The email address is badly formatted. (auth/invalid-email')) {
+            emailErrorMessage = '유효하지 않은 이메일 형식입니다.';
+            passwordErrorMessage = '';
+            print('오류: 유효하지 않은 이메일 형식입니다.');
+          } else if ((e.message ?? '').contains(
+              'An unknown error occurred: FirebaseError: Firebase: Password should be at least 6 characters (auth/weak-password).')) {
+            passwordErrorMessage = '비밀번호가 너무 약합니다.';
+            emailErrorMessage = '';
+            print('오류: 비밀번호가 너무 약합니다.');
+          } else if ((e.message ?? '').contains(
+              'An unknown error occurred: FirebaseError: Firebase: The email address is already in use by another account. (auth/email-already-in-use)')) {
+            emailErrorMessage = '이미 사용 중인 이메일입니다.';
+            passwordErrorMessage = '';
+            print('오류: 이미 사용 중인 이메일입니다.');
+          } else if((e.message ?? '').contains('1111')){
+            emailErrorMessage = '이메일과 비밀번호로 로그인하는 것이 현재 비활성화되어 있습니다.';
+            passwordErrorMessage = '';
+            print('오류: 이메일과 비밀번호로 로그인하는 것이 현재 비활성화되어 있습니다.');
+          } else{
+            emailErrorMessage = '알 수 없는 오류가 발생했습니다:';
+            passwordErrorMessage = '알 수 없는 오류가 발생했습니다:';
+            print('알 수 없는 오류가 발생했습니다: ${e.message}');
+            print('알 수 없는 오류가 발생했습니다: ${e.code}');
+          }
         }
+
+
       });
     } catch (e) {
       setState(() {
@@ -86,7 +98,6 @@ class _SignupPageState extends State<SignupPage> {
       print('오류: 회원가입 실패: 알 수 없는 오류가 발생했습니다.');
     }
   }
-
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
