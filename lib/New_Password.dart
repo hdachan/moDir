@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-// 약관동의 화면
+// 인증메일 받기
 void main() {
   runApp(MaterialApp(
     home: NewPassword(),
@@ -14,83 +14,35 @@ class NewPassword extends StatefulWidget {
 }
 
 class _NewPassword extends State<NewPassword> {
-  String emailErrorMessage = ''; // 클래스 멤버 변수 이름 변경
-  String passwordErrorMessage = ''; // 패스워드 에러 메시지
 
-  Future<void> signUp() async {
+  Future<void> sendPasswordResetEmail() async {
     try {
       if (emailController.text.trim().isEmpty) {
-        setState(() {
-          emailErrorMessage = '이메일을 입력해주세요.';
-          passwordErrorMessage = '';
-        });
-        print('오류: 이메일을 입력해주세요.'); // 여기에 print 추가
+        print('오류: 이메일을 입력해주세요.');
         return;
       }
-      if (passwordController.text.trim().isEmpty) {
-        setState(() {
-          passwordErrorMessage = '비밀번호를 입력해주세요.';
-          emailErrorMessage = '';
-        });
-        print('오류: 비밀번호를 입력해주세요.'); // 여기에 print 추가
-        return;
-      }
-
-      final UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim(),
-      );
-      print('계정 생성 성공: ${userCredential.user}'); // 계정 생성 성공 시 콘솔에 출력
-
-      setState(() {
-        emailErrorMessage = '';
-        passwordErrorMessage = '';
-      });
+      await FirebaseAuth.instance
+          .sendPasswordResetEmail(email: emailController.text.trim());
+      print('비밀번호 재설정 이메일이 전송되었습니다.');
     } on FirebaseAuthException catch (e) {
       setState(() {
-        if (e.message == 'invalid-email') {
-          emailErrorMessage = '유효하지 않은 이메일 형식입니다.';
-          passwordErrorMessage = '';
-          print('오류: 유효하지 않은 이메일 형식입니다.');
-        } else if (e.code == 'email-already-in-use') {
-          emailErrorMessage = '이미 사용 중인 이메일입니다.';
-          passwordErrorMessage = '';
-          print('오류: 이미 사용 중인 이메일입니다.');
-        } else if (e.code == 'weak-password') {
-          passwordErrorMessage = '비밀번호가 너무 약합니다.';
-          emailErrorMessage = '';
-          print('오류: 비밀번호가 너무 약합니다.');
-        } else if (e.code == 'operation-not-allowed') {
-          emailErrorMessage = '이메일과 비밀번호로 로그인하는 것이 현재 비활성화되어 있습니다.';
-          passwordErrorMessage = '';
-          print('오류: 이메일과 비밀번호로 로그인하는 것이 현재 비활성화되어 있습니다.');
-        } else if (e.code == 'too-many-requests') {
-          emailErrorMessage = '요청이 너무 많습니다. 나중에 다시 시도해주세요.';
-          passwordErrorMessage = '';
-          print('오류: 요청이 너무 많습니다. 나중에 다시 시도해주세요.');
-        } else if (e.code == 'user-disabled') {
-          emailErrorMessage = '사용자 계정이 비활성화되었습니다.';
-          passwordErrorMessage = '';
-          print('오류: 사용자 계정이 비활성화되었습니다.');
-        } else {
-          emailErrorMessage = '회원가입 실패: ${e.message}';
-          passwordErrorMessage = '';
-          print('오류: 회원가입 실패: ${e.message}');
+        if (e.code == 'unknown') {
+          if ((e.message ?? '').contains(
+              'An unknown error occurred: FirebaseError: Firebase: The email address is badly formatted. (auth/invalid-email).')) {
+            emailErrorMessage = '이메일 형식이 알맞지 않습니다.';
+            print('이메일 형식이 알맞지 않습니다.');
+          }
         }
       });
+      print('오류 코드: ${e.code}');
+      print('오류 메시지: ${e.message}');
     } catch (e) {
-      setState(() {
-        emailErrorMessage = '회원가입 실패: 알 수 없는 오류가 발생했습니다.';
-        passwordErrorMessage = '';
-      });
-      print('오류: 회원가입 실패: 알 수 없는 오류가 발생했습니다.');
+      print('비밀번호 재설정 이메일 전송 실패: $e');
     }
   }
 
-
   final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController repasswordController = TextEditingController();
+  String emailErrorMessage = ''; // 클래스 멤버 변수 이름 변경
 
   final FocusNode _focusNode = FocusNode();
   Color _borderColor = Color(0xFFD1D1D1); // 기본 테두리 색상
@@ -112,7 +64,7 @@ class _NewPassword extends State<NewPassword> {
   void _onFocusChange() {
     setState(() {
       _borderColor =
-      _focusNode.hasFocus ? Color(0xFF4B0FFF) : Color(0xFFD1D1D1);
+          _focusNode.hasFocus ? Color(0xFF4B0FFF) : Color(0xFFD1D1D1);
     });
   }
 
@@ -131,9 +83,9 @@ class _NewPassword extends State<NewPassword> {
                   decoration: BoxDecoration(
                     border: Border(
                         bottom: BorderSide(
-                          width: 1,
-                          color: Color(0xFFE7E7E7),
-                        )),
+                      width: 1,
+                      color: Color(0xFFE7E7E7),
+                    )),
                   ),
                   child: Padding(
                       padding: EdgeInsets.only(top: 15, bottom: 15, left: 24),
@@ -185,8 +137,8 @@ class _NewPassword extends State<NewPassword> {
                             SizedBox(height: 10),
                             Text(
                               '로그인에 사용하려는 이메일을 입력해 주세요.\n'
-                                  '작성하신 이메일 주소로 비밀번호 재설정을 위한\n'
-                                  '인증 메일이 발송됩니다.',
+                              '작성하신 이메일 주소로 비밀번호 재설정을 위한\n'
+                              '인증 메일이 발송됩니다.',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Color(0xFF888888),
@@ -237,7 +189,7 @@ class _NewPassword extends State<NewPassword> {
                                                 width: 1, color: _borderColor),
                                             // 포커스 상태에 따른 테두리 색상 변경
                                             borderRadius:
-                                            BorderRadius.circular(8),
+                                                BorderRadius.circular(8),
                                           ),
                                         ),
                                         child: TextFormField(
@@ -257,7 +209,7 @@ class _NewPassword extends State<NewPassword> {
                                             border: InputBorder.none,
                                             focusedBorder: InputBorder.none,
                                             contentPadding:
-                                            EdgeInsets.only(bottom: 10),
+                                                EdgeInsets.only(bottom: 10),
                                             hintText: '이메일 입력',
                                             hintStyle: TextStyle(
                                               color: Color(0xFF888888),
@@ -278,7 +230,7 @@ class _NewPassword extends State<NewPassword> {
                                       height: 16,
                                       width: 428,
                                       padding:
-                                      EdgeInsets.symmetric(horizontal: 4),
+                                          EdgeInsets.symmetric(horizontal: 4),
                                       child: Text(
                                         emailErrorMessage,
                                         // 이전에 정의한 errorMessage 변수 사용
@@ -302,14 +254,14 @@ class _NewPassword extends State<NewPassword> {
                   ),
                 ),
                 Padding(
-                  // 다음 버튼 - 버튼 기능 추가
+                    // 다음 버튼 - 버튼 기능 추가
                     padding: EdgeInsets.only(left: 24, right: 24, bottom: 48),
                     child: SizedBox(
                       height: 52,
                       width: 428,
                       child: MaterialButton(
                         onPressed: () {
-                          signUp();
+                          sendPasswordResetEmail();
                         },
                         color: Color(0xFF4B0FFF),
                         shape: RoundedRectangleBorder(

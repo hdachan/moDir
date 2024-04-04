@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:test_qwe/Agree_Page.dart';
 
+import 'package:test_qwe/Agree_Page.dart';
+import 'New_Password.dart';
 import 'main2.dart';
-import 'password_screen.dart';
 
 class login_screen extends StatelessWidget {
   @override
@@ -140,7 +140,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   margin: EdgeInsets.fromLTRB(108.85, 48, 108.85, 0),
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('assets/image/logo.png'),
+                      image: AssetImage('assets/image/eng_logo.png'),
                     ),
                   ),
                   child: Padding(
@@ -304,7 +304,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               onPressed: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => password_screen()),
+                                  MaterialPageRoute(builder: (context) => NewPassword()),
                                 );
                               },
                               child: Text(
