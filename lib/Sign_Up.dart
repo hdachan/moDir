@@ -25,6 +25,7 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
+  bool _isObscured = true;
   String emailErrorMessage = ''; // 클래스 멤버 변수 이름 변경
   String passwordErrorMessage = ''; // 패스워드 에러 메시지
 
@@ -34,6 +35,7 @@ class _SignupPageState extends State<SignupPage> {
         setState(() {
           emailErrorMessage = '이메일을 입력해주세요.';
           passwordErrorMessage = '';
+          _borderColor = Color(0xFFFF3333);
         });
         print('오류: 이메일을 입력해주세요.'); // 여기에 print 추가
         return;
@@ -42,6 +44,7 @@ class _SignupPageState extends State<SignupPage> {
         setState(() {
           passwordErrorMessage = '비밀번호를 입력해주세요.';
           emailErrorMessage = '';
+          _passwordBorderColor = Color(0xFFFF3333);
         });
         print('오류: 비밀번호를 입력해주세요.'); // 여기에 print 추가
         return;
@@ -65,16 +68,19 @@ class _SignupPageState extends State<SignupPage> {
               'An unknown error occurred: FirebaseError: Firebase: The email address is badly formatted. (auth/invalid-email')) {
             emailErrorMessage = '유효하지 않은 이메일 형식입니다.';
             passwordErrorMessage = '';
+            _borderColor = Color(0xFFFF3333);
             print('오류: 유효하지 않은 이메일 형식입니다.');
           } else if ((e.message ?? '').contains(
               'An unknown error occurred: FirebaseError: Firebase: Password should be at least 6 characters (auth/weak-password).')) {
             passwordErrorMessage = '비밀번호가 너무 약합니다.';
             emailErrorMessage = '';
+            _passwordBorderColor = Color(0xFFFF3333);
             print('오류: 비밀번호가 너무 약합니다.');
           } else if ((e.message ?? '').contains(
               'An unknown error occurred: FirebaseError: Firebase: The email address is already in use by another account. (auth/email-already-in-use)')) {
             emailErrorMessage = '이미 사용 중인 이메일입니다.';
             passwordErrorMessage = '';
+            _borderColor = Color(0xFFFF3333);
             print('오류: 이미 사용 중인 이메일입니다.');
           } else if((e.message ?? '').contains('1111')){
             emailErrorMessage = '이메일과 비밀번호로 로그인하는 것이 현재 비활성화되어 있습니다.';
@@ -398,39 +404,49 @@ class _SignupPageState extends State<SignupPage> {
                                               BorderRadius.circular(8),
                                         )),
                                         child: Container(
-                                            color: Colors.white,
-                                            child: TextFormField(
-                                              controller: passwordController,
-                                              obscureText: true,
-                                              obscuringCharacter: '●',
-                                              focusNode: _passwordFocusNode,
-                                              // 포커스 노드 사용
-                                              style: TextStyle(
-                                                color: Color(0xFF3D3D3D),
+                                          color: Colors.white,
+                                          child: TextFormField(
+                                            controller: passwordController,
+                                            obscureText: _isObscured, // 비밀번호 숨김 여부를 결정하는 변수
+                                            obscuringCharacter: '●',
+                                            focusNode: _passwordFocusNode,
+                                            style: TextStyle(
+                                              color: Color(0xFF3D3D3D),
+                                              fontSize: 16,
+                                              fontFamily: 'Pretendard',
+                                              fontWeight: FontWeight.w600,
+                                              height: 1.5,
+                                              letterSpacing: -0.40,
+                                            ),
+                                            textInputAction: TextInputAction.next,
+                                            decoration: InputDecoration(
+                                              border: InputBorder.none,
+                                              focusedBorder: InputBorder.none,
+                                              contentPadding: EdgeInsets.only(bottom: 10), // 아이콘을 위한 공간 확보
+                                              hintText: '비밀번호 입력',
+                                              hintStyle: TextStyle(
+                                                color: Color(0xFF888888),
                                                 fontSize: 16,
                                                 fontFamily: 'Pretendard',
                                                 fontWeight: FontWeight.w600,
                                                 height: 1.5,
                                                 letterSpacing: -0.40,
                                               ),
-                                              textInputAction:
-                                                  TextInputAction.next,
-                                              decoration: InputDecoration(
-                                                border: InputBorder.none,
-                                                focusedBorder: InputBorder.none,
-                                                contentPadding:
-                                                    EdgeInsets.only(bottom: 10),
-                                                hintText: '비밀번호 입력',
-                                                hintStyle: TextStyle(
+                                              suffixIcon: IconButton(
+                                                icon: Icon(
+                                                  _isObscured ? Icons.visibility_off : Icons.visibility,
                                                   color: Color(0xFF888888),
-                                                  fontSize: 16,
-                                                  fontFamily: 'Pretendard',
-                                                  fontWeight: FontWeight.w600,
-                                                  height: 1.5,
-                                                  letterSpacing: -0.40,
                                                 ),
+                                                onPressed: () {
+                                                  setState(() {
+                                                    _isObscured = !_isObscured;
+                                                  });
+                                                },
                                               ),
-                                            )),
+                                            ),
+                                          ),
+                                        )
+                                        ,
                                       ),
                                     ],
                                   ),
@@ -585,7 +601,7 @@ class _SignupPageState extends State<SignupPage> {
                         onPressed: () {
                           signUp();
                         },
-                        color: Color(0xFFAFA6FF),
+                        color: Color(0xFF4B0FFF), //파랑 - 0xFF4B0FFF  , 파랑연한거 -0xFFAFA6FF
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
