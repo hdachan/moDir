@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'Sign_Up.dart';
 
-
 //동의하기 화면 (코드 리뷰떄 메서드 수정 )
 void main() async {
   runApp(AgreePage());
@@ -15,68 +14,70 @@ class AgreePage extends StatefulWidget {
 }
 
 class _AgreePageState extends State<AgreePage> {
-  bool _isAgreed = false; // 사용자의 동의 상태를 관리하는 변수
-  bool _isTermsAgreed = false; // 이용 약관 동의 상태를 추적하는 변수
-  bool _isPrivacyAgreed = false; // 이용 약관 동의 상태 추적 변수 2
-  bool _isPrivacyAgreed2 = false; // 이용 약관 동의 상태 추적 변수 3
-  bool _isPrivacyAgreed3 = false; // 이용 약관 동의 상태 추적 변수 4
-  bool isButtonPressed = false;
+  bool agreeToAllTerms = false; // 전체 동의
+  bool agreeToRequiredTerms1 = false; // (필수) 약관 동의
+  bool agreeToRequiredTerms2 = false;
+  bool agreeToRequiredTerms3 = false;
+  bool agreeToSelectTerms = false; //(선택) 약관 동의
+  bool isButtonPressed = false; //다음 버튼
 
-  // 동의 처리 메서드 (예시)
+  // 전체동의 처리 메서드
   void _toggleAgreement() {
     setState(() {
-      _isAgreed = !_isAgreed; // 전체 동의 상태를 토글
-      // 전체 동의 상태에 따라 개별 동의 변수들과 버튼 활성화 상태를 설정
-      if (_isAgreed) {
-        _isTermsAgreed = true;
-        _isPrivacyAgreed = true;
-        _isPrivacyAgreed2 = true;
-        _isPrivacyAgreed3 = true;
-        isButtonPressed = true; // 전체 동의 시 버튼 활성화
-      } else {
-        _isTermsAgreed = false;
-        _isPrivacyAgreed = false;
-        _isPrivacyAgreed2 = false;
-        _isPrivacyAgreed3 = false;
-        isButtonPressed = false; // 전체 동의가 아니면 버튼 비활성화
-      }
-    });
-  }
-
-  void _StatetoggleAgreement() {
-    setState(() {
-      bool allAgreed = _isTermsAgreed&& _isPrivacyAgreed && _isPrivacyAgreed2;
-
-      if (allAgreed) {
-        // 모든 조건이 참일 때
+      agreeToAllTerms = !agreeToAllTerms;
+      if (agreeToAllTerms) {
+        agreeToRequiredTerms1 = true;
+        agreeToRequiredTerms2 = true;
+        agreeToRequiredTerms3 = true;
+        agreeToSelectTerms = true;
         isButtonPressed = true;
       } else {
-        // 이외의 경우에는 isButtonPressed를 false로 설정합니다.
+        agreeToRequiredTerms1 = false;
+        agreeToRequiredTerms2 = false;
+        agreeToRequiredTerms3 = false;
+        agreeToSelectTerms = false;
         isButtonPressed = false;
       }
     });
   }
 
-  void  _toggleTermsAgreement() {
+  //일정 조건이 참일때 버튼 활성화
+  void _StatetoggleAgreement() {
     setState(() {
-      _isTermsAgreed = !_isTermsAgreed;
+      bool allAgreed = agreeToRequiredTerms1 &&
+          agreeToRequiredTerms2 &&
+          agreeToRequiredTerms3;
+      if (allAgreed) {
+        isButtonPressed = true;
+        agreeToAllTerms = true;
+      } else {
+        isButtonPressed = false;
+        agreeToAllTerms = false;
+      }
+    });
+  }
+
+  void _toggleTermsAgreement() {
+    setState(() {
+      agreeToRequiredTerms1 = !agreeToRequiredTerms1;
       _StatetoggleAgreement();
     });
   }
 
-  void  _toggleTermsAgreement1() {
+  void _toggleTermsAgreement1() {
     setState(() {
-      _isPrivacyAgreed = !_isPrivacyAgreed;
+      agreeToRequiredTerms2 = !agreeToRequiredTerms2;
       _StatetoggleAgreement();
     });
   }
 
-  void  _toggleTermsAgreement2() {
+  void _toggleTermsAgreement2() {
     setState(() {
-      _isPrivacyAgreed2 = !_isPrivacyAgreed2;
+      agreeToRequiredTerms3 = !agreeToRequiredTerms3;
       _StatetoggleAgreement();
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -85,7 +86,7 @@ class _AgreePageState extends State<AgreePage> {
           child: Column(
             children: [
               Container(
-                // 앱 바 - 완
+                // 앱 바 - 완 ( 상단바 줄)
                 width: double.infinity,
                 height: 54,
                 decoration: BoxDecoration(
@@ -170,12 +171,12 @@ class _AgreePageState extends State<AgreePage> {
                               width: 428,
                               height: 48,
                               decoration: BoxDecoration(
-                                color: _isAgreed
+                                color: agreeToAllTerms
                                     ? Color(0xFF4B0FFF)
                                     : Colors.transparent, // 여기에서 배경색을 변경합니다.
                                 border: Border.all(
                                   width: 1.5,
-                                  color: _isAgreed
+                                  color: agreeToAllTerms
                                       ? Color(0xFF4B0FFF)
                                       : Color(
                                           0xFF8773FF), // 조건에 따라 테두리 색상을 변경합니다.
@@ -193,7 +194,7 @@ class _AgreePageState extends State<AgreePage> {
                                       decoration: BoxDecoration(
                                         image: DecorationImage(
                                           image: AssetImage(
-                                            _isAgreed
+                                            agreeToAllTerms
                                                 ? 'assets/image/checkOn_icon.png'
                                                 : 'assets/image/check_icon.png', // 조건에 따라 이미지를 변경합니다.
                                           ),
@@ -204,7 +205,7 @@ class _AgreePageState extends State<AgreePage> {
                                     Text(
                                       '전체 약관동의',
                                       style: TextStyle(
-                                        color: _isAgreed
+                                        color: agreeToAllTerms
                                             ? Colors.white
                                             : Color(0xFF888888),
                                         // 조건에 따라 텍스트 색상을 변경합니다.
@@ -229,7 +230,6 @@ class _AgreePageState extends State<AgreePage> {
                                       onTap: () {
                                         setState(() {
                                           _toggleTermsAgreement();
-                                          //_isTermsAgreed =!_isTermsAgreed; // 탭할 때마다 _isTermsAgreed 값 토글
                                         });
                                       },
                                       child: Container(
@@ -244,7 +244,7 @@ class _AgreePageState extends State<AgreePage> {
                                               decoration: BoxDecoration(
                                                 image: DecorationImage(
                                                   image: AssetImage(
-                                                    _isTermsAgreed
+                                                    agreeToRequiredTerms1
                                                         ? 'assets/image/Onbluecheck_icon.png' // 조건에 따라 이미지 변경
                                                         : 'assets/image/check_icon.png',
                                                   ),
@@ -261,9 +261,12 @@ class _AgreePageState extends State<AgreePage> {
                                                     '(필수) 이용 약관 동의',
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
-                                                      color: _isTermsAgreed
-                                                          ? Color(0xFF3D3D3D)
-                                                          : Color(0xFF888888),
+                                                      color:
+                                                          agreeToRequiredTerms1
+                                                              ? Color(
+                                                                  0xFF3D3D3D)
+                                                              : Color(
+                                                                  0xFF888888),
                                                       // 조건에 따라 텍스트 색상 변경
                                                       fontSize: 14,
                                                       fontFamily: 'Pretendard',
@@ -317,7 +320,6 @@ class _AgreePageState extends State<AgreePage> {
                                     _StatetoggleAgreement();
                                     setState(() {
                                       _toggleTermsAgreement1();
-                                      //_isPrivacyAgreed = !_isPrivacyAgreed; // 탭할 때마다 _isPrivacyAgreed 값 토글
                                     });
                                   },
                                   child: Container(
@@ -332,7 +334,7 @@ class _AgreePageState extends State<AgreePage> {
                                           decoration: BoxDecoration(
                                             image: DecorationImage(
                                               image: AssetImage(
-                                                _isPrivacyAgreed
+                                                agreeToRequiredTerms2
                                                     ? 'assets/image/Onbluecheck_icon.png' // 조건에 따라 이미지 변경
                                                     : 'assets/image/check_icon.png',
                                               ),
@@ -349,7 +351,7 @@ class _AgreePageState extends State<AgreePage> {
                                                 '(필수) 개인정보 수집 동의',
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
-                                                  color: _isPrivacyAgreed
+                                                  color: agreeToRequiredTerms2
                                                       ? Color(0xFF3D3D3D)
                                                       : Color(0xFF888888),
                                                   // 조건에 따라 텍스트 색상 변경
@@ -414,7 +416,7 @@ class _AgreePageState extends State<AgreePage> {
                                           decoration: BoxDecoration(
                                             image: DecorationImage(
                                               image: AssetImage(
-                                                _isPrivacyAgreed2
+                                                agreeToRequiredTerms3
                                                     ? 'assets/image/Onbluecheck_icon.png' // 조건에 따라 이미지 변경
                                                     : 'assets/image/check_icon.png',
                                               ),
@@ -431,7 +433,7 @@ class _AgreePageState extends State<AgreePage> {
                                                 '(필수) 전금 금융 거래 이용 약관 동의',
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
-                                                  color: _isPrivacyAgreed2
+                                                  color: agreeToRequiredTerms3
                                                       ? Color(0xFF3D3D3D)
                                                       : Color(0xFF888888),
                                                   // 조건에 따라 텍스트 색상 변경
@@ -481,8 +483,8 @@ class _AgreePageState extends State<AgreePage> {
                                 child: InkWell(
                                   onTap: () {
                                     setState(() {
-                                      _isPrivacyAgreed3 =
-                                          !_isPrivacyAgreed3; // 탭할 때마다 _isPrivacyAgreed 값 토글
+                                      agreeToSelectTerms =
+                                          !agreeToSelectTerms; // 탭할 때마다 _isPrivacyAgreed 값 토글
                                     });
                                   },
                                   child: Container(
@@ -497,7 +499,7 @@ class _AgreePageState extends State<AgreePage> {
                                           decoration: BoxDecoration(
                                             image: DecorationImage(
                                               image: AssetImage(
-                                                _isPrivacyAgreed3
+                                                agreeToSelectTerms
                                                     ? 'assets/image/Onbluecheck_icon.png' // 조건에 따라 이미지 변경
                                                     : 'assets/image/check_icon.png',
                                               ),
@@ -514,7 +516,7 @@ class _AgreePageState extends State<AgreePage> {
                                                 '(선택) 이벤트 및 마케팅 이용 약관 동의',
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
-                                                  color: _isPrivacyAgreed3
+                                                  color: agreeToSelectTerms
                                                       ? Color(0xFF3D3D3D)
                                                       : Color(0xFF888888),
                                                   // 조건에 따라 텍스트 색상 변경
