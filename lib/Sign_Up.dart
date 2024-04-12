@@ -1,18 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-// 회원가입 화면
-
-//남은 오류들
-//emailErrorMessage = '요청이 너무 많습니다. 나중에 다시 시도해주세요.';
-//passwordErrorMessage = '';
-//print('오류: 요청이 너무 많습니다. 나중에 다시 시도해주세요.');
-
-//emailErrorMessage = '회원가입 실패: ${e.message}';
-//passwordErrorMessage = '';
-//print('오류: 회원가입 실패: ${e.message}');
-//}
-
 void main() {
   runApp(MaterialApp(
     home: SignupPage(),
@@ -82,19 +70,18 @@ class _SignupPageState extends State<SignupPage> {
             passwordErrorMessage = '';
             _borderColor = Color(0xFFFF3333);
             print('오류: 이미 사용 중인 이메일입니다.');
-          } else if((e.message ?? '').contains('1111')){
-            emailErrorMessage = '이메일과 비밀번호로 로그인하는 것이 현재 비활성화되어 있습니다.';
+          } else if ((e.message ?? '').contains('too-many-requests')) {
+            emailErrorMessage = '너무 많은 요청이 감지되었습니다. 잠시 후 다시 시도해주세요.';
             passwordErrorMessage = '';
-            print('오류: 이메일과 비밀번호로 로그인하는 것이 현재 비활성화되어 있습니다.');
-          } else{
+            _borderColor = Color(0xFFFF3333);
+            print('오류: 너무 많은 요청이 감지되었습니다. 잠시 후 다시 시도해주세요.');
+          } else {
             emailErrorMessage = '알 수 없는 오류가 발생했습니다:';
             passwordErrorMessage = '알 수 없는 오류가 발생했습니다:';
             print('알 수 없는 오류가 발생했습니다: ${e.message}');
             print('알 수 없는 오류가 발생했습니다: ${e.code}');
           }
         }
-
-
       });
     } catch (e) {
       setState(() {
@@ -407,7 +394,8 @@ class _SignupPageState extends State<SignupPage> {
                                           color: Colors.white,
                                           child: TextFormField(
                                             controller: passwordController,
-                                            obscureText: _isObscured, // 비밀번호 숨김 여부를 결정하는 변수
+                                            obscureText: _isObscured,
+                                            // 비밀번호 숨김 여부를 결정하는 변수
                                             obscuringCharacter: '●',
                                             focusNode: _passwordFocusNode,
                                             style: TextStyle(
@@ -418,11 +406,14 @@ class _SignupPageState extends State<SignupPage> {
                                               height: 1.5,
                                               letterSpacing: -0.40,
                                             ),
-                                            textInputAction: TextInputAction.next,
+                                            textInputAction:
+                                                TextInputAction.next,
                                             decoration: InputDecoration(
                                               border: InputBorder.none,
                                               focusedBorder: InputBorder.none,
-                                              contentPadding: EdgeInsets.only(bottom: 10), // 아이콘을 위한 공간 확보
+                                              contentPadding:
+                                                  EdgeInsets.only(bottom: 10),
+                                              // 아이콘을 위한 공간 확보
                                               hintText: '비밀번호 입력',
                                               hintStyle: TextStyle(
                                                 color: Color(0xFF888888),
@@ -434,7 +425,9 @@ class _SignupPageState extends State<SignupPage> {
                                               ),
                                               suffixIcon: IconButton(
                                                 icon: Icon(
-                                                  _isObscured ? Icons.visibility_off : Icons.visibility,
+                                                  _isObscured
+                                                      ? Icons.visibility_off
+                                                      : Icons.visibility,
                                                   color: Color(0xFF888888),
                                                 ),
                                                 onPressed: () {
@@ -445,8 +438,7 @@ class _SignupPageState extends State<SignupPage> {
                                               ),
                                             ),
                                           ),
-                                        )
-                                        ,
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -601,7 +593,8 @@ class _SignupPageState extends State<SignupPage> {
                         onPressed: () {
                           signUp();
                         },
-                        color: Color(0xFF4B0FFF), //파랑 - 0xFF4B0FFF  , 파랑연한거 -0xFFAFA6FF
+                        color: Color(0xFF4B0FFF),
+                        //파랑 - 0xFF4B0FFF  , 파랑연한거 -0xFFAFA6FF
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),

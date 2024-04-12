@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'Sign_Up.dart';
+import 'main2.dart';
 
 //동의하기 화면 (코드 리뷰떄 메서드 수정 )
 void main() async {
@@ -283,34 +284,40 @@ class _AgreePageState extends State<AgreePage> {
                                         ),
                                       ))),
                               Container(
-                                // 약관 더보기 부분 - 메서드 / 버튼 기능 추가
                                 width: 31,
                                 height: 28,
                                 margin: EdgeInsets.only(right: 12),
                                 padding: EdgeInsets.symmetric(vertical: 6),
-                                child: Text(
-                                  '더보기',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Color(0xFFB0B0B0),
-                                    fontSize: 12,
-                                    fontFamily: 'Pretendard',
-                                    fontWeight: FontWeight.w400,
-                                    decoration: TextDecoration.underline,
-                                    decorationColor: Color(0xFFB0B0B0),
-                                    height: 1.3,
-                                    letterSpacing: -0.3,
+                                child: TextButton(
+                                  style: TextButton.styleFrom(
+                                    padding: EdgeInsets.zero,
+                                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => Main2()),
+                                    );
+                                  },
+                                  child: Text(
+                                    '더보기',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Color(0xFFB0B0B0),
+                                      fontSize: 12,
+                                      fontFamily: 'Pretendard',
+                                      fontWeight: FontWeight.w400,
+                                      decoration: TextDecoration.underline,
+                                      decorationColor: Color(0xFFB0B0B0),
+                                      height: 1.3,
+                                      letterSpacing: -0.3,
+                                    ),
                                   ),
                                 ),
                               ),
+
                             ],
                           ),
-
-//-------------------------------------------여기서 부터는 같은 코드 3개 + 다음 버튼--------------------------------------------------------------
-//                                            동의 2번 부분에 적어 놓겠음.(메서드)
-//           온보딩 처럼 콘텐츠 만들고 불러 오는 식으로 하면 좋을 듯 함 생각하니까 메서드는 아래꺼 그대로 만들고 콘텐츠에서 텍스트만 불러오면 될 듯?
-//                                                       필요하면 부르셈
-
                           Row(
                             // 동의 2번 부분 - 아이콘, 텍스트 메서드로 변경 / 버튼 기능 추가
                             children: [

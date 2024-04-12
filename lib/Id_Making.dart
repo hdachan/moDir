@@ -24,7 +24,7 @@ class _IdMaking extends State<IdMaking> {
           emailErrorMessage = '이메일을 입력해주세요.';
           passwordErrorMessage = '';
         });
-        print('오류: 이메일을 입력해주세요.'); // 여기에 print 추가
+        print('오류: 이메일을 입력해주세요.');
         return;
       }
       if (passwordController.text.trim().isEmpty) {
@@ -32,7 +32,7 @@ class _IdMaking extends State<IdMaking> {
           passwordErrorMessage = '비밀번호를 입력해주세요.';
           emailErrorMessage = '';
         });
-        print('오류: 비밀번호를 입력해주세요.'); // 여기에 print 추가
+        print('오류: 비밀번호를 입력해주세요.');
         return;
       }
 
@@ -482,33 +482,58 @@ class _IdMaking extends State<IdMaking> {
                                     ),
                                   ),
                                   SizedBox(height: 4),
-                                  Expanded(
+                                  Expanded( // 이 Expanded는 가로 방향으로 최대 크기를 차지하기 위해 사용됩니다.
                                     child: Container(
                                       height: 48,
-                                      width: 428,
-                                      padding: EdgeInsets.symmetric(vertical: 12),
+                                      // width: 428, // 가로 방향으로 최대 크기를 차지하기 위해 width 설정을 제거합니다.
                                       decoration: ShapeDecoration(
-                                          shape: RoundedRectangleBorder(
-                                            side: BorderSide(
-                                                width: 1,
-                                                color: _rePasswordBorderColor
-                                            ),
-                                            // 포커스 상태에 따른 테두리 색상 변경
-                                            borderRadius: BorderRadius.circular(8),
-                                          )
+                                        shape: RoundedRectangleBorder(
+                                          side: BorderSide(
+                                            width: 1,
+                                            color: _rePasswordBorderColor,
+                                          ),
+                                          borderRadius: BorderRadius.circular(8),
+                                        ),
                                       ),
                                       child: Row(
                                         children: [
-                                          Container(
-                                            color: Colors.red,
+                                          Expanded(
+                                            child: TextButton(
+                                              style: TextButton.styleFrom(
+                                                backgroundColor: Colors.red,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.circular(8),
+                                                ),
+                                              ),
+                                              onPressed: () {},
+                                              child: Text(
+                                                '버튼 1',
+                                                style: TextStyle(color: Colors.white),
+                                              ),
+                                            ),
                                           ),
-                                          Container(
-                                            color: Colors.amber,
-                                          )
+                                          Expanded(
+                                            child: TextButton(
+                                              style: TextButton.styleFrom(
+                                                backgroundColor: Colors.amber,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.circular(8),
+                                                ),
+                                              ),
+                                              onPressed: () {},
+                                              child: Text(
+                                                '버튼 2',
+                                                style: TextStyle(color: Colors.white),
+                                              ),
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     ),
                                   ),
+
+
+
                                   SizedBox(height: 4),
                                   Container(
                                     height: 16,
