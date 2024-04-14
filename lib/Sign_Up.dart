@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import 'Id_Making.dart';
+
 void main() {
   runApp(MaterialApp(
     home: SignupPage(),
@@ -13,9 +15,10 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
-  bool _isObscured = true;
-  String emailErrorMessage = ''; // 클래스 멤버 변수 이름 변경
-  String passwordErrorMessage = ''; // 패스워드 에러 메시지
+  bool _isObscured = true; //비전 아이콘 활성화,비활성화
+  String emailErrorMessage = '';
+  String passwordErrorMessage = '';
+  String repasswordErrorMessage ='';
 
   Future<void> signUp() async {
     try {
@@ -23,7 +26,8 @@ class _SignupPageState extends State<SignupPage> {
         setState(() {
           emailErrorMessage = '이메일을 입력해주세요.';
           passwordErrorMessage = '';
-          _borderColor = Color(0xFFFF3333);
+          repasswordErrorMessage='';
+          _emailborderColor = Color(0xFFFF3333);
         });
         print('오류: 이메일을 입력해주세요.'); // 여기에 print 추가
         return;
@@ -32,11 +36,36 @@ class _SignupPageState extends State<SignupPage> {
         setState(() {
           passwordErrorMessage = '비밀번호를 입력해주세요.';
           emailErrorMessage = '';
+          repasswordErrorMessage='';
           _passwordBorderColor = Color(0xFFFF3333);
         });
         print('오류: 비밀번호를 입력해주세요.'); // 여기에 print 추가
         return;
       }
+
+      if (repasswordController.text.trim().isEmpty) {
+        setState(() {
+          repasswordErrorMessage= '비밀번호를 재입력해주세요.';
+          passwordErrorMessage = '';
+          emailErrorMessage = '';
+          _rePasswordBorderColor = Color(0xFFFF3333);
+        });
+        print('오류: 비밀번호를 재입력해주세요.'); // 여기에 print 추가
+        return;
+      }
+
+      // 비밀번호와 재입력한 비밀번호가 다를 경우 처리
+      if (passwordController.text.trim() != repasswordController.text.trim()) {
+        setState(() {
+          repasswordErrorMessage = '비밀번호가 똑같지 않습니다.';
+          passwordErrorMessage = '';
+          emailErrorMessage = '';
+          _rePasswordBorderColor = Color(0xFFFF3333); // 재입력 비밀번호 필드의 테두리 색을 변경할 수 있습니다.
+        });
+        print('오류: 비밀번호가 똑같지 않습니다.');
+        return;
+      }
+
 
       final UserCredential userCredential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -49,6 +78,11 @@ class _SignupPageState extends State<SignupPage> {
         emailErrorMessage = '';
         passwordErrorMessage = '';
       });
+
+
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => IdMaking()));
+
     } on FirebaseAuthException catch (e) {
       setState(() {
         if (e.code == 'unknown') {
@@ -56,28 +90,33 @@ class _SignupPageState extends State<SignupPage> {
               'An unknown error occurred: FirebaseError: Firebase: The email address is badly formatted. (auth/invalid-email')) {
             emailErrorMessage = '유효하지 않은 이메일 형식입니다.';
             passwordErrorMessage = '';
-            _borderColor = Color(0xFFFF3333);
+            repasswordErrorMessage='';
+            _emailborderColor = Color(0xFFFF3333);
             print('오류: 유효하지 않은 이메일 형식입니다.');
           } else if ((e.message ?? '').contains(
               'An unknown error occurred: FirebaseError: Firebase: Password should be at least 6 characters (auth/weak-password).')) {
             passwordErrorMessage = '비밀번호가 너무 약합니다.';
             emailErrorMessage = '';
+            repasswordErrorMessage='';
             _passwordBorderColor = Color(0xFFFF3333);
             print('오류: 비밀번호가 너무 약합니다.');
           } else if ((e.message ?? '').contains(
               'An unknown error occurred: FirebaseError: Firebase: The email address is already in use by another account. (auth/email-already-in-use)')) {
             emailErrorMessage = '이미 사용 중인 이메일입니다.';
             passwordErrorMessage = '';
-            _borderColor = Color(0xFFFF3333);
+            repasswordErrorMessage='';
+            _emailborderColor = Color(0xFFFF3333);
             print('오류: 이미 사용 중인 이메일입니다.');
           } else if ((e.message ?? '').contains('too-many-requests')) {
             emailErrorMessage = '너무 많은 요청이 감지되었습니다. 잠시 후 다시 시도해주세요.';
             passwordErrorMessage = '';
-            _borderColor = Color(0xFFFF3333);
+            repasswordErrorMessage='';
+            _emailborderColor = Color(0xFFFF3333);
             print('오류: 너무 많은 요청이 감지되었습니다. 잠시 후 다시 시도해주세요.');
           } else {
-            emailErrorMessage = '알 수 없는 오류가 발생했습니다:';
-            passwordErrorMessage = '알 수 없는 오류가 발생했습니다:';
+            emailErrorMessage = '알 수 없는 오류가 발생했습니다';
+            passwordErrorMessage = '알 수 없는 오류가 발생했습니다';
+            repasswordErrorMessage='알 수 없는 오류가 발생했습니다';
             print('알 수 없는 오류가 발생했습니다: ${e.message}');
             print('알 수 없는 오류가 발생했습니다: ${e.code}');
           }
@@ -87,6 +126,7 @@ class _SignupPageState extends State<SignupPage> {
       setState(() {
         emailErrorMessage = '회원가입 실패: 알 수 없는 오류가 발생했습니다.';
         passwordErrorMessage = '';
+        repasswordErrorMessage='알 수 없는 오류가 발생했습니다';
       });
       print('오류: 회원가입 실패: 알 수 없는 오류가 발생했습니다.');
     }
@@ -96,8 +136,8 @@ class _SignupPageState extends State<SignupPage> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController repasswordController = TextEditingController();
 
-  final FocusNode _focusNode = FocusNode();
-  Color _borderColor = Color(0xFFD1D1D1); // 기본 테두리 색상
+  final FocusNode _emailfocusNode = FocusNode();
+  Color _emailborderColor = Color(0xFFD1D1D1); // 기본 테두리 색상
 
   final FocusNode _passwordFocusNode = FocusNode();
   Color _passwordBorderColor = Color(0xFFD1D1D1); // 기본 테두리 색상
@@ -108,7 +148,7 @@ class _SignupPageState extends State<SignupPage> {
   @override
   void initState() {
     super.initState();
-    _focusNode.addListener(_onFocusChange);
+    _emailfocusNode.addListener(_onFocusChange);
     _passwordFocusNode.addListener(_onPasswordFocusChange);
     _rePasswordFocusNode.addListener(
         _onRePasswordFocusChange); // 비밀번호 재입력 필드의 FocusNode 상태 변화 감지
@@ -116,8 +156,8 @@ class _SignupPageState extends State<SignupPage> {
 
   @override
   void dispose() {
-    _focusNode.removeListener(_onFocusChange);
-    _focusNode.dispose();
+    _emailfocusNode.removeListener(_onFocusChange);
+    _emailfocusNode.dispose();
     _passwordFocusNode.removeListener(_onPasswordFocusChange);
     _passwordFocusNode.dispose();
     _rePasswordFocusNode.removeListener(_onRePasswordFocusChange); // 메서드 제거
@@ -128,8 +168,8 @@ class _SignupPageState extends State<SignupPage> {
 
   void _onFocusChange() {
     setState(() {
-      _borderColor =
-          _focusNode.hasFocus ? Color(0xFF4B0FFF) : Color(0xFFD1D1D1);
+      _emailborderColor =
+      _emailfocusNode.hasFocus ? Color(0xFF4B0FFF) : Color(0xFFD1D1D1);
     });
   }
 
@@ -274,7 +314,7 @@ class _SignupPageState extends State<SignupPage> {
                                         decoration: ShapeDecoration(
                                           shape: RoundedRectangleBorder(
                                             side: BorderSide(
-                                                width: 1, color: _borderColor),
+                                                width: 1, color: _emailborderColor),
                                             // 포커스 상태에 따른 테두리 색상 변경
                                             borderRadius:
                                                 BorderRadius.circular(8),
@@ -282,7 +322,7 @@ class _SignupPageState extends State<SignupPage> {
                                         ),
                                         child: TextFormField(
                                           controller: emailController,
-                                          focusNode: _focusNode,
+                                          focusNode: _emailfocusNode,
                                           // 포커스 노드 사용
                                           style: TextStyle(
                                             color: Color(0xFF3D3D3D),
@@ -563,9 +603,9 @@ class _SignupPageState extends State<SignupPage> {
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 4),
                                     child: Text(
-                                      '비밀번호 재입력을 잘못 했을 때 경고 문구',
+                                      repasswordErrorMessage,
                                       style: TextStyle(
-                                        color: Color(0xFFB0B0B0),
+                                        color: Color(0xFFFF3333),
                                         fontSize: 12,
                                         fontFamily: 'Pretendard',
                                         fontWeight: FontWeight.w500,

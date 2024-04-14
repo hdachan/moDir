@@ -1,7 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-// 약관동의 화면
+// 별명입력하기
 void main() {
   runApp(MaterialApp(
     home: IdMaking(),
@@ -14,83 +14,51 @@ class IdMaking extends StatefulWidget {
 }
 
 class _IdMaking extends State<IdMaking> {
-  String emailErrorMessage = ''; // 클래스 멤버 변수 이름 변경
-  String passwordErrorMessage = ''; // 패스워드 에러 메시지
+  final TextEditingController nicknameController = TextEditingController();
+  final TextEditingController birthDateController = TextEditingController();
+  String nicknameErrorMessage = ''; // 클래스 멤버 변수 이름 변경
+  String birthDateErrorMexssage = '';
+  String gender = '';
 
-  Future<void> signUp() async {
-    try {
-      if (emailController.text.trim().isEmpty) {
-        setState(() {
-          emailErrorMessage = '이메일을 입력해주세요.';
-          passwordErrorMessage = '';
-        });
-        print('오류: 이메일을 입력해주세요.');
-        return;
-      }
-      if (passwordController.text.trim().isEmpty) {
-        setState(() {
-          passwordErrorMessage = '비밀번호를 입력해주세요.';
-          emailErrorMessage = '';
-        });
-        print('오류: 비밀번호를 입력해주세요.');
-        return;
-      }
+  Future<void> next() async {
 
-      final UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim(),
-      );
-      print('계정 생성 성공: ${userCredential.user}'); // 계정 생성 성공 시 콘솔에 출력
+    final String nickname = nicknameController.text;
+    final String birthDate = birthDateController.text;
 
+    if (nicknameController.text.trim().isEmpty) {
       setState(() {
-        emailErrorMessage = '';
-        passwordErrorMessage = '';
+        nicknameErrorMessage = '닉네임을 입력해주세요';
+        birthDateErrorMexssage = '';
+        print('닉네임을 입력해주세요');
+        _borderColor = Color(0xFFFF3333);
       });
-    } on FirebaseAuthException catch (e) {
-      setState(() {
-        if (e.message == 'invalid-email') {
-          emailErrorMessage = '유효하지 않은 이메일 형식입니다.';
-          passwordErrorMessage = '';
-          print('오류: 유효하지 않은 이메일 형식입니다.');
-        } else if (e.code == 'email-already-in-use') {
-          emailErrorMessage = '이미 사용 중인 이메일입니다.';
-          passwordErrorMessage = '';
-          print('오류: 이미 사용 중인 이메일입니다.');
-        } else if (e.code == 'weak-password') {
-          passwordErrorMessage = '비밀번호가 너무 약합니다.';
-          emailErrorMessage = '';
-          print('오류: 비밀번호가 너무 약합니다.');
-        } else if (e.code == 'operation-not-allowed') {
-          emailErrorMessage = '이메일과 비밀번호로 로그인하는 것이 현재 비활성화되어 있습니다.';
-          passwordErrorMessage = '';
-          print('오류: 이메일과 비밀번호로 로그인하는 것이 현재 비활성화되어 있습니다.');
-        } else if (e.code == 'too-many-requests') {
-          emailErrorMessage = '요청이 너무 많습니다. 나중에 다시 시도해주세요.';
-          passwordErrorMessage = '';
-          print('오류: 요청이 너무 많습니다. 나중에 다시 시도해주세요.');
-        } else if (e.code == 'user-disabled') {
-          emailErrorMessage = '사용자 계정이 비활성화되었습니다.';
-          passwordErrorMessage = '';
-          print('오류: 사용자 계정이 비활성화되었습니다.');
-        } else {
-          emailErrorMessage = '회원가입 실패: ${e.message}';
-          passwordErrorMessage = '';
-          print('오류: 회원가입 실패: ${e.message}');
-        }
-      });
-    } catch (e) {
-      setState(() {
-        emailErrorMessage = '회원가입 실패: 알 수 없는 오류가 발생했습니다.';
-        passwordErrorMessage = '';
-      });
-      print('오류: 회원가입 실패: 알 수 없는 오류가 발생했습니다.');
+      print('오류: 닉네임을 입력해주세요.'); // 여기에 print 추가
+      return;
     }
+
+    if (birthDateController.text.trim().isEmpty) {
+      setState(() {
+        nicknameErrorMessage = '';
+        birthDateErrorMexssage = '생일을 입력해주세요';
+        print('생일을 입력해주세요');
+        _borderColor = Color(0xFFFF3333);
+      });
+      print('오류: 생일을 입력해주세요'); // 여기에 print 추가
+      return;
+    }
+
+    // Firestore에 사용자 정보 저장
+    await FirebaseFirestore.instance.collection('users').add({
+      'nickname': nickname,
+      'birthDate': birthDate,
+      'gender': gender,
+    });
+
+    // 데이터 저장 후 추가적인 처리, 예: 사용자에게 성공 메시지 표시
   }
 
 
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController repasswordController = TextEditingController();
+
 
   final FocusNode _focusNode = FocusNode();
   Color _borderColor = Color(0xFFD1D1D1); // 기본 테두리 색상
@@ -259,6 +227,8 @@ class _IdMaking extends State<IdMaking> {
                                       ],
                                     ),
                                   ),
+
+
                                   SizedBox(height: 4),
                                   Column(
                                     children: [
@@ -277,7 +247,7 @@ class _IdMaking extends State<IdMaking> {
                                           ),
                                         ),
                                         child: TextFormField(
-                                          controller: emailController,
+                                          controller: nicknameController ,
                                           focusNode: _focusNode,
                                           // 포커스 노드 사용
                                           style: TextStyle(
@@ -309,14 +279,13 @@ class _IdMaking extends State<IdMaking> {
                                     ],
                                   ),
                                   SizedBox(height: 4),
-                                  if (emailErrorMessage.isNotEmpty)
                                     Container(
                                       height: 16,
                                       width: 428,
                                       padding:
                                       EdgeInsets.symmetric(horizontal: 4),
                                       child: Text(
-                                        emailErrorMessage,
+                                          nicknameErrorMessage,
                                         // 이전에 정의한 errorMessage 변수 사용
                                         style: TextStyle(
                                           color: Color(0xFFFF3333),
@@ -389,7 +358,7 @@ class _IdMaking extends State<IdMaking> {
                                         child: Container(
                                             color: Colors.white,
                                             child: TextFormField(
-                                              controller: passwordController,
+                                              controller: birthDateController ,
                                               focusNode: _passwordFocusNode,
                                               // 포커스 노드 사용
                                               style: TextStyle(
@@ -422,14 +391,13 @@ class _IdMaking extends State<IdMaking> {
                                     ],
                                   ),
                                   SizedBox(height: 4),
-                                  if (passwordErrorMessage.isNotEmpty)
                                     Container(
                                       height: 16,
                                       width: 428,
                                       padding:
                                       EdgeInsets.symmetric(horizontal: 4),
                                       child: Text(
-                                        passwordErrorMessage,
+                                        birthDateErrorMexssage,
                                         style: TextStyle(
                                           color: Color(0xFFF72828),
                                           fontSize: 12,
@@ -507,8 +475,8 @@ class _IdMaking extends State<IdMaking> {
                                               ),
                                               onPressed: () {},
                                               child: Text(
-                                                '버튼 1',
-                                                style: TextStyle(color: Colors.white),
+                                                '남자',
+                                                style: TextStyle(color: Colors.blue),
                                               ),
                                             ),
                                           ),
@@ -522,8 +490,8 @@ class _IdMaking extends State<IdMaking> {
                                               ),
                                               onPressed: () {},
                                               child: Text(
-                                                '버튼 2',
-                                                style: TextStyle(color: Colors.white),
+                                                '여자',
+                                                style: TextStyle(color: Colors.red),
                                               ),
                                             ),
                                           ),
@@ -569,7 +537,7 @@ class _IdMaking extends State<IdMaking> {
                       width: 428,
                       child: MaterialButton(
                         onPressed: () {
-                          signUp();
+                          next();
                         },
                         color: Color(0xFF4B0FFF),
                         shape: RoundedRectangleBorder(
