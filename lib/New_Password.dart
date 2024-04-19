@@ -15,37 +15,11 @@ class NewPassword extends StatefulWidget {
 
 class _NewPassword extends State<NewPassword> {
 
-  Future<void> sendPasswordResetEmail() async {
-    try {
-      if (emailController.text.trim().isEmpty) {
-        print('오류: 이메일을 입력해주세요.');
-        return;
-      }
-      await FirebaseAuth.instance
-          .sendPasswordResetEmail(email: emailController.text.trim());
-      print('비밀번호 재설정 이메일이 전송되었습니다.');
-    } on FirebaseAuthException catch (e) {
-      setState(() {
-        if (e.code == 'unknown') {
-          if ((e.message ?? '').contains(
-              'An unknown error occurred: FirebaseError: Firebase: The email address is badly formatted. (auth/invalid-email).')) {
-            emailErrorMessage = '이메일 형식이 알맞지 않습니다.';
-            print('이메일 형식이 알맞지 않습니다.');
-          }
-        }
-      });
-      print('오류 코드: ${e.code}');
-      print('오류 메시지: ${e.message}');
-    } catch (e) {
-      print('비밀번호 재설정 이메일 전송 실패: $e');
-    }
-  }
-
   final TextEditingController emailController = TextEditingController();
   String emailErrorMessage = ''; // 클래스 멤버 변수 이름 변경
 
   final FocusNode _focusNode = FocusNode();
-  Color _borderColor = Color(0xFFD1D1D1); // 기본 테두리 색상
+  Color _emailborderColor = Color(0xFFD1D1D1); // 기본 테두리 색상
 
   @override
   void initState() {
@@ -63,10 +37,47 @@ class _NewPassword extends State<NewPassword> {
 
   void _onFocusChange() {
     setState(() {
-      _borderColor =
-          _focusNode.hasFocus ? Color(0xFF4B0FFF) : Color(0xFFD1D1D1);
+      _emailborderColor =
+      _focusNode.hasFocus ? Color(0xFF4B0FFF) : Color(0xFFD1D1D1);
     });
   }
+
+  Future<void> sendPasswordResetEmail() async {
+    try {
+      if (emailController.text.trim().isEmpty) {
+        setState(() {
+          _emailborderColor = Color(0xFFFF3333);
+          print('오류: 이메일을 입력해주세요.');
+          return;
+        });
+      }
+      await FirebaseAuth.instance
+          .sendPasswordResetEmail(email: emailController.text.trim());
+      print('비밀번호 재설정 이메일이 전송되었습니다.');
+    } on FirebaseAuthException catch (e) {
+      setState(() {
+        if (e.code == 'unknown') {
+          if ((e.message ?? '').contains(
+              'An unknown error occurred: FirebaseError: Firebase: The email address is badly formatted. (auth/invalid-email).')) {
+            emailErrorMessage = '이메일 형식이 알맞지 않습니다.';
+            _emailborderColor = Color(0xFFFF3333);
+            print('이메일 형식이 알맞지 않습니다.');
+          }
+          else if ((e.message ?? '').contains(
+              'An unknown error occurred: FirebaseError: Firebase: Error (auth/missing-email).')) {
+            emailErrorMessage = '이메일을 입력해주세요.';
+            _emailborderColor = Color(0xFFFF3333);
+            print('이메일을 입력해주세요.');
+          }
+        }
+      });
+      print('오류 코드: ${e.code}');
+      print('오류 메시지: ${e.message}');
+    } catch (e) {
+      print('비밀번호 재설정 이메일 전송 실패: $e');
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -186,7 +197,7 @@ class _NewPassword extends State<NewPassword> {
                                         decoration: ShapeDecoration(
                                           shape: RoundedRectangleBorder(
                                             side: BorderSide(
-                                                width: 1, color: _borderColor),
+                                                width: 1, color: _emailborderColor),
                                             // 포커스 상태에 따른 테두리 색상 변경
                                             borderRadius:
                                                 BorderRadius.circular(8),

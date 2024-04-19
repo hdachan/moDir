@@ -18,7 +18,6 @@ class _IdMaking extends State<IdMaking> {
   final TextEditingController birthDateController = TextEditingController();
   String nicknameErrorMessage = ''; // 클래스 멤버 변수 이름 변경
   String birthDateErrorMexssage = '';
-  String gender = '';
 
   Future<void> next() async {
 
@@ -30,7 +29,7 @@ class _IdMaking extends State<IdMaking> {
         nicknameErrorMessage = '닉네임을 입력해주세요';
         birthDateErrorMexssage = '';
         print('닉네임을 입력해주세요');
-        _borderColor = Color(0xFFFF3333);
+        _nicknameborderColor = Color(0xFFFF3333);
       });
       print('오류: 닉네임을 입력해주세요.'); // 여기에 print 추가
       return;
@@ -41,7 +40,7 @@ class _IdMaking extends State<IdMaking> {
         nicknameErrorMessage = '';
         birthDateErrorMexssage = '생일을 입력해주세요';
         print('생일을 입력해주세요');
-        _borderColor = Color(0xFFFF3333);
+        _nicknameborderColor = Color(0xFFFF3333);
       });
       print('오류: 생일을 입력해주세요'); // 여기에 print 추가
       return;
@@ -51,20 +50,15 @@ class _IdMaking extends State<IdMaking> {
     await FirebaseFirestore.instance.collection('users').add({
       'nickname': nickname,
       'birthDate': birthDate,
-      'gender': gender,
     });
-
-    // 데이터 저장 후 추가적인 처리, 예: 사용자에게 성공 메시지 표시
   }
 
 
-
-
   final FocusNode _focusNode = FocusNode();
-  Color _borderColor = Color(0xFFD1D1D1); // 기본 테두리 색상
+  Color _nicknameborderColor = Color(0xFFD1D1D1); // 기본 테두리 색상
 
   final FocusNode _passwordFocusNode = FocusNode();
-  Color _passwordBorderColor = Color(0xFFD1D1D1); // 기본 테두리 색상
+  Color _birthDateBorderColor = Color(0xFFD1D1D1); // 기본 테두리 색상
 
   final FocusNode _rePasswordFocusNode = FocusNode();
   Color _rePasswordBorderColor = Color(0xFFD1D1D1); // 기본 테두리 색상
@@ -92,14 +86,14 @@ class _IdMaking extends State<IdMaking> {
 
   void _onFocusChange() {
     setState(() {
-      _borderColor =
+      _nicknameborderColor =
       _focusNode.hasFocus ? Color(0xFF4B0FFF) : Color(0xFFD1D1D1);
     });
   }
 
   void _onPasswordFocusChange() {
     setState(() {
-      _passwordBorderColor =
+      _birthDateBorderColor =
       _passwordFocusNode.hasFocus ? Color(0xFF4B0FFF) : Color(0xFFD1D1D1);
     });
   }
@@ -240,7 +234,7 @@ class _IdMaking extends State<IdMaking> {
                                         decoration: ShapeDecoration(
                                           shape: RoundedRectangleBorder(
                                             side: BorderSide(
-                                                width: 1, color: _borderColor),
+                                                width: 1, color: _nicknameborderColor),
                                             // 포커스 상태에 따른 테두리 색상 변경
                                             borderRadius:
                                             BorderRadius.circular(8),
@@ -350,7 +344,7 @@ class _IdMaking extends State<IdMaking> {
                                             shape: RoundedRectangleBorder(
                                               side: BorderSide(
                                                   width: 1,
-                                                  color: _passwordBorderColor),
+                                                  color: _birthDateBorderColor),
                                               // 포커스 상태에 따른 테두리 색상 변경
                                               borderRadius:
                                               BorderRadius.circular(8),
