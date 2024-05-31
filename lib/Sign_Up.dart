@@ -15,7 +15,8 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
-  bool _isObscured = true; //비전 아이콘 활성화,비활성화
+  bool _isObscured = true;
+  bool isObscured = true;//비전 아이콘 활성화,비활성화
   String emailErrorMessage = '';
   String passwordErrorMessage = '';
   String repasswordErrorMessage ='';
@@ -347,6 +348,14 @@ class _SignupPageState extends State<SignupPage> {
                                               height: 1.5,
                                               letterSpacing: -0.40,
                                             ),
+                                              suffixIcon: emailController.text.isNotEmpty
+                                                  ? IconButton(
+                                                  onPressed: (){
+                                                    emailController.clear();
+                                                    setState(() {});
+                                                  },
+                                                  padding: EdgeInsets.only(left: 60),
+                                                  icon: Icon(Icons.cancel, color: Color(0xFF888888))) : null
                                           ),
                                         ),
                                       )
@@ -470,6 +479,7 @@ class _SignupPageState extends State<SignupPage> {
                                                       : Icons.visibility,
                                                   color: Color(0xFF888888),
                                                 ),
+                                                padding: EdgeInsets.only(left: 60),//이게 들어 가서 왜 위 아래가 잡히는 지 몰겠네
                                                 onPressed: () {
                                                   setState(() {
                                                     _isObscured = !_isObscured;
@@ -563,7 +573,7 @@ class _SignupPageState extends State<SignupPage> {
                                             color: Colors.white,
                                             child: TextFormField(
                                               controller: repasswordController,
-                                              obscureText: true,
+                                              obscureText: isObscured,
                                               obscuringCharacter: '●',
                                               focusNode: _rePasswordFocusNode,
                                               // 포커스 노드 사용
@@ -590,6 +600,20 @@ class _SignupPageState extends State<SignupPage> {
                                                   fontWeight: FontWeight.w600,
                                                   height: 1.5,
                                                   letterSpacing: -0.40,
+                                                ),
+                                                suffixIcon: IconButton(
+                                                  icon: Icon(
+                                                    isObscured
+                                                        ? Icons.visibility_off
+                                                        : Icons.visibility,
+                                                    color: Color(0xFF888888),
+                                                  ),
+                                                  padding: EdgeInsets.only(left: 60),//이게 들어 가서 왜 위 아래가 잡히는 지 몰겠네
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      isObscured = !isObscured;
+                                                    });
+                                                  },
                                                 ),
                                               ),
                                             )),

@@ -267,6 +267,14 @@ class _IdMaking extends State<IdMaking> {
                                               height: 1.5,
                                               letterSpacing: -0.40,
                                             ),
+                                              suffixIcon: nicknameController.text.isNotEmpty
+                                                  ? IconButton(
+                                                  onPressed: (){
+                                                    nicknameController.clear();
+                                                    setState(() {});
+                                                  },
+                                                  padding: EdgeInsets.only(bottom: 10, left: 60),
+                                                  icon: Icon(Icons.cancel, color: Color(0xFF888888))) : null
                                           ),
                                         ),
                                       )
@@ -379,6 +387,14 @@ class _IdMaking extends State<IdMaking> {
                                                   height: 1.5,
                                                   letterSpacing: -0.40,
                                                 ),
+                                                  suffixIcon: birthDateController.text.isNotEmpty
+                                                      ? IconButton(
+                                                      onPressed: (){
+                                                        birthDateController.clear();
+                                                        setState(() {});
+                                                      },
+                                                      padding: EdgeInsets.only(bottom: 10, left: 60),
+                                                      icon: Icon(Icons.cancel, color: Color(0xFF888888))) : null
                                               ),
                                             )),
                                       ),

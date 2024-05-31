@@ -26,7 +26,9 @@ dependencies:
   cupertino_icons: ^1.0.2 # 구글 아이콘
   cloud_firestore: ^4.15.4 # 파이어베이스 데이터 베이스
   carousel_slider: ^4.2.1 # 화면 넘기기
-  dots_indicator: ^3.0.0  # 슬라이딩 이미지 찾기
+  # dots_indicator: ^3.0.0  # 슬라이딩 이미지 찾기
+  introduction_screen: ^3.1.12 # 슬라이딩 넣기
+
 
 dev_dependencies:
   flutter_test:
@@ -50,6 +52,17 @@ flutter:
     - assets/image/fox.png
     - assets/image/bad.png
     - assets/image/tog.png
+    - assets/image/login1.png
+    - assets/image/eng_logo.png
+    - assets/image/on1.png
+    - assets/image/on2.png
+    - assets/image/on3.png
+    - assets/image/back_icon.png
+    - assets/image/check_icon.png
+    - assets/image/checkOn_icon.png
+    - assets/image/Oncheck_icon.png
+    - assets/image/Onbluecheck_icon.png
+    - assets/image/logo_10.png
 
   uses-material-design: true
   fonts:

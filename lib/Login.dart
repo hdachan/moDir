@@ -7,7 +7,7 @@ void main() {
   ));
 }
 
-bool _isCheck = false;
+bool _isObscured = true;
 
 class Login extends StatefulWidget {
 
@@ -16,6 +16,10 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+
+  final _textController = TextEditingController();
+  final _textController2 = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -24,7 +28,7 @@ class _LoginState extends State<Login> {
           child: Center(
             child: Container(
               width: 426,
-              height: 321,
+              height: 309,
               padding: EdgeInsets.symmetric(horizontal: 24),
               child: Column(
                 children: [
@@ -33,7 +37,7 @@ class _LoginState extends State<Login> {
                     height: 29,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage('assets/image/eng_logo.png')
+                        image: AssetImage('assets/image/logo_10.png')
                       )
                     ),
                   ),
@@ -41,9 +45,9 @@ class _LoginState extends State<Login> {
                   Column(
                     children: [
                       Container(
-                        height: 42,
+                        height: 48,
                         width: 428,
-                        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+                        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
                         decoration: ShapeDecoration(
                           shape: RoundedRectangleBorder(
                             side: BorderSide(
@@ -54,6 +58,11 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                         child: TextFormField(
+                          controller: _textController,
+                          onChanged: (text){
+                            setState(() {
+                            });
+                          },
                           style: TextStyle(
                             color: Color(0xFF3D3D3D),
                             fontSize: 14,
@@ -66,8 +75,7 @@ class _LoginState extends State<Login> {
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             focusedBorder: InputBorder.none,
-                            contentPadding:
-                            EdgeInsets.only(bottom: 10),
+                            contentPadding: EdgeInsets.only(bottom: 10),
                             hintText: '이메일',
                             hintStyle: TextStyle(
                               color: Color(0xFF888888),
@@ -77,14 +85,22 @@ class _LoginState extends State<Login> {
                               height: 1.28,
                               letterSpacing: -0.35,
                             ),
+                            suffixIcon: _textController.text.isNotEmpty
+                              ? IconButton(
+                                  onPressed: (){
+                                    _textController.clear();
+                                    setState(() {});
+                                  },
+                                  padding: EdgeInsets.only(bottom: 10, left: 60),
+                                  icon: Icon(Icons.cancel, color: Color(0xFF888888))) : null
                           ),
                         ),
                       ),
-                      SizedBox(height: 12),
+                      SizedBox(height: 8),
                       Container(
-                        height: 42,
+                        height: 48,
                         width: 428,
-                        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+                        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
                         decoration: ShapeDecoration(
                           shape: RoundedRectangleBorder(
                               side: BorderSide(
@@ -95,6 +111,13 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                         child: TextFormField(
+                          controller: _textController2,
+                          onChanged: (text){
+                            setState(() {
+                            });
+                          },
+                          obscureText: _isObscured,
+                          obscuringCharacter: '●',
                           style: TextStyle(
                             color: Color(0xFF3D3D3D),
                             fontSize: 14,
@@ -118,61 +141,26 @@ class _LoginState extends State<Login> {
                               height: 1.28,
                               letterSpacing: -0.35,
                             ),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _isObscured
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                color: Color(0xFF888888),
+                              ),
+                              padding: EdgeInsets.only(left: 60),//이게 들어 가서 왜 위 아래가 잡히는 지 몰겠네
+                              onPressed: () {
+                                setState(() {
+                                  _isObscured = !_isObscured;
+                                });
+                              },
+                            ),
                           ),
                         ),
                       ),
-                      SizedBox(height: 12),
+                      SizedBox(height: 40),
                       Container(
-                        height: 24,
-                        width: 428,
-                        child: Row(
-                          children: [
-                            SizedBox(
-                              height: 24,
-                              width: 24,
-                              child: Checkbox(
-                                value: _isCheck,
-                                onChanged: (value) {
-                                  setState(() {
-                                    _isCheck = value!;
-                                  });
-                                },
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(4)
-                                ),
-                                side: BorderSide(
-                                  color: Color(0xFF888888),
-                                  width: 1
-                                ),
-                              ),
-                            ),
-                            SizedBox(width: 8),
-                            Container(
-                              height: 24,
-                              width: 70,
-                              padding: EdgeInsets.symmetric(vertical: 3),
-                              child: Column(
-                                children: const [
-                                  Text(
-                                    '자동로그인',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Color(0xFF888888),
-                                      fontSize: 14,
-                                      fontFamily: 'Pretendard',
-                                      fontWeight: FontWeight.w500,
-                                      height: 1.28,
-                                    )
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 24),
-                      SizedBox(
-                        height: 52,
+                        height: 48,
                         width: 428,
                         child: MaterialButton(
                           onPressed: () {
@@ -182,39 +170,49 @@ class _LoginState extends State<Login> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),
-                          child: Text(
-                            textAlign: TextAlign.center,
-                            '로그인',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'Pretendard',
-                              fontWeight: FontWeight.w500,
-                              height: 1.5,
-                              letterSpacing: -0.4,
-                              fontSize: 16,
+                          child: Container(
+                            width: 51,
+                            height: 20,
+                            child: Text(
+                              textAlign: TextAlign.center,
+                              '로그인',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'Pretendard',
+                                fontWeight: FontWeight.w700,
+                                height: 1.0,
+                                letterSpacing: -0.5,
+                                fontSize: 20,
+                              ),
                             ),
                           ),
                         ),
                       ),
-                      SizedBox(height: 12),
+                      SizedBox(height: 16),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Container(
                             width: 135,
                             height: 24,
-                            padding: EdgeInsets.symmetric(vertical: 3),
                             child: Row(
                               children: [
                                 Container(
                                   width: 48,
-                                  height: 18,
+                                  height: 24,
                                   child: TextButton(
                                     onPressed: (){
 
                                     },
+                                    style: OutlinedButton.styleFrom(
+                                      minimumSize: Size.zero,
+                                      padding: EdgeInsets.only(
+                                        top: 3,
+                                        bottom: 3
+                                      )
+                                    ),
                                     child: Text(
-                                      '회원가입',
+                                      "회원가입",
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         color: Color(0xFF888888),
@@ -230,11 +228,18 @@ class _LoginState extends State<Login> {
                                 SizedBox(width: 12),
                                 Container(
                                   width: 75,
-                                  height: 18,
+                                  height: 24,
                                   child: TextButton(
                                     onPressed: (){
 
                                     },
+                                    style: OutlinedButton.styleFrom(
+                                        minimumSize: Size.zero,
+                                        padding: EdgeInsets.only(
+                                            top: 3,
+                                            bottom: 3
+                                        )
+                                    ),
                                     child: Text(
                                       '비밀번호 찾기',
                                       textAlign: TextAlign.center,

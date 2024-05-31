@@ -230,6 +230,14 @@ class _NewPassword extends State<NewPassword> {
                                               height: 1.5,
                                               letterSpacing: -0.40,
                                             ),
+                                              suffixIcon: emailController.text.isNotEmpty
+                                                  ? IconButton(
+                                                  onPressed: (){
+                                                    emailController.clear();
+                                                    setState(() {});
+                                                  },
+                                                  padding: EdgeInsets.only(bottom: 10, left: 60),
+                                                  icon: Icon(Icons.cancel, color: Color(0xFF888888))) : null
                                           ),
                                         ),
                                       )
