@@ -31,8 +31,8 @@ class _MyHomePageState extends State<MyHomePage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  Future<UserCredential?> signInWithEmailAndPassword
-      (String email, String password) async {
+  Future<UserCredential?> signInWithEmailAndPassword(
+      String email, String password) async {
     // 이메일 형식 검사
     String pattern = r'^[^@]+@[^@]+\.[^@]+$';
     RegExp regex = RegExp(pattern);
@@ -42,7 +42,8 @@ class _MyHomePageState extends State<MyHomePage> {
       return null;
     }
 
-    String passwordPattern = r'^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
+    String passwordPattern =
+        r'^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
     RegExp passwordRegex = RegExp(passwordPattern);
     if (!passwordRegex.hasMatch(password)) {
       print('비밀번호는 최소 한 개의 소문자, 숫자, 특수문자를 포함해야 합니다.');
@@ -76,19 +77,16 @@ class _MyHomePageState extends State<MyHomePage> {
         } else if ((e.message ?? '').contains('auth/invalid-credential')) {
           errorMessage = '이메일 또는 비밀번호 정보가 잘못되었습니다.';
           print('이메일 또는 비밀번호 정보가 잘못되었습니다.');
-        }
-        else if ((e.message ?? '').contains('auth/auth/too-many-requests')) {
-          errorMessage ='너무 많은 요청이 발생하였습니다.';
+        } else if ((e.message ?? '').contains('auth/auth/too-many-requests')) {
+          errorMessage = '너무 많은 요청이 발생하였습니다.';
           print('너무 많은 요청이 발생하였습니다.');
-        }
-        else if ((e.message ?? '').contains('auth/network-request-failed')) {
-          errorMessage ='네트워크 오류가 발생하였습니다.';
+        } else if ((e.message ?? '').contains('auth/network-request-failed')) {
+          errorMessage = '네트워크 오류가 발생하였습니다.';
           print('네트워크 오류가 발생하였습니다.');
-        }
-        else {
+        } else {
           print('알 수 없는 오류가 발생했습니다: ${e.message}');
         }
-        setState(() {});  // 상태를 업데이트하여 UI를 다시 그립니다.
+        setState(() {}); // 상태를 업데이트하여 UI를 다시 그립니다.
       }
       print('오류 코드: ${e.code}');
       print('오류 메시지: ${e.message}');
@@ -97,9 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
       print('로그인 도중 예상치 못한 오류가 발생했습니다: $e');
       return null;
     }
-
   }
-
 
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -145,7 +141,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   child: Padding(
                     padding:
-                    EdgeInsets.fromLTRB(4, 6, 4, 6), // 각 방향에 다른 패딩 값 설정
+                        EdgeInsets.fromLTRB(4, 6, 4, 6), // 각 방향에 다른 패딩 값 설정
                   ),
                 ),
                 Container(
@@ -175,7 +171,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       ),
                       Container(
-                        //아이디 입력
+                          //아이디 입력
                           width: 280.w,
                           height: 44.h,
                           margin: EdgeInsets.fromLTRB(24, 40, 24, 0),
@@ -205,7 +201,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                           )),
                       Container(
-                        //비밀번호 입력
+                          //비밀번호 입력
                           width: 280.w,
                           height: 44.h,
                           margin: EdgeInsets.fromLTRB(24, 8, 24, 0),
@@ -255,6 +251,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               fontSize: 12,
                               fontFamily: 'Pretendard',
                               fontWeight: FontWeight.w500,
+                              height: 1.0,
                               letterSpacing: -0.30,
                             ),
                           ),
@@ -270,12 +267,16 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         child: TextButton(
                           onPressed: () async {
-                            UserCredential? user = await signInWithEmailAndPassword(emailController.text, passwordController.text);
+                            UserCredential? user =
+                                await signInWithEmailAndPassword(
+                                    emailController.text,
+                                    passwordController.text);
                             if (user != null) {
                               print("Login Successful");
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => Main2()),
+                                MaterialPageRoute(
+                                    builder: (context) => Main2()),
                               );
                             } else {
                               print("Login Failed");
@@ -304,7 +305,8 @@ class _MyHomePageState extends State<MyHomePage> {
                               onPressed: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => NewPassword()),
+                                  MaterialPageRoute(
+                                      builder: (context) => NewPassword()),
                                 );
                               },
                               child: Text(
@@ -324,7 +326,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                 onPressed: () {
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => AgreePage()),
+                                    MaterialPageRoute(
+                                        builder: (context) => AgreePage()),
                                   );
                                 },
                                 child: Text(
@@ -342,9 +345,6 @@ class _MyHomePageState extends State<MyHomePage> {
                           ],
                         ),
                       )
-
-
-
                     ],
                   ),
                 ),

@@ -13,6 +13,8 @@ class IdMaking extends StatefulWidget {
   _IdMaking createState() => _IdMaking();
 }
 
+const List<Widget> gender = <Widget>[Text('남자'), Text('여자')];
+
 class _IdMaking extends State<IdMaking> {
   final TextEditingController nicknameController = TextEditingController();
   final TextEditingController birthDateController = TextEditingController();
@@ -20,7 +22,6 @@ class _IdMaking extends State<IdMaking> {
   String birthDateErrorMexssage = '';
 
   Future<void> next() async {
-
     final String nickname = nicknameController.text;
     final String birthDate = birthDateController.text;
 
@@ -53,7 +54,6 @@ class _IdMaking extends State<IdMaking> {
     });
   }
 
-
   final FocusNode _focusNode = FocusNode();
   Color _nicknameborderColor = Color(0xFFD1D1D1); // 기본 테두리 색상
 
@@ -62,6 +62,8 @@ class _IdMaking extends State<IdMaking> {
 
   final FocusNode _rePasswordFocusNode = FocusNode();
   Color _rePasswordBorderColor = Color(0xFFD1D1D1); // 기본 테두리 색상
+
+  final List<bool> _selectedGender = <bool>[false, false];
 
   @override
   void initState() {
@@ -87,21 +89,21 @@ class _IdMaking extends State<IdMaking> {
   void _onFocusChange() {
     setState(() {
       _nicknameborderColor =
-      _focusNode.hasFocus ? Color(0xFF4B0FFF) : Color(0xFFD1D1D1);
+          _focusNode.hasFocus ? Color(0xFF4B0FFF) : Color(0xFFD1D1D1);
     });
   }
 
   void _onPasswordFocusChange() {
     setState(() {
       _birthDateBorderColor =
-      _passwordFocusNode.hasFocus ? Color(0xFF4B0FFF) : Color(0xFFD1D1D1);
+          _passwordFocusNode.hasFocus ? Color(0xFF4B0FFF) : Color(0xFFD1D1D1);
     });
   }
 
   void _onRePasswordFocusChange() {
     setState(() {
       _rePasswordBorderColor =
-      _rePasswordFocusNode.hasFocus ? Color(0xFF4B0FFF) : Color(0xFFD1D1D1);
+          _rePasswordFocusNode.hasFocus ? Color(0xFF4B0FFF) : Color(0xFFD1D1D1);
     });
   }
 
@@ -116,16 +118,16 @@ class _IdMaking extends State<IdMaking> {
                 Container(
                   // 앱 바 - 완
                   width: double.infinity,
-                  height: 54,
+                  height: 48,
                   decoration: BoxDecoration(
                     border: Border(
                         bottom: BorderSide(
-                          width: 1,
-                          color: Color(0xFFE7E7E7),
-                        )),
+                      width: 1,
+                      color: Color(0xFFE7E7E7),
+                    )),
                   ),
                   child: Padding(
-                      padding: EdgeInsets.only(top: 15, bottom: 15, left: 24),
+                      padding: EdgeInsets.only(top: 12, bottom: 12, left: 12),
                       child: Row(
                         children: [
                           Container(
@@ -149,7 +151,7 @@ class _IdMaking extends State<IdMaking> {
                   child: Container(
                     // 중간 패널
                     width: 428,
-                    height: 586,
+                    height: 592,
                     decoration: BoxDecoration(color: Colors.white),
                     child: Padding(
                       padding: EdgeInsets.only(left: 24, right: 24, top: 48),
@@ -164,11 +166,11 @@ class _IdMaking extends State<IdMaking> {
                               '계정을 생성해 볼까요?',
                               style: TextStyle(
                                 color: Color(0xFF3D3D3D),
-                                fontSize: 28,
+                                fontSize: 24,
                                 fontFamily: 'Pretendard',
                                 fontWeight: FontWeight.w700,
-                                height: 1.2,
-                                letterSpacing: -0.70,
+                                height: 1.3,
+                                letterSpacing: -0.60,
                               ),
                             ),
                             SizedBox(height: 10),
@@ -179,13 +181,13 @@ class _IdMaking extends State<IdMaking> {
                                 fontSize: 14,
                                 fontFamily: 'Pretendard',
                                 fontWeight: FontWeight.w500,
-                                height: 1.28,
+                                height: 1.3,
                                 letterSpacing: -0.35,
                               ),
                             ),
                             SizedBox(height: 48),
                             Container(
-                              height: 90,
+                              height: 82,
                               width: 428,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -201,8 +203,8 @@ class _IdMaking extends State<IdMaking> {
                                             color: Color(0xFF3D3D3D),
                                             fontSize: 14,
                                             fontFamily: 'Pretendard',
-                                            fontWeight: FontWeight.w500,
-                                            height: 1.28,
+                                            fontWeight: FontWeight.w400,
+                                            height: 1.0,
                                             letterSpacing: -0.35,
                                           ),
                                         ),
@@ -211,18 +213,16 @@ class _IdMaking extends State<IdMaking> {
                                           '*',
                                           style: TextStyle(
                                             color: Color(0xFFFF3333),
-                                            fontSize: 12,
+                                            fontSize: 14,
                                             fontFamily: 'Pretendard',
-                                            fontWeight: FontWeight.w500,
-                                            height: 1.3,
-                                            letterSpacing: -0.30,
+                                            fontWeight: FontWeight.w400,
+                                            height: 1.0,
+                                            letterSpacing: -0.35,
                                           ),
                                         )
                                       ],
                                     ),
                                   ),
-
-
                                   SizedBox(height: 4),
                                   Column(
                                     children: [
@@ -230,81 +230,87 @@ class _IdMaking extends State<IdMaking> {
                                         height: 48,
                                         width: 428,
                                         padding: EdgeInsets.symmetric(
-                                            vertical: 10, horizontal: 12),
+                                            vertical: 12, horizontal: 12),
                                         decoration: ShapeDecoration(
                                           shape: RoundedRectangleBorder(
                                             side: BorderSide(
-                                                width: 1, color: _nicknameborderColor),
+                                                width: 1,
+                                                color: _nicknameborderColor),
                                             // 포커스 상태에 따른 테두리 색상 변경
                                             borderRadius:
-                                            BorderRadius.circular(8),
+                                                BorderRadius.circular(8),
                                           ),
                                         ),
                                         child: TextFormField(
-                                          controller: nicknameController ,
+                                          controller: nicknameController,
                                           focusNode: _focusNode,
                                           // 포커스 노드 사용
                                           style: TextStyle(
                                             color: Color(0xFF3D3D3D),
                                             fontSize: 16,
                                             fontFamily: 'Pretendard',
-                                            fontWeight: FontWeight.w600,
-                                            height: 1.5,
+                                            fontWeight: FontWeight.w500,
+                                            height: 1.0,
                                             letterSpacing: -0.40,
                                           ),
                                           textInputAction: TextInputAction.next,
                                           decoration: InputDecoration(
-                                            border: InputBorder.none,
-                                            focusedBorder: InputBorder.none,
-                                            contentPadding:
-                                            EdgeInsets.only(bottom: 10),
-                                            hintText: '닉네임 입력',
-                                            hintStyle: TextStyle(
-                                              color: Color(0xFF888888),
-                                              fontSize: 16,
-                                              fontFamily: 'Pretendard',
-                                              fontWeight: FontWeight.w600,
-                                              height: 1.5,
-                                              letterSpacing: -0.40,
-                                            ),
-                                              suffixIcon: nicknameController.text.isNotEmpty
+                                              border: InputBorder.none,
+                                              focusedBorder: InputBorder.none,
+                                              contentPadding:
+                                                  EdgeInsets.only(bottom: 10),
+                                              hintText: '닉네임 입력',
+                                              hintStyle: TextStyle(
+                                                color: Color(0xFF888888),
+                                                fontSize: 16,
+                                                fontFamily: 'Pretendard',
+                                                fontWeight: FontWeight.w500,
+                                                height: 1.0,
+                                                letterSpacing: -0.40,
+                                              ),
+                                              suffixIcon: nicknameController
+                                                      .text.isNotEmpty
                                                   ? IconButton(
-                                                  onPressed: (){
-                                                    nicknameController.clear();
-                                                    setState(() {});
-                                                  },
-                                                  padding: EdgeInsets.only(bottom: 10, left: 60),
-                                                  icon: Icon(Icons.cancel, color: Color(0xFF888888))) : null
-                                          ),
+                                                      onPressed: () {
+                                                        nicknameController
+                                                            .clear();
+                                                        setState(() {});
+                                                      },
+                                                      padding: EdgeInsets.only(
+                                                          bottom: 10, left: 60),
+                                                      icon: Icon(Icons.cancel,
+                                                          color: Color(
+                                                              0xFF888888)))
+                                                  : null),
                                         ),
                                       )
                                     ],
                                   ),
                                   SizedBox(height: 4),
-                                    Container(
-                                      height: 16,
-                                      width: 428,
-                                      padding:
-                                      EdgeInsets.symmetric(horizontal: 4),
-                                      child: Text(
-                                          nicknameErrorMessage,
-                                        // 이전에 정의한 errorMessage 변수 사용
-                                        style: TextStyle(
-                                          color: Color(0xFFFF3333),
-                                          fontSize: 12,
-                                          fontFamily: 'Pretendard',
-                                          fontWeight: FontWeight.w500,
-                                          height: 1.33,
-                                          letterSpacing: -0.30,
-                                        ),
+                                  Container(
+                                    height: 12,
+                                    width: 428,
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 4),
+                                    child: Text(
+                                      nicknameErrorMessage,
+                                      // 이전에 정의한 errorMessage 변수 사용
+                                      style: TextStyle(
+                                        color: Color(0xFFFF3333),
+                                        fontSize: 12,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w400,
+                                        height: 1.0,
+                                        letterSpacing: -0.30,
                                       ),
                                     ),
+                                  ),
                                 ],
                               ),
                             ),
-                            SizedBox(height: 16),
+                            SizedBox(height: 12),
                             Container(
-                              height: 90,
+                              height: 82,
                               width: 428,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -320,8 +326,8 @@ class _IdMaking extends State<IdMaking> {
                                             color: Color(0xFF3D3D3D),
                                             fontSize: 14,
                                             fontFamily: 'Pretendard',
-                                            fontWeight: FontWeight.w500,
-                                            height: 1.28,
+                                            fontWeight: FontWeight.w400,
+                                            height: 1.0,
                                             letterSpacing: -0.35,
                                           ),
                                         ),
@@ -330,11 +336,11 @@ class _IdMaking extends State<IdMaking> {
                                           '*',
                                           style: TextStyle(
                                             color: Color(0xFFFF3333),
-                                            fontSize: 12,
+                                            fontSize: 14,
                                             fontFamily: 'Pretendard',
-                                            fontWeight: FontWeight.w500,
-                                            height: 1.3,
-                                            letterSpacing: -0.30,
+                                            fontWeight: FontWeight.w400,
+                                            height: 1.0,
+                                            letterSpacing: -0.35,
                                           ),
                                         )
                                       ],
@@ -347,83 +353,85 @@ class _IdMaking extends State<IdMaking> {
                                         height: 48,
                                         width: 428,
                                         padding: EdgeInsets.symmetric(
-                                            vertical: 10, horizontal: 12),
+                                            vertical: 12, horizontal: 12),
                                         decoration: ShapeDecoration(
                                             shape: RoundedRectangleBorder(
-                                              side: BorderSide(
-                                                  width: 1,
-                                                  color: _birthDateBorderColor),
-                                              // 포커스 상태에 따른 테두리 색상 변경
-                                              borderRadius:
+                                          side: BorderSide(
+                                              width: 1,
+                                              color: _birthDateBorderColor),
+                                          // 포커스 상태에 따른 테두리 색상 변경
+                                          borderRadius:
                                               BorderRadius.circular(8),
-                                            )),
-                                        child: Container(
-                                            color: Colors.white,
-                                            child: TextFormField(
-                                              controller: birthDateController ,
-                                              focusNode: _passwordFocusNode,
-                                              // 포커스 노드 사용
-                                              style: TextStyle(
-                                                color: Color(0xFF3D3D3D),
+                                        )),
+                                        child: TextFormField(
+                                          controller: birthDateController,
+                                          focusNode: _passwordFocusNode,
+                                          // 포커스 노드 사용
+                                          style: TextStyle(
+                                            color: Color(0xFF3D3D3D),
+                                            fontSize: 16,
+                                            fontFamily: 'Pretendard',
+                                            fontWeight: FontWeight.w500,
+                                            height: 1.0,
+                                            letterSpacing: -0.40,
+                                          ),
+                                          textInputAction: TextInputAction.next,
+                                          decoration: InputDecoration(
+                                              border: InputBorder.none,
+                                              focusedBorder: InputBorder.none,
+                                              contentPadding:
+                                                  EdgeInsets.only(bottom: 10),
+                                              hintText: '생년월일 입력',
+                                              hintStyle: TextStyle(
+                                                color: Color(0xFF888888),
                                                 fontSize: 16,
                                                 fontFamily: 'Pretendard',
-                                                fontWeight: FontWeight.w600,
-                                                height: 1.5,
+                                                fontWeight: FontWeight.w500,
+                                                height: 1.0,
                                                 letterSpacing: -0.40,
                                               ),
-                                              textInputAction:
-                                              TextInputAction.next,
-                                              decoration: InputDecoration(
-                                                border: InputBorder.none,
-                                                focusedBorder: InputBorder.none,
-                                                contentPadding:
-                                                EdgeInsets.only(bottom: 10),
-                                                hintText: '생년월일 입력',
-                                                hintStyle: TextStyle(
-                                                  color: Color(0xFF888888),
-                                                  fontSize: 16,
-                                                  fontFamily: 'Pretendard',
-                                                  fontWeight: FontWeight.w600,
-                                                  height: 1.5,
-                                                  letterSpacing: -0.40,
-                                                ),
-                                                  suffixIcon: birthDateController.text.isNotEmpty
-                                                      ? IconButton(
-                                                      onPressed: (){
-                                                        birthDateController.clear();
+                                              suffixIcon: birthDateController
+                                                      .text.isNotEmpty
+                                                  ? IconButton(
+                                                      onPressed: () {
+                                                        birthDateController
+                                                            .clear();
                                                         setState(() {});
                                                       },
-                                                      padding: EdgeInsets.only(bottom: 10, left: 60),
-                                                      icon: Icon(Icons.cancel, color: Color(0xFF888888))) : null
-                                              ),
-                                            )),
+                                                      padding: EdgeInsets.only(
+                                                          bottom: 10, left: 60),
+                                                      icon: Icon(Icons.cancel,
+                                                          color: Color(
+                                                              0xFF888888)))
+                                                  : null),
+                                        ),
                                       ),
                                     ],
                                   ),
                                   SizedBox(height: 4),
-                                    Container(
-                                      height: 16,
-                                      width: 428,
-                                      padding:
-                                      EdgeInsets.symmetric(horizontal: 4),
-                                      child: Text(
-                                        birthDateErrorMexssage,
-                                        style: TextStyle(
-                                          color: Color(0xFFF72828),
-                                          fontSize: 12,
-                                          fontFamily: 'Pretendard',
-                                          fontWeight: FontWeight.w500,
-                                          height: 1.33,
-                                          letterSpacing: -0.30,
-                                        ),
+                                  Container(
+                                    height: 12,
+                                    width: 428,
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 4),
+                                    child: Text(
+                                      birthDateErrorMexssage,
+                                      style: TextStyle(
+                                        color: Color(0xFFF72828),
+                                        fontSize: 12,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w400,
+                                        height: 1.0,
+                                        letterSpacing: -0.30,
                                       ),
                                     ),
+                                  ),
                                 ],
                               ),
                             ),
-                            SizedBox(height: 16),
+                            SizedBox(height: 12),
                             Container(
-                              height: 90,
+                              height: 82,
                               width: 428,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -439,8 +447,8 @@ class _IdMaking extends State<IdMaking> {
                                             color: Color(0xFF3D3D3D),
                                             fontSize: 14,
                                             fontFamily: 'Pretendard',
-                                            fontWeight: FontWeight.w500,
-                                            height: 1.28,
+                                            fontWeight: FontWeight.w400,
+                                            height: 1.0,
                                             letterSpacing: -0.35,
                                           ),
                                         ),
@@ -449,84 +457,64 @@ class _IdMaking extends State<IdMaking> {
                                           '*',
                                           style: TextStyle(
                                             color: Color(0xFFFF3333),
-                                            fontSize: 12,
+                                            fontSize: 14,
                                             fontFamily: 'Pretendard',
-                                            fontWeight: FontWeight.w500,
-                                            height: 1.3,
-                                            letterSpacing: -0.30,
+                                            fontWeight: FontWeight.w400,
+                                            height: 1.0,
+                                            letterSpacing: -0.35,
                                           ),
                                         )
                                       ],
                                     ),
                                   ),
                                   SizedBox(height: 4),
-                                  Expanded( // 이 Expanded는 가로 방향으로 최대 크기를 차지하기 위해 사용됩니다.
-                                    child: Container(
+                                  Expanded(
+                                    child: SizedBox(
                                       height: 48,
-                                      // width: 428, // 가로 방향으로 최대 크기를 차지하기 위해 width 설정을 제거합니다.
-                                      decoration: ShapeDecoration(
-                                        shape: RoundedRectangleBorder(
-                                          side: BorderSide(
-                                            width: 1,
-                                            color: _rePasswordBorderColor,
-                                          ),
-                                          borderRadius: BorderRadius.circular(8),
+                                      width: 428,
+                                      child: ToggleButtons(
+                                        onPressed: (int index) {
+                                          setState(() {
+                                            for (int i = 0;
+                                                i < _selectedGender.length;
+                                                i++) {
+                                              _selectedGender[i] = i == index;
+                                            }
+                                          });
+                                        },
+                                        textStyle: TextStyle(
+                                          fontSize: 16,
+                                          fontFamily: 'Pretendard',
+                                          fontWeight: FontWeight.w500,
+                                          height: 1.0,
+                                          letterSpacing: -0.40,
                                         ),
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          Expanded(
-                                            child: TextButton(
-                                              style: TextButton.styleFrom(
-                                                backgroundColor: Colors.red,
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.circular(8),
-                                                ),
-                                              ),
-                                              onPressed: () {},
-                                              child: Text(
-                                                '남자',
-                                                style: TextStyle(color: Colors.blue),
-                                              ),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: TextButton(
-                                              style: TextButton.styleFrom(
-                                                backgroundColor: Colors.amber,
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.circular(8),
-                                                ),
-                                              ),
-                                              onPressed: () {},
-                                              child: Text(
-                                                '여자',
-                                                style: TextStyle(color: Colors.red),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
+                                        borderColor: Color(0xFFD1D1D1),
+                                        color: Color(0xFF888888),
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(8)),
+                                        selectedBorderColor: Color(0xFF4B0FFF),
+                                        selectedColor: Color(0xFF4B0FFF),
+                                        isSelected: _selectedGender,
+                                        children: gender,
                                       ),
                                     ),
                                   ),
-
-
-
                                   SizedBox(height: 4),
                                   Container(
-                                    height: 16,
+                                    height: 12,
                                     width: 426,
                                     padding:
-                                    EdgeInsets.symmetric(horizontal: 4),
+                                        EdgeInsets.symmetric(horizontal: 4),
                                     child: Text(
                                       '성별을 선택해 주세요',
                                       style: TextStyle(
                                         color: Color(0xFFB0B0B0),
                                         fontSize: 12,
                                         fontFamily: 'Pretendard',
-                                        fontWeight: FontWeight.w500,
-                                        height: 1.33,
-                                        letterSpacing: -0.30,
+                                        fontWeight: FontWeight.w400,
+                                        height: 1.0,
+                                        letterSpacing: -0.35,
                                       ),
                                     ),
                                   ),
@@ -540,10 +528,10 @@ class _IdMaking extends State<IdMaking> {
                   ),
                 ),
                 Padding(
-                  // 다음 버튼 - 버튼 기능 추가
+                    // 다음 버튼 - 버튼 기능 추가
                     padding: EdgeInsets.only(left: 24, right: 24, bottom: 48),
                     child: SizedBox(
-                      height: 52,
+                      height: 48,
                       width: 428,
                       child: MaterialButton(
                         onPressed: () {
@@ -560,9 +548,9 @@ class _IdMaking extends State<IdMaking> {
                             color: Colors.white,
                             fontFamily: 'Pretendard',
                             fontWeight: FontWeight.w700,
-                            height: 1.1,
-                            letterSpacing: -0.53,
-                            fontSize: 21,
+                            height: 1.0,
+                            letterSpacing: -0.50,
+                            fontSize: 20,
                           ),
                         ),
                       ),

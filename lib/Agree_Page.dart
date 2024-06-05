@@ -89,7 +89,7 @@ class _AgreePageState extends State<AgreePage> {
               Container(
                 // 앱 바 - 완 ( 상단바 줄)
                 width: double.infinity,
-                height: 54,
+                height: 48,
                 decoration: BoxDecoration(
                   border: Border(
                       bottom: BorderSide(
@@ -98,7 +98,7 @@ class _AgreePageState extends State<AgreePage> {
                   )),
                 ),
                 child: Padding(
-                    padding: EdgeInsets.only(top: 15, bottom: 15, left: 24),
+                    padding: EdgeInsets.only(top: 12, bottom: 12, left: 12),
                     child: Row(
                       children: [
                         Container(
@@ -122,13 +122,13 @@ class _AgreePageState extends State<AgreePage> {
                 child: Container(
                   // 중간 패널
                   width: 428,
-                  height: 586,
+                  height: 592,
                   decoration: BoxDecoration(color: Colors.white),
                   child: Padding(
                     padding: EdgeInsets.only(
-                        top: 48, bottom: 124, right: 24, left: 24),
+                        top: 54, bottom: 130, right: 24, left: 24),
                     child: Container(
-                      height: 114,
+                      height: 108,
                       decoration: BoxDecoration(color: Colors.white),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -140,11 +140,11 @@ class _AgreePageState extends State<AgreePage> {
                             textAlign: TextAlign.left,
                             style: TextStyle(
                               color: Color(0xFF3D3D3D),
-                              fontSize: 28,
+                              fontSize: 24,
                               fontFamily: 'Pretendard',
                               fontWeight: FontWeight.w700,
-                              height: 1.2,
-                              letterSpacing: -0.7,
+                              height: 1.3,
+                              letterSpacing: -0.6,
                             ),
                           ),
                           SizedBox(height: 10),
@@ -157,7 +157,7 @@ class _AgreePageState extends State<AgreePage> {
                               fontSize: 14,
                               fontFamily: 'Pretendard',
                               fontWeight: FontWeight.w500,
-                              height: 1.2,
+                              height: 1.3,
                               letterSpacing: -0.35,
                             ),
                           ),
@@ -212,7 +212,9 @@ class _AgreePageState extends State<AgreePage> {
                                         // 조건에 따라 텍스트 색상을 변경합니다.
                                         fontSize: 16,
                                         fontFamily: 'Pretendard',
-                                        fontWeight: FontWeight.w600,
+                                        fontWeight: FontWeight.w500,
+                                        height: 1.0,
+                                        letterSpacing: -0.40,
                                       ),
                                     ),
                                   ],
@@ -220,9 +222,7 @@ class _AgreePageState extends State<AgreePage> {
                               ),
                             ),
                           ),
-
                           SizedBox(height: 12),
-
                           Row(
                             // 동의 1번 부분 - 아이콘, 텍스트 메서드로 변경 / 버튼 기능 추가
                             children: [
@@ -272,8 +272,8 @@ class _AgreePageState extends State<AgreePage> {
                                                       fontSize: 14,
                                                       fontFamily: 'Pretendard',
                                                       fontWeight:
-                                                          FontWeight.w500,
-                                                      height: 1.3,
+                                                          FontWeight.w400,
+                                                      height: 1.0,
                                                       letterSpacing: -0.35,
                                                     ),
                                                   ),
@@ -285,18 +285,20 @@ class _AgreePageState extends State<AgreePage> {
                                       ))),
                               Container(
                                 width: 31,
-                                height: 28,
+                                height: 24,
                                 margin: EdgeInsets.only(right: 12),
                                 padding: EdgeInsets.symmetric(vertical: 6),
                                 child: TextButton(
                                   style: TextButton.styleFrom(
                                     padding: EdgeInsets.zero,
-                                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                    tapTargetSize:
+                                        MaterialTapTargetSize.shrinkWrap,
                                   ),
                                   onPressed: () {
                                     Navigator.push(
                                       context,
-                                      MaterialPageRoute(builder: (context) => Main2()),
+                                      MaterialPageRoute(
+                                          builder: (context) => Main2()),
                                     );
                                   },
                                   child: Text(
@@ -309,13 +311,12 @@ class _AgreePageState extends State<AgreePage> {
                                       fontWeight: FontWeight.w400,
                                       decoration: TextDecoration.underline,
                                       decorationColor: Color(0xFFB0B0B0),
-                                      height: 1.3,
+                                      height: 1,
                                       letterSpacing: -0.3,
                                     ),
                                   ),
                                 ),
                               ),
-
                             ],
                           ),
                           Row(
@@ -364,8 +365,8 @@ class _AgreePageState extends State<AgreePage> {
                                                   // 조건에 따라 텍스트 색상 변경
                                                   fontSize: 14,
                                                   fontFamily: 'Pretendard',
-                                                  fontWeight: FontWeight.w500,
-                                                  height: 1.3,
+                                                  fontWeight: FontWeight.w400,
+                                                  height: 1.0,
                                                   letterSpacing: -0.35,
                                                 ),
                                               ),
@@ -380,7 +381,7 @@ class _AgreePageState extends State<AgreePage> {
                               Container(
                                 // 약관 더보기 부분 - 메서드 / 버튼 기능 추가
                                 width: 31,
-                                height: 28,
+                                height: 24,
                                 margin: EdgeInsets.only(right: 12),
                                 padding: EdgeInsets.symmetric(vertical: 6),
                                 child: Text(
@@ -393,14 +394,13 @@ class _AgreePageState extends State<AgreePage> {
                                     fontWeight: FontWeight.w400,
                                     decoration: TextDecoration.underline,
                                     decorationColor: Color(0xFFB0B0B0),
-                                    height: 1.3,
+                                    height: 1.0,
                                     letterSpacing: -0.3,
                                   ),
                                 ),
                               ),
                             ],
                           ),
-
                           Row(
                             // 동의 3번 부분 - 아이콘, 텍스트 메서드로 변경 / 버튼 기능 추가
                             children: [
@@ -446,8 +446,8 @@ class _AgreePageState extends State<AgreePage> {
                                                   // 조건에 따라 텍스트 색상 변경
                                                   fontSize: 14,
                                                   fontFamily: 'Pretendard',
-                                                  fontWeight: FontWeight.w500,
-                                                  height: 1.3,
+                                                  fontWeight: FontWeight.w400,
+                                                  height: 1.0,
                                                   letterSpacing: -0.35,
                                                 ),
                                               ),
@@ -462,7 +462,7 @@ class _AgreePageState extends State<AgreePage> {
                               Container(
                                 // 약관 더보기 부분 - 메서드 / 버튼 기능 추가
                                 width: 31,
-                                height: 28,
+                                height: 24,
                                 margin: EdgeInsets.only(right: 12),
                                 padding: EdgeInsets.symmetric(vertical: 6),
                                 child: Text(
@@ -475,14 +475,13 @@ class _AgreePageState extends State<AgreePage> {
                                     fontWeight: FontWeight.w400,
                                     decoration: TextDecoration.underline,
                                     decorationColor: Color(0xFFB0B0B0),
-                                    height: 1.3,
+                                    height: 1.0,
                                     letterSpacing: -0.3,
                                   ),
                                 ),
                               ),
                             ],
                           ),
-
                           Row(
                             // 동의 4번 부분 - 아이콘, 텍스트 메서드로 변경 / 버튼 기능 추가
                             children: [
@@ -529,8 +528,8 @@ class _AgreePageState extends State<AgreePage> {
                                                   // 조건에 따라 텍스트 색상 변경
                                                   fontSize: 14,
                                                   fontFamily: 'Pretendard',
-                                                  fontWeight: FontWeight.w500,
-                                                  height: 1.3,
+                                                  fontWeight: FontWeight.w400,
+                                                  height: 1.0,
                                                   letterSpacing: -0.35,
                                                 ),
                                               ),
@@ -545,7 +544,7 @@ class _AgreePageState extends State<AgreePage> {
                               Container(
                                 // 약관 더보기 부분 - 메서드 / 버튼 기능 추가
                                 width: 31,
-                                height: 28,
+                                height: 24,
                                 margin: EdgeInsets.only(right: 12),
                                 padding: EdgeInsets.symmetric(vertical: 6),
                                 child: Text(
@@ -558,7 +557,7 @@ class _AgreePageState extends State<AgreePage> {
                                     fontWeight: FontWeight.w400,
                                     decoration: TextDecoration.underline,
                                     decorationColor: Color(0xFFB0B0B0),
-                                    height: 1.3,
+                                    height: 1.0,
                                     letterSpacing: -0.3,
                                   ),
                                 ),
@@ -573,9 +572,19 @@ class _AgreePageState extends State<AgreePage> {
               ),
               Padding(
                 padding: EdgeInsets.only(left: 24, right: 24, bottom: 48),
-                child: SizedBox(
-                  height: 52,
+                child: Container(
+                  height: 48,
                   width: 428,
+                  decoration: BoxDecoration(
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Color(0x19000000),
+                        blurRadius: 20,
+                        offset: Offset(0, 4),
+                        spreadRadius: 0,
+                      )
+                    ],
+                  ),
                   child: MaterialButton(
                     onPressed: () {
                       // 버튼이 눌렸을 때 수행할 작업을 여기에 구현
@@ -599,9 +608,9 @@ class _AgreePageState extends State<AgreePage> {
                         color: Color(0xFFF6F6F6),
                         fontFamily: 'Pretendard',
                         fontWeight: FontWeight.w700,
-                        height: 1.1,
-                        letterSpacing: -0.53,
-                        fontSize: 21,
+                        height: 1.0,
+                        letterSpacing: -0.5,
+                        fontSize: 20,
                       ),
                       textAlign: TextAlign.center,
                     ),

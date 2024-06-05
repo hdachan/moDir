@@ -16,10 +16,10 @@ class SignupPage extends StatefulWidget {
 
 class _SignupPageState extends State<SignupPage> {
   bool _isObscured = true;
-  bool isObscured = true;//비전 아이콘 활성화,비활성화
+  bool isObscured = true; //비전 아이콘 활성화,비활성화
   String emailErrorMessage = '';
   String passwordErrorMessage = '';
-  String repasswordErrorMessage ='';
+  String repasswordErrorMessage = '';
 
   Future<void> signUp() async {
     try {
@@ -27,7 +27,7 @@ class _SignupPageState extends State<SignupPage> {
         setState(() {
           emailErrorMessage = '이메일을 입력해주세요.';
           passwordErrorMessage = '';
-          repasswordErrorMessage='';
+          repasswordErrorMessage = '';
           _emailborderColor = Color(0xFFFF3333);
         });
         print('오류: 이메일을 입력해주세요.'); // 여기에 print 추가
@@ -37,7 +37,7 @@ class _SignupPageState extends State<SignupPage> {
         setState(() {
           passwordErrorMessage = '비밀번호를 입력해주세요.';
           emailErrorMessage = '';
-          repasswordErrorMessage='';
+          repasswordErrorMessage = '';
           _passwordBorderColor = Color(0xFFFF3333);
         });
         print('오류: 비밀번호를 입력해주세요.'); // 여기에 print 추가
@@ -46,7 +46,7 @@ class _SignupPageState extends State<SignupPage> {
 
       if (repasswordController.text.trim().isEmpty) {
         setState(() {
-          repasswordErrorMessage= '비밀번호를 재입력해주세요.';
+          repasswordErrorMessage = '비밀번호를 재입력해주세요.';
           passwordErrorMessage = '';
           emailErrorMessage = '';
           _rePasswordBorderColor = Color(0xFFFF3333);
@@ -61,12 +61,12 @@ class _SignupPageState extends State<SignupPage> {
           repasswordErrorMessage = '비밀번호가 똑같지 않습니다.';
           passwordErrorMessage = '';
           emailErrorMessage = '';
-          _rePasswordBorderColor = Color(0xFFFF3333); // 재입력 비밀번호 필드의 테두리 색을 변경할 수 있습니다.
+          _rePasswordBorderColor =
+              Color(0xFFFF3333); // 재입력 비밀번호 필드의 테두리 색을 변경할 수 있습니다.
         });
         print('오류: 비밀번호가 똑같지 않습니다.');
         return;
       }
-
 
       final UserCredential userCredential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -80,10 +80,8 @@ class _SignupPageState extends State<SignupPage> {
         passwordErrorMessage = '';
       });
 
-
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => IdMaking()));
-
     } on FirebaseAuthException catch (e) {
       setState(() {
         if (e.code == 'unknown') {
@@ -91,33 +89,33 @@ class _SignupPageState extends State<SignupPage> {
               'An unknown error occurred: FirebaseError: Firebase: The email address is badly formatted. (auth/invalid-email')) {
             emailErrorMessage = '유효하지 않은 이메일 형식입니다.';
             passwordErrorMessage = '';
-            repasswordErrorMessage='';
+            repasswordErrorMessage = '';
             _emailborderColor = Color(0xFFFF3333);
             print('오류: 유효하지 않은 이메일 형식입니다.');
           } else if ((e.message ?? '').contains(
               'An unknown error occurred: FirebaseError: Firebase: Password should be at least 6 characters (auth/weak-password).')) {
             passwordErrorMessage = '비밀번호가 너무 약합니다.';
             emailErrorMessage = '';
-            repasswordErrorMessage='';
+            repasswordErrorMessage = '';
             _passwordBorderColor = Color(0xFFFF3333);
             print('오류: 비밀번호가 너무 약합니다.');
           } else if ((e.message ?? '').contains(
               'An unknown error occurred: FirebaseError: Firebase: The email address is already in use by another account. (auth/email-already-in-use)')) {
             emailErrorMessage = '이미 사용 중인 이메일입니다.';
             passwordErrorMessage = '';
-            repasswordErrorMessage='';
+            repasswordErrorMessage = '';
             _emailborderColor = Color(0xFFFF3333);
             print('오류: 이미 사용 중인 이메일입니다.');
           } else if ((e.message ?? '').contains('too-many-requests')) {
             emailErrorMessage = '너무 많은 요청이 감지되었습니다. 잠시 후 다시 시도해주세요.';
             passwordErrorMessage = '';
-            repasswordErrorMessage='';
+            repasswordErrorMessage = '';
             _emailborderColor = Color(0xFFFF3333);
             print('오류: 너무 많은 요청이 감지되었습니다. 잠시 후 다시 시도해주세요.');
           } else {
             emailErrorMessage = '알 수 없는 오류가 발생했습니다';
             passwordErrorMessage = '알 수 없는 오류가 발생했습니다';
-            repasswordErrorMessage='알 수 없는 오류가 발생했습니다';
+            repasswordErrorMessage = '알 수 없는 오류가 발생했습니다';
             print('알 수 없는 오류가 발생했습니다: ${e.message}');
             print('알 수 없는 오류가 발생했습니다: ${e.code}');
           }
@@ -127,7 +125,7 @@ class _SignupPageState extends State<SignupPage> {
       setState(() {
         emailErrorMessage = '회원가입 실패: 알 수 없는 오류가 발생했습니다.';
         passwordErrorMessage = '';
-        repasswordErrorMessage='알 수 없는 오류가 발생했습니다';
+        repasswordErrorMessage = '알 수 없는 오류가 발생했습니다';
       });
       print('오류: 회원가입 실패: 알 수 없는 오류가 발생했습니다.');
     }
@@ -170,7 +168,7 @@ class _SignupPageState extends State<SignupPage> {
   void _onFocusChange() {
     setState(() {
       _emailborderColor =
-      _emailfocusNode.hasFocus ? Color(0xFF4B0FFF) : Color(0xFFD1D1D1);
+          _emailfocusNode.hasFocus ? Color(0xFF4B0FFF) : Color(0xFFD1D1D1);
     });
   }
 
@@ -199,7 +197,7 @@ class _SignupPageState extends State<SignupPage> {
                 Container(
                   // 앱 바 - 완
                   width: double.infinity,
-                  height: 54,
+                  height: 48,
                   decoration: BoxDecoration(
                     border: Border(
                         bottom: BorderSide(
@@ -208,7 +206,7 @@ class _SignupPageState extends State<SignupPage> {
                     )),
                   ),
                   child: Padding(
-                      padding: EdgeInsets.only(top: 15, bottom: 15, left: 24),
+                      padding: EdgeInsets.only(top: 12, bottom: 12, left: 12),
                       child: Row(
                         children: [
                           Container(
@@ -232,10 +230,10 @@ class _SignupPageState extends State<SignupPage> {
                   child: Container(
                     // 중간 패널
                     width: 428,
-                    height: 586,
+                    height: 592,
                     decoration: BoxDecoration(color: Colors.white),
                     child: Padding(
-                      padding: EdgeInsets.only(left: 24, right: 24, top: 48),
+                      padding: EdgeInsets.only(left: 24, right: 24, top: 55.5),
                       child: Container(
                         height: 62,
                         width: 426,
@@ -247,11 +245,11 @@ class _SignupPageState extends State<SignupPage> {
                               '이메일 및 비밀번호 입력',
                               style: TextStyle(
                                 color: Color(0xFF3D3D3D),
-                                fontSize: 28,
+                                fontSize: 24,
                                 fontFamily: 'Pretendard',
                                 fontWeight: FontWeight.w700,
-                                height: 1.2,
-                                letterSpacing: -0.70,
+                                height: 1.3,
+                                letterSpacing: -0.60,
                               ),
                             ),
                             SizedBox(height: 10),
@@ -262,13 +260,13 @@ class _SignupPageState extends State<SignupPage> {
                                 fontSize: 14,
                                 fontFamily: 'Pretendard',
                                 fontWeight: FontWeight.w500,
-                                height: 1.28,
+                                height: 1.3,
                                 letterSpacing: -0.35,
                               ),
                             ),
                             SizedBox(height: 48),
                             Container(
-                              height: 90,
+                              height: 82,
                               width: 426,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -284,8 +282,8 @@ class _SignupPageState extends State<SignupPage> {
                                             color: Color(0xFF3D3D3D),
                                             fontSize: 14,
                                             fontFamily: 'Pretendard',
-                                            fontWeight: FontWeight.w500,
-                                            height: 1.28,
+                                            fontWeight: FontWeight.w400,
+                                            height: 1.0,
                                             letterSpacing: -0.35,
                                           ),
                                         ),
@@ -294,11 +292,11 @@ class _SignupPageState extends State<SignupPage> {
                                           '*',
                                           style: TextStyle(
                                             color: Color(0xFFFF3333),
-                                            fontSize: 12,
+                                            fontSize: 14,
                                             fontFamily: 'Pretendard',
-                                            fontWeight: FontWeight.w500,
-                                            height: 1.3,
-                                            letterSpacing: -0.30,
+                                            fontWeight: FontWeight.w400,
+                                            height: 1.0,
+                                            letterSpacing: -0.35,
                                           ),
                                         )
                                       ],
@@ -311,11 +309,12 @@ class _SignupPageState extends State<SignupPage> {
                                         height: 48,
                                         width: 426,
                                         padding: EdgeInsets.symmetric(
-                                            vertical: 10, horizontal: 12),
+                                            vertical: 12, horizontal: 12),
                                         decoration: ShapeDecoration(
                                           shape: RoundedRectangleBorder(
                                             side: BorderSide(
-                                                width: 1, color: _emailborderColor),
+                                                width: 1,
+                                                color: _emailborderColor),
                                             // 포커스 상태에 따른 테두리 색상 변경
                                             borderRadius:
                                                 BorderRadius.circular(8),
@@ -329,34 +328,38 @@ class _SignupPageState extends State<SignupPage> {
                                             color: Color(0xFF3D3D3D),
                                             fontSize: 16,
                                             fontFamily: 'Pretendard',
-                                            fontWeight: FontWeight.w600,
-                                            height: 1.5,
+                                            fontWeight: FontWeight.w500,
+                                            height: 1.0,
                                             letterSpacing: -0.40,
                                           ),
                                           textInputAction: TextInputAction.next,
                                           decoration: InputDecoration(
-                                            border: InputBorder.none,
-                                            focusedBorder: InputBorder.none,
-                                            contentPadding:
-                                                EdgeInsets.only(bottom: 10),
-                                            hintText: '이메일 입력',
-                                            hintStyle: TextStyle(
-                                              color: Color(0xFF888888),
-                                              fontSize: 16,
-                                              fontFamily: 'Pretendard',
-                                              fontWeight: FontWeight.w600,
-                                              height: 1.5,
-                                              letterSpacing: -0.40,
-                                            ),
-                                              suffixIcon: emailController.text.isNotEmpty
+                                              border: InputBorder.none,
+                                              focusedBorder: InputBorder.none,
+                                              contentPadding:
+                                                  EdgeInsets.only(bottom: 10),
+                                              hintText: '이메일 입력',
+                                              hintStyle: TextStyle(
+                                                color: Color(0xFF888888),
+                                                fontSize: 16,
+                                                fontFamily: 'Pretendard',
+                                                fontWeight: FontWeight.w500,
+                                                height: 1.0,
+                                                letterSpacing: -0.40,
+                                              ),
+                                              suffixIcon: emailController
+                                                      .text.isNotEmpty
                                                   ? IconButton(
-                                                  onPressed: (){
-                                                    emailController.clear();
-                                                    setState(() {});
-                                                  },
-                                                  padding: EdgeInsets.only(left: 60),
-                                                  icon: Icon(Icons.cancel, color: Color(0xFF888888))) : null
-                                          ),
+                                                      onPressed: () {
+                                                        emailController.clear();
+                                                        setState(() {});
+                                                      },
+                                                      padding: EdgeInsets.only(
+                                                          left: 60),
+                                                      icon: Icon(Icons.cancel,
+                                                          color: Color(
+                                                              0xFF888888)))
+                                                  : null),
                                         ),
                                       )
                                     ],
@@ -364,7 +367,7 @@ class _SignupPageState extends State<SignupPage> {
                                   SizedBox(height: 4),
                                   if (emailErrorMessage.isNotEmpty)
                                     Container(
-                                      height: 16,
+                                      height: 12,
                                       width: 426,
                                       padding:
                                           EdgeInsets.symmetric(horizontal: 4),
@@ -375,8 +378,8 @@ class _SignupPageState extends State<SignupPage> {
                                           color: Color(0xFFFF3333),
                                           fontSize: 12,
                                           fontFamily: 'Pretendard',
-                                          fontWeight: FontWeight.w500,
-                                          height: 1.33,
+                                          fontWeight: FontWeight.w400,
+                                          height: 1.0,
                                           letterSpacing: -0.30,
                                         ),
                                       ),
@@ -384,9 +387,9 @@ class _SignupPageState extends State<SignupPage> {
                                 ],
                               ),
                             ),
-                            SizedBox(height: 16),
+                            SizedBox(height: 12),
                             Container(
-                              height: 90,
+                              height: 82,
                               width: 426,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -402,8 +405,8 @@ class _SignupPageState extends State<SignupPage> {
                                             color: Color(0xFF3D3D3D),
                                             fontSize: 14,
                                             fontFamily: 'Pretendard',
-                                            fontWeight: FontWeight.w500,
-                                            height: 1.28,
+                                            fontWeight: FontWeight.w400,
+                                            height: 1.0,
                                             letterSpacing: -0.35,
                                           ),
                                         ),
@@ -412,11 +415,11 @@ class _SignupPageState extends State<SignupPage> {
                                           '*',
                                           style: TextStyle(
                                             color: Color(0xFFFF3333),
-                                            fontSize: 12,
+                                            fontSize: 14,
                                             fontFamily: 'Pretendard',
-                                            fontWeight: FontWeight.w500,
-                                            height: 1.3,
-                                            letterSpacing: -0.30,
+                                            fontWeight: FontWeight.w400,
+                                            height: 1.0,
+                                            letterSpacing: -0.35,
                                           ),
                                         )
                                       ],
@@ -429,7 +432,7 @@ class _SignupPageState extends State<SignupPage> {
                                         height: 48,
                                         width: 426,
                                         padding: EdgeInsets.symmetric(
-                                            vertical: 10, horizontal: 12),
+                                            vertical: 12, horizontal: 12),
                                         decoration: ShapeDecoration(
                                             shape: RoundedRectangleBorder(
                                           side: BorderSide(
@@ -451,8 +454,8 @@ class _SignupPageState extends State<SignupPage> {
                                               color: Color(0xFF3D3D3D),
                                               fontSize: 16,
                                               fontFamily: 'Pretendard',
-                                              fontWeight: FontWeight.w600,
-                                              height: 1.5,
+                                              fontWeight: FontWeight.w500,
+                                              height: 1.0,
                                               letterSpacing: -0.40,
                                             ),
                                             textInputAction:
@@ -468,8 +471,8 @@ class _SignupPageState extends State<SignupPage> {
                                                 color: Color(0xFF888888),
                                                 fontSize: 16,
                                                 fontFamily: 'Pretendard',
-                                                fontWeight: FontWeight.w600,
-                                                height: 1.5,
+                                                fontWeight: FontWeight.w500,
+                                                height: 1.0,
                                                 letterSpacing: -0.40,
                                               ),
                                               suffixIcon: IconButton(
@@ -479,7 +482,9 @@ class _SignupPageState extends State<SignupPage> {
                                                       : Icons.visibility,
                                                   color: Color(0xFF888888),
                                                 ),
-                                                padding: EdgeInsets.only(left: 60),//이게 들어 가서 왜 위 아래가 잡히는 지 몰겠네
+                                                padding:
+                                                    EdgeInsets.only(left: 60),
+                                                //이게 들어 가서 왜 위 아래가 잡히는 지 몰겠네
                                                 onPressed: () {
                                                   setState(() {
                                                     _isObscured = !_isObscured;
@@ -495,7 +500,7 @@ class _SignupPageState extends State<SignupPage> {
                                   SizedBox(height: 4),
                                   if (passwordErrorMessage.isNotEmpty)
                                     Container(
-                                      height: 16,
+                                      height: 12,
                                       width: 426,
                                       padding:
                                           EdgeInsets.symmetric(horizontal: 4),
@@ -505,8 +510,8 @@ class _SignupPageState extends State<SignupPage> {
                                           color: Color(0xFFF72828),
                                           fontSize: 12,
                                           fontFamily: 'Pretendard',
-                                          fontWeight: FontWeight.w500,
-                                          height: 1.33,
+                                          fontWeight: FontWeight.w400,
+                                          height: 1.0,
                                           letterSpacing: -0.30,
                                         ),
                                       ),
@@ -514,9 +519,9 @@ class _SignupPageState extends State<SignupPage> {
                                 ],
                               ),
                             ),
-                            SizedBox(height: 16),
+                            SizedBox(height: 12),
                             Container(
-                              height: 90,
+                              height: 82,
                               width: 426,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -532,8 +537,8 @@ class _SignupPageState extends State<SignupPage> {
                                             color: Color(0xFF3D3D3D),
                                             fontSize: 14,
                                             fontFamily: 'Pretendard',
-                                            fontWeight: FontWeight.w500,
-                                            height: 1.28,
+                                            fontWeight: FontWeight.w400,
+                                            height: 1.0,
                                             letterSpacing: -0.35,
                                           ),
                                         ),
@@ -542,11 +547,11 @@ class _SignupPageState extends State<SignupPage> {
                                           '*',
                                           style: TextStyle(
                                             color: Color(0xFFFF3333),
-                                            fontSize: 12,
+                                            fontSize: 14,
                                             fontFamily: 'Pretendard',
-                                            fontWeight: FontWeight.w500,
-                                            height: 1.3,
-                                            letterSpacing: -0.30,
+                                            fontWeight: FontWeight.w400,
+                                            height: 1.0,
+                                            letterSpacing: -0.35,
                                           ),
                                         )
                                       ],
@@ -559,7 +564,7 @@ class _SignupPageState extends State<SignupPage> {
                                         height: 48,
                                         width: 426,
                                         padding: EdgeInsets.symmetric(
-                                            vertical: 10, horizontal: 12),
+                                            vertical: 12, horizontal: 12),
                                         decoration: ShapeDecoration(
                                             shape: RoundedRectangleBorder(
                                           side: BorderSide(
@@ -581,8 +586,8 @@ class _SignupPageState extends State<SignupPage> {
                                                 color: Color(0xFF3D3D3D),
                                                 fontSize: 16,
                                                 fontFamily: 'Pretendard',
-                                                fontWeight: FontWeight.w600,
-                                                height: 1.5,
+                                                fontWeight: FontWeight.w500,
+                                                height: 1.0,
                                                 letterSpacing: -0.40,
                                               ),
                                               textInputAction:
@@ -597,8 +602,8 @@ class _SignupPageState extends State<SignupPage> {
                                                   color: Color(0xFF888888),
                                                   fontSize: 16,
                                                   fontFamily: 'Pretendard',
-                                                  fontWeight: FontWeight.w600,
-                                                  height: 1.5,
+                                                  fontWeight: FontWeight.w500,
+                                                  height: 1.0,
                                                   letterSpacing: -0.40,
                                                 ),
                                                 suffixIcon: IconButton(
@@ -608,7 +613,9 @@ class _SignupPageState extends State<SignupPage> {
                                                         : Icons.visibility,
                                                     color: Color(0xFF888888),
                                                   ),
-                                                  padding: EdgeInsets.only(left: 60),//이게 들어 가서 왜 위 아래가 잡히는 지 몰겠네
+                                                  padding:
+                                                      EdgeInsets.only(left: 60),
+                                                  //이게 들어 가서 왜 위 아래가 잡히는 지 몰겠네
                                                   onPressed: () {
                                                     setState(() {
                                                       isObscured = !isObscured;
@@ -622,7 +629,7 @@ class _SignupPageState extends State<SignupPage> {
                                   ),
                                   SizedBox(height: 4),
                                   Container(
-                                    height: 16,
+                                    height: 12,
                                     width: 426,
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 4),
@@ -632,8 +639,8 @@ class _SignupPageState extends State<SignupPage> {
                                         color: Color(0xFFFF3333),
                                         fontSize: 12,
                                         fontFamily: 'Pretendard',
-                                        fontWeight: FontWeight.w500,
-                                        height: 1.33,
+                                        fontWeight: FontWeight.w400,
+                                        height: 1.0,
                                         letterSpacing: -0.30,
                                       ),
                                     ),
@@ -651,7 +658,7 @@ class _SignupPageState extends State<SignupPage> {
                     // 다음 버튼 - 버튼 기능 추가
                     padding: EdgeInsets.only(left: 24, right: 24, bottom: 48),
                     child: SizedBox(
-                      height: 52,
+                      height: 48,
                       width: 428,
                       child: MaterialButton(
                         onPressed: () {
@@ -669,9 +676,9 @@ class _SignupPageState extends State<SignupPage> {
                             color: Color(0xFFF6F6F6),
                             fontFamily: 'Pretendard',
                             fontWeight: FontWeight.w700,
-                            height: 1.1,
-                            letterSpacing: -0.53,
-                            fontSize: 21,
+                            height: 1.0,
+                            letterSpacing: -0.50,
+                            fontSize: 20,
                           ),
                         ),
                       ),

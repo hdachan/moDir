@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'login_screen.dart';
+import 'package:test_qwe/Login.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -79,15 +79,15 @@ class _OnboardingPageState extends State<OnboardingPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding( // 로고 - 완
+            Padding(
+              // 로고 - 완
               padding: EdgeInsets.only(top: 22, left: 30, bottom: 4),
               child: Container(
                 width: 136,
                 height: 32,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage('assets/image/eng_logo.png')
-                  ),
+                      image: AssetImage('assets/image/eng_logo.png')),
                 ),
               ),
             ),
@@ -101,33 +101,35 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   });
                 },
                 itemBuilder: (_, i) {
-                  return SingleChildScrollView( // 이미지 + 텍스트 완료
+                  return SingleChildScrollView(
+                    // 이미지 + 텍스트 완료
                     child: Padding(
-                      padding: EdgeInsets.only(top: 118, bottom: 100), // 이미지 크기와 함께 수정 필요
+                      padding: EdgeInsets.only(top: 118, bottom: 100),
+                      // 이미지 크기와 함께 수정 필요
                       child: Column(
                         children: [
-                          Container( // 온보딩 이미지 1,2,3 - 완
+                          Container(
+                            // 온보딩 이미지 1,2,3 - 완
                             width: 271,
                             height: 201,
                             padding: EdgeInsets.symmetric(horizontal: 43),
                             decoration: BoxDecoration(
                                 image: DecorationImage(
-                                    image: AssetImage(contents[i].image)
-                                )
-                            ),
+                                    image: AssetImage(contents[i].image))),
                           ),
                           SizedBox(height: 62),
-                          SizedBox( // 온보딩 텍스트 - 완
+                          SizedBox(
+                            // 온보딩 텍스트 - 완
                             width: double.infinity,
                             child: Text(
                               textAlign: TextAlign.center,
                               contents[i].text,
                               style: const TextStyle(
                                 color: Color(0xFF3D3D3D),
-                                fontSize: 26,
+                                fontSize: 24,
                                 fontFamily: 'Pretendard',
                                 fontWeight: FontWeight.w700,
-                                letterSpacing: -0.65,
+                                letterSpacing: -0.6,
                                 height: 1.3,
                               ),
                             ),
@@ -143,11 +145,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
             Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(
-                    contents.length, (index) => buildPage(index, context)
-                )
-            ),
-            Container( // 다음, 시작하기 버튼 - 완
-              height: 52,
+                    contents.length, (index) => buildPage(index, context))),
+            Container(
+              // 다음, 시작하기 버튼 - 완
+              height: 48,
               width: double.infinity,
               margin: EdgeInsets.only(top: 24, left: 24, right: 24, bottom: 48),
               child: MaterialButton(
@@ -155,8 +156,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   if (currentIndex == contents.length - 1) {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (_) => login_screen()
-                      ),
+                      MaterialPageRoute(builder: (_) => Login()),
                     );
                   }
                   _controller.nextPage(
@@ -169,16 +169,15 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: Text( // 다음, 시작하기 버튼 텍스트 - 완
-                  currentIndex == contents.length - 1
-                      ? "시작하기"
-                      : "다음",
+                child: Text(
+                  // 다음, 시작하기 버튼 텍스트 - 완
+                  currentIndex == contents.length - 1 ? "시작하기" : "다음",
                   style: TextStyle(
                     fontFamily: 'Pretendard',
                     fontWeight: FontWeight.w700,
-                    height: 1.1,
-                    letterSpacing: -0.53,
-                    fontSize: 21,
+                    height: 1.0,
+                    letterSpacing: -0.50,
+                    fontSize: 20,
                   ),
                 ),
               ),
@@ -190,14 +189,14 @@ class _OnboardingPageState extends State<OnboardingPage> {
   }
 
   Container buildPage(int index, BuildContext context) {
-    return Container( // 코코볼 - 완
+    return Container(
+      // 코코볼 - 완
       height: 12,
       width: 12,
       margin: EdgeInsets.symmetric(horizontal: 6),
       decoration: ShapeDecoration(
         shape: OvalBorder(),
-        color:
-        currentIndex == index ? Color(0xFF4B0FFF) : Color(0xFFD1D1D1),
+        color: currentIndex == index ? Color(0xFF4B0FFF) : Color(0xFFD1D1D1),
       ),
     );
   }
