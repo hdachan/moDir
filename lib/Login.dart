@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -5,11 +6,22 @@ import 'package:test_qwe/Agree_Page.dart';
 import 'New_Password.dart';
 import 'main2.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: const FirebaseOptions(
+      apiKey: 'AIzaSyDogzalL_f-tEOiqOrBSfN8Amzc64l_nLw',
+      appId: '1:531305378076:android:31a98cc7b8d92f337b4ad9',
+      messagingSenderId: '531305378076',
+      projectId: 'modir-d8182',
+      storageBucket: 'modir-d8182.appspot.com',
+    ),
+  );
   runApp(MaterialApp(
     home: Login(),
   ));
 }
+
 
 bool _isObscured = true;
 
