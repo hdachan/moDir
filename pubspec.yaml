@@ -63,6 +63,8 @@ flutter:
     - assets/image/Oncheck_icon.png
     - assets/image/Onbluecheck_icon.png
     - assets/image/logo_10.png
+    - assets/image/next_line_S.png
+    - assets/image/logout_line_S.png
 
   uses-material-design: true
   fonts:

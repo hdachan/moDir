@@ -155,374 +155,370 @@ class _IdMaking extends State<IdMaking> {
                     decoration: BoxDecoration(color: Colors.white),
                     child: Padding(
                       padding: EdgeInsets.only(left: 24, right: 24, top: 48),
-                      child: Container(
-                        height: 62,
-                        width: 428,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              '계정을 생성해 볼까요?',
-                              style: TextStyle(
-                                color: Color(0xFF3D3D3D),
-                                fontSize: 24,
-                                fontFamily: 'Pretendard',
-                                fontWeight: FontWeight.w700,
-                                height: 1.3,
-                                letterSpacing: -0.60,
-                              ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '계정을 생성해 볼까요?',
+                            style: TextStyle(
+                              color: Color(0xFF3D3D3D),
+                              fontSize: 24,
+                              fontFamily: 'Pretendard',
+                              fontWeight: FontWeight.w700,
+                              height: 1.3,
+                              letterSpacing: -0.60,
                             ),
-                            SizedBox(height: 10),
-                            Text(
-                              '가입회원이 되면 원하는 커뮤니티 정보를 알 수 있어요.',
-                              style: TextStyle(
-                                color: Color(0xFF888888),
-                                fontSize: 14,
-                                fontFamily: 'Pretendard',
-                                fontWeight: FontWeight.w500,
-                                height: 1.3,
-                                letterSpacing: -0.35,
-                              ),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            '가입회원이 되면 원하는 커뮤니티 정보를 알 수 있어요.',
+                            style: TextStyle(
+                              color: Color(0xFF888888),
+                              fontSize: 14,
+                              fontFamily: 'Pretendard',
+                              fontWeight: FontWeight.w500,
+                              height: 1.3,
+                              letterSpacing: -0.35,
                             ),
-                            SizedBox(height: 48),
-                            Container(
-                              height: 82,
-                              width: 428,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(left: 4),
-                                    child: Row(
-                                      children: const [
-                                        Text(
-                                          '닉네임',
-                                          style: TextStyle(
-                                            color: Color(0xFF3D3D3D),
-                                            fontSize: 14,
-                                            fontFamily: 'Pretendard',
-                                            fontWeight: FontWeight.w400,
-                                            height: 1.0,
-                                            letterSpacing: -0.35,
-                                          ),
+                          ),
+                          SizedBox(height: 48),
+                          Container(
+                            height: 82,
+                            width: 428,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(left: 4),
+                                  child: Row(
+                                    children: const [
+                                      Text(
+                                        '닉네임',
+                                        style: TextStyle(
+                                          color: Color(0xFF3D3D3D),
+                                          fontSize: 14,
+                                          fontFamily: 'Pretendard',
+                                          fontWeight: FontWeight.w400,
+                                          height: 1.0,
+                                          letterSpacing: -0.35,
                                         ),
-                                        SizedBox(width: 2),
-                                        Text(
-                                          '*',
-                                          style: TextStyle(
-                                            color: Color(0xFFFF3333),
-                                            fontSize: 14,
-                                            fontFamily: 'Pretendard',
-                                            fontWeight: FontWeight.w400,
-                                            height: 1.0,
-                                            letterSpacing: -0.35,
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(height: 4),
-                                  Column(
-                                    children: [
-                                      Container(
-                                        height: 48,
-                                        width: 428,
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: 12, horizontal: 12),
-                                        decoration: ShapeDecoration(
-                                          shape: RoundedRectangleBorder(
-                                            side: BorderSide(
-                                                width: 1,
-                                                color: _nicknameborderColor),
-                                            // 포커스 상태에 따른 테두리 색상 변경
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
-                                        ),
-                                        child: TextFormField(
-                                          controller: nicknameController,
-                                          focusNode: _focusNode,
-                                          // 포커스 노드 사용
-                                          style: TextStyle(
-                                            color: Color(0xFF3D3D3D),
-                                            fontSize: 16,
-                                            fontFamily: 'Pretendard',
-                                            fontWeight: FontWeight.w500,
-                                            height: 1.0,
-                                            letterSpacing: -0.40,
-                                          ),
-                                          textInputAction: TextInputAction.next,
-                                          decoration: InputDecoration(
-                                              border: InputBorder.none,
-                                              focusedBorder: InputBorder.none,
-                                              contentPadding:
-                                                  EdgeInsets.only(bottom: 10),
-                                              hintText: '닉네임 입력',
-                                              hintStyle: TextStyle(
-                                                color: Color(0xFF888888),
-                                                fontSize: 16,
-                                                fontFamily: 'Pretendard',
-                                                fontWeight: FontWeight.w500,
-                                                height: 1.0,
-                                                letterSpacing: -0.40,
-                                              ),
-                                              suffixIcon: nicknameController
-                                                      .text.isNotEmpty
-                                                  ? IconButton(
-                                                      onPressed: () {
-                                                        nicknameController
-                                                            .clear();
-                                                        setState(() {});
-                                                      },
-                                                      padding: EdgeInsets.only(
-                                                          bottom: 10, left: 60),
-                                                      icon: Icon(Icons.cancel,
-                                                          color: Color(
-                                                              0xFF888888)))
-                                                  : null),
+                                      ),
+                                      SizedBox(width: 2),
+                                      Text(
+                                        '*',
+                                        style: TextStyle(
+                                          color: Color(0xFFFF3333),
+                                          fontSize: 14,
+                                          fontFamily: 'Pretendard',
+                                          fontWeight: FontWeight.w400,
+                                          height: 1.0,
+                                          letterSpacing: -0.35,
                                         ),
                                       )
                                     ],
                                   ),
-                                  SizedBox(height: 4),
-                                  Container(
-                                    height: 12,
-                                    width: 428,
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 4),
-                                    child: Text(
-                                      nicknameErrorMessage,
-                                      // 이전에 정의한 errorMessage 변수 사용
-                                      style: TextStyle(
-                                        color: Color(0xFFFF3333),
-                                        fontSize: 12,
-                                        fontFamily: 'Pretendard',
-                                        fontWeight: FontWeight.w400,
-                                        height: 1.0,
-                                        letterSpacing: -0.30,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(height: 12),
-                            Container(
-                              height: 82,
-                              width: 428,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(left: 4),
-                                    child: Row(
-                                      children: const [
-                                        Text(
-                                          '생년월일',
-                                          style: TextStyle(
-                                            color: Color(0xFF3D3D3D),
-                                            fontSize: 14,
-                                            fontFamily: 'Pretendard',
-                                            fontWeight: FontWeight.w400,
-                                            height: 1.0,
-                                            letterSpacing: -0.35,
-                                          ),
-                                        ),
-                                        SizedBox(width: 2),
-                                        Text(
-                                          '*',
-                                          style: TextStyle(
-                                            color: Color(0xFFFF3333),
-                                            fontSize: 14,
-                                            fontFamily: 'Pretendard',
-                                            fontWeight: FontWeight.w400,
-                                            height: 1.0,
-                                            letterSpacing: -0.35,
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(height: 4),
-                                  Column(
-                                    children: [
-                                      Container(
-                                        height: 48,
-                                        width: 428,
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: 12, horizontal: 12),
-                                        decoration: ShapeDecoration(
-                                            shape: RoundedRectangleBorder(
+                                ),
+                                SizedBox(height: 4),
+                                Column(
+                                  children: [
+                                    Container(
+                                      height: 48,
+                                      width: 428,
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 12, horizontal: 12),
+                                      decoration: ShapeDecoration(
+                                        shape: RoundedRectangleBorder(
                                           side: BorderSide(
                                               width: 1,
-                                              color: _birthDateBorderColor),
+                                              color: _nicknameborderColor),
                                           // 포커스 상태에 따른 테두리 색상 변경
                                           borderRadius:
                                               BorderRadius.circular(8),
-                                        )),
-                                        child: TextFormField(
-                                          controller: birthDateController,
-                                          focusNode: _passwordFocusNode,
-                                          // 포커스 노드 사용
-                                          style: TextStyle(
-                                            color: Color(0xFF3D3D3D),
-                                            fontSize: 16,
-                                            fontFamily: 'Pretendard',
-                                            fontWeight: FontWeight.w500,
-                                            height: 1.0,
-                                            letterSpacing: -0.40,
-                                          ),
-                                          textInputAction: TextInputAction.next,
-                                          decoration: InputDecoration(
-                                              border: InputBorder.none,
-                                              focusedBorder: InputBorder.none,
-                                              contentPadding:
-                                                  EdgeInsets.only(bottom: 10),
-                                              hintText: '생년월일 입력',
-                                              hintStyle: TextStyle(
-                                                color: Color(0xFF888888),
-                                                fontSize: 16,
-                                                fontFamily: 'Pretendard',
-                                                fontWeight: FontWeight.w500,
-                                                height: 1.0,
-                                                letterSpacing: -0.40,
-                                              ),
-                                              suffixIcon: birthDateController
-                                                      .text.isNotEmpty
-                                                  ? IconButton(
-                                                      onPressed: () {
-                                                        birthDateController
-                                                            .clear();
-                                                        setState(() {});
-                                                      },
-                                                      padding: EdgeInsets.only(
-                                                          bottom: 10, left: 60),
-                                                      icon: Icon(Icons.cancel,
-                                                          color: Color(
-                                                              0xFF888888)))
-                                                  : null),
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                  SizedBox(height: 4),
-                                  Container(
-                                    height: 12,
-                                    width: 428,
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 4),
-                                    child: Text(
-                                      birthDateErrorMexssage,
-                                      style: TextStyle(
-                                        color: Color(0xFFF72828),
-                                        fontSize: 12,
-                                        fontFamily: 'Pretendard',
-                                        fontWeight: FontWeight.w400,
-                                        height: 1.0,
-                                        letterSpacing: -0.30,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(height: 12),
-                            Container(
-                              height: 82,
-                              width: 428,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(left: 4),
-                                    child: Row(
-                                      children: const [
-                                        Text(
-                                          '성별',
-                                          style: TextStyle(
-                                            color: Color(0xFF3D3D3D),
-                                            fontSize: 14,
-                                            fontFamily: 'Pretendard',
-                                            fontWeight: FontWeight.w400,
-                                            height: 1.0,
-                                            letterSpacing: -0.35,
-                                          ),
-                                        ),
-                                        SizedBox(width: 2),
-                                        Text(
-                                          '*',
-                                          style: TextStyle(
-                                            color: Color(0xFFFF3333),
-                                            fontSize: 14,
-                                            fontFamily: 'Pretendard',
-                                            fontWeight: FontWeight.w400,
-                                            height: 1.0,
-                                            letterSpacing: -0.35,
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(height: 4),
-                                  Expanded(
-                                    child: SizedBox(
-                                      height: 48,
-                                      width: 428,
-                                      child: ToggleButtons(
-                                        onPressed: (int index) {
-                                          setState(() {
-                                            for (int i = 0;
-                                                i < _selectedGender.length;
-                                                i++) {
-                                              _selectedGender[i] = i == index;
-                                            }
-                                          });
-                                        },
-                                        textStyle: TextStyle(
+                                      child: TextFormField(
+                                        controller: nicknameController,
+                                        focusNode: _focusNode,
+                                        // 포커스 노드 사용
+                                        style: TextStyle(
+                                          color: Color(0xFF3D3D3D),
                                           fontSize: 16,
                                           fontFamily: 'Pretendard',
                                           fontWeight: FontWeight.w500,
                                           height: 1.0,
                                           letterSpacing: -0.40,
                                         ),
-                                        borderColor: Color(0xFFD1D1D1),
-                                        color: Color(0xFF888888),
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(8)),
-                                        selectedBorderColor: Color(0xFF4B0FFF),
-                                        selectedColor: Color(0xFF4B0FFF),
-                                        isSelected: _selectedGender,
-                                        children: gender,
+                                        textInputAction: TextInputAction.next,
+                                        decoration: InputDecoration(
+                                            border: InputBorder.none,
+                                            focusedBorder: InputBorder.none,
+                                            contentPadding:
+                                                EdgeInsets.only(bottom: 10),
+                                            hintText: '닉네임 입력',
+                                            hintStyle: TextStyle(
+                                              color: Color(0xFF888888),
+                                              fontSize: 16,
+                                              fontFamily: 'Pretendard',
+                                              fontWeight: FontWeight.w500,
+                                              height: 1.0,
+                                              letterSpacing: -0.40,
+                                            ),
+                                            suffixIcon: nicknameController
+                                                    .text.isNotEmpty
+                                                ? IconButton(
+                                                    onPressed: () {
+                                                      nicknameController
+                                                          .clear();
+                                                      setState(() {});
+                                                    },
+                                                    padding: EdgeInsets.only(
+                                                        bottom: 10, left: 60),
+                                                    icon: Icon(Icons.cancel,
+                                                        color: Color(
+                                                            0xFF888888)))
+                                                : null),
                                       ),
+                                    )
+                                  ],
+                                ),
+                                SizedBox(height: 4),
+                                Container(
+                                  height: 12,
+                                  width: 428,
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 4),
+                                  child: Text(
+                                    nicknameErrorMessage,
+                                    // 이전에 정의한 errorMessage 변수 사용
+                                    style: TextStyle(
+                                      color: Color(0xFFFF3333),
+                                      fontSize: 12,
+                                      fontFamily: 'Pretendard',
+                                      fontWeight: FontWeight.w400,
+                                      height: 1.0,
+                                      letterSpacing: -0.30,
                                     ),
                                   ),
-                                  SizedBox(height: 4),
-                                  Container(
-                                    height: 12,
-                                    width: 426,
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 4),
-                                    child: Text(
-                                      '성별을 선택해 주세요',
-                                      style: TextStyle(
-                                        color: Color(0xFFB0B0B0),
-                                        fontSize: 12,
-                                        fontFamily: 'Pretendard',
-                                        fontWeight: FontWeight.w400,
-                                        height: 1.0,
-                                        letterSpacing: -0.35,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                          SizedBox(height: 12),
+                          Container(
+                            height: 82,
+                            width: 428,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(left: 4),
+                                  child: Row(
+                                    children: const [
+                                      Text(
+                                        '생년월일',
+                                        style: TextStyle(
+                                          color: Color(0xFF3D3D3D),
+                                          fontSize: 14,
+                                          fontFamily: 'Pretendard',
+                                          fontWeight: FontWeight.w400,
+                                          height: 1.0,
+                                          letterSpacing: -0.35,
+                                        ),
+                                      ),
+                                      SizedBox(width: 2),
+                                      Text(
+                                        '*',
+                                        style: TextStyle(
+                                          color: Color(0xFFFF3333),
+                                          fontSize: 14,
+                                          fontFamily: 'Pretendard',
+                                          fontWeight: FontWeight.w400,
+                                          height: 1.0,
+                                          letterSpacing: -0.35,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(height: 4),
+                                Column(
+                                  children: [
+                                    Container(
+                                      height: 48,
+                                      width: 428,
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 12, horizontal: 12),
+                                      decoration: ShapeDecoration(
+                                          shape: RoundedRectangleBorder(
+                                        side: BorderSide(
+                                            width: 1,
+                                            color: _birthDateBorderColor),
+                                        // 포커스 상태에 따른 테두리 색상 변경
+                                        borderRadius:
+                                            BorderRadius.circular(8),
+                                      )),
+                                      child: TextFormField(
+                                        controller: birthDateController,
+                                        focusNode: _passwordFocusNode,
+                                        // 포커스 노드 사용
+                                        style: TextStyle(
+                                          color: Color(0xFF3D3D3D),
+                                          fontSize: 16,
+                                          fontFamily: 'Pretendard',
+                                          fontWeight: FontWeight.w500,
+                                          height: 1.0,
+                                          letterSpacing: -0.40,
+                                        ),
+                                        textInputAction: TextInputAction.next,
+                                        decoration: InputDecoration(
+                                            border: InputBorder.none,
+                                            focusedBorder: InputBorder.none,
+                                            contentPadding:
+                                                EdgeInsets.only(bottom: 10),
+                                            hintText: '생년월일 입력',
+                                            hintStyle: TextStyle(
+                                              color: Color(0xFF888888),
+                                              fontSize: 16,
+                                              fontFamily: 'Pretendard',
+                                              fontWeight: FontWeight.w500,
+                                              height: 1.0,
+                                              letterSpacing: -0.40,
+                                            ),
+                                            suffixIcon: birthDateController
+                                                    .text.isNotEmpty
+                                                ? IconButton(
+                                                    onPressed: () {
+                                                      birthDateController
+                                                          .clear();
+                                                      setState(() {});
+                                                    },
+                                                    padding: EdgeInsets.only(
+                                                        bottom: 10, left: 60),
+                                                    icon: Icon(Icons.cancel,
+                                                        color: Color(
+                                                            0xFF888888)))
+                                                : null),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 4),
+                                Container(
+                                  height: 12,
+                                  width: 428,
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 4),
+                                  child: Text(
+                                    birthDateErrorMexssage,
+                                    style: TextStyle(
+                                      color: Color(0xFFF72828),
+                                      fontSize: 12,
+                                      fontFamily: 'Pretendard',
+                                      fontWeight: FontWeight.w400,
+                                      height: 1.0,
+                                      letterSpacing: -0.30,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 12),
+                          Container(
+                            height: 82,
+                            width: 428,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(left: 4),
+                                  child: Row(
+                                    children: const [
+                                      Text(
+                                        '성별',
+                                        style: TextStyle(
+                                          color: Color(0xFF3D3D3D),
+                                          fontSize: 14,
+                                          fontFamily: 'Pretendard',
+                                          fontWeight: FontWeight.w400,
+                                          height: 1.0,
+                                          letterSpacing: -0.35,
+                                        ),
+                                      ),
+                                      SizedBox(width: 2),
+                                      Text(
+                                        '*',
+                                        style: TextStyle(
+                                          color: Color(0xFFFF3333),
+                                          fontSize: 14,
+                                          fontFamily: 'Pretendard',
+                                          fontWeight: FontWeight.w400,
+                                          height: 1.0,
+                                          letterSpacing: -0.35,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(height: 4),
+                                Expanded(
+                                  child: SizedBox(
+                                    height: 48,
+                                    width: 428,
+                                    child: ToggleButtons(
+                                      onPressed: (int index) {
+                                        setState(() {
+                                          for (int i = 0;
+                                              i < _selectedGender.length;
+                                              i++) {
+                                            _selectedGender[i] = i == index;
+                                          }
+                                        });
+                                      },
+                                      textStyle: TextStyle(
+                                        fontSize: 16,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w500,
+                                        height: 1.0,
+                                        letterSpacing: -0.40,
+                                      ),
+                                      borderColor: Color(0xFFD1D1D1),
+                                      color: Color(0xFF888888),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(8)),
+                                      selectedBorderColor: Color(0xFF4B0FFF),
+                                      selectedColor: Color(0xFF4B0FFF),
+                                      isSelected: _selectedGender,
+                                      children: gender,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 4),
+                                Container(
+                                  height: 12,
+                                  width: 426,
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 4),
+                                  child: Text(
+                                    '성별을 선택해 주세요',
+                                    style: TextStyle(
+                                      color: Color(0xFFB0B0B0),
+                                      fontSize: 12,
+                                      fontFamily: 'Pretendard',
+                                      fontWeight: FontWeight.w400,
+                                      height: 1.0,
+                                      letterSpacing: -0.35,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
