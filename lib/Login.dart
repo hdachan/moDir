@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:test_qwe/Agree_Page.dart';
 import 'New_Password.dart';
+import 'User_Setting.dart';
 import 'main2.dart';
 
 void main() async {
@@ -247,7 +248,7 @@ class _LoginState extends State<Login> {
                         width: 428,
                         padding: EdgeInsets.symmetric(horizontal: 4),
                         child: Text(
-                          errorMessage,
+                          '임시 오류 메세지',
                           style: TextStyle(
                             color: Color(0xFFF72828),
                             fontSize: 12,
@@ -267,7 +268,7 @@ class _LoginState extends State<Login> {
                             //여기에 유저 아이디 받는? 코드 들어감
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => Main2()),
+                              MaterialPageRoute(builder: (context) => UserSetting()),
                             );
                           },
                           color: Color(0xFF4B0FFF),
@@ -298,7 +299,7 @@ class _LoginState extends State<Login> {
                         children: [
                           Container(
                             width: 135,
-                            height: 24,
+                            height: 14,
                             child: Row(
                               children: [
                                 Container(
@@ -330,7 +331,7 @@ class _LoginState extends State<Login> {
                                     ),
                                   ),
                                 ),
-                                SizedBox(width: 16),
+                                SizedBox(width: 12),
                                 Container(
                                   width: 75,
                                   height: 24,
