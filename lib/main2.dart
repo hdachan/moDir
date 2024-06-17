@@ -2,8 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+
 // 성공화면
 class Main2 extends StatelessWidget {
+
   String uid = FirebaseAuth.instance.currentUser?.uid ?? '';
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _contentController = TextEditingController();
@@ -39,6 +41,8 @@ class Main2 extends StatelessWidget {
     }
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -52,8 +56,7 @@ class Main2 extends StatelessWidget {
             children: <Widget>[
               UserAccountsDrawerHeader(
                 accountName: Text('사용자 이름 또는 이메일'),
-                accountEmail:
-                    Text(FirebaseAuth.instance.currentUser?.email ?? 'UID 없음'),
+                accountEmail: Text(FirebaseAuth.instance.currentUser?.email ?? 'UID 없음'),
                 currentAccountPicture: CircleAvatar(
                   child: Icon(Icons.account_circle),
                 ),
@@ -113,6 +116,10 @@ class Main2 extends StatelessWidget {
             ),
           ),
         ),
+
+
+
+
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             showModalBottomSheet(
@@ -122,8 +129,7 @@ class Main2 extends StatelessWidget {
                 height: 300, // 패널의 높이를 조금 더 늘려서 버튼에 공간을 만듭니다.
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  // Column의 크기를 내용물에 맞게 조절합니다.
+                  mainAxisSize: MainAxisSize.min, // Column의 크기를 내용물에 맞게 조절합니다.
                   children: <Widget>[
                     TextField(
                       controller: _titleController,
@@ -157,6 +163,10 @@ class Main2 extends StatelessWidget {
           },
           child: Icon(Icons.edit),
         ),
+
+
+
+
       ),
     );
   }

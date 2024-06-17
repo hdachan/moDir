@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:test_qwe/Agree_Page.dart';
 import 'New_Password.dart';
-import 'User_Setting.dart';
 import 'main2.dart';
 
 void main() async {
@@ -32,79 +31,68 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  final _textController = TextEditingController();
-  final _textController2 = TextEditingController();
 
   String errorMessage = '';
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  final _textController = TextEditingController();
+  final _textController2 = TextEditingController();
 
-  Future<UserCredential?> signInWithEmailAndPassword(
-      String email, String password) async {
-    // 이메일 형식 검사
-    String pattern = r'^[^@]+@[^@]+\.[^@]+$';
-    RegExp regex = RegExp(pattern);
-
-    if (!regex.hasMatch(email)) {
-      print('올바른 이메일 형식이 아닙니다.');
-      return null;
-    }
-
-    String passwordPattern =
-        r'^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
-    RegExp passwordRegex = RegExp(passwordPattern);
-    if (!passwordRegex.hasMatch(password)) {
-      print('비밀번호는 최소 한 개의 소문자, 숫자, 특수문자를 포함해야 합니다.');
-      return null;
-    }
-
-    // 비밀번호 강도 검사
-    if (password.length < 8) {
-      print('비밀번호는 최소 8자 이상이어야 합니다.');
-      return null;
-    }
-
-    // 이메일과 비밀번호 빈 문자열 검사
-    if (email.isEmpty || password.isEmpty) {
-      errorMessage = '이메일과 비밀번호는 필수 입력 사항입니다.';
-      print('이메일과 비밀번호는 필수 입력 사항입니다.');
-      return null;
-    }
-
+  Future<UserCredential?> signIn(String email, String password) async {
     try {
-      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
+      final UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email.trim(),
+        password: password.trim(),
+
+
       );
       return userCredential;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'unknown') {
-        if ((e.message ?? '').contains('auth/user-disabled')) {
-          errorMessage = '해당 사용자 계정은 비활성화 상태입니다.';
-          print('해당 사용자 계정은 비활성화 상태입니다.');
-        } else if ((e.message ?? '').contains('auth/invalid-credential')) {
-          errorMessage = '이메일 또는 비밀번호 정보가 잘못되었습니다.';
-          print('이메일 또는 비밀번호 정보가 잘못되었습니다.');
-        } else if ((e.message ?? '').contains('auth/auth/too-many-requests')) {
-          errorMessage = '너무 많은 요청이 발생하였습니다.';
-          print('너무 많은 요청이 발생하였습니다.');
-        } else if ((e.message ?? '').contains('auth/network-request-failed')) {
-          errorMessage = '네트워크 오류가 발생하였습니다.';
-          print('네트워크 오류가 발생하였습니다.');
-        } else {
-          print('알 수 없는 오류가 발생했습니다: ${e.message}');
+        if ((e.message ?? '').contains(
+            'An unknown error occurred: FirebaseError: Firebase: The email address is badly formatted. (auth/invalid-email)')) {
+          errorMessage = '이메일 형식이 상태가 안좋네요';
+          print('이메일 형식이 상태가 안좋네요');
+        } else if ((e.message ?? '').contains(
+            'An unknown error occurred: FirebaseError: Firebase: A non-empty password must be provided (auth/missing-password).')) {
+          errorMessage = '비밀번호 상태가 안좋아요';
+          print('비밀번호 상태가 안좋아요');
+        } else if ((e.message ?? '').contains(
+            'An unknown error occurred: FirebaseError: Firebase: Password should be at least 6 characters (auth/weak-password)')) {
+          errorMessage = '암호는 6자 이상이어야 합니다';
+          print('암호는 6자 이상이어야 합니다');
+        } else if ((e.message ?? '').contains(
+            'An unknown error occurred: FirebaseError: Firebase: The supplied auth credential is incorrect, malformed or has expired. (auth/invalid-credential)')) {
+          errorMessage = '제공된 인증 자격 증명이 잘못되었거나 형식이 잘못되었습니다';
+          print('제공된 인증 자격 증명이 잘못되었거나 형식이 잘못되었습니다');
+        } else if ((e.message ?? '').contains(
+            'An unknown error occurred: FirebaseError: Firebase: The user account has been disabled by an administrator. (auth/user-disabled)')) {
+          errorMessage = '계정이 비활성화 되었습니다.';
+          print('계정이 비활성화 되었습니다.');
         }
-        setState(() {}); // 상태를 업데이트하여 UI를 다시 그립니다.
+        else {
+          print('오류 코드: ${e.code}');
+          print('오류 메시지: ${e.message}');
+        }
+      } else {
+        if (e.code == 'user-not-found') {
+          errorMessage = '사용자를 찾을 수 없습니다';
+          print('사용자를 찾을 수 없습니다');
+        } else if (e.code == 'wrong-password') {
+          errorMessage = '잘못된 비밀번호입니다';
+          print('잘못된 비밀번호입니다');
+        } else {
+          print('오류 코드: ${e.code}');
+          print('오류 메시지: ${e.message}');
+        }
       }
-      print('오류 코드: ${e.code}');
-      print('오류 메시지: ${e.message}');
+      setState(() {}); // 상태를 업데이트하여 UI를 다시 그립니다.
       return null;
     } catch (e) {
       print('로그인 도중 예상치 못한 오류가 발생했습니다: $e');
       return null;
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -159,7 +147,7 @@ class _LoginState extends State<Login> {
                               border: InputBorder.none,
                               focusedBorder: InputBorder.none,
                               contentPadding: EdgeInsets.only(bottom: 10),
-                              hintText: '이메일',
+                              hintText: '이메일입니다.',
                               hintStyle: TextStyle(
                                 color: Color(0xFF888888),
                                 fontSize: 16,
@@ -243,12 +231,13 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                       SizedBox(height: 4),
+                      if (errorMessage.isNotEmpty)
                       Container(
                         height: 12,
                         width: 428,
                         padding: EdgeInsets.symmetric(horizontal: 4),
                         child: Text(
-                          '임시 오류 메세지',
+                          errorMessage,
                           style: TextStyle(
                             color: Color(0xFFF72828),
                             fontSize: 12,
@@ -264,13 +253,27 @@ class _LoginState extends State<Login> {
                         height: 48,
                         width: 428,
                         child: MaterialButton(
-                          onPressed: () {
-                            //여기에 유저 아이디 받는? 코드 들어감
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => UserSetting()),
-                            );
+                          onPressed: () async {
+                            UserCredential? user =
+                            await signIn(
+                                _textController.text,
+                                _textController2.text);
+                            if (user != null) {
+                              print("Login Successful");
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Main2()),
+                              );
+                            } else {
+                              print("Login Failed");
+                            }
                           },
+                          // onPressed: () {
+                          //   String email = _textController.text;
+                          //   String password = _textController2.text;
+                          //   signIn(email, password);
+                          // },
                           color: Color(0xFF4B0FFF),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
