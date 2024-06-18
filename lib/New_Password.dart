@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 // 인증메일 받기
 void main() {
@@ -46,12 +47,31 @@ class _NewPassword extends State<NewPassword> {
       if (emailController.text.trim().isEmpty) {
         setState(() {
           _emailborderColor = Color(0xFFFF3333);
+          emailErrorMessage = '이메일을 입력해주세요.';
           print('오류: 이메일을 입력해주세요.');
-          return;
         });
+        return;
       }
-      await FirebaseAuth.instance
-          .sendPasswordResetEmail(email: emailController.text.trim());
+
+      String email = emailController.text.trim();
+
+      // Firestore에서 이메일 존재 여부 확인
+      var userQuery = await FirebaseFirestore.instance
+          .collection('users')
+          .where('email', isEqualTo: email)
+          .get();
+
+      if (userQuery.docs.isEmpty) {
+        setState(() {
+          emailErrorMessage = '해당 이메일로 등록된 계정이 없습니다.';
+          _emailborderColor = Color(0xFFFF3333);
+          print('해당 이메일로 등록된 계정이 없습니다.');
+        });
+        return;
+      }
+
+      // 비밀번호 재설정 이메일 전송
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
       print('비밀번호 재설정 이메일이 전송되었습니다.');
     } on FirebaseAuthException catch (e) {
       setState(() {
@@ -75,6 +95,7 @@ class _NewPassword extends State<NewPassword> {
       print('비밀번호 재설정 이메일 전송 실패: $e');
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
