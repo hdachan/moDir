@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:test_qwe/Agree_Page.dart';
 import 'New_Password.dart';
 import 'main2.dart';
+import 'bottom_bar.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -262,8 +263,7 @@ class _LoginState extends State<Login> {
                               print("Login Successful");
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(
-                                    builder: (context) => Main2()),
+                                MaterialPageRoute(builder: (context) => BottomBar()), // BottomBar로 이동
                               );
                             } else {
                               print("Login Failed");
