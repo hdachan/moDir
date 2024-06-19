@@ -38,6 +38,44 @@ class _LoginState extends State<Login> {
   final _textController = TextEditingController();
   final _textController2 = TextEditingController();
 
+  final FocusNode _emailfocusNode = FocusNode();
+  Color _emailborderColor = Color(0xFFD1D1D1); // 기본 테두리 색상
+
+  final FocusNode _passwordFocusNode = FocusNode();
+  Color _passwordBorderColor = Color(0xFFD1D1D1); // 기본 테두리 색상
+
+
+  @override
+  void initState() {
+    super.initState();
+    _emailfocusNode.addListener(_onFocusChange);
+    _passwordFocusNode.addListener(_onPasswordFocusChange);
+  }
+
+  @override
+  void dispose() {
+    _emailfocusNode.removeListener(_onFocusChange);
+    _emailfocusNode.dispose();
+    _passwordFocusNode.removeListener(_onPasswordFocusChange);
+    _passwordFocusNode.dispose();
+    super.dispose();
+  }
+
+  void _onFocusChange() {
+    setState(() {
+      _emailborderColor =
+      _emailfocusNode.hasFocus ? Color(0xFF4B0FFF) : Color(0xFFD1D1D1);
+    });
+  }
+
+  void _onPasswordFocusChange() {
+    setState(() {
+      _passwordBorderColor =
+      _passwordFocusNode.hasFocus ? Color(0xFF4B0FFF) : Color(0xFFD1D1D1);
+    });
+  }
+
+
   Future<UserCredential?> signIn(String email, String password) async {
     try {
       final UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -52,22 +90,28 @@ class _LoginState extends State<Login> {
         if ((e.message ?? '').contains(
             'An unknown error occurred: FirebaseError: Firebase: The email address is badly formatted. (auth/invalid-email)')) {
           errorMessage = '이메일 형식이 상태가 안좋네요';
+          _emailborderColor = Color(0xFFFF3333);
           print('이메일 형식이 상태가 안좋네요');
         } else if ((e.message ?? '').contains(
             'An unknown error occurred: FirebaseError: Firebase: A non-empty password must be provided (auth/missing-password).')) {
           errorMessage = '비밀번호 상태가 안좋아요';
+          _passwordBorderColor = Color(0xFFFF3333);
           print('비밀번호 상태가 안좋아요');
         } else if ((e.message ?? '').contains(
             'An unknown error occurred: FirebaseError: Firebase: Password should be at least 6 characters (auth/weak-password)')) {
           errorMessage = '암호는 6자 이상이어야 합니다';
+          _passwordBorderColor = Color(0xFFFF3333);
           print('암호는 6자 이상이어야 합니다');
         } else if ((e.message ?? '').contains(
             'An unknown error occurred: FirebaseError: Firebase: The supplied auth credential is incorrect, malformed or has expired. (auth/invalid-credential)')) {
           errorMessage = '제공된 인증 자격 증명이 잘못되었거나 형식이 잘못되었습니다';
+          _emailborderColor = Color(0xFFFF3333);
+          _passwordBorderColor = Color(0xFFFF3333);
           print('제공된 인증 자격 증명이 잘못되었거나 형식이 잘못되었습니다');
         } else if ((e.message ?? '').contains(
             'An unknown error occurred: FirebaseError: Firebase: The user account has been disabled by an administrator. (auth/user-disabled)')) {
           errorMessage = '계정이 비활성화 되었습니다.';
+          _emailborderColor = Color(0xFFFF3333);
           print('계정이 비활성화 되었습니다.');
         }
         else {
@@ -126,12 +170,13 @@ class _LoginState extends State<Login> {
                           shape: RoundedRectangleBorder(
                               side: BorderSide(
                                 width: 1,
-                                color: Color(0xFFD1D1D1),
+                                color: _emailborderColor,
                               ),
                               borderRadius: BorderRadius.circular(8)),
                         ),
                         child: TextFormField(
                           controller: _textController,
+                          focusNode: _emailfocusNode,
                           onChanged: (text) {
                             setState(() {});
                           },
@@ -180,12 +225,13 @@ class _LoginState extends State<Login> {
                           shape: RoundedRectangleBorder(
                               side: BorderSide(
                                 width: 1,
-                                color: Color(0xFFD1D1D1),
+                                color: _passwordBorderColor,
                               ),
                               borderRadius: BorderRadius.circular(8)),
                         ),
                         child: TextFormField(
                           controller: _textController2,
+                          focusNode: _passwordFocusNode,
                           onChanged: (text) {
                             setState(() {});
                           },
