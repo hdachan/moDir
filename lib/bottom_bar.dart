@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:test_qwe/Login.dart';
 import 'Change_Password.dart';
 
 
@@ -20,9 +23,6 @@ class _BottomBarState  extends State<BottomBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('앱바 제목'), // 상단바 제목
-      ),
       body: _pages[_currentIndex], // 현재 선택된 페이지를 표시
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex, // 현재 선택된 인덱스
@@ -63,30 +63,140 @@ class HomeScreen extends StatelessWidget {
     return DefaultTabController(
       length: 3, // 탭의 수
       child: Scaffold(
-        body: Column(
+        appBar: AppBar(
+          bottom: TabBar(
+            tabs: [
+              Tab(text: '메인'),
+              Tab(text: '커뮤니티'),
+              Tab(text: '매거진'),
+            ],
+          ),
+        ),
+        body: TabBarView(
           children: [
-            TabBar(
-              tabs: [
-                Tab(text: '메인'),
-                Tab(text: '커뮤니티'),
-                Tab(text: '매거진'),
+            Center(child: Text('메인 화면 내용')),
+            Stack(
+              children: [
+                StreamBuilder(
+                  stream: FirebaseFirestore.instance.collection('posts').snapshots(),
+                  builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (!snapshot.hasData) {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                    return ListView(
+                      children: snapshot.data!.docs.map((document) {
+                        return ListTile(
+                          title: Text(document['title']),
+                          subtitle: Text(document['content']),
+                        );
+                      }).toList(),
+                    );
+                  },
+                ),
+                Positioned(
+                  bottom: 16.0,
+                  right: 16.0,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Material(
+                        color: Colors.transparent,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50.0),
+                        ),
+                        child: InkWell(
+                          onTap: () {
+                            // 화살표 버튼 클릭 시 동작
+                          },
+                          borderRadius: BorderRadius.circular(50.0),
+                          child: Container(
+                            width: 56.0,
+                            height: 56.0,
+                            decoration: BoxDecoration(
+                              color: Color(0x80000000), // #0000004D
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(Icons.arrow_upward, color: Colors.white),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 8.0),
+                      Material(
+                        color: Colors.transparent,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50.0),
+                        ),
+                        child: InkWell(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                TextEditingController titleController = TextEditingController();
+                                TextEditingController contentController = TextEditingController();
+
+                                return AlertDialog(
+                                  title: Text('새 글 작성'),
+                                  content: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      TextField(
+                                        controller: titleController,
+                                        decoration: InputDecoration(labelText: '제목'),
+                                      ),
+                                      TextField(
+                                        controller: contentController,
+                                        decoration: InputDecoration(labelText: '내용'),
+                                      ),
+                                    ],
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text('취소'),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        FirebaseFirestore.instance.collection('posts').add({
+                                          'title': titleController.text,
+                                          'content': contentController.text,
+                                        });
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text('저장'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                          borderRadius: BorderRadius.circular(50.0),
+                          child: Container(
+                            width: 56.0,
+                            height: 56.0,
+                            decoration: BoxDecoration(
+                              color: Color(0xFF4F4F4F), // #4F4F4F
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(Icons.edit, color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
-            Expanded(
-              child: TabBarView(
-                children: [
-                  Center(child: Text('메인 화면 내용')),
-                  Center(child: Text('커뮤니티 화면 내용')),
-                  Center(child: Text('매거진 화면 내용')),
-                ],
-              ),
-            ),
+            Center(child: Text('매거진 화면 내용')),
           ],
         ),
       ),
     );
   }
 }
+
+
 
 // 기능 화면 위젯
 class FeatureScreen extends StatelessWidget {
@@ -276,7 +386,13 @@ class MyPageScreen extends StatelessWidget {
                       ),
                     ),
                     MaterialButton(
-                      onPressed: (){
+                      onPressed: () async {
+                        await FirebaseAuth.instance.signOut();
+                        // 로그아웃 후 이동할 화면
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Login()), // BottomBar로 이동
+                        );
                       },
                       height: 48,
                       padding: EdgeInsets.zero,
@@ -448,7 +564,22 @@ class MyPageScreen extends StatelessWidget {
                     ),
                     Container(height: 24, color: Color(0xFFF6F6F6)),
                     MaterialButton(
-                      onPressed: (){
+                      onPressed: () async {
+                        User? user = FirebaseAuth.instance.currentUser;
+
+                        if (user != null) {
+                          try {
+                            await user.delete();
+                            // 회원 탈퇴 후 이동할 화면이 있다면 여기에 추가
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => Login()), // BottomBar로 이동
+                            );;
+                          } catch (e) {
+                            // 오류 처리
+                            print('회원 탈퇴 오류: $e');
+                          }
+                        }
                       },
                       height: 48,
                       padding: EdgeInsets.zero,
