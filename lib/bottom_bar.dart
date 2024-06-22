@@ -78,7 +78,10 @@ class HomeScreen extends StatelessWidget {
             Stack(
               children: [
                 StreamBuilder(
-                  stream: FirebaseFirestore.instance.collection('posts').snapshots(),
+                  stream: FirebaseFirestore.instance
+                      .collection('posts')
+                      .orderBy('timestamp', descending: true) // 타임스탬프 기준으로 정렬
+                      .snapshots(),
                   builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (!snapshot.hasData) {
                       return Center(child: CircularProgressIndicator());
@@ -161,6 +164,7 @@ class HomeScreen extends StatelessWidget {
                                         FirebaseFirestore.instance.collection('posts').add({
                                           'title': titleController.text,
                                           'content': contentController.text,
+                                          'timestamp': FieldValue.serverTimestamp(), // 타임스탬프 추가
                                         });
                                         Navigator.of(context).pop();
                                       },
@@ -195,6 +199,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+
 
 
 
