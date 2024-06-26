@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 // 별명입력하기
@@ -47,11 +48,24 @@ class _IdMaking extends State<IdMaking> {
       return;
     }
 
-    // Firestore에 사용자 정보 저장
-    await FirebaseFirestore.instance.collection('users').add({
-      'nickname': nickname,
-      'birthDate': birthDate,
-    });
+    try {
+      // 현재 로그인한 사용자의 UID 가져오기
+      final User? user = FirebaseAuth.instance.currentUser;
+
+      if (user != null) {
+        // UID를 사용하여 Firestore에서 문서 업데이트
+        await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+          'nickname': nickname,
+          'birthDate': birthDate,
+        }, SetOptions(merge: true)); // merge 옵션을 사용하여 기존 데이터를 덮어쓰지 않고 병합
+
+        print('사용자 정보가 성공적으로 업데이트되었습니다.');
+      } else {
+        print('오류: 사용자가 로그인되어 있지 않습니다.');
+      }
+    } catch (e) {
+      print('오류: 사용자 정보를 업데이트하는 데 실패했습니다. ${e.toString()}');
+    }
   }
 
   final FocusNode _focusNode = FocusNode();

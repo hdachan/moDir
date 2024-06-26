@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -21,6 +22,7 @@ class _SignupPageState extends State<SignupPage> {
   String passwordErrorMessage = '';
   String repasswordErrorMessage = '';
 
+
   Future<void> signUp() async {
     try {
       if (emailController.text.trim().isEmpty) {
@@ -30,7 +32,7 @@ class _SignupPageState extends State<SignupPage> {
           repasswordErrorMessage = '';
           _emailborderColor = Color(0xFFFF3333);
         });
-        print('오류: 이메일을 입력해주세요.'); // 여기에 print 추가
+        print('오류: 이메일을 입력해주세요.');
         return;
       }
       if (passwordController.text.trim().isEmpty) {
@@ -40,7 +42,7 @@ class _SignupPageState extends State<SignupPage> {
           repasswordErrorMessage = '';
           _passwordBorderColor = Color(0xFFFF3333);
         });
-        print('오류: 비밀번호를 입력해주세요.'); // 여기에 print 추가
+        print('오류: 비밀번호를 입력해주세요.');
         return;
       }
 
@@ -51,7 +53,7 @@ class _SignupPageState extends State<SignupPage> {
           emailErrorMessage = '';
           _rePasswordBorderColor = Color(0xFFFF3333);
         });
-        print('오류: 비밀번호를 재입력해주세요.'); // 여기에 print 추가
+        print('오류: 비밀번호를 재입력해주세요.');
         return;
       }
 
@@ -61,19 +63,24 @@ class _SignupPageState extends State<SignupPage> {
           repasswordErrorMessage = '비밀번호가 똑같지 않습니다.';
           passwordErrorMessage = '';
           emailErrorMessage = '';
-          _rePasswordBorderColor =
-              Color(0xFFFF3333); // 재입력 비밀번호 필드의 테두리 색을 변경할 수 있습니다.
+          _rePasswordBorderColor = Color(0xFFFF3333);
         });
         print('오류: 비밀번호가 똑같지 않습니다.');
         return;
       }
 
       final UserCredential userCredential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
-      print('계정 생성 성공: ${userCredential.user}'); // 계정 생성 성공 시 콘솔에 출력
+      print('계정 생성 성공: ${userCredential.user}');
+
+      // Firestore에 이메일 저장
+      await FirebaseFirestore.instance.collection('users').doc(userCredential.user?.uid).set({
+        'email': emailController.text.trim(),
+      });
+      print('이메일이 Firestore에 저장되었습니다.');
 
       setState(() {
         emailErrorMessage = '';
@@ -130,6 +137,8 @@ class _SignupPageState extends State<SignupPage> {
       print('오류: 회원가입 실패: 알 수 없는 오류가 발생했습니다.');
     }
   }
+
+
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();

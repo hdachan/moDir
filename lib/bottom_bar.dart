@@ -1,8 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:test_qwe/Login.dart';
 import 'Change_Password.dart';
+
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 
 class BottomBar extends StatefulWidget {
@@ -56,12 +61,12 @@ class _BottomBarState  extends State<BottomBar> {
   }
 }
 
-// 홈 화면 위젯
+//커뮤니티 안에서 탭
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3, // 탭의 수
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
           bottom: TabBar(
@@ -75,123 +80,7 @@ class HomeScreen extends StatelessWidget {
         body: TabBarView(
           children: [
             Center(child: Text('메인 화면 내용')),
-            Stack(
-              children: [
-                StreamBuilder(
-                  stream: FirebaseFirestore.instance
-                      .collection('posts')
-                      .orderBy('timestamp', descending: true) // 타임스탬프 기준으로 정렬
-                      .snapshots(),
-                  builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                    if (!snapshot.hasData) {
-                      return Center(child: CircularProgressIndicator());
-                    }
-                    return ListView(
-                      children: snapshot.data!.docs.map((document) {
-                        return ListTile(
-                          title: Text(document['title']),
-                          subtitle: Text(document['content']),
-                        );
-                      }).toList(),
-                    );
-                  },
-                ),
-                Positioned(
-                  bottom: 16.0,
-                  right: 16.0,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Material(
-                        color: Colors.transparent,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50.0),
-                        ),
-                        child: InkWell(
-                          onTap: () {
-                            // 화살표 버튼 클릭 시 동작
-                          },
-                          borderRadius: BorderRadius.circular(50.0),
-                          child: Container(
-                            width: 56.0,
-                            height: 56.0,
-                            decoration: BoxDecoration(
-                              color: Color(0x80000000), // #0000004D
-                              shape: BoxShape.circle,
-                            ),
-                            child: Icon(Icons.arrow_upward, color: Colors.white),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 8.0),
-                      Material(
-                        color: Colors.transparent,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50.0),
-                        ),
-                        child: InkWell(
-                          onTap: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                TextEditingController titleController = TextEditingController();
-                                TextEditingController contentController = TextEditingController();
-
-                                return AlertDialog(
-                                  title: Text('새 글 작성'),
-                                  content: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      TextField(
-                                        controller: titleController,
-                                        decoration: InputDecoration(labelText: '제목'),
-                                      ),
-                                      TextField(
-                                        controller: contentController,
-                                        decoration: InputDecoration(labelText: '내용'),
-                                      ),
-                                    ],
-                                  ),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: Text('취소'),
-                                    ),
-                                    TextButton(
-                                      onPressed: () {
-                                        FirebaseFirestore.instance.collection('posts').add({
-                                          'title': titleController.text,
-                                          'content': contentController.text,
-                                          'timestamp': FieldValue.serverTimestamp(), // 타임스탬프 추가
-                                        });
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: Text('저장'),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          },
-                          borderRadius: BorderRadius.circular(50.0),
-                          child: Container(
-                            width: 56.0,
-                            height: 56.0,
-                            decoration: BoxDecoration(
-                              color: Color(0xFF4F4F4F), // #4F4F4F
-                              shape: BoxShape.circle,
-                            ),
-                            child: Icon(Icons.edit, color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+            CommunityTab(),
             Center(child: Text('매거진 화면 내용')),
           ],
         ),
@@ -199,9 +88,187 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+// 커뮤니티 탭
+class CommunityTab extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection('posts')
+            .orderBy('timestamp', descending: true) // 타임스탬프 기준으로 정렬
+            .snapshots(),
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (!snapshot.hasData) {
+            return Center(child: CircularProgressIndicator());
+          }
+          return ListView(
+            children: snapshot.data!.docs.map((document) {
+              // document.data()가 null이 아닌지 확인
+              var data = document.data() as Map<String, dynamic>?;
 
+              // data가 null이 아닌 경우 imageUrl 필드가 존재하는지 확인
+              String imageUrl = (data != null && data['imageUrl'] != null) ? data['imageUrl'] as String : '';
 
+              return ListTile(
+                title: Text(data?['title'] ?? '제목 없음'),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(data?['content'] ?? '내용 없음'),
+                    if (imageUrl.isNotEmpty)
+                      Image.network(imageUrl),
+                    Text(
+                      DateFormat('yyyy-MM-dd – kk:mm').format(
+                        (data?['timestamp'] as Timestamp).toDate(),
+                      ),
+                      style: TextStyle(fontSize: 12, color: Colors.grey),
+                    ),
+                  ],
+                ),
+              );
+            }).toList(),
+          );
+        },
+      ),
+      floatingActionButton: Material(
+        color: Colors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(50.0),
+        ),
+        child: InkWell(
+          onTap: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return NewPostDialog();
+              },
+            );
+          },
+          borderRadius: BorderRadius.circular(50.0),
+          child: Container(
+            width: 56.0,
+            height: 56.0,
+            decoration: BoxDecoration(
+              color: Color(0x80000000), // #0000004D
+              shape: BoxShape.circle,
+            ),
+            child: Icon(Icons.edit, color: Colors.white),
+          ),
+        ),
+      ),
+    );
+  }
+}
 
+//글쓰기 버튼을 눌렀을때 나오는 탭
+class NewPostDialog extends StatefulWidget {
+  @override
+  _NewPostDialogState createState() => _NewPostDialogState();
+}
+
+//이미지 선택 클래스
+class _NewPostDialogState extends State<NewPostDialog> {
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController contentController = TextEditingController();
+  File? _image;
+  bool _isUploading = false;
+
+  Future<void> _pickImage() async {
+    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+    }
+  }
+
+  Future<String?> _uploadImage(File image) async {
+    try {
+      final storageRef = FirebaseStorage.instance.ref().child('posts/${DateTime.now().millisecondsSinceEpoch}.jpg');
+      final uploadTask = storageRef.putFile(image);
+      final snapshot = await uploadTask;
+
+      if (snapshot.state == TaskState.success) {
+        final downloadUrl = await snapshot.ref.getDownloadURL();
+        return downloadUrl;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  Future<void> _savePost() async {
+    setState(() {
+      _isUploading = true;
+    });
+
+    String? imageUrl;
+    if (_image != null) {
+      imageUrl = await _uploadImage(_image!);
+    }
+
+    if (imageUrl != null || _image == null) {
+      await FirebaseFirestore.instance.collection('posts').add({
+        'title': titleController.text,
+        'content': contentController.text,
+        'imageUrl': imageUrl,
+        'timestamp': FieldValue.serverTimestamp(),
+      });
+    }
+
+    setState(() {
+      _isUploading = false;
+    });
+
+    Navigator.of(context).pop();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text('새 글 작성'),
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: titleController,
+              decoration: InputDecoration(labelText: '제목'),
+            ),
+            TextField(
+              controller: contentController,
+              decoration: InputDecoration(labelText: '내용'),
+            ),
+            SizedBox(height: 10),
+            _image == null
+                ? Text('이미지가 선택되지 않았습니다.')
+                : Image.file(_image!),
+            TextButton(
+              onPressed: _pickImage,
+              child: Text('갤러리에서 사진 선택'),
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text('취소'),
+        ),
+        TextButton(
+          onPressed: _isUploading ? null : _savePost,
+          child: _isUploading ? CircularProgressIndicator() : Text('저장'),
+        ),
+      ],
+    );
+  }
+}
 
 // 기능 화면 위젯
 class FeatureScreen extends StatelessWidget {
