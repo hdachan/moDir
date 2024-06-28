@@ -104,10 +104,7 @@ class CommunityTab extends StatelessWidget {
           }
           return ListView(
             children: snapshot.data!.docs.map((document) {
-              // document.data()가 null이 아닌지 확인
               var data = document.data() as Map<String, dynamic>?;
-
-              // data가 null이 아닌 경우 imageUrl 필드가 존재하는지 확인
               String imageUrl = (data != null && data['imageUrl'] != null) ? data['imageUrl'] as String : '';
 
               return ListTile(
@@ -126,6 +123,14 @@ class CommunityTab extends StatelessWidget {
                     ),
                   ],
                 ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PostDetail(post: document),
+                    ),
+                  );
+                },
               );
             }).toList(),
           );
@@ -161,11 +166,281 @@ class CommunityTab extends StatelessWidget {
   }
 }
 
+
 //글쓰기 버튼을 눌렀을때 나오는 탭
 class NewPostDialog extends StatefulWidget {
   @override
   _NewPostDialogState createState() => _NewPostDialogState();
 }
+
+
+//포스터를 눌렀을때 나오는 화면
+class PostDetail extends StatefulWidget {
+  final DocumentSnapshot post;
+
+  PostDetail({required this.post});
+
+  @override
+  _PostDetailState createState() => _PostDetailState();
+}
+
+class _PostDetailState extends State<PostDetail> {
+  late Map<String, dynamic> data;
+  String imageUrl = '';
+  bool isLiked = false;
+  int likesCount = 0;
+  User? currentUser;
+  List<String> likedEmails = [];
+
+  @override
+  void initState() {
+    super.initState();
+    data = widget.post.data() as Map<String, dynamic>;
+    imageUrl = data['imageUrl'] ?? '';
+    likesCount = data['likesCount'] ?? 0;
+    currentUser = FirebaseAuth.instance.currentUser;
+
+    if (currentUser != null) {
+      checkIfLiked();
+      fetchLikedEmails();
+    }
+  }
+
+  void checkIfLiked() async {
+    DocumentSnapshot userLikeDoc = await widget.post.reference
+        .collection('likes')
+        .doc(currentUser!.uid)
+        .get();
+
+    setState(() {
+      isLiked = userLikeDoc.exists;
+    });
+  }
+
+  void fetchLikedEmails() async {
+    QuerySnapshot likesSnapshot = await widget.post.reference
+        .collection('likes')
+        .get();
+
+    setState(() {
+      likedEmails = likesSnapshot.docs.map((doc) => doc['email'] as String).toList();
+    });
+  }
+
+  void toggleLike() async {
+    if (currentUser == null) return;
+
+    DocumentReference likeRef = widget.post.reference
+        .collection('likes')
+        .doc(currentUser!.uid);
+
+    if (isLiked) {
+      await likeRef.delete();
+      setState(() {
+        isLiked = false;
+        likesCount--;
+        likedEmails.remove(currentUser!.email);
+      });
+    } else {
+      await likeRef.set({
+        'likedAt': FieldValue.serverTimestamp(),
+        'email': currentUser!.email,
+      });
+      setState(() {
+        isLiked = true;
+        likesCount++;
+        likedEmails.add(currentUser!.email!);
+      });
+    }
+
+    widget.post.reference.update({'likesCount': likesCount});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(data['title'] ?? '제목 없음'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              data['title'] ?? '제목 없음',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 8),
+            Text(
+              DateFormat('yyyy-MM-dd – kk:mm').format(
+                (data['timestamp'] as Timestamp).toDate(),
+              ),
+              style: TextStyle(fontSize: 12, color: Colors.grey),
+            ),
+            SizedBox(height: 8),
+            if (imageUrl.isNotEmpty)
+              Image.network(imageUrl),
+            SizedBox(height: 8),
+            Text(data['content'] ?? '내용 없음'),
+            SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    IconButton(
+                      icon: Icon(
+                        isLiked ? Icons.favorite : Icons.favorite_border,
+                        color: isLiked ? Colors.red : Colors.grey,
+                      ),
+                      onPressed: toggleLike,
+                    ),
+                    Text('좋아요: $likesCount'),
+                  ],
+                ),
+                Text('댓글: ${data['commentsCount'] ?? 0}'),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+// 글을 클릭했을때 나오는 위젯
+class PostClick extends StatefulWidget {
+  final DocumentSnapshot post;
+
+  PostClick({required this.post});
+
+  @override
+  _PostClickState createState() => _PostClickState();
+}
+class _PostClickState extends State<PostClick> {
+  late Map<String, dynamic> data;
+  String imageUrl = '';
+  bool isLiked = false;
+  int likesCount = 0;
+  User? currentUser;
+
+  @override
+  void initState() {
+    super.initState();
+    data = widget.post.data() as Map<String, dynamic>;
+    imageUrl = data['imageUrl'] ?? '';
+    likesCount = data['likesCount'] ?? 0;
+    currentUser = FirebaseAuth.instance.currentUser;
+
+    if (currentUser != null) {
+      checkIfLiked();
+    }
+  }
+
+  void checkIfLiked() async {
+    DocumentSnapshot userLikeDoc = await widget.post.reference
+        .collection('likes')
+        .doc(currentUser!.uid)
+        .get();
+
+    setState(() {
+      isLiked = userLikeDoc.exists;
+    });
+  }
+
+  void toggleLike() async {
+    if (currentUser == null) return;
+
+    DocumentReference likeRef = widget.post.reference
+        .collection('likes')
+        .doc(currentUser!.uid);
+
+    if (isLiked) {
+      await likeRef.delete();
+      setState(() {
+        isLiked = false;
+        likesCount--;
+      });
+    } else {
+      await likeRef.set({
+        'likedAt': FieldValue.serverTimestamp(),
+        'email': currentUser!.email,
+        'postId': widget.post.id,
+      });
+      setState(() {
+        isLiked = true;
+        likesCount++;
+      });
+    }
+
+    widget.post.reference.update({'likesCount': likesCount});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(data['title'] ?? '제목 없음'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              data['title'] ?? '제목 없음',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 8),
+            Text(
+              DateFormat('yyyy-MM-dd – kk:mm').format(
+                (data['timestamp'] as Timestamp).toDate(),
+              ),
+              style: TextStyle(fontSize: 12, color: Colors.grey),
+            ),
+            SizedBox(height: 8),
+            if (imageUrl.isNotEmpty)
+              Image.network(imageUrl),
+            SizedBox(height: 8),
+            Text(data['content'] ?? '내용 없음'),
+            SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    IconButton(
+                      icon: Icon(
+                        isLiked ? Icons.favorite : Icons.favorite_border,
+                        color: isLiked ? Colors.red : Colors.grey,
+                      ),
+                      onPressed: toggleLike,
+                    ),
+                    Text('좋아요: $likesCount'),
+                  ],
+                ),
+                Text('댓글: ${data['commentsCount'] ?? 0}'),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
 
 //이미지 선택 클래스
 class _NewPostDialogState extends State<NewPostDialog> {
@@ -269,6 +544,22 @@ class _NewPostDialogState extends State<NewPostDialog> {
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // 기능 화면 위젯
 class FeatureScreen extends StatelessWidget {

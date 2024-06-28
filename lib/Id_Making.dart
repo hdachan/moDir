@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import 'bottom_bar.dart';
+
 // 별명입력하기
 void main() {
   runApp(MaterialApp(
@@ -26,43 +28,56 @@ class _IdMaking extends State<IdMaking> {
     final String nickname = nicknameController.text;
     final String birthDate = birthDateController.text;
 
-    if (nicknameController.text.trim().isEmpty) {
+    if (nickname.trim().isEmpty) {
       setState(() {
         nicknameErrorMessage = '닉네임을 입력해주세요';
         birthDateErrorMexssage = '';
-        print('닉네임을 입력해주세요');
         _nicknameborderColor = Color(0xFFFF3333);
       });
-      print('오류: 닉네임을 입력해주세요.'); // 여기에 print 추가
+      print('오류: 닉네임을 입력해주세요.');
       return;
     }
 
-    if (birthDateController.text.trim().isEmpty) {
+    if (birthDate.trim().isEmpty) {
       setState(() {
         nicknameErrorMessage = '';
         birthDateErrorMexssage = '생일을 입력해주세요';
-        print('생일을 입력해주세요');
         _nicknameborderColor = Color(0xFFFF3333);
       });
-      print('오류: 생일을 입력해주세요'); // 여기에 print 추가
+      print('오류: 생일을 입력해주세요');
       return;
     }
 
     try {
-      // 현재 로그인한 사용자의 UID 가져오기
       final User? user = FirebaseAuth.instance.currentUser;
 
       if (user != null) {
-        // UID를 사용하여 Firestore에서 문서 업데이트
-        await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+        // 가입 날짜를 Firestore에 저장
+        DocumentReference userDoc = FirebaseFirestore.instance.collection('users').doc(user.uid);
+        await userDoc.set({
           'nickname': nickname,
           'birthDate': birthDate,
-        }, SetOptions(merge: true)); // merge 옵션을 사용하여 기존 데이터를 덮어쓰지 않고 병합
+          'createdAt': FieldValue.serverTimestamp(), // 가입 날짜 저장
+        }, SetOptions(merge: true));
 
         print('사용자 정보가 성공적으로 업데이트되었습니다.');
+
+        // Firestore에서 가입 날짜를 가져와서 출력
+        DocumentSnapshot userSnapshot = await userDoc.get();
+        if (userSnapshot.exists) {
+          Timestamp createdAtTimestamp = userSnapshot['createdAt'];
+          DateTime createdAt = createdAtTimestamp.toDate();
+          print('가입 날짜: ${createdAt.toLocal()}');
+        } else {
+          print('오류: 사용자 정보를 가져올 수 없습니다.');
+        }
       } else {
         print('오류: 사용자가 로그인되어 있지 않습니다.');
       }
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => BottomBar()),
+      );
     } catch (e) {
       print('오류: 사용자 정보를 업데이트하는 데 실패했습니다. ${e.toString()}');
     }
