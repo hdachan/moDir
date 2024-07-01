@@ -36,23 +36,23 @@ class _BottomBarState  extends State<BottomBar> {
             _currentIndex = index; // 인덱스 변경 시 상태 갱신
           });
         },
-        selectedItemColor: Colors.blue, // 선택된 아이템 색상
-        unselectedItemColor: Colors.grey, // 선택되지 않은 아이템 색상
+        selectedItemColor: Color(0xFF3D3D3D), // 선택된 아이템 색상
+        unselectedItemColor: Color(0xFF3D3D3D), // 선택되지 않은 아이템 색상
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home, color: Colors.blue), // 홈 아이콘
+            icon: Icon(Icons.home, color:Color(0xFF3D3D3D)), // 홈 아이콘
             label: '홈',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.featured_play_list, color: Colors.blue), // 기능 아이콘
+            icon: Icon(Icons.featured_play_list, color: Color(0xFF3D3D3D)), // 기능 아이콘
             label: '기능',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.bookmark, color: Colors.blue), // 북마크 아이콘
+            icon: Icon(Icons.bookmark, color: Color(0xFF3D3D3D)), // 북마크 아이콘
             label: '북마크',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person, color: Colors.blue), // 마이페이지 아이콘
+            icon: Icon(Icons.person, color: Color(0xFF3D3D3D)), // 마이페이지 아이콘
             label: '마이페이지',
           ),
         ],
@@ -61,7 +61,7 @@ class _BottomBarState  extends State<BottomBar> {
   }
 }
 
-//커뮤니티 안에서 탭
+//홈 >> 메인 / 커뮤니티 / 매거진
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -88,7 +88,9 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-// 커뮤니티 탭
+
+
+// 홈 >> 커뮤니티
 class CommunityTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -96,7 +98,7 @@ class CommunityTab extends StatelessWidget {
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection('posts')
-            .orderBy('timestamp', descending: true) // 타임스탬프 기준으로 정렬
+            .orderBy('timestamp', descending: true)
             .snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
@@ -107,28 +109,60 @@ class CommunityTab extends StatelessWidget {
               var data = document.data() as Map<String, dynamic>?;
               String imageUrl = (data != null && data['imageUrl'] != null) ? data['imageUrl'] as String : '';
 
-              return ListTile(
-                title: Text(data?['title'] ?? '제목 없음'),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(data?['content'] ?? '내용 없음'),
-                    if (imageUrl.isNotEmpty)
-                      Image.network(imageUrl),
-                    Text(
-                      DateFormat('yyyy-MM-dd – kk:mm').format(
-                        (data?['timestamp'] as Timestamp).toDate(),
-                      ),
-                      style: TextStyle(fontSize: 12, color: Colors.grey),
+              return FutureBuilder(
+                future: Future.wait([
+                  document.reference.collection('likes').get(),
+                  document.reference.collection('comments').get(),
+                ]),
+                builder: (context, AsyncSnapshot<List<QuerySnapshot>> countsSnapshot) {
+                  if (!countsSnapshot.hasData) {
+                    return Center(child: CircularProgressIndicator());
+                  }
+
+                  int likesCount = countsSnapshot.data![0].docs.length;
+                  int commentsCount = countsSnapshot.data![1].docs.length;
+
+                  return ListTile(
+                    title: Text(data?['title'] ?? '제목 없음'),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(data?['content'] ?? '내용 없음'),
+                        if (imageUrl.isNotEmpty)
+                          Image.network(
+                            imageUrl,
+                            width: 100, // 원하는 너비 지정
+                            height: 100, // 원하는 높이 지정
+                            fit: BoxFit.cover, // 이미지 비율 유지하며 크기 조절
+                          ),
+                        Text(
+                          DateFormat('yyyy-MM-dd – kk:mm').format(
+                            (data?['timestamp'] as Timestamp).toDate(),
+                          ),
+                          style: TextStyle(fontSize: 12, color: Colors.grey),
+                        ),
+                        SizedBox(height: 4),
+                        Row(
+                          children: [
+                            Icon(Icons.favorite, color: Colors.red, size: 16),
+                            SizedBox(width: 4),
+                            Text('$likesCount'),
+                            SizedBox(width: 16),
+                            Icon(Icons.comment, color: Colors.grey, size: 16),
+                            SizedBox(width: 4),
+                            Text('$commentsCount'),
+                          ],
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => PostDetail(post: document),
-                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PostDetail(post: document),
+                        ),
+                      );
+                    },
                   );
                 },
               );
@@ -136,41 +170,117 @@ class CommunityTab extends StatelessWidget {
           );
         },
       ),
-      floatingActionButton: Material(
-        color: Colors.transparent,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(50.0),
-        ),
-        child: InkWell(
-          onTap: () {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return NewPostDialog();
-              },
-            );
-          },
-          borderRadius: BorderRadius.circular(50.0),
-          child: Container(
-            width: 56.0,
-            height: 56.0,
-            decoration: BoxDecoration(
-              color: Color(0x80000000), // #0000004D
-              shape: BoxShape.circle,
-            ),
-            child: Icon(Icons.edit, color: Colors.white),
-          ),
-        ),
-      ),
     );
   }
 }
+
 
 
 //글쓰기 버튼을 눌렀을때 나오는 탭
 class NewPostDialog extends StatefulWidget {
   @override
   _NewPostDialogState createState() => _NewPostDialogState();
+}
+class _NewPostDialogState extends State<NewPostDialog> {
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController contentController = TextEditingController();
+  File? _image;
+  bool _isUploading = false;
+
+  Future<void> _pickImage() async {
+    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+    }
+  }
+
+  Future<String?> _uploadImage(File image) async {
+    try {
+      final storageRef = FirebaseStorage.instance.ref().child('posts/${DateTime.now().millisecondsSinceEpoch}.jpg');
+      final uploadTask = storageRef.putFile(image);
+      final snapshot = await uploadTask;
+
+      if (snapshot.state == TaskState.success) {
+        final downloadUrl = await snapshot.ref.getDownloadURL();
+        return downloadUrl;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  Future<void> _savePost() async {
+    setState(() {
+      _isUploading = true;
+    });
+
+    String? imageUrl;
+    if (_image != null) {
+      imageUrl = await _uploadImage(_image!);
+    }
+
+    if (imageUrl != null || _image == null) {
+      await FirebaseFirestore.instance.collection('posts').add({
+        'title': titleController.text,
+        'content': contentController.text,
+        'imageUrl': imageUrl,
+        'timestamp': FieldValue.serverTimestamp(),
+      });
+    }
+
+    setState(() {
+      _isUploading = false;
+    });
+
+    Navigator.of(context).pop();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text('새 글 작성'),
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: titleController,
+              decoration: InputDecoration(labelText: '제목'),
+            ),
+            TextField(
+              controller: contentController,
+              decoration: InputDecoration(labelText: '내용'),
+            ),
+            SizedBox(height: 10),
+            _image == null
+                ? Text('이미지가 선택되지 않았습니다.')
+                : Image.file(_image!),
+            TextButton(
+              onPressed: _pickImage,
+              child: Text('갤러리에서 사진 선택'),
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text('취소'),
+        ),
+        TextButton(
+          onPressed: _isUploading ? null : _savePost,
+          child: _isUploading ? CircularProgressIndicator() : Text('저장'),
+        ),
+      ],
+    );
+  }
 }
 
 
@@ -183,7 +293,6 @@ class PostDetail extends StatefulWidget {
   @override
   _PostDetailState createState() => _PostDetailState();
 }
-
 class _PostDetailState extends State<PostDetail> {
   late Map<String, dynamic> data;
   String imageUrl = '';
@@ -191,6 +300,8 @@ class _PostDetailState extends State<PostDetail> {
   int likesCount = 0;
   User? currentUser;
   List<String> likedEmails = [];
+  List<Map<String, dynamic>> comments = [];
+  TextEditingController commentController = TextEditingController();
 
   @override
   void initState() {
@@ -204,6 +315,7 @@ class _PostDetailState extends State<PostDetail> {
       checkIfLiked();
       fetchLikedEmails();
     }
+    fetchComments();
   }
 
   void checkIfLiked() async {
@@ -225,6 +337,32 @@ class _PostDetailState extends State<PostDetail> {
     setState(() {
       likedEmails = likesSnapshot.docs.map((doc) => doc['email'] as String).toList();
     });
+  }
+
+  void fetchComments() async {
+    QuerySnapshot commentsSnapshot = await widget.post.reference
+        .collection('comments')
+        .orderBy('timestamp', descending: true)
+        .get();
+
+    setState(() {
+      comments = commentsSnapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
+    });
+  }
+
+  void addComment() async {
+    if (currentUser == null || commentController.text.isEmpty) return;
+
+    DocumentReference commentRef = widget.post.reference.collection('comments').doc();
+
+    await commentRef.set({
+      'content': commentController.text,
+      'author': currentUser!.email,
+      'timestamp': FieldValue.serverTimestamp(),
+    });
+
+    commentController.clear();
+    fetchComments();
   }
 
   void toggleLike() async {
@@ -280,7 +418,12 @@ class _PostDetailState extends State<PostDetail> {
             ),
             SizedBox(height: 8),
             if (imageUrl.isNotEmpty)
-              Image.network(imageUrl),
+              Image.network(
+                imageUrl,
+                width: 300, // 원하는 너비 설정
+                height: 300, // 원하는 높이 설정
+                fit: BoxFit.cover, // 이미지가 지정된 크기에 맞게 조정되도록 설정
+              ),
             SizedBox(height: 8),
             Text(data['content'] ?? '내용 없음'),
             SizedBox(height: 16),
@@ -299,8 +442,37 @@ class _PostDetailState extends State<PostDetail> {
                     Text('좋아요: $likesCount'),
                   ],
                 ),
-                Text('댓글: ${data['commentsCount'] ?? 0}'),
+                Text('댓글: ${comments.length}'),
               ],
+            ),
+            SizedBox(height: 16),
+            Expanded(
+              child: ListView.builder(
+                itemCount: comments.length,
+                itemBuilder: (context, index) {
+                  final comment = comments[index];
+                  return ListTile(
+                    title: Text(comment['content']),
+                    subtitle: Text(comment['author']),
+                    trailing: Text(
+                      DateFormat('yyyy-MM-dd – kk:mm').format(
+                        (comment['timestamp'] as Timestamp).toDate(),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+            TextField(
+              controller: commentController,
+              decoration: InputDecoration(
+                labelText: '댓글 입력',
+              ),
+            ),
+            SizedBox(height: 8),
+            ElevatedButton(
+              onPressed: addComment,
+              child: Text('댓글 달기'),
             ),
           ],
         ),
@@ -308,6 +480,7 @@ class _PostDetailState extends State<PostDetail> {
     );
   }
 }
+
 
 
 // 글을 클릭했을때 나오는 위젯
@@ -433,117 +606,6 @@ class _PostClickState extends State<PostClick> {
 
 
 
-
-
-
-
-
-
-
-
-
-//이미지 선택 클래스
-class _NewPostDialogState extends State<NewPostDialog> {
-  final TextEditingController titleController = TextEditingController();
-  final TextEditingController contentController = TextEditingController();
-  File? _image;
-  bool _isUploading = false;
-
-  Future<void> _pickImage() async {
-    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      setState(() {
-        _image = File(pickedFile.path);
-      });
-    }
-  }
-
-  Future<String?> _uploadImage(File image) async {
-    try {
-      final storageRef = FirebaseStorage.instance.ref().child('posts/${DateTime.now().millisecondsSinceEpoch}.jpg');
-      final uploadTask = storageRef.putFile(image);
-      final snapshot = await uploadTask;
-
-      if (snapshot.state == TaskState.success) {
-        final downloadUrl = await snapshot.ref.getDownloadURL();
-        return downloadUrl;
-      } else {
-        return null;
-      }
-    } catch (e) {
-      print(e);
-      return null;
-    }
-  }
-
-  Future<void> _savePost() async {
-    setState(() {
-      _isUploading = true;
-    });
-
-    String? imageUrl;
-    if (_image != null) {
-      imageUrl = await _uploadImage(_image!);
-    }
-
-    if (imageUrl != null || _image == null) {
-      await FirebaseFirestore.instance.collection('posts').add({
-        'title': titleController.text,
-        'content': contentController.text,
-        'imageUrl': imageUrl,
-        'timestamp': FieldValue.serverTimestamp(),
-      });
-    }
-
-    setState(() {
-      _isUploading = false;
-    });
-
-    Navigator.of(context).pop();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text('새 글 작성'),
-      content: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: titleController,
-              decoration: InputDecoration(labelText: '제목'),
-            ),
-            TextField(
-              controller: contentController,
-              decoration: InputDecoration(labelText: '내용'),
-            ),
-            SizedBox(height: 10),
-            _image == null
-                ? Text('이미지가 선택되지 않았습니다.')
-                : Image.file(_image!),
-            TextButton(
-              onPressed: _pickImage,
-              child: Text('갤러리에서 사진 선택'),
-            ),
-          ],
-        ),
-      ),
-      actions: [
-        TextButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          child: Text('취소'),
-        ),
-        TextButton(
-          onPressed: _isUploading ? null : _savePost,
-          child: _isUploading ? CircularProgressIndicator() : Text('저장'),
-        ),
-      ],
-    );
-  }
-}
 
 
 
