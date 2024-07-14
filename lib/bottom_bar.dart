@@ -16,50 +16,57 @@ class BottomBar extends StatefulWidget {
 }
 
 // HomePage의 상태 관리 클래스
-class _BottomBarState  extends State<BottomBar> {
+class _BottomBarState extends State<BottomBar> {
   int _currentIndex = 0; // 현재 선택된 인덱스
-  final List<Widget> _pages = [
-    HomeScreen(),
-    FeatureScreen(),
-    BookmarkScreen(),
-    MyPageScreen(),
-  ]; // 각 페이지 위젯들
+  final List<Widget> _pages = [    HomeScreen(),    FeatureScreen(),    BookmarkScreen(),    MyPageScreen(),    HelloWorldScreen(),  ]; // 각 페이지 위젯들
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: _pages[_currentIndex], // 현재 선택된 페이지를 표시
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex, // 현재 선택된 인덱스
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index; // 인덱스 변경 시 상태 갱신
-          });
-        },
-        selectedItemColor: Color(0xFF3D3D3D), // 선택된 아이템 색상
-        unselectedItemColor: Color(0xFF3D3D3D), // 선택되지 않은 아이템 색상
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home, color:Color(0xFF3D3D3D)), // 홈 아이콘
-            label: '홈',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.featured_play_list, color: Color(0xFF3D3D3D)), // 기능 아이콘
-            label: '기능',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.bookmark, color: Color(0xFF3D3D3D)), // 북마크 아이콘
-            label: '북마크',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person, color: Color(0xFF3D3D3D)), // 마이페이지 아이콘
-            label: '마이페이지',
-          ),
-        ],
+      bottomNavigationBar: Container(
+        height: 68, // 높이를 68로 설정
+        child: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed, // 라벨 항상 표시
+          currentIndex: _currentIndex, // 현재 선택된 인덱스
+          onTap: (index) {
+            setState(() {
+              _currentIndex = index; // 인덱스 변경 시 상태 갱신
+            });
+          },
+          selectedItemColor: Color(0xFF3D3D3D), // 선택된 아이템 색상
+          unselectedItemColor: Color(0xFF3D3D3D), // 선택되지 않은 아이템 색상
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home, color: Color(0xFF3D3D3D)), // 홈 아이콘
+              label: '홈',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.featured_play_list, color: Color(0xFF3D3D3D)), // 기능 아이콘
+              label: '기능',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.bookmark, color: Color(0xFF3D3D3D)), // 북마크 아이콘
+              label: '북마크',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person, color: Color(0xFF3D3D3D)), // 마이페이지 아이콘
+              label: '마이페이지',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.emoji_emotions, color: Color(0xFF3D3D3D)), // 헬로월드 아이콘
+              label: '헬로월드',
+            ),
+          ],
+        ),
       ),
     );
   }
 }
+
+
+
+
 
 //홈 >> 메인 / 커뮤니티 / 매거진
 class HomeScreen extends StatelessWidget {
@@ -68,13 +75,110 @@ class HomeScreen extends StatelessWidget {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-        appBar: AppBar(
-          bottom: TabBar(
-            tabs: [
-              Tab(text: '메인'),
-              Tab(text: '커뮤니티'),
-              Tab(text: '매거진'),
-            ],
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(96.0), // AppBar 높이를 96으로 설정 (탭바 높이 포함)
+          child: AppBar(
+            automaticallyImplyLeading: false, // 기본 leading 아이콘 제거
+            flexibleSpace: Container(
+              width: 360,
+              height: 48,
+              child: Stack(
+                children: [
+                  Positioned(
+                    top: 14,
+                    left: 12,
+                    child: Image.asset(
+                      'assets/image/logo_primary.png', // 실제 로고 이미지
+                      width: 95,
+                      height: 19,
+                    ),
+                  ),
+                  Positioned(
+                    right: 0,
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Icon(
+                            Icons.search,
+                            size: 24,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Icon(
+                            Icons.notifications,
+                            size: 24,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            bottom: PreferredSize(
+              preferredSize: Size.fromHeight(48.0), // TabBar 높이
+              child: Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.only(left: 12.0), // 왼쪽 패딩 추가
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 3, // 3등분 중 1.5등분 차지
+                          child: TabBar(
+                            tabs: [
+                              Tab(
+                                child: Text(
+                                  '메인',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 13,
+                                    fontFamily: 'NotoSansKR',
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ),
+                              Tab(
+                                child: Text(
+                                  '커뮤니티',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 13,
+                                    fontFamily: 'NotoSansKR',
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ),
+                              Tab(
+                                child: Text(
+                                  '매거진',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 13,
+                                    fontFamily: 'NotoSansKR',
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ),
+                            ],
+                            indicatorColor: Colors.black,
+                          ),
+                        ),
+                        Spacer(flex: 3), // 나머지 공간 채우기
+                      ],
+                    ),
+                  ),
+
+                  Divider( // 구분선 추가
+                    color: Color(0xFFE3E3E3), // 구분선 색상 변경
+                    height: 1.0,
+                    thickness: 1.0,
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
         body: TabBarView(
@@ -606,39 +710,101 @@ class _PostClickState extends State<PostClick> {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// 기능 화면 위젯
-class FeatureScreen extends StatelessWidget {
+// 5번째 위젯
+class HelloWorldScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text('기능 화면'), // 기능 화면 텍스트
+      child: Text('헬로월드 내용'),
     );
   }
 }
 
-// 북마크 화면 위젯
+
+
+
+
+
+// 북마크 화면
 class BookmarkScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Text('북마크 화면'), // 북마크 화면 텍스트
+    );
+  }
+}
+
+
+
+//기능화면
+class Designer {
+  final String name;
+  final double rating;
+  final String description;
+  final String specialty;
+  final double price;
+
+  Designer({
+    required this.name,
+    required this.rating,
+    required this.description,
+    required this.specialty,
+    required this.price,
+  });
+
+  factory Designer.fromFirestore(DocumentSnapshot doc) {
+    Map data = doc.data() as Map;
+    return Designer(
+      name: data['name'] ?? '',
+      rating: data['rating']?.toDouble() ?? 0.0,
+      description: data['description'] ?? '',
+      specialty: data['specialty'] ?? '',
+      price: data['price']?.toDouble() ?? 0.0,
+    );
+  }
+}
+
+class FeatureScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('디자이너 목록'),
+      ),
+      body: StreamBuilder(
+        stream: FirebaseFirestore.instance.collection('designer').snapshots(),
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return Center(child: Text('오류 발생: ${snapshot.error}'));
+          }
+
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }
+
+          if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+            return Center(child: Text('데이터가 없습니다.'));
+          }
+
+          var designers = snapshot.data!.docs.map((doc) => Designer.fromFirestore(doc)).toList();
+
+          return ListView.builder(
+            itemCount: designers.length,
+            itemBuilder: (context, index) {
+              var designer = designers[index];
+              return ListTile(
+                title: Text(designer.name),
+                subtitle: Text('평점: ${designer.rating} / 분야: ${designer.specialty}'),
+                trailing: Text('\$${designer.price}'),
+                onTap: () {
+                  // 상세 정보 보기 등 추가 기능 구현 가능
+                },
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }

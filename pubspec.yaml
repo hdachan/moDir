@@ -67,6 +67,8 @@ flutter:
     - assets/image/logo_10.png
     - assets/image/next_line_S.png
     - assets/image/logout_line_S.png
+    - assets/image/m_logo.png
+    - assets/image/logo_primary.png
 
   uses-material-design: true
   fonts:
@@ -91,4 +93,16 @@ flutter:
         - asset: assets/fonts/Pretendard-Black.otf
           weight: 900
 
+    - family: NotoSansKR
+      fonts:
+        - asset: assets/fonts/NotoSansKR-Thin.ttf
+          weight: 100
+        - asset: assets/fonts/NotoSansKR-Light.ttf
+          weight: 300
+        - asset: assets/fonts/NotoSansKR-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/NotoSansKR-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/NotoSansKR-Black.ttf
+          weight: 900
 
