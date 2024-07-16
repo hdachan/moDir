@@ -9,6 +9,8 @@ import 'Change_Password.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
+import 'designer_detail_screen.dart';
+
 
 class BottomBar extends StatefulWidget {
   @override
@@ -18,7 +20,7 @@ class BottomBar extends StatefulWidget {
 // HomePage의 상태 관리 클래스
 class _BottomBarState extends State<BottomBar> {
   int _currentIndex = 0; // 현재 선택된 인덱스
-  final List<Widget> _pages = [    HomeScreen(),    FeatureScreen(),    BookmarkScreen(),    MyPageScreen(),    HelloWorldScreen(),  ]; // 각 페이지 위젯들
+  final List<Widget> _pages = [    HomeScreen(),    DesignerListScreen(),    BookmarkScreen(),    MyPageScreen(),    HelloWorldScreen(),  ]; // 각 페이지 위젯들
 
   @override
   Widget build(BuildContext context) {
@@ -63,9 +65,6 @@ class _BottomBarState extends State<BottomBar> {
     );
   }
 }
-
-
-
 
 
 //홈 >> 메인 / 커뮤니티 / 매거진
@@ -710,67 +709,81 @@ class _PostClickState extends State<PostClick> {
 
 
 
-// 5번째 위젯
-class HelloWorldScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text('헬로월드 내용'),
-    );
-  }
-}
-
-
-
-
-
-
-// 북마크 화면
-class BookmarkScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text('북마크 화면'), // 북마크 화면 텍스트
-    );
-  }
-}
-
-
-
 //기능화면
 class Designer {
   final String name;
+  final String imageUrl;
   final double rating;
-  final String description;
   final String specialty;
   final double price;
+  final String description; // 새로운 속성 추가
 
   Designer({
     required this.name,
+    required this.imageUrl,
     required this.rating,
-    required this.description,
     required this.specialty,
     required this.price,
+    required this.description, // 새로운 속성 초기화
   });
 
   factory Designer.fromFirestore(DocumentSnapshot doc) {
     Map data = doc.data() as Map;
     return Designer(
       name: data['name'] ?? '',
-      rating: data['rating']?.toDouble() ?? 0.0,
-      description: data['description'] ?? '',
+      rating: data['rating'] ?? 0.0,
       specialty: data['specialty'] ?? '',
-      price: data['price']?.toDouble() ?? 0.0,
+      price: data['price'] ?? 0.0,
+      imageUrl: data['imageUrl'] ?? '', // 이미지 URL 초기화
+      description: data['description'] ?? '', // description 초기화
     );
   }
 }
 
-class FeatureScreen extends StatelessWidget {
+class DesignerListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('디자이너 목록'),
+        automaticallyImplyLeading: false, // 기본 leading 아이콘 제거
+        flexibleSpace: Container(
+          width: 360,
+          height: 48,
+          child: Stack(
+            children: [
+              Positioned(
+                top: 14,
+                left: 12,
+                child: Image.asset(
+                  'assets/image/logo_primary.png', // 실제 로고 이미지
+                  width: 95,
+                  height: 19,
+                ),
+              ),
+              Positioned(
+                right: 0,
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Icon(
+                        Icons.search,
+                        size: 24,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Icon(
+                        Icons.notifications,
+                        size: 24,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance.collection('designer').snapshots(),
@@ -793,13 +806,111 @@ class FeatureScreen extends StatelessWidget {
             itemCount: designers.length,
             itemBuilder: (context, index) {
               var designer = designers[index];
-              return ListTile(
-                title: Text(designer.name),
-                subtitle: Text('평점: ${designer.rating} / 분야: ${designer.specialty}'),
-                trailing: Text('\$${designer.price}'),
+              return GestureDetector(
                 onTap: () {
-                  // 상세 정보 보기 등 추가 기능 구현 가능
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DesignerDetailScreen(designer: designer),
+                    ),
+                  );
                 },
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                  padding: EdgeInsets.all(16.0),
+                  height: 150.0,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset: Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10.0),
+                        child: designer.imageUrl.isNotEmpty
+                            ? Image.network(
+                          designer.imageUrl,
+                          width: 100,
+                          height: 100,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Image.asset(
+                              'assets/image/m_logo.png',
+                              width: 100,
+                              height: 100,
+                              fit: BoxFit.cover,
+                            );
+                          },
+                        )
+                            : Image.asset(
+                          'assets/image/m_logo.png',
+                          width: 100,
+                          height: 100,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      SizedBox(width: 16.0),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              designer.name,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontFamily: 'Pretendard',
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            SizedBox(height: 8.0),
+                            Row(
+                              children: [
+                                Icon(Icons.star, color: Colors.yellow, size: 16.0),
+                                SizedBox(width: 4.0),
+                                Text(
+                                  '평점: ${designer.rating}',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 12,
+                                    fontFamily: 'Pretendard',
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Text(
+                              '분야: ${designer.specialty}',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 12,
+                                fontFamily: 'Pretendard',
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            Text(
+                              '가격: \$${designer.price}',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 12,
+                                fontFamily: 'Pretendard',
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               );
             },
           );
@@ -809,11 +920,115 @@ class FeatureScreen extends StatelessWidget {
   }
 }
 
+
+
+// 5번째 위젯
+class HelloWorldScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text('헬로월드 내용'),
+    );
+  }
+}
+
+// 북마크 화면
+class BookmarkScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false, // 기본 leading 아이콘 제거
+        flexibleSpace: Container(
+          width: 360,
+          height: 48,
+          child: Stack(
+            children: [
+              Positioned(
+                top: 14,
+                left: 12,
+                child: Image.asset(
+                  'assets/image/logo_primary.png', // 실제 로고 이미지
+                  width: 95,
+                  height: 19,
+                ),
+              ),
+              Positioned(
+                right: 0,
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Icon(
+                        Icons.search,
+                        size: 24,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Icon(
+                        Icons.notifications,
+                        size: 24,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
 // 마이페이지 화면 위젯
 class MyPageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false, // 기본 leading 아이콘 제거
+        flexibleSpace: Container(
+          width: 360,
+          height: 48,
+          child: Stack(
+            children: [
+              Positioned(
+                top: 14,
+                left: 12,
+                child: Image.asset(
+                  'assets/image/logo_primary.png', // 실제 로고 이미지
+                  width: 95,
+                  height: 19,
+                ),
+              ),
+              Positioned(
+                right: 0,
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Icon(
+                        Icons.search,
+                        size: 24,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Icon(
+                        Icons.notifications,
+                        size: 24,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -1200,3 +1415,9 @@ class MyPageScreen extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
