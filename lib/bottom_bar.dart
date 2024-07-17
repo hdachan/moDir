@@ -11,7 +11,6 @@ import 'dart:io';
 
 import 'designer_detail_screen.dart';
 
-
 class BottomBar extends StatefulWidget {
   @override
   _BottomBarState createState() => _BottomBarState();
@@ -20,7 +19,13 @@ class BottomBar extends StatefulWidget {
 // HomePage의 상태 관리 클래스
 class _BottomBarState extends State<BottomBar> {
   int _currentIndex = 0; // 현재 선택된 인덱스
-  final List<Widget> _pages = [    HomeScreen(),    DesignerListScreen(),    BookmarkScreen(),    MyPageScreen(),    HelloWorldScreen(),  ]; // 각 페이지 위젯들
+  final List<Widget> _pages = [
+    HomeScreen(),
+    DesignerListScreen(),
+    BookmarkScreen(),
+    MyPageScreen(),
+    HelloWorldScreen(),
+  ]; // 각 페이지 위젯들
 
   @override
   Widget build(BuildContext context) {
@@ -29,22 +34,27 @@ class _BottomBarState extends State<BottomBar> {
       bottomNavigationBar: Container(
         height: 68, // 높이를 68로 설정
         child: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed, // 라벨 항상 표시
-          currentIndex: _currentIndex, // 현재 선택된 인덱스
+          type: BottomNavigationBarType.fixed,
+          // 라벨 항상 표시
+          currentIndex: _currentIndex,
+          // 현재 선택된 인덱스
           onTap: (index) {
             setState(() {
               _currentIndex = index; // 인덱스 변경 시 상태 갱신
             });
           },
-          selectedItemColor: Color(0xFF3D3D3D), // 선택된 아이템 색상
-          unselectedItemColor: Color(0xFF3D3D3D), // 선택되지 않은 아이템 색상
+          selectedItemColor: Color(0xFF3D3D3D),
+          // 선택된 아이템 색상
+          unselectedItemColor: Color(0xFF3D3D3D),
+          // 선택되지 않은 아이템 색상
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.home, color: Color(0xFF3D3D3D)), // 홈 아이콘
               label: '홈',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.featured_play_list, color: Color(0xFF3D3D3D)), // 기능 아이콘
+              icon: Icon(Icons.featured_play_list, color: Color(0xFF3D3D3D)),
+              // 기능 아이콘
               label: '기능',
             ),
             BottomNavigationBarItem(
@@ -56,7 +66,8 @@ class _BottomBarState extends State<BottomBar> {
               label: '마이페이지',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.emoji_emotions, color: Color(0xFF3D3D3D)), // 헬로월드 아이콘
+              icon: Icon(Icons.emoji_emotions, color: Color(0xFF3D3D3D)),
+              // 헬로월드 아이콘
               label: '헬로월드',
             ),
           ],
@@ -65,7 +76,6 @@ class _BottomBarState extends State<BottomBar> {
     );
   }
 }
-
 
 //홈 >> 메인 / 커뮤니티 / 매거진
 class HomeScreen extends StatelessWidget {
@@ -78,7 +88,7 @@ class HomeScreen extends StatelessWidget {
           preferredSize: Size.fromHeight(96.0), // AppBar 높이를 96으로 설정 (탭바 높이 포함)
           child: AppBar(
             automaticallyImplyLeading: false, // 기본 leading 아이콘 제거
-            flexibleSpace: Container(
+            flexibleSpace: SizedBox(
               width: 360,
               height: 48,
               child: Stack(
@@ -88,7 +98,7 @@ class HomeScreen extends StatelessWidget {
                     left: 12,
                     child: Image.asset(
                       'assets/image/logo_primary.png', // 실제 로고 이미지
-                      width: 95,
+                      width: 96,
                       height: 19,
                     ),
                   ),
@@ -97,14 +107,14 @@ class HomeScreen extends StatelessWidget {
                     child: Row(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.all(12.0),
+                          padding: EdgeInsets.all(12.0),
                           child: Icon(
                             Icons.search,
                             size: 24,
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(12.0),
+                          padding: EdgeInsets.all(12.0),
                           child: Icon(
                             Icons.notifications,
                             size: 24,
@@ -117,60 +127,70 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             bottom: PreferredSize(
-              preferredSize: Size.fromHeight(48.0), // TabBar 높이
+              preferredSize: Size.fromHeight(44), // TabBar 높이
               child: Column(
-                children: [
-                  Container(
-                    padding: EdgeInsets.only(left: 12.0), // 왼쪽 패딩 추가
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 3, // 3등분 중 1.5등분 차지
-                          child: TabBar(
-                            tabs: [
-                              Tab(
-                                child: Text(
-                                  '메인',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 13,
-                                    fontFamily: 'NotoSansKR',
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                              ),
-                              Tab(
-                                child: Text(
-                                  '커뮤니티',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 13,
-                                    fontFamily: 'NotoSansKR',
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                              ),
-                              Tab(
-                                child: Text(
-                                  '매거진',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 13,
-                                    fontFamily: 'NotoSansKR',
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                              ),
-                            ],
-                            indicatorColor: Colors.black,
+                children: const [
+                  TabBar(
+                    padding: EdgeInsets.only(left: 16, right: 16, top: 16),
+                    isScrollable: true,
+                    tabAlignment: TabAlignment.start,
+                    tabs: [
+                      Tab(
+                        child: SizedBox(
+                          height: 14,
+                          width: 26,
+                          child: Text(
+                            '메인',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14,
+                                fontFamily: 'NotoSansKR',
+                                fontWeight: FontWeight.w400,
+                                height: 1,
+                                letterSpacing: -0.35),
                           ),
                         ),
-                        Spacer(flex: 3), // 나머지 공간 채우기
-                      ],
-                    ),
+                      ),
+                      Tab(
+                        child: SizedBox(
+                          height: 14,
+                          width: 51,
+                          child: Text(
+                            '커뮤니티',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14,
+                                fontFamily: 'NotoSansKR',
+                                fontWeight: FontWeight.w400,
+                                height: 1,
+                                letterSpacing: -0.35),
+                          ),
+                        ),
+                      ),
+                      Tab(
+                        child: SizedBox(
+                          height: 14,
+                          width: 38,
+                          child: Text(
+                            '매거진',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14,
+                                fontFamily: 'NotoSansKR',
+                                fontWeight: FontWeight.w400,
+                                height: 1,
+                                letterSpacing: -0.35),
+                          ),
+                        ),
+                      ),
+                    ],
+                    indicatorColor: Colors.black,
+                    indicatorSize: TabBarIndicatorSize.label,
+                    indicatorPadding: EdgeInsets.only(top: 12),
+                    labelPadding: EdgeInsets.only(left: 6, right: 6),
                   ),
-
-                  Divider( // 구분선 추가
+                  Divider(
+                    // 구분선 추가
                     color: Color(0xFFE3E3E3), // 구분선 색상 변경
                     height: 1.0,
                     thickness: 1.0,
@@ -192,7 +212,6 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-
 // 홈 >> 커뮤니티
 class CommunityTab extends StatelessWidget {
   @override
@@ -210,14 +229,17 @@ class CommunityTab extends StatelessWidget {
           return ListView(
             children: snapshot.data!.docs.map((document) {
               var data = document.data() as Map<String, dynamic>?;
-              String imageUrl = (data != null && data['imageUrl'] != null) ? data['imageUrl'] as String : '';
+              String imageUrl = (data != null && data['imageUrl'] != null)
+                  ? data['imageUrl'] as String
+                  : '';
 
               return FutureBuilder(
                 future: Future.wait([
                   document.reference.collection('likes').get(),
                   document.reference.collection('comments').get(),
                 ]),
-                builder: (context, AsyncSnapshot<List<QuerySnapshot>> countsSnapshot) {
+                builder: (context,
+                    AsyncSnapshot<List<QuerySnapshot>> countsSnapshot) {
                   if (!countsSnapshot.hasData) {
                     return Center(child: CircularProgressIndicator());
                   }
@@ -277,13 +299,12 @@ class CommunityTab extends StatelessWidget {
   }
 }
 
-
-
 //글쓰기 버튼을 눌렀을때 나오는 탭
 class NewPostDialog extends StatefulWidget {
   @override
   _NewPostDialogState createState() => _NewPostDialogState();
 }
+
 class _NewPostDialogState extends State<NewPostDialog> {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController contentController = TextEditingController();
@@ -291,7 +312,8 @@ class _NewPostDialogState extends State<NewPostDialog> {
   bool _isUploading = false;
 
   Future<void> _pickImage() async {
-    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       setState(() {
         _image = File(pickedFile.path);
@@ -301,7 +323,9 @@ class _NewPostDialogState extends State<NewPostDialog> {
 
   Future<String?> _uploadImage(File image) async {
     try {
-      final storageRef = FirebaseStorage.instance.ref().child('posts/${DateTime.now().millisecondsSinceEpoch}.jpg');
+      final storageRef = FirebaseStorage.instance
+          .ref()
+          .child('posts/${DateTime.now().millisecondsSinceEpoch}.jpg');
       final uploadTask = storageRef.putFile(image);
       final snapshot = await uploadTask;
 
@@ -360,9 +384,7 @@ class _NewPostDialogState extends State<NewPostDialog> {
               decoration: InputDecoration(labelText: '내용'),
             ),
             SizedBox(height: 10),
-            _image == null
-                ? Text('이미지가 선택되지 않았습니다.')
-                : Image.file(_image!),
+            _image == null ? Text('이미지가 선택되지 않았습니다.') : Image.file(_image!),
             TextButton(
               onPressed: _pickImage,
               child: Text('갤러리에서 사진 선택'),
@@ -386,7 +408,6 @@ class _NewPostDialogState extends State<NewPostDialog> {
   }
 }
 
-
 //포스터를 눌렀을때 나오는 화면
 class PostDetail extends StatefulWidget {
   final DocumentSnapshot post;
@@ -396,6 +417,7 @@ class PostDetail extends StatefulWidget {
   @override
   _PostDetailState createState() => _PostDetailState();
 }
+
 class _PostDetailState extends State<PostDetail> {
   late Map<String, dynamic> data;
   String imageUrl = '';
@@ -433,12 +455,12 @@ class _PostDetailState extends State<PostDetail> {
   }
 
   void fetchLikedEmails() async {
-    QuerySnapshot likesSnapshot = await widget.post.reference
-        .collection('likes')
-        .get();
+    QuerySnapshot likesSnapshot =
+        await widget.post.reference.collection('likes').get();
 
     setState(() {
-      likedEmails = likesSnapshot.docs.map((doc) => doc['email'] as String).toList();
+      likedEmails =
+          likesSnapshot.docs.map((doc) => doc['email'] as String).toList();
     });
   }
 
@@ -449,14 +471,17 @@ class _PostDetailState extends State<PostDetail> {
         .get();
 
     setState(() {
-      comments = commentsSnapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
+      comments = commentsSnapshot.docs
+          .map((doc) => doc.data() as Map<String, dynamic>)
+          .toList();
     });
   }
 
   void addComment() async {
     if (currentUser == null || commentController.text.isEmpty) return;
 
-    DocumentReference commentRef = widget.post.reference.collection('comments').doc();
+    DocumentReference commentRef =
+        widget.post.reference.collection('comments').doc();
 
     await commentRef.set({
       'content': commentController.text,
@@ -471,9 +496,8 @@ class _PostDetailState extends State<PostDetail> {
   void toggleLike() async {
     if (currentUser == null) return;
 
-    DocumentReference likeRef = widget.post.reference
-        .collection('likes')
-        .doc(currentUser!.uid);
+    DocumentReference likeRef =
+        widget.post.reference.collection('likes').doc(currentUser!.uid);
 
     if (isLiked) {
       await likeRef.delete();
@@ -584,8 +608,6 @@ class _PostDetailState extends State<PostDetail> {
   }
 }
 
-
-
 // 글을 클릭했을때 나오는 위젯
 class PostClick extends StatefulWidget {
   final DocumentSnapshot post;
@@ -595,6 +617,7 @@ class PostClick extends StatefulWidget {
   @override
   _PostClickState createState() => _PostClickState();
 }
+
 class _PostClickState extends State<PostClick> {
   late Map<String, dynamic> data;
   String imageUrl = '';
@@ -629,9 +652,8 @@ class _PostClickState extends State<PostClick> {
   void toggleLike() async {
     if (currentUser == null) return;
 
-    DocumentReference likeRef = widget.post.reference
-        .collection('likes')
-        .doc(currentUser!.uid);
+    DocumentReference likeRef =
+        widget.post.reference.collection('likes').doc(currentUser!.uid);
 
     if (isLiked) {
       await likeRef.delete();
@@ -677,8 +699,7 @@ class _PostClickState extends State<PostClick> {
               style: TextStyle(fontSize: 12, color: Colors.grey),
             ),
             SizedBox(height: 8),
-            if (imageUrl.isNotEmpty)
-              Image.network(imageUrl),
+            if (imageUrl.isNotEmpty) Image.network(imageUrl),
             SizedBox(height: 8),
             Text(data['content'] ?? '내용 없음'),
             SizedBox(height: 16),
@@ -707,8 +728,6 @@ class _PostClickState extends State<PostClick> {
   }
 }
 
-
-
 //기능화면
 class Designer {
   final String name;
@@ -734,7 +753,8 @@ class Designer {
       rating: data['rating'] ?? 0.0,
       specialty: data['specialty'] ?? '',
       price: data['price'] ?? 0.0,
-      imageUrl: data['imageUrl'] ?? '', // 이미지 URL 초기화
+      imageUrl: data['imageUrl'] ?? '',
+      // 이미지 URL 초기화
       description: data['description'] ?? '', // description 초기화
     );
   }
@@ -800,7 +820,9 @@ class DesignerListScreen extends StatelessWidget {
             return Center(child: Text('데이터가 없습니다.'));
           }
 
-          var designers = snapshot.data!.docs.map((doc) => Designer.fromFirestore(doc)).toList();
+          var designers = snapshot.data!.docs
+              .map((doc) => Designer.fromFirestore(doc))
+              .toList();
 
           return ListView.builder(
             itemCount: designers.length,
@@ -811,7 +833,8 @@ class DesignerListScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => DesignerDetailScreen(designer: designer),
+                      builder: (context) =>
+                          DesignerDetailScreen(designer: designer),
                     ),
                   );
                 },
@@ -837,25 +860,25 @@ class DesignerListScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10.0),
                         child: designer.imageUrl.isNotEmpty
                             ? Image.network(
-                          designer.imageUrl,
-                          width: 100,
-                          height: 100,
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Image.asset(
-                              'assets/image/m_logo.png',
-                              width: 100,
-                              height: 100,
-                              fit: BoxFit.cover,
-                            );
-                          },
-                        )
+                                designer.imageUrl,
+                                width: 100,
+                                height: 100,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Image.asset(
+                                    'assets/image/m_logo.png',
+                                    width: 100,
+                                    height: 100,
+                                    fit: BoxFit.cover,
+                                  );
+                                },
+                              )
                             : Image.asset(
-                          'assets/image/m_logo.png',
-                          width: 100,
-                          height: 100,
-                          fit: BoxFit.cover,
-                        ),
+                                'assets/image/m_logo.png',
+                                width: 100,
+                                height: 100,
+                                fit: BoxFit.cover,
+                              ),
                       ),
                       SizedBox(width: 16.0),
                       Expanded(
@@ -874,7 +897,8 @@ class DesignerListScreen extends StatelessWidget {
                             SizedBox(height: 8.0),
                             Row(
                               children: [
-                                Icon(Icons.star, color: Colors.yellow, size: 16.0),
+                                Icon(Icons.star,
+                                    color: Colors.yellow, size: 16.0),
                                 SizedBox(width: 4.0),
                                 Text(
                                   '평점: ${designer.rating}',
@@ -919,8 +943,6 @@ class DesignerListScreen extends StatelessWidget {
     );
   }
 }
-
-
 
 // 5번째 위젯
 class HelloWorldScreen extends StatelessWidget {
@@ -981,7 +1003,6 @@ class BookmarkScreen extends StatelessWidget {
     );
   }
 }
-
 
 // 마이페이지 화면 위젯
 class MyPageScreen extends StatelessWidget {
@@ -1105,8 +1126,7 @@ class MyPageScreen extends StatelessWidget {
                       ),
                     ),
                     MaterialButton(
-                      onPressed: (){
-                      },
+                      onPressed: () {},
                       height: 48,
                       padding: EdgeInsets.zero,
                       child: Row(
@@ -1128,20 +1148,18 @@ class MyPageScreen extends StatelessWidget {
                             height: 24,
                             decoration: BoxDecoration(
                                 image: DecorationImage(
-                                    image: AssetImage('assets/image/next_line_S.png')
-                                )
-                            ),
+                                    image: AssetImage(
+                                        'assets/image/next_line_S.png'))),
                           )
                         ],
                       ),
                     ),
                     MaterialButton(
-                      onPressed: (){
+                      onPressed: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  ChangePassword()),
+                              builder: (context) => ChangePassword()),
                         );
                       },
                       height: 48,
@@ -1165,9 +1183,8 @@ class MyPageScreen extends StatelessWidget {
                             height: 24,
                             decoration: BoxDecoration(
                                 image: DecorationImage(
-                                    image: AssetImage('assets/image/next_line_S.png')
-                                )
-                            ),
+                                    image: AssetImage(
+                                        'assets/image/next_line_S.png'))),
                           )
                         ],
                       ),
@@ -1197,7 +1214,8 @@ class MyPageScreen extends StatelessWidget {
                         // 로그아웃 후 이동할 화면
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => Login()), // BottomBar로 이동
+                          MaterialPageRoute(
+                              builder: (context) => Login()), // BottomBar로 이동
                         );
                       },
                       height: 48,
@@ -1221,7 +1239,8 @@ class MyPageScreen extends StatelessWidget {
                             height: 24,
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                image: AssetImage('assets/image/logout_line_S.png'),
+                                image: AssetImage(
+                                    'assets/image/logout_line_S.png'),
                               ),
                             ),
                           ),
@@ -1247,8 +1266,7 @@ class MyPageScreen extends StatelessWidget {
                       ),
                     ),
                     MaterialButton(
-                      onPressed: (){
-                      },
+                      onPressed: () {},
                       height: 48,
                       padding: EdgeInsets.zero,
                       child: Row(
@@ -1270,16 +1288,14 @@ class MyPageScreen extends StatelessWidget {
                             height: 24,
                             decoration: BoxDecoration(
                                 image: DecorationImage(
-                                    image: AssetImage('assets/image/next_line_S.png')
-                                )
-                            ),
+                                    image: AssetImage(
+                                        'assets/image/next_line_S.png'))),
                           )
                         ],
                       ),
                     ),
                     MaterialButton(
-                      onPressed: (){
-                      },
+                      onPressed: () {},
                       height: 48,
                       padding: EdgeInsets.zero,
                       child: Row(
@@ -1301,16 +1317,14 @@ class MyPageScreen extends StatelessWidget {
                             height: 24,
                             decoration: BoxDecoration(
                                 image: DecorationImage(
-                                    image: AssetImage('assets/image/next_line_S.png')
-                                )
-                            ),
+                                    image: AssetImage(
+                                        'assets/image/next_line_S.png'))),
                           )
                         ],
                       ),
                     ),
                     MaterialButton(
-                      onPressed: (){
-                      },
+                      onPressed: () {},
                       height: 48,
                       padding: EdgeInsets.zero,
                       child: Row(
@@ -1332,9 +1346,8 @@ class MyPageScreen extends StatelessWidget {
                             height: 24,
                             decoration: BoxDecoration(
                                 image: DecorationImage(
-                                    image: AssetImage('assets/image/next_line_S.png')
-                                )
-                            ),
+                                    image: AssetImage(
+                                        'assets/image/next_line_S.png'))),
                           )
                         ],
                       ),
@@ -1361,9 +1374,8 @@ class MyPageScreen extends StatelessWidget {
                             height: 24,
                             decoration: BoxDecoration(
                                 image: DecorationImage(
-                                    image: AssetImage('assets/image/next_line_S.png')
-                                )
-                            ),
+                                    image: AssetImage(
+                                        'assets/image/next_line_S.png'))),
                           )
                         ],
                       ),
@@ -1379,8 +1391,11 @@ class MyPageScreen extends StatelessWidget {
                             // 회원 탈퇴 후 이동할 화면이 있다면 여기에 추가
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => Login()), // BottomBar로 이동
-                            );;
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      Login()), // BottomBar로 이동
+                            );
+                            ;
                           } catch (e) {
                             // 오류 처리
                             print('회원 탈퇴 오류: $e');
@@ -1415,9 +1430,3 @@ class MyPageScreen extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-
