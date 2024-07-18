@@ -47,27 +47,35 @@ class _BottomBarState extends State<BottomBar> {
           // 선택된 아이템 색상
           unselectedItemColor: Color(0xFF3D3D3D),
           // 선택되지 않은 아이템 색상
-          items: const [
+          items: [
             BottomNavigationBarItem(
-              icon: Icon(Icons.home, color: Color(0xFF3D3D3D)), // 홈 아이콘
+              icon: _currentIndex == 0
+                  ? Icon(Icons.home)
+                  : Icon(Icons.home_outlined), // 홈 아이콘 변경
               label: '홈',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.featured_play_list, color: Color(0xFF3D3D3D)),
-              // 기능 아이콘
+              icon: _currentIndex == 1
+                  ? Icon(Icons.featured_play_list)
+                  : Icon(Icons.featured_play_list_outlined), // 기능 아이콘 변경
               label: '기능',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.bookmark, color: Color(0xFF3D3D3D)), // 북마크 아이콘
+              icon: _currentIndex == 2
+                  ? Icon(Icons.bookmark)
+                  : Icon(Icons.bookmark_outline), // 북마크 아이콘 변경
               label: '북마크',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person, color: Color(0xFF3D3D3D)), // 마이페이지 아이콘
+              icon: _currentIndex == 3
+                  ? Icon(Icons.person)
+                  : Icon(Icons.person_outline), // 마이페이지 아이콘 변경
               label: '마이페이지',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.emoji_emotions, color: Color(0xFF3D3D3D)),
-              // 헬로월드 아이콘
+              icon: _currentIndex == 4
+                  ? Icon(Icons.emoji_emotions)
+                  : Icon(Icons.emoji_emotions_outlined), // 헬로월드 아이콘 변경
               label: '헬로월드',
             ),
           ],

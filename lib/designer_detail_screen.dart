@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'ReservationPage.dart';
 import 'bottom_bar.dart';
 
 class DesignerDetailScreen extends StatelessWidget {
@@ -120,6 +121,12 @@ class DesignerDetailScreen extends StatelessWidget {
           child: MaterialButton(
             onPressed: () async {
               // 다음 화면으로 이동 버튼 클릭 시 동작 추가
+              await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ReservationPage(),
+                ),
+              );
             },
             color: Color(0xFF4B0FFF),
             shape: RoundedRectangleBorder(
