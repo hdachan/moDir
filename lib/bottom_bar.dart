@@ -966,51 +966,113 @@ class HelloWorldScreen extends StatelessWidget {
 class BookmarkScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false, // 기본 leading 아이콘 제거
-        flexibleSpace: Container(
-          width: 360,
-          height: 48,
-          child: Stack(
-            children: [
-              Positioned(
-                top: 14,
-                left: 12,
-                child: Image.asset(
-                  'assets/image/logo_primary.png', // 실제 로고 이미지
-                  width: 95,
-                  height: 19,
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false, // 기본 leading 아이콘 제거
+          flexibleSpace: Container(
+            width: 360,
+            height: 48,
+            child: Stack(
+              children: [
+                Positioned(
+                  top: 14,
+                  left: 12,
+                  child: Image.asset(
+                    'assets/image/logo_modi.png', // 실제 로고 이미지
+                    width: 34,
+                    height: 20,
+                  ),
                 ),
-              ),
-              Positioned(
-                right: 0,
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Icon(
-                        Icons.search,
-                        size: 24,
+                Positioned(
+                  right: 0,
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Icon(
+                          Icons.search,
+                          size: 24,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Icon(
+                          Icons.notifications,
+                          size: 24,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [ // children 속성을 추가
+                Center(
+                  child: Container(
+                    // 중간 패널
+                    width: 428,
+                    height: 624,
+                    decoration: BoxDecoration(color: Colors.red),
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 24, right: 24, top: 10),
+                      child: Container(
+                        height: 96,
+                        width: 428,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children:[
+                            Text(
+                              '추천 받을 디자이너를 선택해주세요',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontFamily: 'Pretendard',
+                                fontWeight: FontWeight.w600,
+                                height: 1.3,
+                                letterSpacing: -0.60,
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Text(
+                              '원하는 패션 분야의 디자이너를 선택하면 취향에 맞는 옷을 추천 받을 수 있어요',
+                              style: TextStyle(
+                                color: Color(0xFF888888),
+                                fontSize: 16,
+                                fontFamily: 'Pretendard',
+                                fontWeight: FontWeight.w400,
+                                height: 1.3,
+                                letterSpacing: -0.3,
+                              ),
+                            ),
+                            SizedBox(height: 20),
+                        Container(
+                          height: 132,
+                          width: 428,
+                          decoration: BoxDecoration(color: Colors.redAccent),
+                        ),
+                          ]
+                        ),
+                        decoration: BoxDecoration(color: Colors.white),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Icon(
-                        Icons.notifications,
-                        size: 24,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 }
+
 
 // 마이페이지 화면 위젯
 class MyPageScreen extends StatelessWidget {

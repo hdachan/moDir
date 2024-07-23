@@ -69,6 +69,7 @@ flutter:
     - assets/image/logout_line_S.png
     - assets/image/m_logo.png
     - assets/image/logo_primary.png
+    - assets/image/logo_modi.png
 
   uses-material-design: true
   fonts:
