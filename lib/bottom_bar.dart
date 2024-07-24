@@ -968,110 +968,132 @@ class BookmarkScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false, // 기본 leading 아이콘 제거
-          flexibleSpace: Container(
-            width: 360,
-            height: 48,
-            child: Stack(
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: _buildListView(), // 리스트 뷰 메서드 호출
+          ),
+        ),
+      ),
+    );
+  }
+
+  // 리스트 뷰 빌드 메서드
+  Widget _buildListView() {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            width: 1,
+            color: Color(0xFFE7E7E7), // 하단 테두리 색상
+          ),
+        ),
+      ),
+      child: ListView.builder(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        itemCount: 10, // 예시로 10개 아이템 생성
+        itemBuilder: (context, index) {
+          return Container(
+            decoration: BoxDecoration(
+              //color: Colors.lightBlue, // 배경색
+              borderRadius: BorderRadius.zero, // 둥근 모서리 없애기
+            ),
+            height: 128, // 높이를 128로 설정
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center, // 세로 중앙 정렬
               children: [
-                Positioned(
-                  top: 14,
-                  left: 12,
-                  child: Image.asset(
-                    'assets/image/logo_modi.png', // 실제 로고 이미지
-                    width: 34,
-                    height: 20,
-                  ),
+                Container(
+                  width: 96, // 박스의 너비
+                  height: 96, // 박스의 높이
+                  color: Colors.black, // 검은색 박스
+                  margin: EdgeInsets.only(right: 16.0, left: 16.0), // 왼쪽 마진 16으로 설정
                 ),
-                Positioned(
-                  right: 0,
-                  child: Row(
+                Container(
+                  margin: EdgeInsets.only(top: 16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Icon(
-                          Icons.search,
-                          size: 24,
+                      Text(
+                        '최선을 다하자너',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w700,
                         ),
+                      ), // 디자이너 이름
+                      SizedBox(height: 8), // 이름과 설명 사이의 간격을 8로 설정
+                      Text(
+                        '설명: 예시 설명 내용입니다.',
+                        style: TextStyle(
+                          color: Color(0xFF5D5D5D),
+                          fontSize: 12,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ), // 설명
+                      SizedBox(height: 8), // 설명과 별점 사이의 간격을 8로 설정
+                      Row(
+                        children: [
+                          Text(
+                            '별점: ★★★★☆ | 빈티지',
+                            style: TextStyle(
+                              color: Color(0xFF5D5D5D),
+                              fontSize: 12,
+                              fontFamily: 'Pretendard',
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ), // 별점
+                          SizedBox(width: 8), // 별점과 주종목 사이의 간격
+                        ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Icon(
-                          Icons.notifications,
-                          size: 24,
-                        ),
+                      SizedBox(height: 8), // 주종목과 가격 사이의 간격을 8로 설정
+                      Row(
+                        children: [
+                          Text(
+                            '30,000',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                              fontFamily: 'Pretendard',
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ), // 가격 숫자
+                          SizedBox(width: 4), // 숫자와 '원' 사이의 간격
+                          Text(
+                            '원',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                              fontFamily: 'Pretendard',
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ), // '원'
+                        ],
                       ),
                     ],
                   ),
                 ),
               ],
             ),
-          ),
-        ),
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [ // children 속성을 추가
-                Center(
-                  child: Container(
-                    // 중간 패널
-                    width: 428,
-                    height: 624,
-                    decoration: BoxDecoration(color: Colors.red),
-                    child: Padding(
-                      padding: EdgeInsets.only(left: 24, right: 24, top: 10),
-                      child: Container(
-                        height: 96,
-                        width: 428,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children:[
-                            Text(
-                              '추천 받을 디자이너를 선택해주세요',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontFamily: 'Pretendard',
-                                fontWeight: FontWeight.w600,
-                                height: 1.3,
-                                letterSpacing: -0.60,
-                              ),
-                            ),
-                            SizedBox(height: 10),
-                            Text(
-                              '원하는 패션 분야의 디자이너를 선택하면 취향에 맞는 옷을 추천 받을 수 있어요',
-                              style: TextStyle(
-                                color: Color(0xFF888888),
-                                fontSize: 16,
-                                fontFamily: 'Pretendard',
-                                fontWeight: FontWeight.w400,
-                                height: 1.3,
-                                letterSpacing: -0.3,
-                              ),
-                            ),
-                            SizedBox(height: 20),
-                        Container(
-                          height: 132,
-                          width: 428,
-                          decoration: BoxDecoration(color: Colors.redAccent),
-                        ),
-                          ]
-                        ),
-                        decoration: BoxDecoration(color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // 마이페이지 화면 위젯
@@ -1080,7 +1102,6 @@ class MyPageScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false, // 기본 leading 아이콘 제거
         flexibleSpace: Container(
           width: 360,
           height: 48,
