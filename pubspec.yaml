@@ -70,7 +70,7 @@ flutter:
     - assets/image/m_logo.png
     - assets/image/logo_primary.png
     - assets/image/logo_modi.png
-
+    - assets/image/123.png
   uses-material-design: true
   fonts:
     - family: Pretendard

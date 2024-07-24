@@ -768,6 +768,7 @@ class Designer {
   }
 }
 
+// 이거는 기능만들어놓은거니까 원담이 이거 만지면안된데이 이거 가만히 나두고 북마크에 해야됨
 class DesignerListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -962,52 +963,123 @@ class HelloWorldScreen extends StatelessWidget {
   }
 }
 
-// 북마크 화면
+// 북마크 화면 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<여기가 디자이너 화면만드는중
 class BookmarkScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          flexibleSpace: Container(
+            width: 360,
+            height: 48,
+            child: Stack(
+              children: [
+                Positioned(
+                  top: 14,
+                  left: 12,
+                  child: Image.asset(
+                    'assets/image/logo_modi.png',
+                    width: 34,
+                    height: 20,
+                  ),
+                ),
+                Positioned(
+                  right: 0,
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Icon(Icons.search, size: 24),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Icon(Icons.notifications, size: 24),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
         body: SafeArea(
           child: SingleChildScrollView(
-            child: _buildListView(), // 리스트 뷰 메서드 호출
+            child: Column(
+              children: [
+                Center(
+                  child: Container(
+                    width: 428,
+                    height: 624,
+                    //decoration: BoxDecoration(color: Colors.red),
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          top: 0,
+                          child: Container( // 여기에 전체 인기순 분야 성별 넣어야됨 상단에 고정되는거아님 여기 위치맞음
+                            height: 56,
+                            width: 428,
+                            decoration: BoxDecoration(color: Colors.blue),
+                          ),
+                        ),
+                        Positioned(
+                          top: 56,
+                          child: Container(
+                            height: 568, // Adjusted to fill the remaining space
+                            width: 428,
+                            child: _buildListView(), // Using the ListView here
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  // 리스트 뷰 빌드 메서드
+  // ListView builder method
   Widget _buildListView() {
     return Container(
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
             width: 1,
-            color: Color(0xFFE7E7E7), // 하단 테두리 색상
+            color: Color(0xFFE7E7E7),
           ),
         ),
       ),
       child: ListView.builder(
         shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        itemCount: 10, // 예시로 10개 아이템 생성
+        physics: ClampingScrollPhysics(), // Changed from NeverScrollableScrollPhysics
+        itemCount: 10,
         itemBuilder: (context, index) {
           return Container(
             decoration: BoxDecoration(
-              //color: Colors.lightBlue, // 배경색
-              borderRadius: BorderRadius.zero, // 둥근 모서리 없애기
+              borderRadius: BorderRadius.zero,
             ),
-            height: 128, // 높이를 128로 설정
+            height: 128,
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center, // 세로 중앙 정렬
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                  width: 96, // 박스의 너비
-                  height: 96, // 박스의 높이
-                  color: Colors.black, // 검은색 박스
-                  margin: EdgeInsets.only(right: 16.0, left: 16.0), // 왼쪽 마진 16으로 설정
+                  width: 96,
+                  height: 96,
+                  margin: EdgeInsets.only(right: 16.0, left: 16.0),
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/image/123.png'), // 이미지 경로 설정
+                      fit: BoxFit.cover, // 이미지 크기 조절
+                    ),
+                    borderRadius: BorderRadius.circular(4), // 둥글게 만들기
+                  ),
                 ),
+
                 Container(
                   margin: EdgeInsets.only(top: 16.0),
                   child: Column(
@@ -1021,8 +1093,8 @@ class BookmarkScreen extends StatelessWidget {
                           fontFamily: 'Pretendard',
                           fontWeight: FontWeight.w700,
                         ),
-                      ), // 디자이너 이름
-                      SizedBox(height: 8), // 이름과 설명 사이의 간격을 8로 설정
+                      ),
+                      SizedBox(height: 8),
                       Text(
                         '설명: 예시 설명 내용입니다.',
                         style: TextStyle(
@@ -1031,23 +1103,35 @@ class BookmarkScreen extends StatelessWidget {
                           fontFamily: 'Pretendard',
                           fontWeight: FontWeight.w400,
                         ),
-                      ), // 설명
-                      SizedBox(height: 8), // 설명과 별점 사이의 간격을 8로 설정
+                      ),
+                      SizedBox(height: 8),
                       Row(
                         children: [
+                          // 별점 아이콘 추가
+                          Icon(Icons.star, size: 14, color: Colors.yellow),
+                          SizedBox(width: 4),
                           Text(
-                            '별점: ★★★★☆ | 빈티지',
+                            '2.8(64)',
                             style: TextStyle(
                               color: Color(0xFF5D5D5D),
                               fontSize: 12,
                               fontFamily: 'Pretendard',
                               fontWeight: FontWeight.w400,
                             ),
-                          ), // 별점
-                          SizedBox(width: 8), // 별점과 주종목 사이의 간격
+                          ),
+                          SizedBox(width: 4),
+                          Text(
+                            '| 빈티지',
+                            style: TextStyle(
+                              color: Color(0xFF5D5D5D),
+                              fontSize: 12,
+                              fontFamily: 'Pretendard',
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
                         ],
                       ),
-                      SizedBox(height: 8), // 주종목과 가격 사이의 간격을 8로 설정
+                      SizedBox(height: 8),
                       Row(
                         children: [
                           Text(
@@ -1058,8 +1142,8 @@ class BookmarkScreen extends StatelessWidget {
                               fontFamily: 'Pretendard',
                               fontWeight: FontWeight.w600,
                             ),
-                          ), // 가격 숫자
-                          SizedBox(width: 4), // 숫자와 '원' 사이의 간격
+                          ),
+                          SizedBox(width: 4),
                           Text(
                             '원',
                             style: TextStyle(
@@ -1068,12 +1152,13 @@ class BookmarkScreen extends StatelessWidget {
                               fontFamily: 'Pretendard',
                               fontWeight: FontWeight.w600,
                             ),
-                          ), // '원'
+                          ),
                         ],
                       ),
                     ],
                   ),
                 ),
+
               ],
             ),
           );
@@ -1082,19 +1167,6 @@ class BookmarkScreen extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // 마이페이지 화면 위젯
 class MyPageScreen extends StatelessWidget {
