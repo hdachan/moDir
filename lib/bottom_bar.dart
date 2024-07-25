@@ -1011,25 +1011,17 @@ class BookmarkScreen extends StatelessWidget {
                 Center(
                   child: Container(
                     width: 428,
-                    height: 624,
                     //decoration: BoxDecoration(color: Colors.red),
-                    child: Stack(
+                    child: Column(
                       children: [
-                        Positioned(
-                          top: 0,
-                          child: Container( // 여기에 전체 인기순 분야 성별 넣어야됨 상단에 고정되는거아님 여기 위치맞음
-                            height: 56,
-                            width: 428,
-                            decoration: BoxDecoration(color: Colors.blue),
-                          ),
+                        Container( // 여기에 전체 인기순 분야 성별 넣어야됨 상단에 고정되는거아님 여기 위치맞음
+                          height: 56,
+                          width: 428,
+                          decoration: BoxDecoration(color: Colors.blue),
                         ),
-                        Positioned(
-                          top: 56,
-                          child: Container(
-                            height: 568, // Adjusted to fill the remaining space
-                            width: 428,
-                            child: _buildListView(), // Using the ListView here
-                          ),
+                        Container(
+                          width: 428,
+                          child: _buildListView(), // Using the ListView here
                         ),
                       ],
                     ),
@@ -1092,6 +1084,8 @@ class BookmarkScreen extends StatelessWidget {
                           fontSize: 14,
                           fontFamily: 'Pretendard',
                           fontWeight: FontWeight.w700,
+                          height: 1.2,
+                          letterSpacing: -0.35,
                         ),
                       ),
                       SizedBox(height: 8),
@@ -1102,6 +1096,8 @@ class BookmarkScreen extends StatelessWidget {
                           fontSize: 12,
                           fontFamily: 'Pretendard',
                           fontWeight: FontWeight.w400,
+                          height: 1.2,
+                          letterSpacing: -0.30,
                         ),
                       ),
                       SizedBox(height: 8),
@@ -1111,22 +1107,40 @@ class BookmarkScreen extends StatelessWidget {
                           Icon(Icons.star, size: 14, color: Colors.yellow),
                           SizedBox(width: 4),
                           Text(
-                            '2.8(64)',
+                            '2.8',
                             style: TextStyle(
                               color: Color(0xFF5D5D5D),
                               fontSize: 12,
                               fontFamily: 'Pretendard',
                               fontWeight: FontWeight.w400,
+                              height: 1.2,
+                              letterSpacing: -0.30,
+                            ),
+                          ),
+                          SizedBox(width: 2),
+                          Text(
+                            '(64)',
+                            style: TextStyle(
+                              color: Color(0xFF5D5D5D),
+                              fontSize: 12,
+                              fontFamily: 'Pretendard',
+                              fontWeight: FontWeight.w400,
+                              height: 1.2,
+                              letterSpacing: -0.30,
                             ),
                           ),
                           SizedBox(width: 4),
+                          Container(width: 1, height: 12,decoration: BoxDecoration(color: Color(0xFF888888))),
+                          SizedBox(width: 4),
                           Text(
-                            '| 빈티지',
+                            '빈티지',
                             style: TextStyle(
                               color: Color(0xFF5D5D5D),
                               fontSize: 12,
                               fontFamily: 'Pretendard',
                               fontWeight: FontWeight.w400,
+                              height: 1.2,
+                              letterSpacing: -0.30,
                             ),
                           ),
                         ],
@@ -1141,6 +1155,8 @@ class BookmarkScreen extends StatelessWidget {
                               fontSize: 14,
                               fontFamily: 'Pretendard',
                               fontWeight: FontWeight.w600,
+                              height: 1.3,
+                              letterSpacing: -0.35,
                             ),
                           ),
                           SizedBox(width: 4),
@@ -1151,6 +1167,8 @@ class BookmarkScreen extends StatelessWidget {
                               fontSize: 14,
                               fontFamily: 'Pretendard',
                               fontWeight: FontWeight.w600,
+                              height: 1.3,
+                              letterSpacing: -0.35,
                             ),
                           ),
                         ],
