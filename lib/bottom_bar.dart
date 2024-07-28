@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -10,6 +11,22 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
 import 'designer_detail_screen.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: const FirebaseOptions(
+      apiKey: 'AIzaSyDogzalL_f-tEOiqOrBSfN8Amzc64l_nLw',
+      appId: '1:531305378076:android:31a98cc7b8d92f337b4ad9',
+      messagingSenderId: '531305378076',
+      projectId: 'modir-d8182',
+      storageBucket: 'modir-d8182.appspot.com',
+    ),
+  );
+  runApp(MaterialApp(
+    home: BottomBar(),
+  ));
+}
 
 class BottomBar extends StatefulWidget {
   @override
@@ -964,7 +981,14 @@ class HelloWorldScreen extends StatelessWidget {
 }
 
 // 북마크 화면 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<여기가 디자이너 화면만드는중
-class BookmarkScreen extends StatelessWidget {
+class BookmarkScreen extends StatefulWidget {
+  @override
+  _BookmarkScreenState createState() => _BookmarkScreenState();
+}
+
+class _BookmarkScreenState extends State<BookmarkScreen> {
+  int _selectedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -1011,17 +1035,30 @@ class BookmarkScreen extends StatelessWidget {
                 Center(
                   child: Container(
                     width: 428,
-                    //decoration: BoxDecoration(color: Colors.red),
                     child: Column(
                       children: [
-                        Container( // 여기에 전체 인기순 분야 성별 넣어야됨 상단에 고정되는거아님 여기 위치맞음
+                        Container(
                           height: 56,
                           width: 428,
-                          decoration: BoxDecoration(color: Colors.blue),
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                                left: 16, right: 16, top: 12, bottom: 12),
+                            child: Row(
+                              children: [
+                                _buildButton(0, '전체', 48),
+                                SizedBox(width: 8),
+                                _buildButton(1, '인기순', 78),
+                                SizedBox(width: 8),
+                                _buildButton(2, '분야', 66),
+                                SizedBox(width: 8),
+                                _buildButton(3, '성별', 66),
+                              ],
+                            ),
+                          ),
                         ),
                         Container(
                           width: 428,
-                          child: _buildListView(), // Using the ListView here
+                          child: _buildListView(),
                         ),
                       ],
                     ),
@@ -1035,8 +1072,57 @@ class BookmarkScreen extends StatelessWidget {
     );
   }
 
-  // ListView builder method
+  Widget _buildButton(int index, String text, double width) {
+    bool isSelected = _selectedIndex == index;
+    return InkWell(
+      onTap: () {
+        setState(() {
+          _selectedIndex = index;
+        });
+        print('$text 버튼 클릭됨!');
+      },
+      borderRadius: BorderRadius.circular(100),
+      splashColor: Colors.grey.withOpacity(0.5),
+      highlightColor: Colors.transparent,
+      child: Container(
+        height: 32,
+        width: width,
+        decoration: BoxDecoration(
+          color: isSelected ? Color(0xFF3D3D3D) : Colors.transparent,
+          border: isSelected ? null : Border.all(width: 1, color: Color(0xFFE7E7E7)),
+          borderRadius: BorderRadius.circular(100),
+        ),
+        child: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                text,
+                style: TextStyle(
+                  color: isSelected ? Colors.white : Colors.black,
+                  fontSize: 14,
+                  fontFamily: 'Pretendard',
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: -0.35,
+                ),
+              ),
+              if (index > 0) ...[
+                SizedBox(width: 2),
+                Icon(
+                  Icons.arrow_drop_down,
+                  color: isSelected ? Colors.white : Colors.black,
+                  size: 16,
+                ),
+              ],
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _buildListView() {
+    // The rest of the _buildListView method remains unchanged
     return Container(
       decoration: BoxDecoration(
         border: Border(
@@ -1048,7 +1134,7 @@ class BookmarkScreen extends StatelessWidget {
       ),
       child: ListView.builder(
         shrinkWrap: true,
-        physics: ClampingScrollPhysics(), // Changed from NeverScrollableScrollPhysics
+        physics: ClampingScrollPhysics(),
         itemCount: 10,
         itemBuilder: (context, index) {
           return Container(
@@ -1065,13 +1151,12 @@ class BookmarkScreen extends StatelessWidget {
                   margin: EdgeInsets.only(right: 16.0, left: 16.0),
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('assets/image/123.png'), // 이미지 경로 설정
-                      fit: BoxFit.cover, // 이미지 크기 조절
+                      image: AssetImage('assets/image/123.png'),
+                      fit: BoxFit.cover,
                     ),
-                    borderRadius: BorderRadius.circular(4), // 둥글게 만들기
+                    borderRadius: BorderRadius.circular(4),
                   ),
                 ),
-
                 Container(
                   margin: EdgeInsets.only(top: 16.0),
                   child: Column(
@@ -1103,7 +1188,6 @@ class BookmarkScreen extends StatelessWidget {
                       SizedBox(height: 8),
                       Row(
                         children: [
-                          // 별점 아이콘 추가
                           Icon(Icons.star, size: 14, color: Colors.yellow),
                           SizedBox(width: 4),
                           Text(
@@ -1130,7 +1214,11 @@ class BookmarkScreen extends StatelessWidget {
                             ),
                           ),
                           SizedBox(width: 4),
-                          Container(width: 1, height: 12,decoration: BoxDecoration(color: Color(0xFF888888))),
+                          Container(
+                              width: 1,
+                              height: 12,
+                              decoration:
+                              BoxDecoration(color: Color(0xFF888888))),
                           SizedBox(width: 4),
                           Text(
                             '빈티지',
@@ -1176,7 +1264,6 @@ class BookmarkScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-
               ],
             ),
           );
