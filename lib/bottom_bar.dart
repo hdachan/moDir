@@ -753,37 +753,6 @@ class _PostClickState extends State<PostClick> {
   }
 }
 
-//기능화면
-class Designer {
-  final String name;
-  final String imageUrl;
-  final double rating;
-  final String specialty;
-  final double price;
-  final String description; // 새로운 속성 추가
-
-  Designer({
-    required this.name,
-    required this.imageUrl,
-    required this.rating,
-    required this.specialty,
-    required this.price,
-    required this.description, // 새로운 속성 초기화
-  });
-
-  factory Designer.fromFirestore(DocumentSnapshot doc) {
-    Map data = doc.data() as Map;
-    return Designer(
-      name: data['name'] ?? '',
-      rating: data['rating'] ?? 0.0,
-      specialty: data['specialty'] ?? '',
-      price: data['price'] ?? 0.0,
-      imageUrl: data['imageUrl'] ?? '',
-      // 이미지 URL 초기화
-      description: data['description'] ?? '', // description 초기화
-    );
-  }
-}
 
 // 이거는 기능만들어놓은거니까 원담이 이거 만지면안된데이 이거 가만히 나두고 북마크에 해야됨
 class DesignerListScreen extends StatelessWidget {
@@ -830,141 +799,6 @@ class DesignerListScreen extends StatelessWidget {
             ],
           ),
         ),
-      ),
-      body: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('designer').snapshots(),
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.hasError) {
-            return Center(child: Text('오류 발생: ${snapshot.error}'));
-          }
-
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          }
-
-          if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            return Center(child: Text('데이터가 없습니다.'));
-          }
-
-          var designers = snapshot.data!.docs
-              .map((doc) => Designer.fromFirestore(doc))
-              .toList();
-
-          return ListView.builder(
-            itemCount: designers.length,
-            itemBuilder: (context, index) {
-              var designer = designers[index];
-              return GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          DesignerDetailScreen(designer: designer),
-                    ),
-                  );
-                },
-                child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                  padding: EdgeInsets.all(16.0),
-                  height: 150.0,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 2,
-                        blurRadius: 5,
-                        offset: Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(10.0),
-                        child: designer.imageUrl.isNotEmpty
-                            ? Image.network(
-                                designer.imageUrl,
-                                width: 100,
-                                height: 100,
-                                fit: BoxFit.cover,
-                                errorBuilder: (context, error, stackTrace) {
-                                  return Image.asset(
-                                    'assets/image/m_logo.png',
-                                    width: 100,
-                                    height: 100,
-                                    fit: BoxFit.cover,
-                                  );
-                                },
-                              )
-                            : Image.asset(
-                                'assets/image/m_logo.png',
-                                width: 100,
-                                height: 100,
-                                fit: BoxFit.cover,
-                              ),
-                      ),
-                      SizedBox(width: 16.0),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              designer.name,
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontFamily: 'Pretendard',
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            SizedBox(height: 8.0),
-                            Row(
-                              children: [
-                                Icon(Icons.star,
-                                    color: Colors.yellow, size: 16.0),
-                                SizedBox(width: 4.0),
-                                Text(
-                                  '평점: ${designer.rating}',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 12,
-                                    fontFamily: 'Pretendard',
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Text(
-                              '분야: ${designer.specialty}',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 12,
-                                fontFamily: 'Pretendard',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                            Text(
-                              '가격: \$${designer.price}',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 12,
-                                fontFamily: 'Pretendard',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            },
-          );
-        },
       ),
     );
   }
@@ -1121,8 +955,25 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
     );
   }
 
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  List<String> _names = [];
+  List<String> _introductions = []; // introduction 리스트 추가
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchData();
+  }
+
+  Future<void> _fetchData() async {
+    QuerySnapshot snapshot = await _firestore.collection('designer').get();
+    setState(() {
+      _names = snapshot.docs.map((doc) => doc['name'] as String).toList();
+      _introductions = snapshot.docs.map((doc) => doc['introduction'] as String).toList(); // introduction 필드 추가
+    });
+  }
+
   Widget _buildListView() {
-    // The rest of the _buildListView method remains unchanged
     return Container(
       decoration: BoxDecoration(
         border: Border(
@@ -1135,7 +986,7 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
       child: ListView.builder(
         shrinkWrap: true,
         physics: ClampingScrollPhysics(),
-        itemCount: 10,
+        itemCount: _names.length,
         itemBuilder: (context, index) {
           return Container(
             decoration: BoxDecoration(
@@ -1163,7 +1014,7 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '최선을 다하자너',
+                        _names[index], // Firestore에서 가져온 이름
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 14,
@@ -1175,7 +1026,7 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
                       ),
                       SizedBox(height: 8),
                       Text(
-                        '설명: 예시 설명 내용입니다.',
+                        '${_introductions[index]}', // introduction 필드를 사용
                         style: TextStyle(
                           color: Color(0xFF5D5D5D),
                           fontSize: 12,
@@ -1191,7 +1042,7 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
                           Icon(Icons.star, size: 14, color: Colors.yellow),
                           SizedBox(width: 4),
                           Text(
-                            '2.8',
+                            '4.9',
                             style: TextStyle(
                               color: Color(0xFF5D5D5D),
                               fontSize: 12,
@@ -1203,7 +1054,7 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
                           ),
                           SizedBox(width: 2),
                           Text(
-                            '(64)',
+                            '(99+)',
                             style: TextStyle(
                               color: Color(0xFF5D5D5D),
                               fontSize: 12,
@@ -1215,13 +1066,13 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
                           ),
                           SizedBox(width: 4),
                           Container(
-                              width: 1,
-                              height: 12,
-                              decoration:
-                              BoxDecoration(color: Color(0xFF888888))),
+                            width: 1,
+                            height: 12,
+                            decoration: BoxDecoration(color: Color(0xFF888888)),
+                          ),
                           SizedBox(width: 4),
                           Text(
-                            '빈티지',
+                            '빈티지, 아메카지',
                             style: TextStyle(
                               color: Color(0xFF5D5D5D),
                               fontSize: 12,
@@ -1252,9 +1103,9 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
                             '원',
                             style: TextStyle(
                               color: Colors.black,
-                              fontSize: 14,
+                              fontSize: 12,
                               fontFamily: 'Pretendard',
-                              fontWeight: FontWeight.w600,
+                              fontWeight: FontWeight.w400,
                               height: 1.3,
                               letterSpacing: -0.35,
                             ),
