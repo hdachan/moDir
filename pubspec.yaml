@@ -73,6 +73,7 @@ flutter:
     - assets/image/123.png
     - assets/image/456.png
     - assets/image/carousel_home.png
+    - assets/image/arrow_forward.png
   uses-material-design: true
   fonts:
     - family: Pretendard

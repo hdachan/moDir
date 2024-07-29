@@ -803,7 +803,7 @@ class DesignerListScreen extends StatelessWidget {
   }
 }
 
-// 5번째 위젯
+// 헬로 월드(홈화면) 옮기기 전
 class HelloWorldScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -851,12 +851,12 @@ class HelloWorldScreen extends StatelessWidget {
                 child: Container(
                   // 중간 패널
                   width: 360,
-                  height: 2559,
                   //decoration: BoxDecoration(color: Colors.red),
                   child: Column(
                     // 빨간색 박스 안에 Column 추가
                     children: [
                       Container(
+                        // 포스터 화면 제일 후 순위(패키지 쓸 것)
                         height: 420,
                         width: 360,
                         //decoration: BoxDecoration(color: Colors.blue),
@@ -882,6 +882,7 @@ class HelloWorldScreen extends StatelessWidget {
                               fontSize: 14,
                               fontFamily: 'Pretendard',
                               fontWeight: FontWeight.w500,
+                              height: 1.3,
                               letterSpacing: -0.35,
                             ),
                           ),
@@ -890,7 +891,13 @@ class HelloWorldScreen extends StatelessWidget {
                       Container(
                         height: 240,
                         width: 360,
-                        decoration: BoxDecoration(color: Colors.teal),
+                        decoration: BoxDecoration(color: Colors.white),
+                        padding: const EdgeInsets.only(
+                          top: 16,
+                          left: 16,
+                          right: 16,
+                          bottom: 24,
+                        ),
                         child: Center(
                           // 내부 컨테이너들을 중앙에 배치
                           child: Column(
@@ -904,32 +911,176 @@ class HelloWorldScreen extends StatelessWidget {
                                 child: Row(
                                   // 수평으로 배치하기 위해 Row 사용
                                   children: [
-                                    Container(
-                                      height: 70,
+                                    SizedBox(
                                       width: 70,
-                                      decoration:
-                                          BoxDecoration(color: Colors.blue),
+                                      height: 94,
+                                      child: ElevatedButton(
+                                        onPressed: () {},
+                                        style: ElevatedButton.styleFrom(
+                                          shadowColor: Colors.transparent,
+                                          padding: EdgeInsets.zero,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                        ),
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              height: 70,
+                                              width: 70,
+                                              decoration: BoxDecoration(
+                                                  color: Color(0xFFB4B4B4),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8)),
+                                            ),
+                                            SizedBox(height: 8),
+                                            SizedBox(
+                                              width: 70,
+                                              height: 16,
+                                              child: Text('디자이너 찾기',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    color: Color(0xFF3D3D3D),
+                                                    fontSize: 12,
+                                                    fontFamily: 'Pretendard',
+                                                    fontWeight: FontWeight.w400,
+                                                    height: 1.3,
+                                                    letterSpacing: -0.3,
+                                                  )),
+                                            )
+                                          ],
+                                        ),
+                                      ),
                                     ),
                                     SizedBox(width: 16),
-                                    Container(
-                                      height: 70,
+                                    SizedBox(
                                       width: 70,
-                                      decoration:
-                                          BoxDecoration(color: Colors.green),
+                                      height: 94,
+                                      child: ElevatedButton(
+                                        onPressed: () {},
+                                        style: ElevatedButton.styleFrom(
+                                          shadowColor: Colors.transparent,
+                                          padding: EdgeInsets.zero,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                        ),
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              height: 70,
+                                              width: 70,
+                                              decoration: BoxDecoration(
+                                                  color: Color(0xFFB4B4B4),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8)),
+                                            ),
+                                            SizedBox(height: 8),
+                                            SizedBox(
+                                              width: 70,
+                                              height: 16,
+                                              child: Text('찜 목록',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    color: Color(0xFF3D3D3D),
+                                                    fontSize: 12,
+                                                    fontFamily: 'Pretendard',
+                                                    fontWeight: FontWeight.w400,
+                                                    height: 1.3,
+                                                    letterSpacing: -0.3,
+                                                  )),
+                                            )
+                                          ],
+                                        ),
+                                      ),
                                     ),
                                     SizedBox(width: 16),
-                                    Container(
-                                      height: 70,
+                                    SizedBox(
                                       width: 70,
-                                      decoration:
-                                          BoxDecoration(color: Colors.red),
+                                      height: 94,
+                                      child: ElevatedButton(
+                                        onPressed: () {},
+                                        style: ElevatedButton.styleFrom(
+                                          shadowColor: Colors.transparent,
+                                          padding: EdgeInsets.zero,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                        ),
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              height: 70,
+                                              width: 70,
+                                              decoration: BoxDecoration(
+                                                  color: Color(0xFFB4B4B4),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8)),
+                                            ),
+                                            SizedBox(height: 8),
+                                            SizedBox(
+                                              width: 70,
+                                              height: 16,
+                                              child: Text('매거진',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    color: Color(0xFF3D3D3D),
+                                                    fontSize: 12,
+                                                    fontFamily: 'Pretendard',
+                                                    fontWeight: FontWeight.w400,
+                                                    height: 1.3,
+                                                    letterSpacing: -0.3,
+                                                  )),
+                                            )
+                                          ],
+                                        ),
+                                      ),
                                     ),
                                     SizedBox(width: 16),
-                                    Container(
-                                      height: 70,
+                                    SizedBox(
                                       width: 70,
-                                      decoration:
-                                          BoxDecoration(color: Colors.red),
+                                      height: 94,
+                                      child: ElevatedButton(
+                                        onPressed: () {},
+                                        style: ElevatedButton.styleFrom(
+                                          shadowColor: Colors.transparent,
+                                          padding: EdgeInsets.zero,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                        ),
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              height: 70,
+                                              width: 70,
+                                              decoration: BoxDecoration(
+                                                  color: Color(0xFFB4B4B4),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8)),
+                                            ),
+                                            SizedBox(height: 8),
+                                            SizedBox(
+                                              width: 70,
+                                              height: 16,
+                                              child: Text('커뮤니티',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    color: Color(0xFF3D3D3D),
+                                                    fontSize: 12,
+                                                    fontFamily: 'Pretendard',
+                                                    fontWeight: FontWeight.w400,
+                                                    height: 1.3,
+                                                    letterSpacing: -0.3,
+                                                  )),
+                                            )
+                                          ],
+                                        ),
+                                      ),
                                     ),
                                     // 마지막 박스는 패딩 없이 추가
                                   ],
@@ -945,32 +1096,176 @@ class HelloWorldScreen extends StatelessWidget {
                                 child: Row(
                                   // 수평으로 배치하기 위해 Row 사용
                                   children: [
-                                    Container(
-                                      height: 70,
+                                    SizedBox(
                                       width: 70,
-                                      decoration:
-                                          BoxDecoration(color: Colors.blue),
+                                      height: 94,
+                                      child: ElevatedButton(
+                                        onPressed: () {},
+                                        style: ElevatedButton.styleFrom(
+                                          shadowColor: Colors.transparent,
+                                          padding: EdgeInsets.zero,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                        ),
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              height: 70,
+                                              width: 70,
+                                              decoration: BoxDecoration(
+                                                  color: Color(0xFFB4B4B4),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8)),
+                                            ),
+                                            SizedBox(height: 8),
+                                            SizedBox(
+                                              width: 70,
+                                              height: 16,
+                                              child: Text('견적서 보기',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    color: Color(0xFF3D3D3D),
+                                                    fontSize: 12,
+                                                    fontFamily: 'Pretendard',
+                                                    fontWeight: FontWeight.w400,
+                                                    height: 1.3,
+                                                    letterSpacing: -0.3,
+                                                  )),
+                                            )
+                                          ],
+                                        ),
+                                      ),
                                     ),
                                     SizedBox(width: 16),
-                                    Container(
-                                      height: 70,
+                                    SizedBox(
                                       width: 70,
-                                      decoration:
-                                          BoxDecoration(color: Colors.green),
+                                      height: 94,
+                                      child: ElevatedButton(
+                                        onPressed: () {},
+                                        style: ElevatedButton.styleFrom(
+                                          shadowColor: Colors.transparent,
+                                          padding: EdgeInsets.zero,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                        ),
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              height: 70,
+                                              width: 70,
+                                              decoration: BoxDecoration(
+                                                  color: Color(0xFFB4B4B4),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8)),
+                                            ),
+                                            SizedBox(height: 8),
+                                            SizedBox(
+                                              width: 70,
+                                              height: 16,
+                                              child: Text('프로필 작성',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    color: Color(0xFF3D3D3D),
+                                                    fontSize: 12,
+                                                    fontFamily: 'Pretendard',
+                                                    fontWeight: FontWeight.w400,
+                                                    height: 1.3,
+                                                    letterSpacing: -0.3,
+                                                  )),
+                                            )
+                                          ],
+                                        ),
+                                      ),
                                     ),
                                     SizedBox(width: 16),
-                                    Container(
-                                      height: 70,
+                                    SizedBox(
                                       width: 70,
-                                      decoration:
-                                          BoxDecoration(color: Colors.red),
+                                      height: 94,
+                                      child: ElevatedButton(
+                                        onPressed: () {},
+                                        style: ElevatedButton.styleFrom(
+                                          shadowColor: Colors.transparent,
+                                          padding: EdgeInsets.zero,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                        ),
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              height: 70,
+                                              width: 70,
+                                              decoration: BoxDecoration(
+                                                  color: Color(0xFFB4B4B4),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8)),
+                                            ),
+                                            SizedBox(height: 8),
+                                            SizedBox(
+                                              width: 70,
+                                              height: 16,
+                                              child: Text('이벤트',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    color: Color(0xFF3D3D3D),
+                                                    fontSize: 12,
+                                                    fontFamily: 'Pretendard',
+                                                    fontWeight: FontWeight.w400,
+                                                    height: 1.3,
+                                                    letterSpacing: -0.3,
+                                                  )),
+                                            )
+                                          ],
+                                        ),
+                                      ),
                                     ),
                                     SizedBox(width: 16),
-                                    Container(
-                                      height: 70,
+                                    SizedBox(
                                       width: 70,
-                                      decoration:
-                                          BoxDecoration(color: Colors.red),
+                                      height: 94,
+                                      child: ElevatedButton(
+                                        onPressed: () {},
+                                        style: ElevatedButton.styleFrom(
+                                          shadowColor: Colors.transparent,
+                                          padding: EdgeInsets.zero,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                        ),
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              height: 70,
+                                              width: 70,
+                                              decoration: BoxDecoration(
+                                                  color: Color(0xFFB4B4B4),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8)),
+                                            ),
+                                            SizedBox(height: 8),
+                                            SizedBox(
+                                              width: 70,
+                                              height: 16,
+                                              child: Text('쿠폰',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    color: Color(0xFF3D3D3D),
+                                                    fontSize: 12,
+                                                    fontFamily: 'Pretendard',
+                                                    fontWeight: FontWeight.w400,
+                                                    height: 1.3,
+                                                    letterSpacing: -0.3,
+                                                  )),
+                                            )
+                                          ],
+                                        ),
+                                      ),
                                     ),
                                     // 마지막 박스는 패딩 없이 추가
                                   ],
@@ -979,16 +1274,13 @@ class HelloWorldScreen extends StatelessWidget {
                             ],
                           ),
                         ),
-                      ), // 이부분 싹다 다시만들기
+                      ),
                       SizedBox(height: 8),
-
                       Container(
                         height: 60,
                         width: 360,
                         padding: EdgeInsets.only(
                             top: 24, bottom: 12, left: 12, right: 12),
-                        // 위, 아래, 왼쪽, 오른쪽 패딩 설정
-                        //decoration: BoxDecoration(color: Colors.cyan),
                         child: Row(
                           // 수평으로 배치하기 위해 Row 사용
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -998,44 +1290,52 @@ class HelloWorldScreen extends StatelessWidget {
                               '많이 찾는 디자이너',
                               style: TextStyle(
                                 color: Color(0xFF3D3D3D),
-                                // 기존 텍스트 색상
                                 fontSize: 20,
-                                // 기존 글자 크기
                                 fontFamily: 'Pretendard',
-                                // 기존 글꼴
                                 fontWeight: FontWeight.w600,
-                                // 기존 글자 두께
+                                height: 1.2,
                                 letterSpacing: -0.50, // 기존 글자 간격
                               ),
                             ),
-                            Row(
-                              // '더보기' 텍스트와 화살표 아이콘을 수평으로 배치
-                              children: [
-                                Text(
-                                  '더보기',
-                                  style: TextStyle(
-                                    color: Color(0xFF888888),
-                                    // 텍스트 색상 변경
-                                    fontSize: 14,
-                                    // 글자 크기 변경
-                                    fontFamily: 'Pretendard',
-                                    // 글꼴
-                                    fontWeight: FontWeight.w400,
-                                    // 글자 두께 변경
-                                    letterSpacing: -0.35, // 글자 간격 변경
-                                  ),
+                            SizedBox(
+                              width: 54,
+                              height: 24,
+                              child: MaterialButton(
+                                onPressed: () {},
+                                padding: EdgeInsets.zero,
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      '더보기',
+                                      style: TextStyle(
+                                        color: Color(0xFF888888),
+                                        fontSize: 14,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w400,
+                                        height: 1.3,
+                                        letterSpacing: -0.35, // 글자 간격 변경
+                                      ),
+                                    ),
+                                    SizedBox(width: 2), // 텍스트와 화살표 사이의 간격
+                                    Container(
+                                      width: 16,
+                                      height: 16,
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 4),
+                                      decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                        image: AssetImage(
+                                            'assets/image/arrow_forward.png'),
+                                        fit: BoxFit.cover,
+                                      )),
+                                    )
+                                  ],
                                 ),
-                                SizedBox(width: 2), // 텍스트와 화살표 사이의 간격
-                                Icon(
-                                  Icons.arrow_forward, // 화살표 아이콘
-                                  color: Color(0xFF888888), // 아이콘 색상 변경
-                                ),
-                              ],
+                              ),
                             ),
                           ],
                         ),
                       ),
-
                       Container(
                         height: 46,
                         width: 360,
@@ -1084,16 +1384,89 @@ class HelloWorldScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-
                       Container(
                         height: 295,
                         width: 360,
-                        decoration: BoxDecoration(color: Colors.white10),
+                        decoration: BoxDecoration(color: Colors.red),
                       ),
                       Container(
                         height: 82,
                         width: 360,
-                        decoration: BoxDecoration(color: Colors.cyan),
+                        padding: EdgeInsets.only(
+                            top: 24, bottom: 12, left: 12, right: 12),
+                        child: Column(
+                          children: [
+                            Row(
+                              // 수평으로 배치하기 위해 Row 사용
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              // 양쪽 끝으로 배치
+                              children: [
+                                Text(
+                                  '계절 별 코디',
+                                  style: TextStyle(
+                                    color: Color(0xFF3D3D3D),
+                                    fontSize: 20,
+                                    fontFamily: 'Pretendard',
+                                    fontWeight: FontWeight.w600,
+                                    height: 1.2,
+                                    letterSpacing: -0.50, // 기존 글자 간격
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 54,
+                                  height: 24,
+                                  child: MaterialButton(
+                                    onPressed: () {},
+                                    padding: EdgeInsets.zero,
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          '더보기',
+                                          style: TextStyle(
+                                            color: Color(0xFF888888),
+                                            fontSize: 14,
+                                            fontFamily: 'Pretendard',
+                                            fontWeight: FontWeight.w400,
+                                            height: 1.3,
+                                            letterSpacing: -0.35, // 글자 간격 변경
+                                          ),
+                                        ),
+                                        SizedBox(width: 2), // 텍스트와 화살표 사이의 간격
+                                        Container(
+                                          width: 16,
+                                          height: 16,
+                                          padding:
+                                              EdgeInsets.symmetric(vertical: 4),
+                                          decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                            image: AssetImage(
+                                                'assets/image/arrow_forward.png'),
+                                            fit: BoxFit.cover,
+                                          )),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 8),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                '회원님의 마음에 맞는 사진을 골라보세요',
+                                style: TextStyle(
+                                  color: Color(0xFF888888),
+                                  fontSize: 14,
+                                  fontFamily: 'Pretendard',
+                                  fontWeight: FontWeight.w400,
+                                  height: 1,
+                                  letterSpacing: -0.35,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                       Container(
                         height: 46,
@@ -1108,7 +1481,81 @@ class HelloWorldScreen extends StatelessWidget {
                       Container(
                         height: 82,
                         width: 360,
-                        decoration: BoxDecoration(color: Colors.blue),
+                        padding: EdgeInsets.only(
+                            top: 24, bottom: 12, left: 12, right: 12),
+                        child: Column(
+                          children: [
+                            Row(
+                              // 수평으로 배치하기 위해 Row 사용
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              // 양쪽 끝으로 배치
+                              children: [
+                                Text(
+                                  "디자이너's 코디",
+                                  style: TextStyle(
+                                    color: Color(0xFF3D3D3D),
+                                    fontSize: 20,
+                                    fontFamily: 'Pretendard',
+                                    fontWeight: FontWeight.w600,
+                                    height: 1.2,
+                                    letterSpacing: -0.50, // 기존 글자 간격
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 54,
+                                  height: 24,
+                                  child: MaterialButton(
+                                    onPressed: () {},
+                                    padding: EdgeInsets.zero,
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          '더보기',
+                                          style: TextStyle(
+                                            color: Color(0xFF888888),
+                                            fontSize: 14,
+                                            fontFamily: 'Pretendard',
+                                            fontWeight: FontWeight.w400,
+                                            height: 1.3,
+                                            letterSpacing: -0.35, // 글자 간격 변경
+                                          ),
+                                        ),
+                                        SizedBox(width: 2), // 텍스트와 화살표 사이의 간격
+                                        Container(
+                                          width: 16,
+                                          height: 16,
+                                          padding:
+                                              EdgeInsets.symmetric(vertical: 4),
+                                          decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                            image: AssetImage(
+                                                'assets/image/arrow_forward.png'),
+                                            fit: BoxFit.cover,
+                                          )),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 8),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                '디자이너가 코디한 옷들을 살펴보세요',
+                                style: TextStyle(
+                                  color: Color(0xFF888888),
+                                  fontSize: 14,
+                                  fontFamily: 'Pretendard',
+                                  fontWeight: FontWeight.w400,
+                                  height: 1,
+                                  letterSpacing: -0.35,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                       Container(
                         height: 424,
@@ -1117,9 +1564,442 @@ class HelloWorldScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 8),
                       Container(
-                        height: 470,
                         width: 360,
-                        decoration: BoxDecoration(color: Colors.green),
+                        padding: const EdgeInsets.only(
+                          top: 24,
+                          left: 16,
+                          right: 16,
+                          bottom: 48,
+                        ),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                  width: 28,
+                                  height: 16,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                    image: AssetImage(
+                                        'assets/image/logo_modi.png'),
+                                    fit: BoxFit.cover,
+                                  )),
+                                ),
+                                SizedBox(width: 4),
+                                Text(
+                                  '(주)모디랑',
+                                  style: TextStyle(
+                                    color: Color(0xFF3D3D3D),
+                                    fontSize: 12,
+                                    fontFamily: 'Pretendard',
+                                    fontWeight: FontWeight.w600,
+                                    height: 1.3,
+                                    letterSpacing: -0.30,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 12),
+                            Container(
+                              width: 328,
+                              height: 178,
+                              padding: const EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(4),
+                                  border: Border.all(
+                                      color: Color(0xFFE7E7E7), width: 1)),
+                              child: Column(
+                                children: const [
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      '대표이사  :  황대찬  |  사업자등록번호  :  123-45-67891',
+                                      style: TextStyle(
+                                        color: Color(0xFF5D5D5D),
+                                        fontSize: 11,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w400,
+                                        height: 1.3,
+                                        letterSpacing: -0.28,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: 12),
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      '주소  :  경북 경산시 하양읍 문화로4길 18-15 샹그릴라A 306호',
+                                      style: TextStyle(
+                                        color: Color(0xFF5D5D5D),
+                                        fontSize: 11,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w400,
+                                        height: 1.3,
+                                        letterSpacing: -0.28,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: 12),
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      '전화번호  :  010-3009-5596',
+                                      style: TextStyle(
+                                        color: Color(0xFF5D5D5D),
+                                        fontSize: 11,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w400,
+                                        height: 1.3,
+                                        letterSpacing: -0.28,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: 12),
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      '이메일 주소  :  holyhabits915@gmail.com',
+                                      style: TextStyle(
+                                        color: Color(0xFF5D5D5D),
+                                        fontSize: 11,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w400,
+                                        height: 1.3,
+                                        letterSpacing: -0.28,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: 12),
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      '호스팅서비스제공자  :  (주)모디랑',
+                                      style: TextStyle(
+                                        color: Color(0xFF5D5D5D),
+                                        fontSize: 11,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w400,
+                                        height: 1.3,
+                                        letterSpacing: -0.28,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: 12),
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      '통신판매업신고  :  2024-대구경북-00336호',
+                                      style: TextStyle(
+                                        color: Color(0xFF5D5D5D),
+                                        fontSize: 11,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w400,
+                                        height: 1.3,
+                                        letterSpacing: -0.28,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 16),
+                            Row(
+                              children: [
+                                TextButton(
+                                  onPressed: () {},
+                                  style: OutlinedButton.styleFrom(
+                                      minimumSize: Size.zero,
+                                      padding: EdgeInsets.zero),
+                                  child: Text(
+                                    "사업자정보확인",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Color(0xFF5D5D5D),
+                                      fontSize: 11,
+                                      fontFamily: 'Pretendard',
+                                      fontWeight: FontWeight.w400,
+                                      height: 1.3,
+                                      letterSpacing: -0.28,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 4),
+                                Container(
+                                  width: 1,
+                                  height: 11,
+                                  decoration:
+                                      BoxDecoration(color: Color(0xFF5D5D5D)),
+                                ),
+                                SizedBox(width: 4),
+                                TextButton(
+                                  onPressed: () {},
+                                  style: OutlinedButton.styleFrom(
+                                      minimumSize: Size.zero,
+                                      padding: EdgeInsets.zero),
+                                  child: Text(
+                                    "전자금융거래이용약관",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Color(0xFF5D5D5D),
+                                      fontSize: 11,
+                                      fontFamily: 'Pretendard',
+                                      fontWeight: FontWeight.w400,
+                                      height: 1.3,
+                                      letterSpacing: -0.28,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 4),
+                                Container(
+                                  width: 1,
+                                  height: 11,
+                                  decoration:
+                                      BoxDecoration(color: Color(0xFF5D5D5D)),
+                                ),
+                                SizedBox(width: 4),
+                                TextButton(
+                                  onPressed: () {},
+                                  style: OutlinedButton.styleFrom(
+                                      minimumSize: Size.zero,
+                                      padding: EdgeInsets.zero),
+                                  child: Text(
+                                    "전자금융거래이용약관",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Color(0xFF5114FF),
+                                      fontSize: 11,
+                                      fontFamily: 'Pretendard',
+                                      fontWeight: FontWeight.w400,
+                                      height: 1.3,
+                                      letterSpacing: -0.28,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 8),
+                            Row(
+                              children: [
+                                TextButton(
+                                  onPressed: () {},
+                                  style: OutlinedButton.styleFrom(
+                                      minimumSize: Size.zero,
+                                      padding: EdgeInsets.zero),
+                                  child: Text(
+                                    "리뷰운영정책",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Color(0xFF5D5D5D),
+                                      fontSize: 11,
+                                      fontFamily: 'Pretendard',
+                                      fontWeight: FontWeight.w400,
+                                      height: 1.3,
+                                      letterSpacing: -0.28,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 4),
+                                Container(
+                                  width: 1,
+                                  height: 11,
+                                  decoration:
+                                      BoxDecoration(color: Color(0xFF5D5D5D)),
+                                ),
+                                SizedBox(width: 4),
+                                TextButton(
+                                  onPressed: () {},
+                                  style: OutlinedButton.styleFrom(
+                                      minimumSize: Size.zero,
+                                      padding: EdgeInsets.zero),
+                                  child: Text(
+                                    "데이터제공정책",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Color(0xFF5D5D5D),
+                                      fontSize: 11,
+                                      fontFamily: 'Pretendard',
+                                      fontWeight: FontWeight.w400,
+                                      height: 1.3,
+                                      letterSpacing: -0.28,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 4),
+                                Container(
+                                  width: 1,
+                                  height: 11,
+                                  decoration:
+                                      BoxDecoration(color: Color(0xFF5D5D5D)),
+                                ),
+                                SizedBox(width: 4),
+                                TextButton(
+                                  onPressed: () {},
+                                  style: OutlinedButton.styleFrom(
+                                      minimumSize: Size.zero,
+                                      padding: EdgeInsets.zero),
+                                  child: Text(
+                                    "소비자분쟁해결기준",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Color(0xFF5D5D5D),
+                                      fontSize: 11,
+                                      fontFamily: 'Pretendard',
+                                      fontWeight: FontWeight.w400,
+                                      height: 1.3,
+                                      letterSpacing: -0.28,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 16),
+                            Row(
+                              children: [
+                                Container(
+                                  width: 164,
+                                  height: 84,
+                                  padding: const EdgeInsets.all(16),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(4),
+                                          topLeft: Radius.circular(4)),
+                                      border: Border.all(
+                                          color: Color(0xFFE7E7E7), width: 1)),
+                                  child: Column(
+                                    children: const [
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          '고객센터(대표)',
+                                          style: TextStyle(
+                                            color: Color(0xFF5D5D5D),
+                                            fontSize: 11,
+                                            fontFamily: 'Pretendard',
+                                            fontWeight: FontWeight.w400,
+                                            height: 1.3,
+                                            letterSpacing: -0.28,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(height: 4),
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          '010-3009-5596',
+                                          style: TextStyle(
+                                            color: Color(0xFF5D5D5D),
+                                            fontSize: 11,
+                                            fontFamily: 'Pretendard',
+                                            fontWeight: FontWeight.w400,
+                                            height: 1.3,
+                                            letterSpacing: -0.28,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(height: 4),
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          '24시간 운영, 연중무휴',
+                                          style: TextStyle(
+                                            color: Color(0xFF5D5D5D),
+                                            fontSize: 11,
+                                            fontFamily: 'Pretendard',
+                                            fontWeight: FontWeight.w400,
+                                            height: 1.3,
+                                            letterSpacing: -0.28,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  width: 164,
+                                  height: 84,
+                                  padding: const EdgeInsets.all(16),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                          bottomRight: Radius.circular(4),
+                                          topRight: Radius.circular(4)),
+                                      border: Border(
+                                          top: BorderSide(
+                                              color: Color(0xFFE7E7E7),
+                                              width: 1),
+                                          bottom: BorderSide(
+                                              color: Color(0xFFE7E7E7),
+                                              width: 1),
+                                          right: BorderSide(
+                                              color: Color(0xFFE7E7E7),
+                                              width: 1))),
+                                  child: Column(
+                                    children: const [
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          '고객센터',
+                                          style: TextStyle(
+                                            color: Color(0xFF5D5D5D),
+                                            fontSize: 11,
+                                            fontFamily: 'Pretendard',
+                                            fontWeight: FontWeight.w400,
+                                            height: 1.3,
+                                            letterSpacing: -0.28,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(height: 4),
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          '010-4172-4515',
+                                          style: TextStyle(
+                                            color: Color(0xFF5D5D5D),
+                                            fontSize: 11,
+                                            fontFamily: 'Pretendard',
+                                            fontWeight: FontWeight.w400,
+                                            height: 1.3,
+                                            letterSpacing: -0.28,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(height: 4),
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          '오전 09:00 ~ 익일 18:00',
+                                          style: TextStyle(
+                                            color: Color(0xFF5D5D5D),
+                                            fontSize: 11,
+                                            fontFamily: 'Pretendard',
+                                            fontWeight: FontWeight.w400,
+                                            height: 1.3,
+                                            letterSpacing: -0.28,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 16),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                '(주)모디랑은 통신판매중개자로 거래 당사자가 아니므로, 판매자가 등록한 \n상품정보 및 거래 등에 대해 책임을 지지 않습니다. \n단, (주)모디랑이 판매자로 등록 판매한 상품은 판매자로서 책임을 부담합니다.',
+                                style: TextStyle(
+                                  color: Color(0xFF5D5D5D),
+                                  fontSize: 11,
+                                  fontFamily: 'Pretendard',
+                                  fontWeight: FontWeight.w400,
+                                  height: 1.5,
+                                  letterSpacing: -0.28,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ],
                   ),
