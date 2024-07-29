@@ -71,6 +71,8 @@ flutter:
     - assets/image/logo_primary.png
     - assets/image/logo_modi.png
     - assets/image/123.png
+    - assets/image/456.png
+    - assets/image/carousel_home.png
   uses-material-design: true
   fonts:
     - family: Pretendard

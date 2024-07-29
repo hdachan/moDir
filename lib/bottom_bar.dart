@@ -753,7 +753,6 @@ class _PostClickState extends State<PostClick> {
   }
 }
 
-
 // 이거는 기능만들어놓은거니까 원담이 이거 만지면안된데이 이거 가만히 나두고 북마크에 해야됨
 class DesignerListScreen extends StatelessWidget {
   @override
@@ -808,8 +807,302 @@ class DesignerListScreen extends StatelessWidget {
 class HelloWorldScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('헬로월드 내용'),
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        flexibleSpace: Container(
+          width: 360,
+          height: 48,
+          child: Stack(
+            children: [
+              Positioned(
+                top: 14,
+                left: 12,
+                child: Image.asset(
+                  'assets/image/logo_modi.png',
+                  width: 34,
+                  height: 20,
+                ),
+              ),
+              Positioned(
+                right: 0,
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Icon(Icons.search, size: 24),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Icon(Icons.notifications, size: 24),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Center(
+                child: Container(
+                  // 중간 패널
+                  width: 360,
+                  height: 2559,
+                  //decoration: BoxDecoration(color: Colors.red),
+                  child: Column(  // 빨간색 박스 안에 Column 추가
+                    children: [
+                      Container(
+                        height: 420,
+                        width: 360,
+                        //decoration: BoxDecoration(color: Colors.blue),
+                        child: Image.asset(
+                          'assets/image/carousel_home.png', // 실제 이미지 경로로 수정
+                          fit: BoxFit.cover, // 이미지를 컨테이너에 맞게 조정
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12), // 왼쪽, 오른쪽 16, 위아래 12 패딩
+                        height: 42,
+                        width: 360,
+                        decoration: BoxDecoration(color: Colors.black),
+                        child: Align( // 텍스트를 왼쪽에 정렬
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            '첫 디자이너 상담은 무료!',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontFamily: 'Pretendard',
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: -0.35,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        height: 240,
+                        width: 360,
+                        decoration: BoxDecoration(color: Colors.teal),
+                        child: Center( // 내부 컨테이너들을 중앙에 배치
+                          child: Column( // Column 사용
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                height: 94,
+                                width: 328,
+                                decoration: BoxDecoration(color: Colors.white),
+                                child: Row( // 수평으로 배치하기 위해 Row 사용
+                                  children: [
+                                    Container(
+                                      height: 70,
+                                      width: 70,
+                                      decoration: BoxDecoration(color: Colors.blue),
+                                    ),
+                                    SizedBox(width: 16),
+                                    Container(
+                                      height: 70,
+                                      width: 70,
+                                      decoration: BoxDecoration(color: Colors.green),
+                                    ),
+                                    SizedBox(width: 16),
+                                    Container(
+                                      height: 70,
+                                      width: 70,
+                                      decoration: BoxDecoration(color: Colors.red),
+                                    ),
+                                    SizedBox(width: 16),
+                                    Container(
+                                      height: 70,
+                                      width: 70,
+                                      decoration: BoxDecoration(color: Colors.red),
+                                    ),
+                                    // 마지막 박스는 패딩 없이 추가
+                                  ],
+                                ),
+                              ),
+
+
+
+                              SizedBox(height: 12), // 두 컨테이너 사이의 간격
+                              Container(
+                                height: 94,
+                                width: 328,
+                                decoration: BoxDecoration(color: Colors.white), // 두 번째 내부 컨테이너 색상
+                                child: Row( // 수평으로 배치하기 위해 Row 사용
+                                  children: [
+                                    Container(
+                                      height: 70,
+                                      width: 70,
+                                      decoration: BoxDecoration(color: Colors.blue),
+                                    ),
+                                    SizedBox(width: 16),
+                                    Container(
+                                      height: 70,
+                                      width: 70,
+                                      decoration: BoxDecoration(color: Colors.green),
+                                    ),
+                                    SizedBox(width: 16),
+                                    Container(
+                                      height: 70,
+                                      width: 70,
+                                      decoration: BoxDecoration(color: Colors.red),
+                                    ),
+                                    SizedBox(width: 16),
+                                    Container(
+                                      height: 70,
+                                      width: 70,
+                                      decoration: BoxDecoration(color: Colors.red),
+                                    ),
+                                    // 마지막 박스는 패딩 없이 추가
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ), // 이부분 싹다 다시만들기
+                      SizedBox(height: 8),
+
+                      Container(
+                        height: 60,
+                        width: 360,
+                        padding: EdgeInsets.only(top: 24, bottom: 12, left: 12, right: 12), // 위, 아래, 왼쪽, 오른쪽 패딩 설정
+                        //decoration: BoxDecoration(color: Colors.cyan),
+                        child: Row( // 수평으로 배치하기 위해 Row 사용
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween, // 양쪽 끝으로 배치
+                          children: [
+                            Text(
+                              '많이 찾는 디자이너',
+                              style: TextStyle(
+                                color: Color(0xFF3D3D3D), // 기존 텍스트 색상
+                                fontSize: 20, // 기존 글자 크기
+                                fontFamily: 'Pretendard', // 기존 글꼴
+                                fontWeight: FontWeight.w600, // 기존 글자 두께
+                                letterSpacing: -0.50, // 기존 글자 간격
+                              ),
+                            ),
+                            Row( // '더보기' 텍스트와 화살표 아이콘을 수평으로 배치
+                              children: [
+                                Text(
+                                  '더보기',
+                                  style: TextStyle(
+                                    color: Color(0xFF888888), // 텍스트 색상 변경
+                                    fontSize: 14, // 글자 크기 변경
+                                    fontFamily: 'Pretendard', // 글꼴
+                                    fontWeight: FontWeight.w400, // 글자 두께 변경
+                                    letterSpacing: -0.35, // 글자 간격 변경
+                                  ),
+                                ),
+                                SizedBox(width: 2), // 텍스트와 화살표 사이의 간격
+                                Icon(
+                                  Icons.arrow_forward, // 화살표 아이콘
+                                  color: Color(0xFF888888), // 아이콘 색상 변경
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+
+
+                      Container(
+                        height: 46,
+                        width: 360,
+                        padding: EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8), // 패딩 설정
+                        decoration: BoxDecoration(color: Colors.black),
+                        child: Row( // 수평 배치를 위해 Row 사용
+                          children: [
+                            Container(
+                              height: 30, // 박스 높이
+                              width: 48, // 박스 너비
+                              color: Colors.white, // 박스 색상
+                            ),
+                            SizedBox(width: 8), // 박스 사이의 간격
+                            Container(
+                              height: 30, // 박스 높이
+                              width: 48, // 박스 너비
+                              color: Colors.blue, // 박스 색상
+                            ),
+                            SizedBox(width: 8), // 박스 사이의 간격
+                            Container(
+                              height: 30, // 박스 높이
+                              width: 48, // 박스 너비
+                              color: Colors.white, // 박스 색상
+                            ),
+                            SizedBox(width: 8), // 마지막 박스 뒤의 간격
+                            Container(
+                              height: 30, // 박스 높이
+                              width: 48, // 박스 너비
+                              color: Colors.white, // 박스 색상
+                            ),
+                            SizedBox(width: 8), // 마지막 박스 뒤의 간격
+                            Container(
+                              height: 30, // 박스 높이
+                              width: 48, // 박스 너비
+                              color: Colors.white, // 박스 색상
+                            ),
+                            SizedBox(width: 8), // 마지막 박스 뒤의 간격
+                            Container(
+                              height: 30, // 박스 높이
+                              width: 48, // 박스 너비
+                              color: Colors.white, // 박스 색상
+                            ),
+                          ],
+                        ),
+                      ),
+
+
+
+                      Container(
+                        height: 295,
+                        width: 360,
+                        decoration: BoxDecoration(color: Colors.white10),
+                      ),
+                      Container(
+                        height: 82,
+                        width: 360,
+                        decoration: BoxDecoration(color: Colors.cyan),
+                      ),
+                      Container(
+                        height: 46,
+                        width: 360,
+                        decoration: BoxDecoration(color: Colors.cyanAccent),
+                      ),
+                      Container(
+                        height: 336,
+                        width: 360,
+                        decoration: BoxDecoration(color: Colors.black),
+                      ),
+                      Container(
+                        height: 82,
+                        width: 360,
+                        decoration: BoxDecoration(color: Colors.blue),
+                      ),
+                      Container(
+                        height: 424,
+                        width: 360,
+                        decoration: BoxDecoration(color: Colors.lightGreen),
+                      ),
+                      SizedBox(height: 8),
+                      Container(
+                        height: 470,
+                        width: 360,
+                        decoration: BoxDecoration(color: Colors.green),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+
+
     );
   }
 }
@@ -923,7 +1216,9 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
         width: width,
         decoration: BoxDecoration(
           color: isSelected ? Color(0xFF3D3D3D) : Colors.transparent,
-          border: isSelected ? null : Border.all(width: 1, color: Color(0xFFE7E7E7)),
+          border: isSelected
+              ? null
+              : Border.all(width: 1, color: Color(0xFFE7E7E7)),
           borderRadius: BorderRadius.circular(100),
         ),
         child: Center(
@@ -969,7 +1264,9 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
     QuerySnapshot snapshot = await _firestore.collection('designer').get();
     setState(() {
       _names = snapshot.docs.map((doc) => doc['name'] as String).toList();
-      _introductions = snapshot.docs.map((doc) => doc['introduction'] as String).toList(); // introduction 필드 추가
+      _introductions = snapshot.docs
+          .map((doc) => doc['introduction'] as String)
+          .toList(); // introduction 필드 추가
     });
   }
 
