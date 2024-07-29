@@ -853,7 +853,8 @@ class HelloWorldScreen extends StatelessWidget {
                   width: 360,
                   height: 2559,
                   //decoration: BoxDecoration(color: Colors.red),
-                  child: Column(  // 빨간색 박스 안에 Column 추가
+                  child: Column(
+                    // 빨간색 박스 안에 Column 추가
                     children: [
                       Container(
                         height: 420,
@@ -865,11 +866,14 @@ class HelloWorldScreen extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12), // 왼쪽, 오른쪽 16, 위아래 12 패딩
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        // 왼쪽, 오른쪽 16, 위아래 12 패딩
                         height: 42,
                         width: 360,
                         decoration: BoxDecoration(color: Colors.black),
-                        child: Align( // 텍스트를 왼쪽에 정렬
+                        child: Align(
+                          // 텍스트를 왼쪽에 정렬
                           alignment: Alignment.centerLeft,
                           child: Text(
                             '첫 디자이너 상담은 무료!',
@@ -887,75 +891,86 @@ class HelloWorldScreen extends StatelessWidget {
                         height: 240,
                         width: 360,
                         decoration: BoxDecoration(color: Colors.teal),
-                        child: Center( // 내부 컨테이너들을 중앙에 배치
-                          child: Column( // Column 사용
+                        child: Center(
+                          // 내부 컨테이너들을 중앙에 배치
+                          child: Column(
+                            // Column 사용
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
                                 height: 94,
                                 width: 328,
                                 decoration: BoxDecoration(color: Colors.white),
-                                child: Row( // 수평으로 배치하기 위해 Row 사용
+                                child: Row(
+                                  // 수평으로 배치하기 위해 Row 사용
                                   children: [
                                     Container(
                                       height: 70,
                                       width: 70,
-                                      decoration: BoxDecoration(color: Colors.blue),
+                                      decoration:
+                                          BoxDecoration(color: Colors.blue),
                                     ),
                                     SizedBox(width: 16),
                                     Container(
                                       height: 70,
                                       width: 70,
-                                      decoration: BoxDecoration(color: Colors.green),
+                                      decoration:
+                                          BoxDecoration(color: Colors.green),
                                     ),
                                     SizedBox(width: 16),
                                     Container(
                                       height: 70,
                                       width: 70,
-                                      decoration: BoxDecoration(color: Colors.red),
+                                      decoration:
+                                          BoxDecoration(color: Colors.red),
                                     ),
                                     SizedBox(width: 16),
                                     Container(
                                       height: 70,
                                       width: 70,
-                                      decoration: BoxDecoration(color: Colors.red),
+                                      decoration:
+                                          BoxDecoration(color: Colors.red),
                                     ),
                                     // 마지막 박스는 패딩 없이 추가
                                   ],
                                 ),
                               ),
 
-
-
                               SizedBox(height: 12), // 두 컨테이너 사이의 간격
                               Container(
                                 height: 94,
                                 width: 328,
-                                decoration: BoxDecoration(color: Colors.white), // 두 번째 내부 컨테이너 색상
-                                child: Row( // 수평으로 배치하기 위해 Row 사용
+                                decoration: BoxDecoration(color: Colors.white),
+                                // 두 번째 내부 컨테이너 색상
+                                child: Row(
+                                  // 수평으로 배치하기 위해 Row 사용
                                   children: [
                                     Container(
                                       height: 70,
                                       width: 70,
-                                      decoration: BoxDecoration(color: Colors.blue),
+                                      decoration:
+                                          BoxDecoration(color: Colors.blue),
                                     ),
                                     SizedBox(width: 16),
                                     Container(
                                       height: 70,
                                       width: 70,
-                                      decoration: BoxDecoration(color: Colors.green),
+                                      decoration:
+                                          BoxDecoration(color: Colors.green),
                                     ),
                                     SizedBox(width: 16),
                                     Container(
                                       height: 70,
                                       width: 70,
-                                      decoration: BoxDecoration(color: Colors.red),
+                                      decoration:
+                                          BoxDecoration(color: Colors.red),
                                     ),
                                     SizedBox(width: 16),
                                     Container(
                                       height: 70,
                                       width: 70,
-                                      decoration: BoxDecoration(color: Colors.red),
+                                      decoration:
+                                          BoxDecoration(color: Colors.red),
                                     ),
                                     // 마지막 박스는 패딩 없이 추가
                                   ],
@@ -970,30 +985,43 @@ class HelloWorldScreen extends StatelessWidget {
                       Container(
                         height: 60,
                         width: 360,
-                        padding: EdgeInsets.only(top: 24, bottom: 12, left: 12, right: 12), // 위, 아래, 왼쪽, 오른쪽 패딩 설정
+                        padding: EdgeInsets.only(
+                            top: 24, bottom: 12, left: 12, right: 12),
+                        // 위, 아래, 왼쪽, 오른쪽 패딩 설정
                         //decoration: BoxDecoration(color: Colors.cyan),
-                        child: Row( // 수평으로 배치하기 위해 Row 사용
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween, // 양쪽 끝으로 배치
+                        child: Row(
+                          // 수평으로 배치하기 위해 Row 사용
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          // 양쪽 끝으로 배치
                           children: [
                             Text(
                               '많이 찾는 디자이너',
                               style: TextStyle(
-                                color: Color(0xFF3D3D3D), // 기존 텍스트 색상
-                                fontSize: 20, // 기존 글자 크기
-                                fontFamily: 'Pretendard', // 기존 글꼴
-                                fontWeight: FontWeight.w600, // 기존 글자 두께
+                                color: Color(0xFF3D3D3D),
+                                // 기존 텍스트 색상
+                                fontSize: 20,
+                                // 기존 글자 크기
+                                fontFamily: 'Pretendard',
+                                // 기존 글꼴
+                                fontWeight: FontWeight.w600,
+                                // 기존 글자 두께
                                 letterSpacing: -0.50, // 기존 글자 간격
                               ),
                             ),
-                            Row( // '더보기' 텍스트와 화살표 아이콘을 수평으로 배치
+                            Row(
+                              // '더보기' 텍스트와 화살표 아이콘을 수평으로 배치
                               children: [
                                 Text(
                                   '더보기',
                                   style: TextStyle(
-                                    color: Color(0xFF888888), // 텍스트 색상 변경
-                                    fontSize: 14, // 글자 크기 변경
-                                    fontFamily: 'Pretendard', // 글꼴
-                                    fontWeight: FontWeight.w400, // 글자 두께 변경
+                                    color: Color(0xFF888888),
+                                    // 텍스트 색상 변경
+                                    fontSize: 14,
+                                    // 글자 크기 변경
+                                    fontFamily: 'Pretendard',
+                                    // 글꼴
+                                    fontWeight: FontWeight.w400,
+                                    // 글자 두께 변경
                                     letterSpacing: -0.35, // 글자 간격 변경
                                   ),
                                 ),
@@ -1008,13 +1036,15 @@ class HelloWorldScreen extends StatelessWidget {
                         ),
                       ),
 
-
                       Container(
                         height: 46,
                         width: 360,
-                        padding: EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8), // 패딩 설정
+                        padding: EdgeInsets.only(
+                            left: 16, right: 16, top: 8, bottom: 8),
+                        // 패딩 설정
                         decoration: BoxDecoration(color: Colors.black),
-                        child: Row( // 수평 배치를 위해 Row 사용
+                        child: Row(
+                          // 수평 배치를 위해 Row 사용
                           children: [
                             Container(
                               height: 30, // 박스 높이
@@ -1054,8 +1084,6 @@ class HelloWorldScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-
-
 
                       Container(
                         height: 295,
@@ -1101,8 +1129,6 @@ class HelloWorldScreen extends StatelessWidget {
           ),
         ),
       ),
-
-
     );
   }
 }
@@ -1253,20 +1279,33 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   List<String> _names = [];
   List<String> _introductions = []; // introduction 리스트 추가
+  List<String> classification = []; // classification 리스트 추가
+  List<String> _prices = []; // 가격 리스트 추가
+  List<String> _imageUrls = []; // imageUrl 리스트 추가
 
   @override
   void initState() {
     super.initState();
-    _fetchData();
+    _fetchDesignerData(); // 함수 이름 변경
   }
 
-  Future<void> _fetchData() async {
+  Future<void> _fetchDesignerData() async {
+    // 함수 이름 변경
     QuerySnapshot snapshot = await _firestore.collection('designer').get();
     setState(() {
       _names = snapshot.docs.map((doc) => doc['name'] as String).toList();
       _introductions = snapshot.docs
           .map((doc) => doc['introduction'] as String)
           .toList(); // introduction 필드 추가
+      classification = snapshot.docs
+          .map((doc) => doc['classification'] as String) // classification 필드 추가
+          .toList(); // classification 필드 추가
+      _prices = snapshot.docs
+          .map((doc) => doc['price'].toString()) // price 필드 추가
+          .toList(); // 가격 리스트 추가
+      _imageUrls = snapshot.docs
+          .map((doc) => doc['imageUrl'] as String) // imageUrl 필드 추가
+          .toList(); // imageUrl 리스트 추가
     });
   }
 
@@ -1285,134 +1324,153 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
         physics: ClampingScrollPhysics(),
         itemCount: _names.length,
         itemBuilder: (context, index) {
-          return Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.zero,
-            ),
-            height: 128,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  width: 96,
-                  height: 96,
-                  margin: EdgeInsets.only(right: 16.0, left: 16.0),
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/image/123.png'),
-                      fit: BoxFit.cover,
+          return GestureDetector(
+            // 클릭 이벤트 추가
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DesignerDetailScreen(
+                    name: _names[index],
+                    introduction: _introductions[index],
+                    classification: classification[index],
+                    price: _prices[index],
+                    imageUrl: _imageUrls[index],
+                  ),
+                ),
+              );
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.zero,
+              ),
+              height: 128,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 96,
+                    height: 96,
+                    margin: EdgeInsets.only(right: 16.0, left: 16.0),
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage(_imageUrls[index]), // imageUrl 사용
+                        fit: BoxFit.cover,
+                      ),
+                      borderRadius: BorderRadius.circular(4),
                     ),
-                    borderRadius: BorderRadius.circular(4),
                   ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        _names[index], // Firestore에서 가져온 이름
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 14,
-                          fontFamily: 'Pretendard',
-                          fontWeight: FontWeight.w700,
-                          height: 1.2,
-                          letterSpacing: -0.35,
+                  Container(
+                    margin: EdgeInsets.only(top: 16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          _names[index], // Firestore에서 가져온 이름
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                            fontFamily: 'Pretendard',
+                            fontWeight: FontWeight.w700,
+                            height: 1.2,
+                            letterSpacing: -0.35,
+                          ),
                         ),
-                      ),
-                      SizedBox(height: 8),
-                      Text(
-                        '${_introductions[index]}', // introduction 필드를 사용
-                        style: TextStyle(
-                          color: Color(0xFF5D5D5D),
-                          fontSize: 12,
-                          fontFamily: 'Pretendard',
-                          fontWeight: FontWeight.w400,
-                          height: 1.2,
-                          letterSpacing: -0.30,
+                        SizedBox(height: 8),
+                        Text(
+                          '${_introductions[index]}', // introduction 필드를 사용
+                          style: TextStyle(
+                            color: Color(0xFF5D5D5D),
+                            fontSize: 12,
+                            fontFamily: 'Pretendard',
+                            fontWeight: FontWeight.w400,
+                            height: 1.2,
+                            letterSpacing: -0.30,
+                          ),
                         ),
-                      ),
-                      SizedBox(height: 8),
-                      Row(
-                        children: [
-                          Icon(Icons.star, size: 14, color: Colors.yellow),
-                          SizedBox(width: 4),
-                          Text(
-                            '4.9',
-                            style: TextStyle(
-                              color: Color(0xFF5D5D5D),
-                              fontSize: 12,
-                              fontFamily: 'Pretendard',
-                              fontWeight: FontWeight.w400,
-                              height: 1.2,
-                              letterSpacing: -0.30,
+                        SizedBox(height: 8),
+                        Row(
+                          children: [
+                            Icon(Icons.star, size: 14, color: Colors.yellow),
+                            SizedBox(width: 4),
+                            Text(
+                              '4.9',
+                              style: TextStyle(
+                                color: Color(0xFF5D5D5D),
+                                fontSize: 12,
+                                fontFamily: 'Pretendard',
+                                fontWeight: FontWeight.w400,
+                                height: 1.2,
+                                letterSpacing: -0.30,
+                              ),
                             ),
-                          ),
-                          SizedBox(width: 2),
-                          Text(
-                            '(99+)',
-                            style: TextStyle(
-                              color: Color(0xFF5D5D5D),
-                              fontSize: 12,
-                              fontFamily: 'Pretendard',
-                              fontWeight: FontWeight.w400,
-                              height: 1.2,
-                              letterSpacing: -0.30,
+                            SizedBox(width: 2),
+                            Text(
+                              '(99+)',
+                              style: TextStyle(
+                                color: Color(0xFF5D5D5D),
+                                fontSize: 12,
+                                fontFamily: 'Pretendard',
+                                fontWeight: FontWeight.w400,
+                                height: 1.2,
+                                letterSpacing: -0.30,
+                              ),
                             ),
-                          ),
-                          SizedBox(width: 4),
-                          Container(
-                            width: 1,
-                            height: 12,
-                            decoration: BoxDecoration(color: Color(0xFF888888)),
-                          ),
-                          SizedBox(width: 4),
-                          Text(
-                            '빈티지, 아메카지',
-                            style: TextStyle(
-                              color: Color(0xFF5D5D5D),
-                              fontSize: 12,
-                              fontFamily: 'Pretendard',
-                              fontWeight: FontWeight.w400,
-                              height: 1.2,
-                              letterSpacing: -0.30,
+                            SizedBox(width: 4),
+                            Container(
+                              width: 1,
+                              height: 12,
+                              decoration:
+                                  BoxDecoration(color: Color(0xFF888888)),
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 8),
-                      Row(
-                        children: [
-                          Text(
-                            '30,000',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 14,
-                              fontFamily: 'Pretendard',
-                              fontWeight: FontWeight.w600,
-                              height: 1.3,
-                              letterSpacing: -0.35,
+                            SizedBox(width: 4),
+                            Text(
+                              '${classification[index]}',
+                              // classification 필드를 사용
+                              style: TextStyle(
+                                color: Color(0xFF5D5D5D),
+                                fontSize: 12,
+                                fontFamily: 'Pretendard',
+                                fontWeight: FontWeight.w400,
+                                height: 1.2,
+                                letterSpacing: -0.30,
+                              ),
                             ),
-                          ),
-                          SizedBox(width: 4),
-                          Text(
-                            '원',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 12,
-                              fontFamily: 'Pretendard',
-                              fontWeight: FontWeight.w400,
-                              height: 1.3,
-                              letterSpacing: -0.35,
+                          ],
+                        ),
+                        SizedBox(height: 8),
+                        Row(
+                          children: [
+                            Text(
+                              '${_prices[index]}', // 가격을 표시
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14,
+                                fontFamily: 'Pretendard',
+                                fontWeight: FontWeight.w600,
+                                height: 1.3,
+                                letterSpacing: -0.35,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                            SizedBox(width: 4),
+                            Text(
+                              '원',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 12,
+                                fontFamily: 'Pretendard',
+                                fontWeight: FontWeight.w400,
+                                height: 1.3,
+                                letterSpacing: -0.35,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         },
