@@ -803,11 +803,11 @@ class DesignerListScreen extends StatelessWidget {
   }
 }
 
-
 class HelloWorldScreen extends StatefulWidget {
   @override
   _HelloWorldScreenState createState() => _HelloWorldScreenState();
 }
+
 // 헬로 월드(홈화면) 옮기기 전
 class _HelloWorldScreenState extends State<HelloWorldScreen> {
   int _selectedIndex = 0;
@@ -1390,8 +1390,8 @@ class _HelloWorldScreenState extends State<HelloWorldScreen> {
                       Container(
                         height: 46,
                         width: 360,
-                        padding: EdgeInsets.only(
-                            left: 16, right: 16, top: 8, bottom: 8),
+                        padding:
+                            EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                         decoration: BoxDecoration(color: Colors.white),
                         child: SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
@@ -1415,7 +1415,24 @@ class _HelloWorldScreenState extends State<HelloWorldScreen> {
                       Container(
                         height: 295,
                         width: 360,
-                        decoration: BoxDecoration(color: Colors.red),
+                        padding: EdgeInsets.only(
+                            top: 12, bottom: 24, left: 16),
+                        decoration: BoxDecoration(color: Colors.white),
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: [
+                              _buildList(0, '영쭈니', '포멀', '빈티지', '캐주얼'),
+                              SizedBox(width: 16),
+                              _buildList(1, '강민주', '스포티', '캐주얼', '미니멀'),
+                              SizedBox(width: 16),
+                              _buildList(2, '황대찬', '거지', '맛 감', '짐승'),
+                              SizedBox(width: 16),
+                              _buildList(3, '김지민', '십덕', '흠...', '사람 아님'),
+                              SizedBox(width: 16), // 전체 값에서 오른쪽에 패딩 주면 잘리니 항상 마지막에 넣기
+                            ],
+                          ),
+                        ),
                       ),
                       Container(
                         height: 82,
@@ -2063,10 +2080,12 @@ class _HelloWorldScreenState extends State<HelloWorldScreen> {
   }
 
   Widget _buildButton(int index, String text) {
+    // 많이 찾는 디자이너 카테고리
     bool isSelected = _selectedIndex == index;
     return InkWell(
       onTap: () {
-        setState(() { // 상태 업데이트를 위해 setState 추가
+        setState(() {
+          // 상태 업데이트를 위해 setState 추가
           _selectedIndex = index;
         });
         print('$text 버튼 클릭됨!');
@@ -2105,8 +2124,114 @@ class _HelloWorldScreenState extends State<HelloWorldScreen> {
     );
   }
 
+  Widget _buildList(
+      int index, String nText, String cText1, String cText2, String cText3) {
+    // 많이 찾는 디자이너 목록
+
+    return InkWell(
+      onTap: () {
+        setState(() {});
+        print('$nText 버튼 클릭됨!');
+      },
+      child: Container(
+        width: 180,
+        height: 259,
+        decoration: BoxDecoration(color: Colors.white),
+        child: Column(
+          children: [
+            Container(
+              width: 180,
+              height: 180,
+              decoration: BoxDecoration(
+                  color: Colors.black, borderRadius: BorderRadius.circular(8)),
+            ),
+            SizedBox(height: 8),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                nText,
+                style: TextStyle(
+                  color: Color(0xFF3D3D3D),
+                  fontSize: 16,
+                  fontFamily: 'Pretendard',
+                  fontWeight: FontWeight.w500,
+                  height: 1.3,
+                  letterSpacing: -0.40,
+                ),
+              ),
+            ),
+            SizedBox(height: 8),
+            Row(
+              children: [
+                Container(
+                  height: 20,
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  decoration: BoxDecoration(color: Color(0xFFF6F6F6)),
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      cText1,
+                      style: TextStyle(
+                        color: Color(0xFF888888),
+                        fontSize: 12,
+                        fontFamily: 'Pretendard',
+                        fontWeight: FontWeight.w400,
+                        height: 1,
+                        letterSpacing: -0.30,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 8),
+                Container(
+                  height: 20,
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  decoration: BoxDecoration(color: Color(0xFFF6F6F6)),
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      cText2,
+                      style: TextStyle(
+                        color: Color(0xFF888888),
+                        fontSize: 12,
+                        fontFamily: 'Pretendard',
+                        fontWeight: FontWeight.w400,
+                        height: 1,
+                        letterSpacing: -0.30,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 8),
+                Container(
+                  height: 20,
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  decoration: BoxDecoration(color: Color(0xFFF6F6F6)),
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      cText3,
+                      style: TextStyle(
+                        color: Color(0xFF888888),
+                        fontSize: 12,
+                        fontFamily: 'Pretendard',
+                        fontWeight: FontWeight.w400,
+                        height: 1,
+                        letterSpacing: -0.30,
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
 
   Widget _buildButton2(int index2, String text) {
+    // 계절 별 코디 카테고리
     bool isSelected = _selectedIndex2 == index2;
     return InkWell(
       onTap: () {
