@@ -803,8 +803,13 @@ class DesignerListScreen extends StatelessWidget {
   }
 }
 
+
+class HelloWorldScreen extends StatefulWidget {
+  @override
+  _HelloWorldScreenState createState() => _HelloWorldScreenState();
+}
 // 헬로 월드(홈화면) 옮기기 전
-class HelloWorldScreen extends StatelessWidget {
+class _HelloWorldScreenState extends State<HelloWorldScreen> {
   int _selectedIndex = 0;
   int _selectedIndex2 = 0;
 
@@ -2060,8 +2065,10 @@ class HelloWorldScreen extends StatelessWidget {
   Widget _buildButton(int index, String text) {
     bool isSelected = _selectedIndex == index;
     return InkWell(
-      onTap: () { // 1번 satstate 추가 할 곳 - 대차이 여기 임(아래랑 비교 해보쇼)
-        _selectedIndex = index;
+      onTap: () {
+        setState(() { // 상태 업데이트를 위해 setState 추가
+          _selectedIndex = index;
+        });
         print('$text 버튼 클릭됨!');
       },
       borderRadius: BorderRadius.circular(100),
@@ -2098,12 +2105,15 @@ class HelloWorldScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildButton2(int index2, String text2) {
-    bool isSelected2 = _selectedIndex2 == index2;
+
+  Widget _buildButton2(int index2, String text) {
+    bool isSelected = _selectedIndex2 == index2;
     return InkWell(
-      onTap: () { // 2번 satstate 추가 할 곳 - 대차이 여기 임(아래랑 비교 해보쇼)
-        _selectedIndex2 = index2;
-        print('$text2 버튼 클릭됨!');
+      onTap: () {
+        setState(() {
+          _selectedIndex2 = index2;
+        });
+        print('$text 버튼 클릭됨!');
       },
       borderRadius: BorderRadius.circular(100),
       splashColor: Colors.grey.withOpacity(0.5),
@@ -2112,8 +2122,8 @@ class HelloWorldScreen extends StatelessWidget {
         height: 32,
         padding: EdgeInsets.symmetric(vertical: 7, horizontal: 12),
         decoration: BoxDecoration(
-          color: isSelected2 ? Color(0xFF3D3D3D) : Colors.transparent,
-          border: isSelected2
+          color: isSelected ? Color(0xFF3D3D3D) : Colors.transparent,
+          border: isSelected
               ? null
               : Border.all(width: 1, color: Color(0xFFE7E7E7)),
           borderRadius: BorderRadius.circular(100),
@@ -2123,9 +2133,9 @@ class HelloWorldScreen extends StatelessWidget {
           child: Align(
             alignment: Alignment.center,
             child: Text(
-              text2,
+              text,
               style: TextStyle(
-                color: isSelected2 ? Colors.white : Colors.black,
+                color: isSelected ? Colors.white : Colors.black,
                 fontSize: 14,
                 fontFamily: 'Pretendard',
                 fontWeight: FontWeight.w400,
