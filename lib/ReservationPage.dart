@@ -159,10 +159,36 @@ class ProfileInputStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text('프로필 입력 단계'),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('프로필 입력 단계'),
+          SizedBox(height: 20), // 텍스트와 버튼 사이의 간격
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly, // 버튼을 고르게 배치
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  // 첫 번째 버튼 클릭 시 수행할 작업
+                  print('첫 번째 버튼이 클릭되었습니다!');
+                },
+                child: Text('첫 번째 버튼'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  // 두 번째 버튼 클릭 시 수행할 작업
+                  print('두 번째 버튼이 클릭되었습니다!');
+                },
+                child: Text('두 번째 버튼'),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
+
 
 class SliderStep extends StatelessWidget {
   @override

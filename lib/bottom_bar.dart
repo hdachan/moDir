@@ -2162,6 +2162,7 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
   List<String> classification = []; // classification 리스트 추가
   List<String> _prices = []; // 가격 리스트 추가
   List<String> _imageUrls = []; // imageUrl 리스트 추가
+  List<String> _designerIds = [];
 
   @override
   void initState() {
@@ -2170,22 +2171,14 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
   }
 
   Future<void> _fetchDesignerData() async {
-    // 함수 이름 변경
     QuerySnapshot snapshot = await _firestore.collection('designer').get();
     setState(() {
+      _designerIds = snapshot.docs.map((doc) => doc.id).toList(); // 새로 추가된 부분
       _names = snapshot.docs.map((doc) => doc['name'] as String).toList();
-      _introductions = snapshot.docs
-          .map((doc) => doc['introduction'] as String)
-          .toList(); // introduction 필드 추가
-      classification = snapshot.docs
-          .map((doc) => doc['classification'] as String) // classification 필드 추가
-          .toList(); // classification 필드 추가
-      _prices = snapshot.docs
-          .map((doc) => doc['price'].toString()) // price 필드 추가
-          .toList(); // 가격 리스트 추가
-      _imageUrls = snapshot.docs
-          .map((doc) => doc['imageUrl'] as String) // imageUrl 필드 추가
-          .toList(); // imageUrl 리스트 추가
+      _introductions = snapshot.docs.map((doc) => doc['introduction'] as String).toList();
+      classification = snapshot.docs.map((doc) => doc['classification'] as String).toList();
+      _prices = snapshot.docs.map((doc) => doc['price'].toString()).toList();
+      _imageUrls = snapshot.docs.map((doc) => doc['imageUrl'] as String).toList();
     });
   }
 
@@ -2211,6 +2204,7 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
                 context,
                 MaterialPageRoute(
                   builder: (context) => DesignerDetailScreen(
+                    designerId: _designerIds[index], // 새로 추가된 부분
                     name: _names[index],
                     introduction: _introductions[index],
                     classification: classification[index],
