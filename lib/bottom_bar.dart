@@ -805,6 +805,9 @@ class DesignerListScreen extends StatelessWidget {
 
 // 헬로 월드(홈화면) 옮기기 전
 class HelloWorldScreen extends StatelessWidget {
+  int _selectedIndex = 0;
+  int _selectedIndex2 = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -1032,11 +1035,15 @@ class HelloWorldScreen extends StatelessWidget {
                                                   borderRadius:
                                                       BorderRadius.circular(8)),
                                             ),
-                                            Container(height: 8,decoration: BoxDecoration(color: Colors.white)),
+                                            Container(
+                                                height: 8,
+                                                decoration: BoxDecoration(
+                                                    color: Colors.white)),
                                             Container(
                                               width: 70,
                                               height: 16,
-                                              decoration: BoxDecoration(color: Colors.white),
+                                              decoration: BoxDecoration(
+                                                  color: Colors.white),
                                               child: Text('매거진',
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
@@ -1076,11 +1083,15 @@ class HelloWorldScreen extends StatelessWidget {
                                                   borderRadius:
                                                       BorderRadius.circular(8)),
                                             ),
-                                            Container(height: 8,decoration: BoxDecoration(color: Colors.white)),
+                                            Container(
+                                                height: 8,
+                                                decoration: BoxDecoration(
+                                                    color: Colors.white)),
                                             Container(
                                               width: 70,
                                               height: 16,
-                                              decoration: BoxDecoration(color: Colors.white),
+                                              decoration: BoxDecoration(
+                                                  color: Colors.white),
                                               child: Text('커뮤니티',
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
@@ -1133,11 +1144,15 @@ class HelloWorldScreen extends StatelessWidget {
                                                   borderRadius:
                                                       BorderRadius.circular(8)),
                                             ),
-                                            Container(height: 8,decoration: BoxDecoration(color: Colors.white)),
+                                            Container(
+                                                height: 8,
+                                                decoration: BoxDecoration(
+                                                    color: Colors.white)),
                                             Container(
                                               width: 70,
                                               height: 16,
-                                              decoration: BoxDecoration(color: Colors.white),
+                                              decoration: BoxDecoration(
+                                                  color: Colors.white),
                                               child: Text('견적서 보기',
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
@@ -1177,11 +1192,15 @@ class HelloWorldScreen extends StatelessWidget {
                                                   borderRadius:
                                                       BorderRadius.circular(8)),
                                             ),
-                                            Container(height: 8,decoration: BoxDecoration(color: Colors.white)),
+                                            Container(
+                                                height: 8,
+                                                decoration: BoxDecoration(
+                                                    color: Colors.white)),
                                             Container(
                                               width: 70,
                                               height: 16,
-                                              decoration: BoxDecoration(color: Colors.white),
+                                              decoration: BoxDecoration(
+                                                  color: Colors.white),
                                               child: Text('프로필 작성',
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
@@ -1221,11 +1240,15 @@ class HelloWorldScreen extends StatelessWidget {
                                                   borderRadius:
                                                       BorderRadius.circular(8)),
                                             ),
-                                            Container(height: 8,decoration: BoxDecoration(color: Colors.white)),
+                                            Container(
+                                                height: 8,
+                                                decoration: BoxDecoration(
+                                                    color: Colors.white)),
                                             Container(
                                               width: 70,
                                               height: 16,
-                                              decoration: BoxDecoration(color: Colors.white),
+                                              decoration: BoxDecoration(
+                                                  color: Colors.white),
                                               child: Text('이벤트',
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
@@ -1265,11 +1288,15 @@ class HelloWorldScreen extends StatelessWidget {
                                                   borderRadius:
                                                       BorderRadius.circular(8)),
                                             ),
-                                            Container(height: 8,decoration: BoxDecoration(color: Colors.white)),
+                                            Container(
+                                                height: 8,
+                                                decoration: BoxDecoration(
+                                                    color: Colors.white)),
                                             Container(
                                               width: 70,
                                               height: 16,
-                                              decoration: BoxDecoration(color: Colors.white),
+                                              decoration: BoxDecoration(
+                                                  color: Colors.white),
                                               child: Text('쿠폰',
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
@@ -1360,47 +1387,24 @@ class HelloWorldScreen extends StatelessWidget {
                         width: 360,
                         padding: EdgeInsets.only(
                             left: 16, right: 16, top: 8, bottom: 8),
-                        // 패딩 설정
-                        decoration: BoxDecoration(color: Colors.black),
-                        child: Row(
-                          // 수평 배치를 위해 Row 사용
-                          children: [
-                            Container(
-                              height: 30, // 박스 높이
-                              width: 48, // 박스 너비
-                              color: Colors.white, // 박스 색상
-                            ),
-                            SizedBox(width: 8), // 박스 사이의 간격
-                            Container(
-                              height: 30, // 박스 높이
-                              width: 48, // 박스 너비
-                              color: Colors.blue, // 박스 색상
-                            ),
-                            SizedBox(width: 8), // 박스 사이의 간격
-                            Container(
-                              height: 30, // 박스 높이
-                              width: 48, // 박스 너비
-                              color: Colors.white, // 박스 색상
-                            ),
-                            SizedBox(width: 8), // 마지막 박스 뒤의 간격
-                            Container(
-                              height: 30, // 박스 높이
-                              width: 48, // 박스 너비
-                              color: Colors.white, // 박스 색상
-                            ),
-                            SizedBox(width: 8), // 마지막 박스 뒤의 간격
-                            Container(
-                              height: 30, // 박스 높이
-                              width: 48, // 박스 너비
-                              color: Colors.white, // 박스 색상
-                            ),
-                            SizedBox(width: 8), // 마지막 박스 뒤의 간격
-                            Container(
-                              height: 30, // 박스 높이
-                              width: 48, // 박스 너비
-                              color: Colors.white, // 박스 색상
-                            ),
-                          ],
+                        decoration: BoxDecoration(color: Colors.white),
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: [
+                              _buildButton(0, '전체'),
+                              SizedBox(width: 8),
+                              _buildButton(1, '빈티지'),
+                              SizedBox(width: 8),
+                              _buildButton(2, '포멀'),
+                              SizedBox(width: 8),
+                              _buildButton(3, '캐주얼'),
+                              SizedBox(width: 8),
+                              _buildButton(4, '댄디'),
+                              SizedBox(width: 8),
+                              _buildButton(5, '스트릿'),
+                            ],
+                          ),
                         ),
                       ),
                       Container(
@@ -1491,7 +1495,27 @@ class HelloWorldScreen extends StatelessWidget {
                       Container(
                         height: 46,
                         width: 360,
-                        decoration: BoxDecoration(color: Colors.cyanAccent),
+                        padding: EdgeInsets.only(
+                            left: 16, right: 16, top: 8, bottom: 8),
+                        decoration: BoxDecoration(color: Colors.white),
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: [
+                              _buildButton2(0, '전체'),
+                              SizedBox(width: 8),
+                              _buildButton2(1, '빈티지'),
+                              SizedBox(width: 8),
+                              _buildButton2(2, '포멀'),
+                              SizedBox(width: 8),
+                              _buildButton2(3, '캐주얼'),
+                              SizedBox(width: 8),
+                              _buildButton2(4, '댄디'),
+                              SizedBox(width: 8),
+                              _buildButton2(5, '스트릿'),
+                            ],
+                          ),
+                        ),
                       ),
                       Container(
                         height: 336,
@@ -1501,6 +1525,7 @@ class HelloWorldScreen extends StatelessWidget {
                       Container(
                         height: 82,
                         width: 360,
+                        decoration: BoxDecoration(color: Colors.white),
                         padding: EdgeInsets.only(
                             top: 24, bottom: 12, left: 12, right: 12),
                         child: Column(
@@ -2031,6 +2056,88 @@ class HelloWorldScreen extends StatelessWidget {
       ),
     );
   }
+
+  Widget _buildButton(int index, String text) {
+    bool isSelected = _selectedIndex == index;
+    return InkWell(
+      onTap: () { // 1번 satstate 추가 할 곳 - 대차이 여기 임(아래랑 비교 해보쇼)
+        _selectedIndex = index;
+        print('$text 버튼 클릭됨!');
+      },
+      borderRadius: BorderRadius.circular(100),
+      splashColor: Colors.grey.withOpacity(0.5),
+      highlightColor: Colors.transparent,
+      child: Container(
+        height: 32,
+        padding: EdgeInsets.symmetric(vertical: 7, horizontal: 12),
+        decoration: BoxDecoration(
+          color: isSelected ? Color(0xFF3D3D3D) : Colors.transparent,
+          border: isSelected
+              ? null
+              : Border.all(width: 1, color: Color(0xFFE7E7E7)),
+          borderRadius: BorderRadius.circular(100),
+        ),
+        child: SizedBox(
+          height: 14,
+          child: Align(
+            alignment: Alignment.center,
+            child: Text(
+              text,
+              style: TextStyle(
+                color: isSelected ? Colors.white : Colors.black,
+                fontSize: 14,
+                fontFamily: 'Pretendard',
+                fontWeight: FontWeight.w400,
+                height: 1,
+                letterSpacing: -0.35,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildButton2(int index2, String text2) {
+    bool isSelected2 = _selectedIndex2 == index2;
+    return InkWell(
+      onTap: () { // 2번 satstate 추가 할 곳 - 대차이 여기 임(아래랑 비교 해보쇼)
+        _selectedIndex2 = index2;
+        print('$text2 버튼 클릭됨!');
+      },
+      borderRadius: BorderRadius.circular(100),
+      splashColor: Colors.grey.withOpacity(0.5),
+      highlightColor: Colors.transparent,
+      child: Container(
+        height: 32,
+        padding: EdgeInsets.symmetric(vertical: 7, horizontal: 12),
+        decoration: BoxDecoration(
+          color: isSelected2 ? Color(0xFF3D3D3D) : Colors.transparent,
+          border: isSelected2
+              ? null
+              : Border.all(width: 1, color: Color(0xFFE7E7E7)),
+          borderRadius: BorderRadius.circular(100),
+        ),
+        child: SizedBox(
+          height: 14,
+          child: Align(
+            alignment: Alignment.center,
+            child: Text(
+              text2,
+              style: TextStyle(
+                color: isSelected2 ? Colors.white : Colors.black,
+                fontSize: 14,
+                fontFamily: 'Pretendard',
+                fontWeight: FontWeight.w400,
+                height: 1,
+                letterSpacing: -0.35,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 // 북마크 화면 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<여기가 디자이너 화면만드는중
@@ -2158,6 +2265,7 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
                   fontSize: 14,
                   fontFamily: 'Pretendard',
                   fontWeight: FontWeight.w400,
+                  height: 1,
                   letterSpacing: -0.35,
                 ),
               ),
