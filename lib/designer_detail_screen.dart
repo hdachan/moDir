@@ -33,7 +33,7 @@ class _DesignerDetailScreenState extends State<DesignerDetailScreen> {
   int _reviewCount = 0;
   double _averageRating = 0;
 
-  @override
+  @override // 처음 생성될때 필요한 작업
   void initState() {
     super.initState();
     _fetchReviews();
@@ -44,18 +44,36 @@ class _DesignerDetailScreenState extends State<DesignerDetailScreen> {
         .collection('designer')
         .doc(widget.designerId)
         .collection('reviews')
-        .orderBy('timestamp', descending: true)
+        .orderBy('timestamp', descending: true) // 최신 리뷰부터 가져오기
         .get();
 
+    // 리뷰 리스트를 초기화하고 비동기 작업을 통해 리뷰를 가져옵니다.
+    List<Map<String, dynamic>> reviewsList = [];
+
+    await Future.wait(reviewsSnapshot.docs.map((doc) async {
+      final data = doc.data() as Map<String, dynamic>;
+      final userId = data['userId'];
+
+      // users 컬렉션에서 nickname 가져오기
+      DocumentSnapshot userSnapshot = await _firestore.collection('users').doc(userId).get();
+      String nickname = userSnapshot.exists ? (userSnapshot.data() as Map<String, dynamic>)['nickname'] ?? '익명' : '익명';
+
+      reviewsList.add({
+        'review': data['review'],
+        'rating': data['rating'],
+        'userId': userId,
+        'userName': nickname, // nickname으로 변경
+        'timestamp': data['timestamp'],
+      });
+    }));
+
+    // setState를 호출하여 UI를 업데이트합니다.
     setState(() {
-      _reviews = reviewsSnapshot.docs
-          .map((doc) => doc.data() as Map<String, dynamic>)
-          .toList();
-      _reviewCount = _reviews.length;
+      _reviews = reviewsList; // 리뷰 리스트 업데이트
+      _reviewCount = _reviews.length; // 리뷰 개수 업데이트
       _averageRating = _reviews.isEmpty
           ? 0
-          : _reviews.map((r) => r['rating'] as num).reduce((a, b) => a + b) /
-          _reviews.length;
+          : _reviews.map((r) => r['rating'] as num).reduce((a, b) => a + b) / _reviews.length; // 평균 평점 계산
     });
   }
 
@@ -75,6 +93,22 @@ class _DesignerDetailScreenState extends State<DesignerDetailScreen> {
       return;
     }
 
+    // 기존 리뷰 확인
+    QuerySnapshot existingReviewsSnapshot = await _firestore
+        .collection('designer')
+        .doc(widget.designerId)
+        .collection('reviews')
+        .where('userId', isEqualTo: user.uid)
+        .get();
+
+    if (existingReviewsSnapshot.docs.isNotEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('이미 리뷰를 작성하셨습니다.')),
+      );
+      return;
+    }
+
+    // 리뷰 추가
     await _firestore
         .collection('designer')
         .doc(widget.designerId)
@@ -83,21 +117,27 @@ class _DesignerDetailScreenState extends State<DesignerDetailScreen> {
       'review': _reviewController.text,
       'rating': _rating,
       'userId': user.uid,
-      'userName': user.displayName ?? '익명',
+      'userName': user.displayName ?? user.uid, // 이름이 없을 경우 userId로 대체
       'timestamp': FieldValue.serverTimestamp(),
     });
 
+    // 리뷰 개수 업데이트
     await _firestore.collection('designer').doc(widget.designerId).update({
       'reviewCount': FieldValue.increment(1),
     });
 
+    // 입력 필드 초기화 및 UI 업데이트
     _reviewController.clear();
     setState(() {
       _rating = 0;
     });
 
-    _fetchReviews();
+    // 리뷰 목록 새로 고침
+    await _fetchReviews();
   }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -214,7 +254,7 @@ class _DesignerDetailScreenState extends State<DesignerDetailScreen> {
               await Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ReservationPage(),
+                  builder: (context) => SliderStep(),
                 ),
               );
             },

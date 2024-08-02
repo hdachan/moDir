@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'bottom_bar.dart';
+import 'home_screen.dart';
 
 // 별명입력하기
 void main() {
@@ -76,7 +76,7 @@ class _IdMaking extends State<IdMaking> {
       }
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (_) => BottomBar()),
+        MaterialPageRoute(builder: (_) => Home_Screen()),
       );
     } catch (e) {
       print('오류: 사용자 정보를 업데이트하는 데 실패했습니다. ${e.toString()}');
