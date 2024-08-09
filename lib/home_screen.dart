@@ -39,10 +39,10 @@ class Home_Screen extends StatefulWidget {
 class _Home_ScreenState extends State<Home_Screen> {
   int _currentIndex = 0; // 현재 선택된 인덱스
   final List<Widget> _pages = [
-    HelloWorldScreen(),
+    _HomePage(),
     BookmarkScreen(),
     HomeScreen(),
-    DesignerListScreen(),
+    reservation(),
     MyPageScreen(),
 
   ]; // 각 페이지 위젯들
@@ -106,9 +106,9 @@ class _Home_ScreenState extends State<Home_Screen> {
   }
 }
 
-class HelloWorldScreen extends StatefulWidget {
+class _HomePage extends StatefulWidget {
   @override
-  _HelloWorldScreenState createState() => _HelloWorldScreenState();
+  _Home createState() => _Home();
 }
 
 
@@ -134,9 +134,9 @@ class HomeScreen extends StatelessWidget {
                     top: 14,
                     left: 12,
                     child: Image.asset(
-                      'assets/image/logo_primary.png', // 실제 로고 이미지
-                      width: 96,
-                      height: 19,
+                      'assets/image/logo_modi.png', // 실제 로고 이미지
+                      width: 34,
+                      height: 20,
                     ),
                   ),
                   Positioned(
@@ -336,12 +336,12 @@ class CommunityTab extends StatelessWidget {
   }
 }
 
-//글쓰기 버튼을 눌렀을때 나오는 탭
+//글쓰기 버튼을 눌렀을때 생명주기
 class NewPostDialog extends StatefulWidget {
   @override
   _NewPostDialogState createState() => _NewPostDialogState();
 }
-
+//글쓰기 버튼을 눌렀을때 나오는 위젯 /기능
 class _NewPostDialogState extends State<NewPostDialog> {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController contentController = TextEditingController();
@@ -445,7 +445,7 @@ class _NewPostDialogState extends State<NewPostDialog> {
   }
 }
 
-//포스터를 눌렀을때 나오는 화면
+//포스터를 눌렀을때 생명주기
 class PostDetail extends StatefulWidget {
   final DocumentSnapshot post;
 
@@ -454,7 +454,7 @@ class PostDetail extends StatefulWidget {
   @override
   _PostDetailState createState() => _PostDetailState();
 }
-
+//포스터를 눌렀을때 나오는 화면
 class _PostDetailState extends State<PostDetail> {
   late Map<String, dynamic> data;
   String imageUrl = '';
@@ -645,7 +645,7 @@ class _PostDetailState extends State<PostDetail> {
   }
 }
 
-// 글을 클릭했을때 나오는 위젯
+// 글을 클릭했을때 나오는 생명주기
 class PostClick extends StatefulWidget {
   final DocumentSnapshot post;
 
@@ -654,7 +654,7 @@ class PostClick extends StatefulWidget {
   @override
   _PostClickState createState() => _PostClickState();
 }
-
+// 글을 클릭했을때 나오는 위젯 / 기능
 class _PostClickState extends State<PostClick> {
   late Map<String, dynamic> data;
   String imageUrl = '';
@@ -765,13 +765,13 @@ class _PostClickState extends State<PostClick> {
   }
 }
 
-// 이거는 기능만들어놓은거니까 원담이 이거 만지면안된데이 이거 가만히 나두고 북마크에 해야됨
-class DesignerListScreen extends StatelessWidget {
+// 예약화면
+class reservation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false, // 기본 leading 아이콘 제거
+        automaticallyImplyLeading: false,
         flexibleSpace: Container(
           width: 360,
           height: 48,
@@ -781,9 +781,9 @@ class DesignerListScreen extends StatelessWidget {
                 top: 14,
                 left: 12,
                 child: Image.asset(
-                  'assets/image/logo_primary.png', // 실제 로고 이미지
-                  width: 95,
-                  height: 19,
+                  'assets/image/logo_modi.png',
+                  width: 34,
+                  height: 20,
                 ),
               ),
               Positioned(
@@ -792,19 +792,531 @@ class DesignerListScreen extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(12.0),
-                      child: Icon(
-                        Icons.search,
-                        size: 24,
-                      ),
+                      child: Icon(Icons.search, size: 24),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(12.0),
-                      child: Icon(
-                        Icons.notifications,
-                        size: 24,
-                      ),
+                      child: Icon(Icons.notifications, size: 24),
                     ),
                   ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Center(
+                child: Container(
+                  width: 360,
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 476,
+                        width: 360,
+                        //decoration: BoxDecoration(color: Colors.blue),
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 200,
+                              width: 360,
+                              color: Colors.black,
+                            ), // 사진
+                            Container(
+                              // 글씨 넣는 부분
+                              height: 158,
+                              width: 360,
+                              //color: Colors.redAccent,
+                              padding:
+                              EdgeInsets.only(top: 52, left: 16, right: 16),
+                              // 패딩 설정
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                // 텍스트 왼쪽 정렬
+                                children: [
+                                  Text(
+                                    '코디 맛있게 해드려요!',
+                                    style: TextStyle(
+                                      color: Color(0xFF3D3D3D),
+                                      fontSize: 22,
+                                      fontFamily: 'Pretendard',
+                                      fontWeight: FontWeight.w600,
+                                      letterSpacing: -0.55,
+                                      height: 1.4,
+                                    ),
+                                  ),
+                                  SizedBox(height: 8), // 사이즈 박스 추가
+                                  Text(
+                                    '인혜엄',
+                                    style: TextStyle(
+                                      color: Color(0xFF3D3D3D),
+                                      fontSize: 16,
+                                      fontFamily: 'Pretendard',
+                                      fontWeight: FontWeight.w400,
+                                      letterSpacing: -0.40,
+                                      height: 1.2,
+                                    ),
+                                  ),
+                                  SizedBox(height: 8), // 사이즈 박스 추가
+                                  Text(
+                                    '본인의 개성을 잃지않고 트렌드를 따라갈 수 있게 만들어 드릴게요! 저만 믿고 따라오세용~',
+                                    style: TextStyle(
+                                      color: Color(0xFF5D5D5D),
+                                      fontSize: 14,
+                                      fontFamily: 'Pretendard',
+                                      fontWeight: FontWeight.w400,
+                                      letterSpacing: -0.35,
+                                      height: 1.4,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ), // 텍스트 넣는곳
+                            Container(
+                              height: 32,
+                              width: 360,
+                              // 배경색을 흰색으로 변경
+                              padding:
+                              EdgeInsets.only(top: 12, left: 16, right: 16),
+                              // 패딩 설정
+                              child: Row(
+                                children: [
+                                  Container(
+                                    height: 20,
+                                    width: 47,
+                                    decoration: BoxDecoration(
+                                      color: Color(0xFFE6E4FF), // 배경색 설정
+                                      borderRadius:
+                                      BorderRadius.circular(4), // 라운드 설정
+                                    ),
+                                    child: Center(
+                                      // 텍스트를 정중앙에 배치
+                                      child: Text(
+                                        '미니멀',
+                                        style: TextStyle(
+                                          color: Color(0xFF3D3D3D),
+                                          fontSize: 12,
+                                          fontFamily: 'Pretendard',
+                                          fontWeight: FontWeight.w400,
+                                          height: 1.0,
+                                          letterSpacing: -0.30,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 8), // 간격 8 추가
+                                  Container(
+                                    height: 20,
+                                    width: 47,
+                                    decoration: BoxDecoration(
+                                      color: Color(0xFFE6E4FF), // 배경색 설정
+                                      borderRadius:
+                                      BorderRadius.circular(4), // 라운드 설정
+                                    ),
+                                    child: Center(
+                                      // 텍스트를 정중앙에 배치
+                                      child: Text(
+                                        '캐주얼',
+                                        style: TextStyle(
+                                          color: Color(0xFF3D3D3D),
+                                          fontSize: 12,
+                                          fontFamily: 'Pretendard',
+                                          fontWeight: FontWeight.w400,
+                                          height: 1.0,
+                                          letterSpacing: -0.30,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 8), // 간격 8 추가
+                                  Container(
+                                    height: 20,
+                                    width: 47,
+                                    decoration: BoxDecoration(
+                                      color: Color(0xFFE6E4FF), // 배경색 설정
+                                      borderRadius:
+                                      BorderRadius.circular(4), // 라운드 설정
+                                    ),
+                                    child: Center(
+                                      // 텍스트를 정중앙에 배치
+                                      child: Text(
+                                        '빈티지',
+                                        style: TextStyle(
+                                          color: Color(0xFF3D3D3D),
+                                          fontSize: 12,
+                                          fontFamily: 'Pretendard',
+                                          fontWeight: FontWeight.w400,
+                                          height: 1.0,
+                                          letterSpacing: -0.30,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ), //미니멀/캐주얼/빈티지
+                            Container(
+                              height: 86,
+                              width: 360,
+                              //color: Colors.red,
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    left: 16, right: 16, top: 24, bottom: 24),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Container(
+                                          height: 14,
+                                          width: 164,
+                                          //color: Colors.blue, // 첫 번째 Container
+                                          child: Text(
+                                            '스타일대상',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              color: Color(0xFF888888),
+                                              fontSize: 12,
+                                              fontFamily: 'Pretendard',
+                                              fontWeight: FontWeight.w400,
+                                              height: 1.2,
+                                              letterSpacing: -0.30,
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          height: 14,
+                                          width: 164,
+                                          //color: Colors.blue, // 두 번째 Container
+                                          child: Text(
+                                            '별점',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              color: Color(0xFF888888),
+                                              fontSize: 12,
+                                              fontFamily: 'Pretendard',
+                                              fontWeight: FontWeight.w400,
+                                              height: 1.2,
+                                              letterSpacing: -0.30,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Container(
+                                          height: 20,
+                                          width: 164,
+                                          child: Center(
+                                            // Center 추가
+                                            child: Text(
+                                              '여성',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 16,
+                                                fontFamily: 'Pretendard',
+                                                fontWeight: FontWeight.w500,
+                                                letterSpacing: -0.40,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          height: 20,
+                                          width: 164,
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.center, // 중앙 정렬
+                                            children: [
+                                              Icon(
+                                                Icons.star, // 사용할 아이콘
+                                                color: Colors.yellow, // 아이콘 색상
+                                                size: 20, // 아이콘 크기
+                                              ),
+                                              SizedBox(width: 4), // 간격 추가
+                                              Text(
+                                                '4.9',
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 16,
+                                                  fontFamily: 'Pretendard',
+                                                  fontWeight: FontWeight.w500,
+                                                  letterSpacing: -0.40,
+                                                ),
+                                              ),
+                                              SizedBox(width: 2), // 간격 추가
+                                              Text(
+                                                '(1,053)',
+                                                style: TextStyle(
+                                                  color: Color(0xFF888888),
+                                                  fontSize: 12,
+                                                  fontFamily: 'Pretendard',
+                                                  fontWeight: FontWeight.w400,
+                                                  height: 0.11,
+                                                  letterSpacing: -0.30,
+                                                ),
+                                              )
+                                            ],
+                                          ),
+
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 8), // 사이즈 박스 추가
+                      Container(
+                        width: 360,
+                        height: 1827,
+                        //decoration: BoxDecoration(color: Colors.blue),
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 40,
+                              width: 360,
+                              color: Colors.purple,
+                            ), //탭바
+                            Container(
+                              height: 522,
+                              width: 360,
+                              //color: Colors.yellow,
+                              child: Column(
+                                children: [
+                                  Container( // 디자이너 정보
+                                    height: 143,
+                                    width: 360,
+                                    child: Column(
+                                      children: [
+                                        Container( //
+                                          height: 67,
+                                          width: 360,
+                                          padding: EdgeInsets.only(top: 36, bottom: 12, left: 16, right: 16), // 패딩 설정
+                                          child: Text(
+                                            '디자이너 정보',
+                                            style: TextStyle(
+                                              color: Color(0xFF3D3D3D),
+                                              fontSize: 16,
+                                              fontFamily: 'Pretendard',
+                                              fontWeight: FontWeight.w600,
+                                              height: 1.2,
+                                              letterSpacing: -0.40,
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          height: 76,
+                                          width: 360,
+                                          padding: EdgeInsets.only(top: 12, bottom: 12, left: 16, right: 16), // 패딩 설정
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start, // 왼쪽 정렬 설정
+                                            children: [
+                                              Text(
+                                                '견적 비용 : 20,000원',
+                                                style: TextStyle(
+                                                  color: Color(0xFF5D5D5D),
+                                                  fontSize: 14,
+                                                  fontFamily: 'Pretendard',
+                                                  fontWeight: FontWeight.w400,
+                                                  height: 1.3,
+                                                  letterSpacing: -0.35,
+                                                ),
+                                              ),
+                                              SizedBox(height: 12), // 사이즈박스 추가
+                                              Text(
+                                                '견적 소요 시간 : 평균 2~3일',
+                                                style: TextStyle(
+                                                  color: Color(0xFF5D5D5D),
+                                                  fontSize: 14,
+                                                  fontFamily: 'Pretendard',
+                                                  fontWeight: FontWeight.w400,
+                                                  height: 1.3,
+                                                  letterSpacing: -0.35,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+
+                                  Container(
+                                    height: 228,
+                                    width: 360,
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start, // 왼쪽 정렬 설정
+                                      children: [
+                                        Container(
+                                          height: 67,
+                                          width: 360,
+                                          padding: EdgeInsets.only(top: 36, bottom: 12, left: 16, right: 16), // 패딩 설정
+                                          child: Text(
+                                            '디자이너 상세 설명',
+                                            style: TextStyle(
+                                              color: Color(0xFF3D3D3D),
+                                              fontSize: 16,
+                                              fontFamily: 'Pretendard',
+                                              fontWeight: FontWeight.w600,
+                                              height: 1.2,
+                                              letterSpacing: -0.40,
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          height: 129,
+                                          width: 360,
+                                          padding: EdgeInsets.only(top: 12, bottom: 12, left: 16, right: 16), // 패딩 설정
+                                          child: Text(
+                                            '안녕하세요~!\n미니멀이면 미니멀, 캐주얼이면 캐주얼, 빈티지면 빈티지 등등\n원하시는 스타일은 최대한 맞춰 드릴게요!\n현재 300분 이상 저에게 코디 받으시고 만족들 하셨으니, 고객\n님도 충분히 만족시켜 드릴 수 있다고 확신합니다! 그럼 견적...',
+                                            style: TextStyle(
+                                              color: Color(0xFF5D5D5D),
+                                              fontSize: 14,
+                                              fontFamily: 'Pretendard',
+                                              fontWeight: FontWeight.w400,
+                                              height: 1.3,
+                                              letterSpacing: -0.35,
+                                            ),
+                                          ),
+                                        ),
+
+                                        Container(
+                                          height: 32,
+                                          width: 360,
+                                          padding: EdgeInsets.only(left: 16, right: 16), // 패딩 설정
+                                          child: Center(
+                                            child: Container(
+                                              height: 100,
+                                              width: 100,
+                                              decoration: BoxDecoration(
+                                                color: Colors.transparent, // 배경색을 투명으로 설정
+                                                border: Border.all(
+                                                  color: Color(0xFFE7E7E7), // 테두리 색상
+                                                  width: 1, // 테두리 두께
+                                                ),
+                                                borderRadius: BorderRadius.circular(100), // 둥글게 만들기
+                                              ),
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    "더보기",
+                                                    style: TextStyle(
+                                                      color: Color(0xFF5D5D5D),
+                                                      fontSize: 14,
+                                                      fontFamily: 'Pretendard',
+                                                      fontWeight: FontWeight.w400,
+                                                      letterSpacing: -0.35,
+                                                    ),
+                                                  ),
+                                                  SizedBox(width: 2), // 텍스트와 아이콘 사이의 간격
+                                                  Icon(
+                                                    Icons.arrow_drop_down, // 아래로 향하는 화살표
+                                                    color: Colors.black, // 화살표 색상 변경
+                                                    size: 14, // 화살표 크기
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        )
+
+
+
+
+                                      ],
+                                    ),
+                                  ), //디자이너 설명
+
+                                  Container(
+                                    width: 360,
+                                    height: 151,
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          height: 67,
+                                          width: 360,
+                                          padding: EdgeInsets.only(top: 36, bottom: 12, left: 16, right: 16), // 패딩 설정
+                                          child: Text(
+                                            '디자이너 제공 분야',
+                                            style: TextStyle(
+                                              color: Color(0xFF3D3D3D),
+                                              fontSize: 16,
+                                              fontFamily: 'Pretendard',
+                                              fontWeight: FontWeight.w600,
+                                              height: 1.2,
+                                              letterSpacing: -0.40,
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          height: 84,
+                                          width: 360,
+                                          padding: EdgeInsets.only(top: 12, bottom: 40, left: 16, right: 16), // 패딩 설정
+                                          child: Row(
+                                            children: [
+                                              Container(
+                                                height: 32,
+                                                width: 68,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.transparent, // 배경색을 투명으로 설정
+                                                  border: Border.all(
+                                                    color: Color(0xFFE7E7E7), // 테두리 색상
+                                                    width: 1, // 테두리 두께
+                                                  ),
+                                                  borderRadius: BorderRadius.circular(100), // 둥글게 만들기
+                                                ),
+                                              ),
+                                              SizedBox(width: 8), // 사이즈 박스 추가
+                                              Container(
+                                                height: 32,
+                                                width: 68,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.transparent, // 배경색을 투명으로 설정
+                                                  border: Border.all(
+                                                    color: Color(0xFFE7E7E7), // 테두리 색상
+                                                    width: 1, // 테두리 두께
+                                                  ),
+                                                  borderRadius: BorderRadius.circular(100), // 둥글게 만들기
+                                                ),
+                                              ),
+                                              SizedBox(width: 8), // 사이즈 박스 추가
+                                              Container(
+                                                height: 32,
+                                                width: 68,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.transparent, // 배경색을 투명으로 설정
+                                                  border: Border.all(
+                                                    color: Color(0xFFE7E7E7), // 테두리 색상
+                                                    width: 1, // 테두리 두께
+                                                  ),
+                                                  borderRadius: BorderRadius.circular(100), // 둥글게 만들기
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        )
+
+                                      ],
+                                    ),
+                                  )
+
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -816,13 +1328,8 @@ class DesignerListScreen extends StatelessWidget {
 }
 
 
-
-
-
-
-
 // 헬로 월드(홈화면) 옮기기 전
-class _HelloWorldScreenState extends State<HelloWorldScreen> {
+class _Home extends State<_HomePage> {
   int _selectedIndex = 0;
   int _selectedIndex2 = 0;
 
@@ -2288,15 +2795,41 @@ class _HelloWorldScreenState extends State<HelloWorldScreen> {
   }
 }
 
-// 북마크 화면 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<여기가 디자이너 화면만드는중
+// 디자이너 선택화면
 class BookmarkScreen extends StatefulWidget {
   @override
   _BookmarkScreenState createState() => _BookmarkScreenState();
 }
 
 class _BookmarkScreenState extends State<BookmarkScreen> {
-  int _selectedIndex = 0; // 초기 선택 인덱스
-  String _selectedCategory = '전체'; // 새로운 상태 변수
+  int _selectedIndex = 0;
+  String _selectedCategory = '전체';
+
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  List<String> _names = [];
+  List<String> _introductions = [];
+  List<String> classification = [];
+  List<String> _prices = [];
+  List<String> _imageUrls = [];
+  List<String> _designerIds = [];
+
+  @override // 처음생성될때 위젯들을 불러옴
+  void initState() {
+    super.initState();
+    _fetchDesignerData();
+  }
+
+  Future<void> _fetchDesignerData() async {
+    QuerySnapshot snapshot = await _firestore.collection('designer').get();
+    setState(() {
+      _designerIds = snapshot.docs.map((doc) => doc.id).toList();
+      _names = snapshot.docs.map((doc) => doc['name'] as String).toList();
+      _introductions = snapshot.docs.map((doc) => doc['introduction'] as String).toList();
+      classification = snapshot.docs.map((doc) => doc['classification'] as String).toList();
+      _prices = snapshot.docs.map((doc) => doc['price'].toString()).toList();
+      _imageUrls = snapshot.docs.map((doc) => doc['imageUrl'] as String).toList();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -2388,11 +2921,11 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
         setState(() {
           _selectedIndex = index;
         });
-        if (index == 0){
+        if (index == 0) {
           _selectedCategory = '전체';
         }
         if (index == 2) {
-          _showCategoryBottomSheet(); // "분야" 버튼 클릭 시 바텀 시트 표시
+          _showCategoryBottomSheet();
         }
         print('$text 버튼 클릭됨!');
       },
@@ -2508,41 +3041,7 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
     );
   }
 
-
-
-
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  List<String> _names = [];
-  List<String> _introductions = []; // introduction 리스트 추가
-  List<String> classification = []; // classification 리스트 추가
-  List<String> _prices = []; // 가격 리스트 추가
-  List<String> _imageUrls = []; // imageUrl 리스트 추가
-  List<String> _designerIds = [];
-
-
-  @override
-  void initState() {
-    super.initState();
-    _fetchDesignerData(); // 함수 이름 변경
-  }
-
-  Future<void> _fetchDesignerData() async {
-    QuerySnapshot snapshot = await _firestore.collection('designer').get();
-    setState(() {
-      _designerIds = snapshot.docs.map((doc) => doc.id).toList(); // 새로 추가된 부분
-      _names = snapshot.docs.map((doc) => doc['name'] as String).toList();
-      _introductions =
-          snapshot.docs.map((doc) => doc['introduction'] as String).toList();
-      classification =
-          snapshot.docs.map((doc) => doc['classification'] as String).toList();
-      _prices = snapshot.docs.map((doc) => doc['price'].toString()).toList();
-      _imageUrls =
-          snapshot.docs.map((doc) => doc['imageUrl'] as String).toList();
-    });
-  }
-
   Widget _buildListView() {
-    // 선택된 카테고리에 따라 필터링된 리스트 생성
     List<int> filteredIndices = [];
     for (int i = 0; i < classification.length; i++) {
       if (_selectedCategory == '전체' || classification[i].contains(_selectedCategory)) {
@@ -2717,7 +3216,6 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
     );
   }
 }
-
 // 마이페이지 화면 위젯
 class MyPageScreen extends StatelessWidget {
   @override
@@ -2733,9 +3231,9 @@ class MyPageScreen extends StatelessWidget {
                 top: 14,
                 left: 12,
                 child: Image.asset(
-                  'assets/image/logo_primary.png', // 실제 로고 이미지
-                  width: 95,
-                  height: 19,
+                  'assets/image/logo_modi.png', // 실제 로고 이미지
+                  width: 34,
+                  height: 20,
                 ),
               ),
               Positioned(

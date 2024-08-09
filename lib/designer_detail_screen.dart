@@ -254,7 +254,7 @@ class _DesignerDetailScreenState extends State<DesignerDetailScreen> {
               await Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => SliderStep(),
+                  builder: (context) => ReservationPage(),
                 ),
               );
             },
