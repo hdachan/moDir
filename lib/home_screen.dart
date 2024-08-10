@@ -1307,11 +1307,236 @@ class reservation extends StatelessWidget {
 
                                       ],
                                     ),
-                                  )
+                                  ) //디자이너 제공분야
 
                                 ],
                               ),
                             ),
+                            Container(
+                              width: 360,
+                              height: 271,
+                              child: Column(
+                                children: [
+                                  Container(
+                                    width: 360,
+                                    height: 67,
+                                    padding: EdgeInsets.only(top: 36, bottom: 12, left: 16, right: 16), // 패딩 설정
+                                    child: Text(
+                                      '디자이너 스타일',
+                                      style: TextStyle(
+                                        color: Color(0xFF3D3D3D),
+                                        fontSize: 16,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w600,
+                                        height: 1.2,
+                                        letterSpacing: -0.40,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 360,
+                                    height: 56,
+                                    padding: EdgeInsets.only(top: 12, bottom: 12, left: 16, right: 16), // 패딩 설정
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          width: 60,
+                                          height: 32,
+                                          decoration: BoxDecoration(
+                                            color: Colors.black,
+                                            borderRadius: BorderRadius.circular(100), // 라운드 값 설정
+                                          ),
+                                        ),
+                                        SizedBox(width: 8), // 사이즈 박스 추가
+                                        Container(
+                                          width: 60,
+                                          height: 32,
+                                          decoration: BoxDecoration(
+                                            color: Colors.black,
+                                            borderRadius: BorderRadius.circular(100), // 라운드 값 설정
+                                          ),
+                                        ),
+                                        SizedBox(width: 8), // 사이즈 박스 추가
+                                        Container(
+                                          width: 60,
+                                          height: 32,
+                                          decoration: BoxDecoration(
+                                            color: Colors.black,
+                                            borderRadius: BorderRadius.circular(100), // 라운드 값 설정
+                                          ),
+                                        ),
+
+                                      ],
+                                    ),
+                                  ),
+
+                                  Container(
+                                    width: 360,
+                                    height: 148,
+                                    padding: EdgeInsets.only(top: 12, bottom: 40, left: 16, right: 16), // 패딩 설정
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          width: 96,
+                                          height: 96,
+                                          color: Colors.teal,
+                                        ),
+                                        SizedBox(width: 8), // 사이즈 박스 추가
+                                        Container(
+                                          width: 96,
+                                          height: 96,
+                                          color: Colors.teal,
+                                        ),
+                                        SizedBox(width: 8), // 사이즈 박스 추가
+                                        Container(
+                                          width: 96,
+                                          height: 96,
+                                          color: Colors.teal,
+                                        ),
+
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              width: 360,
+                              height: 994,
+                              child: Column(
+                                children: [
+                                  Container(
+                                    width: 360,
+                                    height: 67,
+                                    padding: EdgeInsets.only(top: 36, bottom: 12, left: 16, right: 16), // 패딩 설정
+                                    child: Text(
+                                      '리뷰',
+                                      style: TextStyle(
+                                        color: Color(0xFF3D3D3D),
+                                        fontSize: 16,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w600,
+                                        height: 1.2,
+                                        letterSpacing: -0.40,
+                                      ),
+                                    ),
+                                  ), // 리뷰
+                                  Container(
+                                    width: 360,
+                                    height: 181,
+                                    color: Colors.red,
+                                    padding: EdgeInsets.only(top: 12, bottom: 12, left: 16, right: 16), // 패딩 설정
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          width: 328,
+                                          height: 32,
+                                          child: Center( // 텍스트를 가운데 정렬
+                                            child: Text(
+                                              '4.9',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 32,
+                                                fontFamily: 'Pretendard',
+                                                fontWeight: FontWeight.w700,
+                                                height: 1.0,
+                                                letterSpacing: -0.80,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+
+                                        SizedBox(height: 8), // 사이즈 박스 추가
+                                        Container(
+                                          width: 328,
+                                          height: 24,
+                                          color: Colors.blue, // 원하는 색으로 변경 가능
+                                        ),
+                                        SizedBox(height: 8), // 사이즈 박스 추가
+                                        Container(
+                                          width: 328,
+                                          height: 17,
+                                          color: Colors.green, // 원하는 색으로 변경 가능
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+
+                                  // 전체 빈티지 미니멀 캐주얼 버튼
+                                  Container(
+                                    width: 360,
+                                    height: 52,
+                                    padding: EdgeInsets.only(top: 12, bottom: 8, left: 16, right: 16), // 패딩 설정
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          width: 48,
+                                          height: 32,
+                                          decoration: BoxDecoration(
+                                            color: Colors.black, // 원하는 색으로 변경 가능
+                                            borderRadius: BorderRadius.circular(100), // 라운드 값 설정
+                                          ),
+                                        ),
+                                        SizedBox(width: 8), // 사이즈 박스 추가
+                                        Container(
+                                          width: 48,
+                                          height: 32,
+                                          decoration: BoxDecoration(
+                                            color: Colors.black, // 원하는 색으로 변경 가능
+                                            borderRadius: BorderRadius.circular(100), // 라운드 값 설정
+                                          ),
+                                        ),
+                                        SizedBox(width: 8), // 사이즈 박스 추가
+                                        Container(
+                                          width: 48,
+                                          height: 32,
+                                          decoration: BoxDecoration(
+                                            color: Colors.black, // 원하는 색으로 변경 가능
+                                            borderRadius: BorderRadius.circular(100), // 라운드 값 설정
+                                          ),
+                                        ),
+                                        SizedBox(width: 8), // 사이즈 박스 추가
+                                        Container(
+                                          width: 48,
+                                          height: 32,
+                                          decoration: BoxDecoration(
+                                            color: Colors.black, // 원하는 색으로 변경 가능
+                                            borderRadius: BorderRadius.circular(100), // 라운드 값 설정
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+
+                                  // 네 번째 박스
+                                  Container(
+                                    width: 360,
+                                    height: 48,
+                                    padding: EdgeInsets.only(top: 12, bottom: 12, left: 16, right: 16), // 패딩 설정
+                                    child: Text(
+                                      '전체 리뷰 1,032',
+                                      style: TextStyle(
+                                        color: Color(0xFF3D3D3D),
+                                        fontSize: 14,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w700,
+                                        height: 1.2,
+                                        letterSpacing: -0.35,
+                                      ),
+                                    ),
+                                  ),
+                                  // 다섯 번째 박스
+                                  Container(
+                                    width: 360,
+                                    height: 646,
+                                    color: Colors.green,
+                                  ),
+                                ],
+                              ),
+                            )
+// 리뷰 탭
+
                           ],
                         ),
                       )
