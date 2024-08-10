@@ -3308,6 +3308,9 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.zero,
+                border: Border(
+                  bottom: BorderSide(width: 1, color: Color(0xFFE7E7E7))
+                )
               ),
               height: 128,
               child: Row(
