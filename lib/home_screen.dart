@@ -11,8 +11,6 @@ import 'Change_Password.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
-import 'designer_detail_screen.dart';
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
