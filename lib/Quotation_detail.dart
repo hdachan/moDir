@@ -108,7 +108,7 @@ class _QuotationPageState extends State<QuotationPage>
                                 ),
                               ],
                               indicatorColor: Color(0xFF3D3D3D),
-                              indicatorSize: TabBarIndicatorSize.tab,
+                              indicatorSize: TabBarIndicatorSize.label,
                               indicatorPadding:
                                   EdgeInsets.only(top: 12, bottom: 0),
                               labelPadding: EdgeInsets.only(left: 6, right: 6),

@@ -410,12 +410,11 @@ class _DesignerDetailScreenState extends State<DesignerDetailScreen> {
 
                       Container(
                         width: 360,
-                        height: 1827,
                         //decoration: BoxDecoration(color: Colors.blue),
                         child: Column(
                           children: [
                             Container(
-                              height: 40,
+                              height: 46,
                               // 원하는 높이
                               width: 360,
                               // 너비 설정
@@ -425,60 +424,54 @@ class _DesignerDetailScreenState extends State<DesignerDetailScreen> {
                               child: DefaultTabController(
                                 length: 3,
                                 child: TabBar(
-                                  indicatorColor: Colors.black,
-                                  tabs: [
+                                  tabs: const [
                                     Tab(
-                                      child: Container(
-                                        width: 85, // 적절한 너비 설정
-                                        child: Text(
-                                          '디자이너 정보',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            color: Color(0xFF3D3D3D),
-                                            fontSize: 14,
-                                            fontFamily: 'Pretendard',
-                                            fontWeight: FontWeight.w500,
-                                            height: 1.0,
-                                            letterSpacing: -0.40,
-                                          ),
+                                      child: Text(
+                                        '디자이너 정보',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: Color(0xFF3D3D3D),
+                                          fontSize: 14,
+                                          fontFamily: 'Pretendard',
+                                          fontWeight: FontWeight.w500,
+                                          height: 1.0,
+                                          letterSpacing: -0.40,
                                         ),
                                       ),
                                     ),
                                     Tab(
-                                      child: Container(
-                                        width: 41, // 적절한 너비 설정
-                                        child: Text(
-                                          '스타일',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            color: Color(0xFF3D3D3D),
-                                            fontSize: 14,
-                                            fontFamily: 'Pretendard',
-                                            fontWeight: FontWeight.w500,
-                                            height: 1.0,
-                                            letterSpacing: -0.40,
-                                          ),
+                                      child: Text(
+                                        '스타일',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: Color(0xFF3D3D3D),
+                                          fontSize: 14,
+                                          fontFamily: 'Pretendard',
+                                          fontWeight: FontWeight.w500,
+                                          height: 1.0,
+                                          letterSpacing: -0.40,
                                         ),
                                       ),
                                     ),
                                     Tab(
-                                      child: Container(
-                                        width: 28, // 적절한 너비 설정
-                                        child: Text(
-                                          '리뷰',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            color: Color(0xFF3D3D3D),
-                                            fontSize: 14,
-                                            fontFamily: 'Pretendard',
-                                            fontWeight: FontWeight.w500,
-                                            height: 1.0,
-                                            letterSpacing: -0.40,
-                                          ),
+                                      child: Text(
+                                        '리뷰',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: Color(0xFF3D3D3D),
+                                          fontSize: 14,
+                                          fontFamily: 'Pretendard',
+                                          fontWeight: FontWeight.w500,
+                                          height: 1.0,
+                                          letterSpacing: -0.40,
                                         ),
                                       ),
                                     ),
                                   ],
+                                  indicatorColor: Color(0xFF3D3D3D),
+                                  indicatorSize: TabBarIndicatorSize.label, // 인디케이터 크기 조정
+                                  indicatorPadding: EdgeInsets.only(top: 12, bottom: 0), // 인디케이터와 텍스트 간의 간격 조정
+                                  labelPadding: EdgeInsets.only(left: 16, right: 8),
                                 ),
                               ),
                             ),
@@ -891,7 +884,6 @@ class _DesignerDetailScreenState extends State<DesignerDetailScreen> {
                             ),
                             Container(
                               width: 360,
-                              height: 994,
                               child: Column(
                                 children: [
                                   Container(
@@ -1030,7 +1022,8 @@ class _DesignerDetailScreenState extends State<DesignerDetailScreen> {
                                               color: Color(0xFFE7E7E7),
                                               width: 1,
                                             ),
-                                            borderRadius: BorderRadius.circular(100),
+                                            borderRadius:
+                                                BorderRadius.circular(100),
                                           ),
                                           child: Center(
                                             child: Text(
@@ -1150,7 +1143,7 @@ class _DesignerDetailScreenState extends State<DesignerDetailScreen> {
                                           child: Row(
                                             mainAxisAlignment: MainAxisAlignment
                                                 .end, // 맨 오른쪽 정렬
-                                            children: [
+                                            children: const [
                                               Text(
                                                 '최신순',
                                                 style: TextStyle(
@@ -1176,64 +1169,147 @@ class _DesignerDetailScreenState extends State<DesignerDetailScreen> {
                                     ),
                                   ),
 
-                                  Container(
-                                    width: 360,
-                                    height: 646,
-                                    color: Colors.tealAccent,
-                                    padding: EdgeInsets.symmetric(vertical: 16),
-                                    // 상하 패딩 설정
-                                    child: Column(
-                                      // 중앙 정렬
-                                      children: [
-                                        // children 리스트로 변경
-                                        Container(
-                                          width: 360,
-                                          height: 337,
-                                          color: Colors.grey,
-                                          // 내부 컨테이너 색상
-                                          padding: EdgeInsets.only(
-                                              top: 16,
-                                              bottom: 16,
-                                              left: 16,
-                                              right: 16),
-                                          // 패딩 설정
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment
-                                                    .start, // 왼쪽 정렬
-                                            children: [
-                                              Container(
-                                                width: 328,
-                                                height: 44,
-                                                color: Colors.black,
-                                              ),
-                                              SizedBox(height: 12),
-                                              // 각 컨테이너 사이의 간격
-                                              Container(
-                                                width: 328,
-                                                height: 96,
-                                                color: Colors.black,
-                                              ),
-                                              SizedBox(height: 12),
-                                              // 각 컨테이너 사이의 간격
-                                              Container(
-                                                width: 328,
-                                                height: 81,
-                                                color: Colors.black,
-                                              ),
-                                              SizedBox(height: 12),
-                                              // 각 컨테이너 사이의 간격
-                                              Container(
-                                                width: 328,
-                                                height: 48,
-                                                color: Colors.black,
-                                              ),
-                                            ],
-                                          ),
+                                  Column(
+                                    // 중앙 정렬
+                                    children: [
+                                      // children 리스트로 변경
+                                      Container(
+                                        width: 360,
+                                        height: 337,
+                                        color: Colors.grey,
+                                        // 내부 컨테이너 색상
+                                        padding: EdgeInsets.only(
+                                            top: 16,
+                                            bottom: 16,
+                                            left: 16,
+                                            right: 16),
+                                        // 패딩 설정
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment
+                                                  .start, // 왼쪽 정렬
+                                          children: [
+                                            Container(
+                                              width: 328,
+                                              height: 44,
+                                              color: Colors.black,
+                                            ),
+                                            SizedBox(height: 12),
+                                            // 각 컨테이너 사이의 간격
+                                            Container(
+                                              width: 328,
+                                              height: 96,
+                                              color: Colors.black,
+                                            ),
+                                            SizedBox(height: 12),
+                                            // 각 컨테이너 사이의 간격
+                                            Container(
+                                              width: 328,
+                                              height: 81,
+                                              color: Colors.black,
+                                            ),
+                                            SizedBox(height: 12),
+                                            // 각 컨테이너 사이의 간격
+                                            Container(
+                                              width: 328,
+                                              height: 48,
+                                              color: Colors.black,
+                                            ),
+                                          ],
                                         ),
-                                        SizedBox(height: 12), // 두 번째 컨테이너와의 간격
-                                      ],
-                                    ),
+                                      ),
+                                      Container(
+                                        width: 360,
+                                        height: 337,
+                                        color: Colors.grey,
+                                        // 내부 컨테이너 색상
+                                        padding: EdgeInsets.only(
+                                            top: 16,
+                                            bottom: 16,
+                                            left: 16,
+                                            right: 16),
+                                        // 패딩 설정
+                                        child: Column(
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment
+                                              .start, // 왼쪽 정렬
+                                          children: [
+                                            Container(
+                                              width: 328,
+                                              height: 44,
+                                              color: Colors.black,
+                                            ),
+                                            SizedBox(height: 12),
+                                            // 각 컨테이너 사이의 간격
+                                            Container(
+                                              width: 328,
+                                              height: 96,
+                                              color: Colors.black,
+                                            ),
+                                            SizedBox(height: 12),
+                                            // 각 컨테이너 사이의 간격
+                                            Container(
+                                              width: 328,
+                                              height: 81,
+                                              color: Colors.black,
+                                            ),
+                                            SizedBox(height: 12),
+                                            // 각 컨테이너 사이의 간격
+                                            Container(
+                                              width: 328,
+                                              height: 48,
+                                              color: Colors.black,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Container(
+                                        width: 360,
+                                        height: 337,
+                                        color: Colors.grey,
+                                        // 내부 컨테이너 색상
+                                        padding: EdgeInsets.only(
+                                            top: 16,
+                                            bottom: 16,
+                                            left: 16,
+                                            right: 16),
+                                        // 패딩 설정
+                                        child: Column(
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment
+                                              .start, // 왼쪽 정렬
+                                          children: [
+                                            Container(
+                                              width: 328,
+                                              height: 44,
+                                              color: Colors.black,
+                                            ),
+                                            SizedBox(height: 12),
+                                            // 각 컨테이너 사이의 간격
+                                            Container(
+                                              width: 328,
+                                              height: 96,
+                                              color: Colors.black,
+                                            ),
+                                            SizedBox(height: 12),
+                                            // 각 컨테이너 사이의 간격
+                                            Container(
+                                              width: 328,
+                                              height: 81,
+                                              color: Colors.black,
+                                            ),
+                                            SizedBox(height: 12),
+                                            // 각 컨테이너 사이의 간격
+                                            Container(
+                                              width: 328,
+                                              height: 48,
+                                              color: Colors.black,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(height: 12), // 두 번째 컨테이너와의 간격
+                                    ],
                                   ),
 
                                   // 다섯 번째 박스
@@ -1252,11 +1328,10 @@ class _DesignerDetailScreenState extends State<DesignerDetailScreen> {
           ),
         ),
       ),
-      bottomNavigationBar:
-      Container(
+      bottomNavigationBar: Container(
         height: 52,
-        width: 360,color: Color(0xFF3D3D3D),
-
+        width: 360,
+        color: Color(0xFF3D3D3D),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center, // Row를 중앙 정렬
           children: [
@@ -1307,12 +1382,9 @@ class _DesignerDetailScreenState extends State<DesignerDetailScreen> {
                 ),
               ),
             ),
-
           ],
         ),
       ),
-
-
     );
   }
 
