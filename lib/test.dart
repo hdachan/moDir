@@ -27,7 +27,7 @@ class DesignerDetailScreen extends StatefulWidget {
   _DesignerDetailScreenState createState() => _DesignerDetailScreenState();
 }
 
-class _DesignerDetailScreenState extends State<DesignerDetailScreen> {
+class _DesignerDetailScreenState extends State<DesignerDetailScreen> with SingleTickerProviderStateMixin  {
   List<Widget> tags = [];
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final TextEditingController _reviewController = TextEditingController();
@@ -36,10 +36,19 @@ class _DesignerDetailScreenState extends State<DesignerDetailScreen> {
   int _reviewCount = 0;
   double _averageRating = 0;
 
+  late TabController _tabController;
+
   @override // 처음 생성될때 필요한 작업
   void initState() {
     super.initState();
     _fetchReviews();
+    _tabController = TabController(length: 2, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose(); // 메모리 해제
+    super.dispose();
   }
 
   Future<void> _fetchReviews() async {
@@ -410,72 +419,53 @@ class _DesignerDetailScreenState extends State<DesignerDetailScreen> {
 
                       Container(
                         width: 360,
-                        //decoration: BoxDecoration(color: Colors.blue),
                         child: Column(
                           children: [
                             Container(
                               height: 46,
-                              // 원하는 높이
                               width: 360,
-                              // 너비 설정
-                              padding:
-                                  EdgeInsets.only(top: 12, left: 16, right: 16),
-                              // 위쪽 12, 양쪽 16 패딩 추가
-                              child: DefaultTabController(
-                                length: 3,
-                                child: TabBar(
-                                  tabs: const [
-                                    Tab(
-                                      child: Text(
-                                        '디자이너 정보',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          color: Color(0xFF3D3D3D),
-                                          fontSize: 14,
-                                          fontFamily: 'Pretendard',
-                                          fontWeight: FontWeight.w500,
-                                          height: 1.0,
-                                          letterSpacing: -0.40,
-                                        ),
+                              padding: EdgeInsets.only(top: 12, left: 16, right: 16),
+                              color: Colors.cyan,
+                              child: TabBar(
+                                controller: _tabController,
+                                isScrollable: true,
+                                tabAlignment: TabAlignment.start,
+                                tabs: [
+                                  Tab(
+                                    child: Text(
+                                      '진행중',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: Color(0xFF3D3D3D),
+                                        fontSize: 16,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w500,
+                                        height: 1.0,
+                                        letterSpacing: -0.40,
                                       ),
                                     ),
-                                    Tab(
-                                      child: Text(
-                                        '스타일',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          color: Color(0xFF3D3D3D),
-                                          fontSize: 14,
-                                          fontFamily: 'Pretendard',
-                                          fontWeight: FontWeight.w500,
-                                          height: 1.0,
-                                          letterSpacing: -0.40,
-                                        ),
+                                  ),
+                                  Tab(
+                                    child: Text(
+                                      '지난내역',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: Color(0xFF3D3D3D),
+                                        fontSize: 16,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w500,
+                                        height: 1.0,
+                                        letterSpacing: -0.40,
                                       ),
                                     ),
-                                    Tab(
-                                      child: Text(
-                                        '리뷰',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          color: Color(0xFF3D3D3D),
-                                          fontSize: 14,
-                                          fontFamily: 'Pretendard',
-                                          fontWeight: FontWeight.w500,
-                                          height: 1.0,
-                                          letterSpacing: -0.40,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                  indicatorColor: Color(0xFF3D3D3D),
-                                  indicatorSize: TabBarIndicatorSize.label, // 인디케이터 크기 조정
-                                  indicatorPadding: EdgeInsets.only(top: 12, bottom: 0), // 인디케이터와 텍스트 간의 간격 조정
-                                  labelPadding: EdgeInsets.only(left: 16, right: 8),
-                                ),
+                                  ),
+                                ],
+                                indicatorColor: Color(0xFF3D3D3D),
+                                indicatorSize: TabBarIndicatorSize.label,
+                                indicatorPadding: EdgeInsets.only(top: 12, bottom: 0),
+                                labelPadding: EdgeInsets.only(left: 6, right: 6),
                               ),
                             ),
-
                             //탭바
                             Container(
                               height: 522,
