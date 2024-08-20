@@ -26,11 +26,9 @@ void main() async {
   ));
 }
 
-
 class Home_Screen extends StatefulWidget {
   @override
   _Home_ScreenState createState() => _Home_ScreenState();
-
 }
 
 // HomePage의 상태 관리 클래스
@@ -42,7 +40,6 @@ class _Home_ScreenState extends State<Home_Screen> {
     HomeScreen(),
     reservation(),
     MyPageScreen(),
-
   ]; // 각 페이지 위젯들
 
   @override
@@ -96,7 +93,6 @@ class _Home_ScreenState extends State<Home_Screen> {
                   : Icon(Icons.person_outline), // 마이페이지 아이콘 변경
               label: '마이페이지',
             ),
-
           ],
         ),
       ),
@@ -108,9 +104,6 @@ class _HomePage extends StatefulWidget {
   @override
   _Home createState() => _Home();
 }
-
-
-
 
 //홈 >> 메인 / 커뮤니티 / 매거진
 class HomeScreen extends StatelessWidget {
@@ -339,6 +332,7 @@ class NewPostDialog extends StatefulWidget {
   @override
   _NewPostDialogState createState() => _NewPostDialogState();
 }
+
 //글쓰기 버튼을 눌렀을때 나오는 위젯 /기능
 class _NewPostDialogState extends State<NewPostDialog> {
   final TextEditingController titleController = TextEditingController();
@@ -348,7 +342,7 @@ class _NewPostDialogState extends State<NewPostDialog> {
 
   Future<void> _pickImage() async {
     final pickedFile =
-    await ImagePicker().pickImage(source: ImageSource.gallery);
+        await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       setState(() {
         _image = File(pickedFile.path);
@@ -452,6 +446,7 @@ class PostDetail extends StatefulWidget {
   @override
   _PostDetailState createState() => _PostDetailState();
 }
+
 //포스터를 눌렀을때 나오는 화면
 class _PostDetailState extends State<PostDetail> {
   late Map<String, dynamic> data;
@@ -491,7 +486,7 @@ class _PostDetailState extends State<PostDetail> {
 
   void fetchLikedEmails() async {
     QuerySnapshot likesSnapshot =
-    await widget.post.reference.collection('likes').get();
+        await widget.post.reference.collection('likes').get();
 
     setState(() {
       likedEmails =
@@ -516,7 +511,7 @@ class _PostDetailState extends State<PostDetail> {
     if (currentUser == null || commentController.text.isEmpty) return;
 
     DocumentReference commentRef =
-    widget.post.reference.collection('comments').doc();
+        widget.post.reference.collection('comments').doc();
 
     await commentRef.set({
       'content': commentController.text,
@@ -532,7 +527,7 @@ class _PostDetailState extends State<PostDetail> {
     if (currentUser == null) return;
 
     DocumentReference likeRef =
-    widget.post.reference.collection('likes').doc(currentUser!.uid);
+        widget.post.reference.collection('likes').doc(currentUser!.uid);
 
     if (isLiked) {
       await likeRef.delete();
@@ -652,6 +647,7 @@ class PostClick extends StatefulWidget {
   @override
   _PostClickState createState() => _PostClickState();
 }
+
 // 글을 클릭했을때 나오는 위젯 / 기능
 class _PostClickState extends State<PostClick> {
   late Map<String, dynamic> data;
@@ -688,7 +684,7 @@ class _PostClickState extends State<PostClick> {
     if (currentUser == null) return;
 
     DocumentReference likeRef =
-    widget.post.reference.collection('likes').doc(currentUser!.uid);
+        widget.post.reference.collection('likes').doc(currentUser!.uid);
 
     if (isLiked) {
       await likeRef.delete();
@@ -807,7 +803,6 @@ class reservation extends StatelessWidget {
   }
 }
 
-
 // 헬로 월드(홈화면) 옮기기 전
 class _Home extends State<_HomePage> {
   int _selectedIndex = 0;
@@ -875,7 +870,7 @@ class _Home extends State<_HomePage> {
                       ),
                       Container(
                         padding:
-                        EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                            EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                         // 왼쪽, 오른쪽 16, 위아래 12 패딩
                         height: 42,
                         width: 360,
@@ -929,7 +924,7 @@ class _Home extends State<_HomePage> {
                                           padding: EdgeInsets.zero,
                                           shape: RoundedRectangleBorder(
                                             borderRadius:
-                                            BorderRadius.circular(8),
+                                                BorderRadius.circular(8),
                                           ),
                                         ),
                                         child: Column(
@@ -940,7 +935,7 @@ class _Home extends State<_HomePage> {
                                               decoration: BoxDecoration(
                                                   color: Color(0xFFB4B4B4),
                                                   borderRadius:
-                                                  BorderRadius.circular(8)),
+                                                      BorderRadius.circular(8)),
                                             ),
                                             Container(
                                                 height: 8,
@@ -977,7 +972,7 @@ class _Home extends State<_HomePage> {
                                           padding: EdgeInsets.zero,
                                           shape: RoundedRectangleBorder(
                                             borderRadius:
-                                            BorderRadius.circular(8),
+                                                BorderRadius.circular(8),
                                           ),
                                         ),
                                         child: Column(
@@ -988,7 +983,7 @@ class _Home extends State<_HomePage> {
                                               decoration: BoxDecoration(
                                                   color: Color(0xFFB4B4B4),
                                                   borderRadius:
-                                                  BorderRadius.circular(8)),
+                                                      BorderRadius.circular(8)),
                                             ),
                                             Container(
                                                 height: 8,
@@ -1019,7 +1014,7 @@ class _Home extends State<_HomePage> {
                                       width: 70,
                                       height: 94,
                                       decoration:
-                                      BoxDecoration(color: Colors.white),
+                                          BoxDecoration(color: Colors.white),
                                       child: ElevatedButton(
                                         onPressed: () {},
                                         style: ElevatedButton.styleFrom(
@@ -1027,7 +1022,7 @@ class _Home extends State<_HomePage> {
                                           padding: EdgeInsets.zero,
                                           shape: RoundedRectangleBorder(
                                             borderRadius:
-                                            BorderRadius.circular(8),
+                                                BorderRadius.circular(8),
                                           ),
                                         ),
                                         child: Column(
@@ -1038,7 +1033,7 @@ class _Home extends State<_HomePage> {
                                               decoration: BoxDecoration(
                                                   color: Color(0xFFB4B4B4),
                                                   borderRadius:
-                                                  BorderRadius.circular(8)),
+                                                      BorderRadius.circular(8)),
                                             ),
                                             Container(
                                                 height: 8,
@@ -1075,7 +1070,7 @@ class _Home extends State<_HomePage> {
                                           padding: EdgeInsets.zero,
                                           shape: RoundedRectangleBorder(
                                             borderRadius:
-                                            BorderRadius.circular(8),
+                                                BorderRadius.circular(8),
                                           ),
                                         ),
                                         child: Column(
@@ -1086,7 +1081,7 @@ class _Home extends State<_HomePage> {
                                               decoration: BoxDecoration(
                                                   color: Color(0xFFB4B4B4),
                                                   borderRadius:
-                                                  BorderRadius.circular(8)),
+                                                      BorderRadius.circular(8)),
                                             ),
                                             Container(
                                                 height: 8,
@@ -1136,7 +1131,7 @@ class _Home extends State<_HomePage> {
                                           padding: EdgeInsets.zero,
                                           shape: RoundedRectangleBorder(
                                             borderRadius:
-                                            BorderRadius.circular(8),
+                                                BorderRadius.circular(8),
                                           ),
                                         ),
                                         child: Column(
@@ -1147,7 +1142,7 @@ class _Home extends State<_HomePage> {
                                               decoration: BoxDecoration(
                                                   color: Color(0xFFB4B4B4),
                                                   borderRadius:
-                                                  BorderRadius.circular(8)),
+                                                      BorderRadius.circular(8)),
                                             ),
                                             Container(
                                                 height: 8,
@@ -1184,7 +1179,7 @@ class _Home extends State<_HomePage> {
                                           padding: EdgeInsets.zero,
                                           shape: RoundedRectangleBorder(
                                             borderRadius:
-                                            BorderRadius.circular(8),
+                                                BorderRadius.circular(8),
                                           ),
                                         ),
                                         child: Column(
@@ -1195,7 +1190,7 @@ class _Home extends State<_HomePage> {
                                               decoration: BoxDecoration(
                                                   color: Color(0xFFB4B4B4),
                                                   borderRadius:
-                                                  BorderRadius.circular(8)),
+                                                      BorderRadius.circular(8)),
                                             ),
                                             Container(
                                                 height: 8,
@@ -1232,7 +1227,7 @@ class _Home extends State<_HomePage> {
                                           padding: EdgeInsets.zero,
                                           shape: RoundedRectangleBorder(
                                             borderRadius:
-                                            BorderRadius.circular(8),
+                                                BorderRadius.circular(8),
                                           ),
                                         ),
                                         child: Column(
@@ -1243,7 +1238,7 @@ class _Home extends State<_HomePage> {
                                               decoration: BoxDecoration(
                                                   color: Color(0xFFB4B4B4),
                                                   borderRadius:
-                                                  BorderRadius.circular(8)),
+                                                      BorderRadius.circular(8)),
                                             ),
                                             Container(
                                                 height: 8,
@@ -1280,7 +1275,7 @@ class _Home extends State<_HomePage> {
                                           padding: EdgeInsets.zero,
                                           shape: RoundedRectangleBorder(
                                             borderRadius:
-                                            BorderRadius.circular(8),
+                                                BorderRadius.circular(8),
                                           ),
                                         ),
                                         child: Column(
@@ -1291,7 +1286,7 @@ class _Home extends State<_HomePage> {
                                               decoration: BoxDecoration(
                                                   color: Color(0xFFB4B4B4),
                                                   borderRadius:
-                                                  BorderRadius.circular(8)),
+                                                      BorderRadius.circular(8)),
                                             ),
                                             Container(
                                                 height: 8,
@@ -1372,13 +1367,13 @@ class _Home extends State<_HomePage> {
                                       width: 16,
                                       height: 16,
                                       padding:
-                                      EdgeInsets.symmetric(vertical: 4),
+                                          EdgeInsets.symmetric(vertical: 4),
                                       decoration: BoxDecoration(
                                           image: DecorationImage(
-                                            image: AssetImage(
-                                                'assets/image/arrow_forward.png'),
-                                            fit: BoxFit.cover,
-                                          )),
+                                        image: AssetImage(
+                                            'assets/image/arrow_forward.png'),
+                                        fit: BoxFit.cover,
+                                      )),
                                     )
                                   ],
                                 ),
@@ -1391,7 +1386,7 @@ class _Home extends State<_HomePage> {
                         height: 46,
                         width: 360,
                         padding:
-                        EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                            EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                         decoration: BoxDecoration(color: Colors.white),
                         child: SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
@@ -1415,8 +1410,7 @@ class _Home extends State<_HomePage> {
                       Container(
                         height: 295,
                         width: 360,
-                        padding: EdgeInsets.only(
-                            top: 12, bottom: 24, left: 16),
+                        padding: EdgeInsets.only(top: 12, bottom: 24, left: 16),
                         decoration: BoxDecoration(color: Colors.white),
                         child: SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
@@ -1429,7 +1423,8 @@ class _Home extends State<_HomePage> {
                               _buildList(2, '황대찬', '거지', '맛 감', '짐승'),
                               SizedBox(width: 16),
                               _buildList(3, '김지민', '십덕', '흠...', '사람 아님'),
-                              SizedBox(width: 16), // 전체 값에서 오른쪽에 패딩 주면 잘리니 항상 마지막에 넣기
+                              SizedBox(width: 16),
+                              // 전체 값에서 오른쪽에 패딩 주면 잘리니 항상 마지막에 넣기
                             ],
                           ),
                         ),
@@ -1482,13 +1477,13 @@ class _Home extends State<_HomePage> {
                                           width: 16,
                                           height: 16,
                                           padding:
-                                          EdgeInsets.symmetric(vertical: 4),
+                                              EdgeInsets.symmetric(vertical: 4),
                                           decoration: BoxDecoration(
                                               image: DecorationImage(
-                                                image: AssetImage(
-                                                    'assets/image/arrow_forward.png'),
-                                                fit: BoxFit.cover,
-                                              )),
+                                            image: AssetImage(
+                                                'assets/image/arrow_forward.png'),
+                                            fit: BoxFit.cover,
+                                          )),
                                         )
                                       ],
                                     ),
@@ -1592,13 +1587,13 @@ class _Home extends State<_HomePage> {
                                           width: 16,
                                           height: 16,
                                           padding:
-                                          EdgeInsets.symmetric(vertical: 4),
+                                              EdgeInsets.symmetric(vertical: 4),
                                           decoration: BoxDecoration(
                                               image: DecorationImage(
-                                                image: AssetImage(
-                                                    'assets/image/arrow_forward.png'),
-                                                fit: BoxFit.cover,
-                                              )),
+                                            image: AssetImage(
+                                                'assets/image/arrow_forward.png'),
+                                            fit: BoxFit.cover,
+                                          )),
                                         )
                                       ],
                                     ),
@@ -1647,10 +1642,10 @@ class _Home extends State<_HomePage> {
                                   height: 16,
                                   decoration: BoxDecoration(
                                       image: DecorationImage(
-                                        image: AssetImage(
-                                            'assets/image/logo_modi.png'),
-                                        fit: BoxFit.cover,
-                                      )),
+                                    image: AssetImage(
+                                        'assets/image/logo_modi.png'),
+                                    fit: BoxFit.cover,
+                                  )),
                                 ),
                                 SizedBox(width: 4),
                                 Text(
@@ -1795,7 +1790,7 @@ class _Home extends State<_HomePage> {
                                   width: 1,
                                   height: 11,
                                   decoration:
-                                  BoxDecoration(color: Color(0xFF5D5D5D)),
+                                      BoxDecoration(color: Color(0xFF5D5D5D)),
                                 ),
                                 SizedBox(width: 4),
                                 TextButton(
@@ -1821,7 +1816,7 @@ class _Home extends State<_HomePage> {
                                   width: 1,
                                   height: 11,
                                   decoration:
-                                  BoxDecoration(color: Color(0xFF5D5D5D)),
+                                      BoxDecoration(color: Color(0xFF5D5D5D)),
                                 ),
                                 SizedBox(width: 4),
                                 TextButton(
@@ -1870,7 +1865,7 @@ class _Home extends State<_HomePage> {
                                   width: 1,
                                   height: 11,
                                   decoration:
-                                  BoxDecoration(color: Color(0xFF5D5D5D)),
+                                      BoxDecoration(color: Color(0xFF5D5D5D)),
                                 ),
                                 SizedBox(width: 4),
                                 TextButton(
@@ -1896,7 +1891,7 @@ class _Home extends State<_HomePage> {
                                   width: 1,
                                   height: 11,
                                   decoration:
-                                  BoxDecoration(color: Color(0xFF5D5D5D)),
+                                      BoxDecoration(color: Color(0xFF5D5D5D)),
                                 ),
                                 SizedBox(width: 4),
                                 TextButton(
@@ -2310,12 +2305,16 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
       setState(() {
         _designerIds = snapshot.docs.map((doc) => doc.id).toList();
         _names = snapshot.docs.map((doc) => doc['name'] as String).toList();
-        _introductions = snapshot.docs.map((doc) => doc['introduction'] as String).toList();
-        classification = snapshot.docs.map((doc) => doc['classification'] as String).toList();
+        _introductions =
+            snapshot.docs.map((doc) => doc['introduction'] as String).toList();
+        classification = snapshot.docs
+            .map((doc) => doc['classification'] as String)
+            .toList();
         _prices = snapshot.docs.map((doc) => doc['price'].toString()).toList();
-        _imageUrls = snapshot.docs.map((doc) => doc['imageUrl'] as String).toList();
+        _imageUrls =
+            snapshot.docs.map((doc) => doc['imageUrl'] as String).toList();
         _titles = snapshot.docs.map((doc) => doc['title'] as String).toList();
-        _gender= snapshot.docs.map((doc) => doc['gender'] as String).toList();
+        _gender = snapshot.docs.map((doc) => doc['gender'] as String).toList();
         _reviewCounts = snapshot.docs.map((doc) {
           // reviewCount가 문자열일 경우 변환
           var reviewCountValue = doc['reviewCount'];
@@ -2543,7 +2542,8 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
   Widget _buildListView() {
     List<int> filteredIndices = [];
     for (int i = 0; i < classification.length; i++) {
-      if (_selectedCategory == '전체' || classification[i].contains(_selectedCategory)) {
+      if (_selectedCategory == '전체' ||
+          classification[i].contains(_selectedCategory)) {
         filteredIndices.add(i);
       }
     }
@@ -2575,7 +2575,7 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
                     classification: classification[itemIndex],
                     price: _prices[itemIndex],
                     imageUrl: _imageUrls[itemIndex],
-                    reviewCount:_reviewCounts[itemIndex],
+                    reviewCount: _reviewCounts[itemIndex],
                     gender: _gender[itemIndex],
                   ),
                 ),
@@ -2583,11 +2583,9 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
             },
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.zero,
-                border: Border(
-                  bottom: BorderSide(width: 1, color: Color(0xFFE7E7E7))
-                )
-              ),
+                  borderRadius: BorderRadius.zero,
+                  border: Border(
+                      bottom: BorderSide(width: 1, color: Color(0xFFE7E7E7)))),
               height: 128,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -2664,7 +2662,8 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
                             Container(
                               width: 1,
                               height: 12,
-                              decoration: BoxDecoration(color: Color(0xFF888888)),
+                              decoration:
+                                  BoxDecoration(color: Color(0xFF888888)),
                             ),
                             SizedBox(width: 4),
                             Text(
@@ -2720,62 +2719,367 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
     );
   }
 }
+
 // 마이페이지 화면 위젯
 class MyPageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        flexibleSpace: Container(
-          width: 360,
-          height: 48,
-          child: Stack(
-            children: [
-              Positioned(
-                top: 14,
-                left: 12,
-                child: Image.asset(
-                  'assets/image/logo_modi.png', // 실제 로고 이미지
-                  width: 34,
-                  height: 20,
-                ),
-              ),
-              Positioned(
-                right: 0,
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Icon(
-                        Icons.search,
-                        size: 24,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Icon(
-                        Icons.notifications,
-                        size: 24,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Center(
-                child: Container(
+      appBar: MyProfileAppBar(),
+      body: SingleChildScrollView(
+        child: Center(
+          child: SizedBox(
+            width: 360,
+            child: Column(
+              children: [
+                Container(
                   width: 360,
-                  decoration: BoxDecoration(color: Colors.red),
+                  height: 250,
+                  color: Color(0xFF4F4F4F),
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: const [
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              '황대찬',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 22,
+                                fontFamily: 'Pretendard',
+                                fontWeight: FontWeight.w700,
+                                height: 1.5,
+                                letterSpacing: -0.55,
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 2),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              '님',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 22,
+                                fontFamily: 'Pretendard',
+                                fontWeight: FontWeight.w400,
+                                height: 1.5,
+                                letterSpacing: -0.55,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          '오늘 예쁘게 입기 좋은 날이에요',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 22,
+                            fontFamily: 'Pretendard',
+                            fontWeight: FontWeight.w400,
+                            height: 1.5,
+                            letterSpacing: -0.55,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 32),
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: 260,
+                            height: 20,
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                '아직 작성된 스타일 정보가 없어요',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontFamily: 'Pretendard',
+                                  fontWeight: FontWeight.w400,
+                                  height: 1.4,
+                                  letterSpacing: -0.35,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 68,
+                            height: 20,
+                            child: MaterialButton(
+                              onPressed: () {},
+                              padding: EdgeInsets.zero,
+                              child: Row(
+                                children: const [
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      '작성하기',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w500,
+                                        height: 1.3,
+                                        letterSpacing: -0.35,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 2),
+                                  Icon(
+                                    Icons.navigate_next,
+                                    size: 18,
+                                    color: Colors.white,
+                                  )
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(height: 8),
+                      Container(
+                        width: 328,
+                        height: 84,
+                        decoration: ShapeDecoration(
+                          color: Colors.white,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(4)),
+                        ),
+                        padding:
+                            EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                        child: Row(
+                          children: const [
+                            SizedBox(
+                              width: 62,
+                              height: 44,
+                              child: Column(
+                                children: [
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      '키',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: Color(0xFFB0B0B0),
+                                        fontSize: 12,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w500,
+                                        height: 1,
+                                        letterSpacing: -0.30,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: 12),
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      '--',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w500,
+                                        height: 1,
+                                        letterSpacing: -0.50,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(width: 16),
+                            SizedBox(
+                              width: 62,
+                              height: 44,
+                              child: Column(
+                                children: [
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      '몸무게',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: Color(0xFFB0B0B0),
+                                        fontSize: 12,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w500,
+                                        height: 1,
+                                        letterSpacing: -0.30,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: 12),
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      '--',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w500,
+                                        height: 1,
+                                        letterSpacing: -0.50,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(width: 16),
+                            SizedBox(
+                              width: 62,
+                              height: 44,
+                              child: Column(
+                                children: [
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      '상의',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: Color(0xFFB0B0B0),
+                                        fontSize: 12,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w500,
+                                        height: 1,
+                                        letterSpacing: -0.30,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: 12),
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      '--',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w500,
+                                        height: 1,
+                                        letterSpacing: -0.50,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(width: 16),
+                            SizedBox(
+                              width: 62,
+                              height: 44,
+                              child: Column(
+                                children: [
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      '하의',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: Color(0xFFB0B0B0),
+                                        fontSize: 12,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w500,
+                                        height: 1,
+                                        letterSpacing: -0.30,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: 12),
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      '--',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w500,
+                                        height: 1,
+                                        letterSpacing: -0.50,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            ],
+                Container(
+                  padding:
+                      EdgeInsets.only(top: 8, bottom: 48, left: 16, right: 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: 48,
+                        padding: EdgeInsets.only(top: 24, bottom: 8),
+                        decoration: BoxDecoration(
+                          color: Color(0xFFF6F6F6),
+                        ),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            '관심목록',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontFamily: 'Pretendard',
+                              fontWeight: FontWeight.w600,
+                              height: 1,
+                              letterSpacing: -0.40,
+                            ),
+                          ),
+                        ),
+                      ),
+                      MyProfileButton(text: '관심 디자이너', onPressed: () {}),
+                      MyProfileButton(text: '관심 스타일', onPressed: () {}),
+                      MyProfileButton(text: '관심 아이템', onPressed: () {}),
+                      MyProfileButton(text: '관심 매거진', onPressed: () {}),
+                      MyProfileButton(text: '관심 게시물', onPressed: () {}),
+                      Container(
+                        height: 48,
+                        padding: EdgeInsets.only(top: 24, bottom: 8),
+                        decoration: BoxDecoration(
+                          color: Color(0xFFF6F6F6),
+                        ),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            '고객센터',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontFamily: 'Pretendard',
+                              fontWeight: FontWeight.w600,
+                              height: 1,
+                              letterSpacing: -0.40,
+                            ),
+                          ),
+                        ),
+                      ),
+                      MyProfileButton(text: '공지사항', onPressed: () {}),
+                      MyProfileButton(text: '도움말', onPressed: () {}),
+                      MyProfileButton(text: '문의하기', onPressed: () {}),
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -2783,3 +3087,102 @@ class MyPageScreen extends StatelessWidget {
   }
 }
 
+//마이프로필 앱바
+class MyProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const MyProfileAppBar({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Align(
+        alignment: Alignment.center,
+        child: Container(
+          padding: EdgeInsets.only(left: 16),
+          color: Color(0xFF4F4F4F),
+          width: 360,
+          height: kToolbarHeight,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                  width: 222,
+                  height: 25,
+                  child: Text(
+                    '마이프로필',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontFamily: 'Pretendard',
+                      fontWeight: FontWeight.w700,
+                      height: 1.4,
+                      letterSpacing: -0.45,
+                    ),
+                  )),
+              SizedBox(width: 10),
+              IconButton(
+                onPressed: () {},
+                icon: Icon(Icons.notifications_none),
+                iconSize: 24,
+                color: Colors.white,
+                style: OutlinedButton.styleFrom(minimumSize: Size.zero),
+              ),
+              SizedBox(width: 16),
+              IconButton(
+                onPressed: () {},
+                icon: Icon(Icons.settings_outlined),
+                iconSize: 24,
+                color: Colors.white,
+                style: OutlinedButton.styleFrom(minimumSize: Size.zero),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Size get preferredSize => Size(360, kToolbarHeight);
+}
+//마이프로필 관심목록 / 고객센터 버튼
+class MyProfileButton extends StatelessWidget {
+  final String text;
+  final VoidCallback onPressed;
+
+  const MyProfileButton({
+    Key? key,
+    required this.text,
+    required this.onPressed,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialButton(
+      onPressed: onPressed,
+      height: 48,
+      padding: EdgeInsets.zero,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            text,
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 14,
+              fontFamily: 'Pretendard',
+              fontWeight: FontWeight.w500,
+              height: 1,
+              letterSpacing: -0.35,
+            ),
+          ),
+          Icon(
+            Icons.navigate_next,
+            size: 16,
+            color: Colors.black,
+          )
+        ],
+      ),
+    );
+  }
+}
