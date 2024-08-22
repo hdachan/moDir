@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:test_qwe/test3.dart';
 
 class DesignerDetailScreen extends StatefulWidget {
 
@@ -1260,7 +1261,74 @@ class _MyTabScrollAppState extends State<DesignerDetailScreen> with SingleTicker
           ],
         ),
       ),
+      bottomNavigationBar: Container(
+        height: 52,
+        width: 360,
+        color: Color(0xFF3D3D3D),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center, // Row를 중앙 정렬
+          children: [
+            Container(
+              width: 48,
+              height: 52,
+              color: Color(0xFF3D3D3D), // 하얀색 배경
+              child: Center(
+                child: Icon(
+                  Icons.share_outlined, // 윤곽선 공유 아이콘
+                  size: 24,
+                  color: Colors.white, // 원하는 색으로 변경 가능
+                ),
+              ),
+            ),
+
+            Container(
+              width: 48,
+              height: 52,
+              color: Color(0xFF3D3D3D), // 하얀색 배경
+              child: Center(
+                child: Icon(
+                  Icons.favorite_border, // 하트 아이콘
+                  size: 24,
+                  color: Colors.white, // 원하는 색으로 변경 가능
+                ),
+              ),
+            ),
+
+            // 세 번째 컨테이너: "견적서 작성하기" 텍스트 중앙에 표시
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Test3()), // Test3 화면으로 이동
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Color(0xFF3D3D3D), // 버튼 배경색
+                fixedSize: Size(244, 52), // 버튼 크기
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8), // 모서리 둥글게
+                ),
+              ),
+              child: Center(
+                child: Text(
+                  '견적서 작성하기',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontFamily: 'Pretendard',
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: -0.40,
+                    height: 1.0,
+                  ),
+                ),
+              ),
+            )
+
+          ],
+        ),
+      ),
     );
+
   }
 }
 
@@ -1359,3 +1427,23 @@ Widget buildLabelContainer(String label) {
     ],
   );
 }
+
+
+// 나중에 넣을 앱바
+// appBar: AppBar(
+// leading: IconButton(
+// icon: Icon(Icons.arrow_back), // 뒤로 가기 버튼
+// onPressed: () => Navigator.of(context).pop(),
+// ),
+// actions: [
+// Padding(
+// padding: const EdgeInsets.only(right: 4),
+// child: IconButton(
+// onPressed: () {},
+// icon: Icon(Icons.home_outlined),
+// iconSize: 24),
+// ),
+// ],
+// backgroundColor: Colors.transparent, // 앱바를 투명하게 설정
+// elevation: 0, // 그림자 제거
+// ),
