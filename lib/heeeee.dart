@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:test_qwe/test3.dart';
+import 'package:test_qwe/test5.dart';
 
 class DesignerDetailScreen extends StatefulWidget {
 
@@ -1299,7 +1300,7 @@ class _MyTabScrollAppState extends State<DesignerDetailScreen> with SingleTicker
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Test3()), // Test3 화면으로 이동
+                  MaterialPageRoute(builder: (context) => Test5()), // Test3 화면으로 이동
                 );
               },
               style: ElevatedButton.styleFrom(

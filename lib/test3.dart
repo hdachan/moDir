@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test_qwe/test5.dart';
 
 import 'test4.dart';
 
@@ -169,7 +170,7 @@ class _Test3State extends State<Test3> {
                             Container(
                               width: 328,
                               height: 72, // 필요에 따라 높이 조정
-                              child: Column( // Column으로 변경
+                              child: Column(
                                 children: [
                                   Row(
                                     crossAxisAlignment: CrossAxisAlignment.start, // 상단 왼쪽 정렬
@@ -736,26 +737,29 @@ class _Test3State extends State<Test3> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center, // 중앙 정렬
             children: [
-              Container(
-                width: 154,
-                height: 42,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(width: 1, color: Color(0xFFE7E7E7)), // 테두리 설정
-                  borderRadius: BorderRadius.circular(4),
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Test5()), // Test3 화면으로 이동
+                  );
+                },
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.white, // 버튼 배경색
+                  side: BorderSide(width: 1, color: Color(0xFFE7E7E7)), // 테두리 설정
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                  minimumSize: Size(154, 42), // 버튼 크기
                 ),
-                child: Center(
-                  child: Text(
-                    '이전',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Color(0xFF3D3D3D),
-                      fontSize: 14,
-                      fontFamily: 'Pretendard',
-                      fontWeight: FontWeight.w500,
-                      height: 1.4,
-                      letterSpacing: -0.35,
-                    ),
+                child: Text(
+                  '이전',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Color(0xFF3D3D3D),
+                    fontSize: 14,
+                    fontFamily: 'Pretendard',
+                    fontWeight: FontWeight.w500,
+                    height: 1.4,
+                    letterSpacing: -0.35,
                   ),
                 ),
               ),
@@ -763,10 +767,9 @@ class _Test3State extends State<Test3> {
               SizedBox(width: 20), // 버튼 사이 간격
               TextButton(
                 onPressed: () {
-                  print("눌러짐");
-                  Navigator.pushReplacement(
+                  Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Test4()),
+                    MaterialPageRoute(builder: (context) => Test4()), // Test3 화면으로 이동
                   );
                 },
                 style: TextButton.styleFrom(
@@ -787,10 +790,6 @@ class _Test3State extends State<Test3> {
                   ),
                 ),
               ),
-
-
-
-
             ],
           ),
         ),
