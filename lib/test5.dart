@@ -54,7 +54,52 @@ class _Test5State extends State<Test5> {
                       Container(
                         width: 360,
                         height: 56,
-                        color: Color(0xFF4F4F4F),
+                        padding: EdgeInsets.all(16), // 패딩 값 추가
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 24,
+                              height: 24,
+                              decoration: ShapeDecoration(
+                                shape: RoundedRectangleBorder(
+                                  side: BorderSide(width: 1, color: Color(0xFF3D3D3D)),
+                                  borderRadius: BorderRadius.circular(100),
+                                ),
+                                color: Color(0xFFFF0000), // 내부 컨테이너 색상
+                              ),
+                            ),
+                            Container(
+                              width: 128,
+                              height: 1,
+                              color: Color(0xFFD1D1D1), // 내부 컨테이너 색상 (원하는 색상으로 변경 가능)
+                            ),
+                            Container(
+                              width: 24,
+                              height: 24,
+                              decoration: ShapeDecoration(
+                                shape: RoundedRectangleBorder(
+                                  side: BorderSide(width: 1, color: Color(0xFF3D3D3D)),
+                                  borderRadius: BorderRadius.circular(100),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              width: 128,
+                              height: 1,
+                              color: Color(0xFFD1D1D1), // 내부 컨테이너 색상 (원하는 색상으로 변경 가능)
+                            ),
+                            Container(
+                              width: 24,
+                              height: 24,
+                              decoration: ShapeDecoration(
+                                shape: RoundedRectangleBorder(
+                                  side: BorderSide(width: 1, color: Color(0xFF3D3D3D)),
+                                  borderRadius: BorderRadius.circular(100),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                       Container(
                         width: 360,

@@ -15,42 +15,125 @@ class Test3 extends StatefulWidget { // Test3를 StatefulWidget으로 변경
 
 class _Test3State extends State<Test3> {
   String _warningMessage = ''; // 경고 메시지 상태 변수
+  String _warningUpMessage = ''; // 경고 메시지 상태 변수
+  String _warningBottomMessage = ''; // 경고 메시지 상태 변수
+
+  int? _selectedFit; // 선택된 버튼을 저장하는 변수 (0: 슬림핏, 1: 레귤러핏)
+  int? _selectedUpFit; // 선택된 버튼을 저장하는 변수 (0: 슬림핏, 1: 레귤러핏)
+  int? _selectedBottomFit; // 선택된 버튼을 저장하는 변수 (0: 슬림핏, 1: 레귤러핏)
 
   void _showSlimFitWarning() {
     setState(() {
-      _warningMessage = '몸에 딱 맞는 핏으로 세련된 느낌을 강조'; // 슬림핏 클릭 시 메시지 설정
+      _selectedFit = 0; // 슬림핏이 선택됨
+      _warningMessage = '몸에 딱 맞는 핏으로 세련된 느낌을 강조';
     });
   }
-
   void _showRegularFitWarning() {
     setState(() {
-      _warningMessage = '기본적인 핏으로 몸에 적당히 맞아 깔끔한 인상'; // 레귤러핏 클릭 시 메시지 설정
+      _selectedFit = 1; // 레귤러핏이 선택됨
+      _warningMessage = '기본적인 핏으로 몸에 적당히 맞아 깔끔한 인상';
     });
   }
-
   void _showWarning3() {
     setState(() {
+      _selectedFit = 2; // 루즈핏
       _warningMessage = '오버핏보다 조금 더 슬림한 여유를 가진 핏'; // 레귤러핏 클릭 시 메시지 설정
     });
   }
-
   void _showWarning4() {
     setState(() {
+      _selectedFit = 3; // 오버핏
       _warningMessage = '여유있는 실루엣으로 편안하고 캐주얼한 느낌'; // 레귤러핏 클릭 시 메시지 설정
     });
   }
-
   void _showWarning5() {
     setState(() {
+      _selectedFit = 4; // 크롭핏
       _warningMessage = '허리선 위로 잘린 형태로, 다리 길이를 강조'; // 레귤러핏 클릭 시 메시지 설정
     });
   }
-
   void _showWarning6() {
     setState(() {
+      _selectedFit = 5; // 롱핏
       _warningMessage = '엉덩이 아래까지 오는 기장으로 길고 여유있는 실루엣'; // 레귤러핏 클릭 시 메시지 설정
     });
   }
+
+
+  void _showFitUpWarning0() {
+    setState(() {
+      _selectedUpFit = 0; // 슬림핏이 선택됨
+      _warningUpMessage = '정핏보다 몸에 딱 달라붙게 입는 핏';
+    });
+  }
+  void _showFitUpWarning1() {
+    setState(() {
+      _selectedUpFit = 1; // 슬림핏이 선택됨
+      _warningUpMessage = '옷이 몸에 너무 달라붙지 않고 많이 헐렁하지도 않은 정도';
+    });
+  }
+  void _showFitUpWarning2() {
+    setState(() {
+      _selectedUpFit = 2; // 슬림핏이 선택됨
+      _warningUpMessage = '자신의 체형보다 여유있는 핏';
+    });
+  }
+  void _showFitUpWarning3() {
+    setState(() {
+      _selectedUpFit = 3; // 오버핏
+      _warningUpMessage = '체형보다 한 사이즈 정도 넉넉한 핏'; // 레귤러핏 클릭 시 메시지 설정
+    });
+  }
+  void _showFitUpWarning4() {
+    setState(() {
+      _selectedUpFit = 4; // 크롭핏
+      _warningUpMessage = '허리선 위로 잘린 형태로, 다리 길이를 강조'; // 레귤러핏 클릭 시 메시지 설정
+    });
+  }
+
+  void _showFitBottomWarning0() {
+    setState(() {
+      _selectedBottomFit = 0; // 슬림핏이 선택됨
+      _warningBottomMessage = '힙에서 발목까지 전체적으로 일자로 곧게 내려오는 스타일';
+    });
+  }
+
+  void _showFitBottomWarning1() {
+    setState(() {
+      _selectedBottomFit = 1; // 슬림핏이 선택됨
+      _warningBottomMessage = '허리에서 엉덩이까지는 슬림하고 무릎 아래로는 일자 형태';
+    });
+  }
+
+  void _showFitBottomWarning2() {
+    setState(() {
+      _selectedBottomFit = 2; // 슬림핏이 선택됨
+      _warningBottomMessage = '허벅지부터 종아리까지 일정하게 떨어지는 핏';
+    });
+  }
+
+  void _showFitBottomWarning3() {
+    setState(() {
+      _selectedBottomFit = 3; // 슬림핏이 선택됨
+      _warningBottomMessage = '정핏보다 몸에 딱 달라붙게 입는 핏';
+    });
+  }
+
+  void _showFitBottomWarning4() {
+    setState(() {
+      _selectedBottomFit = 4; // 슬림핏이 선택됨
+      _warningBottomMessage = '허벅지에서 밑단으로 내려가며 점점 통이 좁아지는 핏';
+    });
+  }
+
+  void _showFitBottomWarning5() {
+    setState(() {
+      _selectedBottomFit = 5; // 슬림핏이 선택됨
+      _warningBottomMessage = '레귤러보다 품이 널널하고  핏이 일정하게 떨어지는 핏';
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -93,7 +176,53 @@ class _Test3State extends State<Test3> {
                       Container(
                         width: 360,
                         height: 56,
-                        color: Color(0xFF4F4F4F),
+                        padding: EdgeInsets.all(16), // 패딩 값 추가
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 24,
+                              height: 24,
+                              decoration: ShapeDecoration(
+                                shape: RoundedRectangleBorder(
+                                  side: BorderSide(width: 1, color: Color(0xFF3D3D3D)),
+                                  borderRadius: BorderRadius.circular(100),
+                                ),
+
+                              ),
+                            ),
+                            Container(
+                              width: 128,
+                              height: 1,
+                              color: Color(0xFFD1D1D1), // 내부 컨테이너 색상 (원하는 색상으로 변경 가능)
+                            ),
+                            Container(
+                              width: 24,
+                              height: 24,
+                              decoration: ShapeDecoration(
+                                shape: RoundedRectangleBorder(
+                                  side: BorderSide(width: 1, color: Color(0xFF3D3D3D)),
+                                  borderRadius: BorderRadius.circular(100),
+                                ),
+                                color: Color(0xFFFF0000), // 내부 컨테이너 색상
+                              ),
+                            ),
+                            Container(
+                              width: 128,
+                              height: 1,
+                              color: Color(0xFFD1D1D1), // 내부 컨테이너 색상 (원하는 색상으로 변경 가능)
+                            ),
+                            Container(
+                              width: 24,
+                              height: 24,
+                              decoration: ShapeDecoration(
+                                shape: RoundedRectangleBorder(
+                                  side: BorderSide(width: 1, color: Color(0xFF3D3D3D)),
+                                  borderRadius: BorderRadius.circular(100),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                       Container(
                         width: 360,
@@ -137,9 +266,6 @@ class _Test3State extends State<Test3> {
                           ),
                         ),
                       ),
-
-
-
                       Container(
                         width: 360,
                         height: 186,
@@ -181,14 +307,18 @@ class _Test3State extends State<Test3> {
                                           width: 60,
                                           height: 32,
                                           decoration: BoxDecoration(
-                                            border: Border.all(width: 1, color: Color(0xFFE7E7E7)), // 테두리 색상
-                                            borderRadius: BorderRadius.circular(100), // 둥글게 만들기
+                                            color: _selectedFit == 0 ? Color(0xFF3D3D3D) : Colors.transparent, // 컨테이너 색상
+                                            border: Border.all(
+                                              width: 1,
+                                              color: _selectedFit == 0 ? Colors.transparent : Color(0xFFE7E7E7), // 슬림핏 클릭 시 테두리 색상
+                                            ),
+                                            borderRadius: BorderRadius.circular(100),
                                           ),
-                                          alignment: Alignment.center, // 텍스트 중앙 정렬
+                                          alignment: Alignment.center,
                                           child: Text(
                                             '슬림핏',
                                             style: TextStyle(
-                                              color: Color(0xFF5D5D5D),
+                                              color: _selectedFit == 0 ? Color(0xFFFFFFFF) : Color(0xFF5D5D5D), // 글자 색상
                                               fontSize: 14,
                                               fontFamily: 'Pretendard',
                                               fontWeight: FontWeight.w400,
@@ -205,14 +335,18 @@ class _Test3State extends State<Test3> {
                                           width: 72,
                                           height: 32,
                                           decoration: BoxDecoration(
-                                            border: Border.all(width: 1, color: Color(0xFFE7E7E7)), // 테두리 색상
-                                            borderRadius: BorderRadius.circular(100), // 둥글게 만들기
+                                            color: _selectedFit == 1 ? Color(0xFF3D3D3D) : Colors.transparent, // 컨테이너 색상
+                                            border: Border.all(
+                                              width: 1,
+                                              color: _selectedFit == 1 ? Colors.transparent : Color(0xFFE7E7E7), // 레귤러핏 클릭 시 테두리 색상
+                                            ),
+                                            borderRadius: BorderRadius.circular(100),
                                           ),
-                                          alignment: Alignment.center, // 텍스트 중앙 정렬
+                                          alignment: Alignment.center,
                                           child: Text(
                                             '레귤러핏',
                                             style: TextStyle(
-                                              color: Color(0xFF5D5D5D),
+                                              color: _selectedFit == 1 ? Color(0xFFFFFFFF) : Color(0xFF5D5D5D), // 글자 색상
                                               fontSize: 14,
                                               fontFamily: 'Pretendard',
                                               fontWeight: FontWeight.w400,
@@ -222,6 +356,7 @@ class _Test3State extends State<Test3> {
                                           ),
                                         ),
                                       ),
+
                                       SizedBox(width: 8),
                                       GestureDetector(
                                         onTap: _showWarning3,
@@ -229,14 +364,18 @@ class _Test3State extends State<Test3> {
                                           width: 60,
                                           height: 32,
                                           decoration: BoxDecoration(
-                                            border: Border.all(width: 1, color: Color(0xFFE7E7E7)), // 테두리 색상
-                                            borderRadius: BorderRadius.circular(100), // 둥글게 만들기
+                                            color: _selectedFit == 2 ? Color(0xFF3D3D3D) : Colors.transparent, // 컨테이너 색상
+                                            border: Border.all(
+                                              width: 1,
+                                              color: _selectedFit == 2 ? Colors.transparent : Color(0xFFE7E7E7), // 레귤러핏 클릭 시 테두리 색상
+                                            ),
+                                            borderRadius: BorderRadius.circular(100),
                                           ),
                                           alignment: Alignment.center, // 텍스트 중앙 정렬
                                           child: Text(
                                             '루즈핏',
                                             style: TextStyle(
-                                              color: Color(0xFF5D5D5D),
+                                              color: _selectedFit == 2 ? Color(0xFFFFFFFF) : Color(0xFF5D5D5D), // 글자 색상
                                               fontSize: 14,
                                               fontFamily: 'Pretendard',
                                               fontWeight: FontWeight.w400,
@@ -253,14 +392,19 @@ class _Test3State extends State<Test3> {
                                           width: 60,
                                           height: 32,
                                           decoration: BoxDecoration(
-                                            border: Border.all(width: 1, color: Color(0xFFE7E7E7)), // 테두리 색상
-                                            borderRadius: BorderRadius.circular(100), // 둥글게 만들기
+                                            color: _selectedFit == 3 ? Color(0xFF3D3D3D) : Colors.transparent, // 컨테이너 색상
+                                            border: Border.all(
+                                              width: 1,
+                                              color: _selectedFit == 3 ? Colors.transparent : Color(0xFFE7E7E7), // 레귤러핏 클릭 시 테두리 색상
+                                            ),
+                                            borderRadius: BorderRadius.circular(100),
                                           ),
+
                                           alignment: Alignment.center, // 텍스트 중앙 정렬
                                           child: Text(
                                             '오버핏',
                                             style: TextStyle(
-                                              color: Color(0xFF5D5D5D),
+                                              color: _selectedFit == 3 ? Color(0xFFFFFFFF) : Color(0xFF5D5D5D), // 글자 색상
                                               fontSize: 14,
                                               fontFamily: 'Pretendard',
                                               fontWeight: FontWeight.w400,
@@ -282,14 +426,18 @@ class _Test3State extends State<Test3> {
                                           width: 60,
                                           height: 32,
                                           decoration: BoxDecoration(
-                                            border: Border.all(width: 1, color: Color(0xFFE7E7E7)), // 테두리 색상
-                                            borderRadius: BorderRadius.circular(100), // 둥글게 만들기
+                                            color: _selectedFit == 4 ? Color(0xFF3D3D3D) : Colors.transparent, // 컨테이너 색상
+                                            border: Border.all(
+                                              width: 1,
+                                              color: _selectedFit == 4 ? Colors.transparent : Color(0xFFE7E7E7), // 레귤러핏 클릭 시 테두리 색상
+                                            ),
+                                            borderRadius: BorderRadius.circular(100),
                                           ),
                                           alignment: Alignment.center, // 텍스트 중앙 정렬
                                           child: Text(
                                             '크롭핏',
                                             style: TextStyle(
-                                              color: Color(0xFF5D5D5D),
+                                              color: _selectedFit == 4 ? Color(0xFFFFFFFF) : Color(0xFF5D5D5D), // 글자 색상
                                               fontSize: 14,
                                               fontFamily: 'Pretendard',
                                               fontWeight: FontWeight.w400,
@@ -306,14 +454,18 @@ class _Test3State extends State<Test3> {
                                           width: 48,
                                           height: 32,
                                           decoration: BoxDecoration(
-                                            border: Border.all(width: 1, color: Color(0xFFE7E7E7)), // 테두리 색상
-                                            borderRadius: BorderRadius.circular(100), // 둥글게 만들기
+                                            color: _selectedFit == 5 ? Color(0xFF3D3D3D) : Colors.transparent, // 컨테이너 색상
+                                            border: Border.all(
+                                              width: 1,
+                                              color: _selectedFit == 5 ? Colors.transparent : Color(0xFFE7E7E7), // 레귤러핏 클릭 시 테두리 색상
+                                            ),
+                                            borderRadius: BorderRadius.circular(100),
                                           ),
                                           alignment: Alignment.center, // 텍스트 중앙 정렬
                                           child: Text(
                                             '롱핏',
                                             style: TextStyle(
-                                              color: Color(0xFF5D5D5D),
+                                              color: _selectedFit == 5 ? Color(0xFFFFFFFF) : Color(0xFF5D5D5D), // 글자 색상
                                               fontSize: 14,
                                               fontFamily: 'Pretendard',
                                               fontWeight: FontWeight.w400,
@@ -371,19 +523,23 @@ class _Test3State extends State<Test3> {
                                     crossAxisAlignment: CrossAxisAlignment.start, // 상단 왼쪽 정렬
                                     children: [
                                       GestureDetector(
-                                        onTap: _showSlimFitWarning,
+                                        onTap: _showFitUpWarning0,
                                         child: Container(
                                           width: 60,
                                           height: 32,
                                           decoration: BoxDecoration(
-                                            border: Border.all(width: 1, color: Color(0xFFE7E7E7)), // 테두리 색상
-                                            borderRadius: BorderRadius.circular(100), // 둥글게 만들기
+                                            color: _selectedUpFit == 0 ? Color(0xFF3D3D3D) : Colors.transparent, // 컨테이너 색상
+                                            border: Border.all(
+                                              width: 1,
+                                              color: _selectedUpFit == 0 ? Colors.transparent : Color(0xFFE7E7E7), // 레귤러핏 클릭 시 테두리 색상
+                                            ),
+                                            borderRadius: BorderRadius.circular(100),
                                           ),
                                           alignment: Alignment.center, // 텍스트 중앙 정렬
                                           child: Text(
                                             '슬림핏',
                                             style: TextStyle(
-                                              color: Color(0xFF5D5D5D),
+                                              color: _selectedUpFit == 0 ? Color(0xFFFFFFFF) : Color(0xFF5D5D5D), // 글자 색상
                                               fontSize: 14,
                                               fontFamily: 'Pretendard',
                                               fontWeight: FontWeight.w400,
@@ -395,19 +551,23 @@ class _Test3State extends State<Test3> {
                                       ),
                                       SizedBox(width: 8),
                                       GestureDetector(
-                                        onTap: _showRegularFitWarning,
+                                        onTap: _showFitUpWarning1,
                                         child: Container(
                                           width: 72,
                                           height: 32,
                                           decoration: BoxDecoration(
-                                            border: Border.all(width: 1, color: Color(0xFFE7E7E7)), // 테두리 색상
-                                            borderRadius: BorderRadius.circular(100), // 둥글게 만들기
+                                            color: _selectedUpFit == 1 ? Color(0xFF3D3D3D) : Colors.transparent, // 컨테이너 색상
+                                            border: Border.all(
+                                              width: 1,
+                                              color: _selectedUpFit == 1 ? Colors.transparent : Color(0xFFE7E7E7), // 레귤러핏 클릭 시 테두리 색상
+                                            ),
+                                            borderRadius: BorderRadius.circular(100),
                                           ),
                                           alignment: Alignment.center, // 텍스트 중앙 정렬
                                           child: Text(
                                             '레귤러핏',
                                             style: TextStyle(
-                                              color: Color(0xFF5D5D5D),
+                                              color: _selectedUpFit == 1 ? Color(0xFFFFFFFF) : Color(0xFF5D5D5D), // 글자 색상
                                               fontSize: 14,
                                               fontFamily: 'Pretendard',
                                               fontWeight: FontWeight.w400,
@@ -419,19 +579,23 @@ class _Test3State extends State<Test3> {
                                       ),
                                       SizedBox(width: 8),
                                       GestureDetector(
-                                        onTap: _showWarning3,
+                                        onTap: _showFitUpWarning2,
                                         child: Container(
                                           width: 60,
                                           height: 32,
                                           decoration: BoxDecoration(
-                                            border: Border.all(width: 1, color: Color(0xFFE7E7E7)), // 테두리 색상
-                                            borderRadius: BorderRadius.circular(100), // 둥글게 만들기
+                                            color: _selectedUpFit == 2 ? Color(0xFF3D3D3D) : Colors.transparent, // 컨테이너 색상
+                                            border: Border.all(
+                                              width: 1,
+                                              color: _selectedUpFit == 2 ? Colors.transparent : Color(0xFFE7E7E7), // 레귤러핏 클릭 시 테두리 색상
+                                            ),
+                                            borderRadius: BorderRadius.circular(100),
                                           ),
                                           alignment: Alignment.center, // 텍스트 중앙 정렬
                                           child: Text(
                                             '루즈핏',
                                             style: TextStyle(
-                                              color: Color(0xFF5D5D5D),
+                                              color: _selectedUpFit == 2 ? Color(0xFFFFFFFF) : Color(0xFF5D5D5D), // 글자 색상
                                               fontSize: 14,
                                               fontFamily: 'Pretendard',
                                               fontWeight: FontWeight.w400,
@@ -443,19 +607,23 @@ class _Test3State extends State<Test3> {
                                       ),
                                       SizedBox(width: 8),
                                       GestureDetector(
-                                        onTap: _showWarning4,
+                                        onTap: _showFitUpWarning3,
                                         child: Container(
                                           width: 60,
                                           height: 32,
                                           decoration: BoxDecoration(
-                                            border: Border.all(width: 1, color: Color(0xFFE7E7E7)), // 테두리 색상
-                                            borderRadius: BorderRadius.circular(100), // 둥글게 만들기
+                                            color: _selectedUpFit == 3 ? Color(0xFF3D3D3D) : Colors.transparent, // 컨테이너 색상
+                                            border: Border.all(
+                                              width: 1,
+                                              color: _selectedUpFit == 3 ? Colors.transparent : Color(0xFFE7E7E7), // 레귤러핏 클릭 시 테두리 색상
+                                            ),
+                                            borderRadius: BorderRadius.circular(100),
                                           ),
                                           alignment: Alignment.center, // 텍스트 중앙 정렬
                                           child: Text(
                                             '오버핏',
                                             style: TextStyle(
-                                              color: Color(0xFF5D5D5D),
+                                              color: _selectedUpFit == 3 ? Color(0xFFFFFFFF) : Color(0xFF5D5D5D), // 글자 색상
                                               fontSize: 14,
                                               fontFamily: 'Pretendard',
                                               fontWeight: FontWeight.w400,
@@ -472,43 +640,23 @@ class _Test3State extends State<Test3> {
                                   Row(
                                     children: [
                                       GestureDetector(
-                                        onTap: _showWarning5,
+                                        onTap: _showFitUpWarning4,
                                         child: Container(
                                           width: 60,
                                           height: 32,
                                           decoration: BoxDecoration(
-                                            border: Border.all(width: 1, color: Color(0xFFE7E7E7)), // 테두리 색상
-                                            borderRadius: BorderRadius.circular(100), // 둥글게 만들기
+                                            color: _selectedUpFit == 4 ? Color(0xFF3D3D3D) : Colors.transparent, // 컨테이너 색상
+                                            border: Border.all(
+                                              width: 1,
+                                              color: _selectedUpFit == 4 ? Colors.transparent : Color(0xFFE7E7E7), // 레귤러핏 클릭 시 테두리 색상
+                                            ),
+                                            borderRadius: BorderRadius.circular(100),
                                           ),
                                           alignment: Alignment.center, // 텍스트 중앙 정렬
                                           child: Text(
                                             '크롭핏',
                                             style: TextStyle(
-                                              color: Color(0xFF5D5D5D),
-                                              fontSize: 14,
-                                              fontFamily: 'Pretendard',
-                                              fontWeight: FontWeight.w400,
-                                              height: 1.1,
-                                              letterSpacing: -0.35,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(width: 8),
-                                      GestureDetector(
-                                        onTap: _showWarning6,
-                                        child: Container(
-                                          width: 48,
-                                          height: 32,
-                                          decoration: BoxDecoration(
-                                            border: Border.all(width: 1, color: Color(0xFFE7E7E7)), // 테두리 색상
-                                            borderRadius: BorderRadius.circular(100), // 둥글게 만들기
-                                          ),
-                                          alignment: Alignment.center, // 텍스트 중앙 정렬
-                                          child: Text(
-                                            '롱핏',
-                                            style: TextStyle(
-                                              color: Color(0xFF5D5D5D),
+                                              color: _selectedUpFit == 4 ? Color(0xFFFFFFFF) : Color(0xFF5D5D5D), // 글자 색상
                                               fontSize: 14,
                                               fontFamily: 'Pretendard',
                                               fontWeight: FontWeight.w400,
@@ -524,7 +672,7 @@ class _Test3State extends State<Test3> {
                               ),
                             ),
                             SizedBox(height: 16), // 필요 시 간격 추가
-                            if (_warningMessage.isNotEmpty) WarningContainer(_warningMessage),
+                            if (_warningUpMessage.isNotEmpty) WarningContainer1(_warningUpMessage),
 
                           ],
                         ),
@@ -565,19 +713,23 @@ class _Test3State extends State<Test3> {
                                     crossAxisAlignment: CrossAxisAlignment.start, // 상단 왼쪽 정렬
                                     children: [
                                       GestureDetector(
-                                        onTap: _showSlimFitWarning,
+                                        onTap: _showFitBottomWarning0,
                                         child: Container(
                                           width: 60,
                                           height: 32,
                                           decoration: BoxDecoration(
-                                            border: Border.all(width: 1, color: Color(0xFFE7E7E7)), // 테두리 색상
-                                            borderRadius: BorderRadius.circular(100), // 둥글게 만들기
+                                            color: _selectedBottomFit == 0 ? Color(0xFF3D3D3D) : Colors.transparent, // 컨테이너 색상
+                                            border: Border.all(
+                                              width: 1,
+                                              color: _selectedUpFit == 0 ? Colors.transparent : Color(0xFFE7E7E7), // 레귤러핏 클릭 시 테두리 색상
+                                            ),
+                                            borderRadius: BorderRadius.circular(100),
                                           ),
                                           alignment: Alignment.center, // 텍스트 중앙 정렬
                                           child: Text(
                                             '슬림핏',
                                             style: TextStyle(
-                                              color: Color(0xFF5D5D5D),
+                                              color: _selectedBottomFit == 0 ? Color(0xFFFFFFFF) : Color(0xFF5D5D5D), // 글자 색상
                                               fontSize: 14,
                                               fontFamily: 'Pretendard',
                                               fontWeight: FontWeight.w400,
@@ -589,19 +741,23 @@ class _Test3State extends State<Test3> {
                                       ),
                                       SizedBox(width: 8),
                                       GestureDetector(
-                                        onTap: _showRegularFitWarning,
+                                        onTap: _showFitBottomWarning1,
                                         child: Container(
                                           width: 72,
                                           height: 32,
                                           decoration: BoxDecoration(
-                                            border: Border.all(width: 1, color: Color(0xFFE7E7E7)), // 테두리 색상
-                                            borderRadius: BorderRadius.circular(100), // 둥글게 만들기
+                                            color: _selectedBottomFit == 1 ? Color(0xFF3D3D3D) : Colors.transparent, // 컨테이너 색상
+                                            border: Border.all(
+                                              width: 1,
+                                              color: _selectedUpFit == 1 ? Colors.transparent : Color(0xFFE7E7E7), // 레귤러핏 클릭 시 테두리 색상
+                                            ),
+                                            borderRadius: BorderRadius.circular(100),
                                           ),
                                           alignment: Alignment.center, // 텍스트 중앙 정렬
                                           child: Text(
                                             '레귤러핏',
                                             style: TextStyle(
-                                              color: Color(0xFF5D5D5D),
+                                              color: _selectedBottomFit == 1 ? Color(0xFFFFFFFF) : Color(0xFF5D5D5D), // 글자 색상
                                               fontSize: 14,
                                               fontFamily: 'Pretendard',
                                               fontWeight: FontWeight.w400,
@@ -613,7 +769,7 @@ class _Test3State extends State<Test3> {
                                       ),
                                       SizedBox(width: 8),
                                       GestureDetector(
-                                        onTap: _showWarning3,
+                                        onTap: _showFitBottomWarning2,
                                         child: Container(
                                           width: 60,
                                           height: 32,
@@ -637,19 +793,23 @@ class _Test3State extends State<Test3> {
                                       ),
                                       SizedBox(width: 8),
                                       GestureDetector(
-                                        onTap: _showWarning4,
+                                        onTap: _showFitBottomWarning2,
                                         child: Container(
                                           width: 60,
                                           height: 32,
                                           decoration: BoxDecoration(
-                                            border: Border.all(width: 1, color: Color(0xFFE7E7E7)), // 테두리 색상
-                                            borderRadius: BorderRadius.circular(100), // 둥글게 만들기
+                                            color: _selectedBottomFit == 2 ? Color(0xFF3D3D3D) : Colors.transparent, // 컨테이너 색상
+                                            border: Border.all(
+                                              width: 1,
+                                              color: _selectedUpFit == 2 ? Colors.transparent : Color(0xFFE7E7E7), // 레귤러핏 클릭 시 테두리 색상
+                                            ),
+                                            borderRadius: BorderRadius.circular(100),
                                           ),
                                           alignment: Alignment.center, // 텍스트 중앙 정렬
                                           child: Text(
                                             '오버핏',
                                             style: TextStyle(
-                                              color: Color(0xFF5D5D5D),
+                                              color: _selectedBottomFit == 2 ? Color(0xFFFFFFFF) : Color(0xFF5D5D5D), // 글자 색상
                                               fontSize: 14,
                                               fontFamily: 'Pretendard',
                                               fontWeight: FontWeight.w400,
@@ -666,19 +826,23 @@ class _Test3State extends State<Test3> {
                                   Row(
                                     children: [
                                       GestureDetector(
-                                        onTap: _showWarning5,
+                                        onTap: _showFitBottomWarning3,
                                         child: Container(
                                           width: 60,
                                           height: 32,
                                           decoration: BoxDecoration(
-                                            border: Border.all(width: 1, color: Color(0xFFE7E7E7)), // 테두리 색상
-                                            borderRadius: BorderRadius.circular(100), // 둥글게 만들기
+                                            color: _selectedBottomFit == 3 ? Color(0xFF3D3D3D) : Colors.transparent, // 컨테이너 색상
+                                            border: Border.all(
+                                              width: 1,
+                                              color: _selectedUpFit == 3 ? Colors.transparent : Color(0xFFE7E7E7), // 레귤러핏 클릭 시 테두리 색상
+                                            ),
+                                            borderRadius: BorderRadius.circular(100),
                                           ),
                                           alignment: Alignment.center, // 텍스트 중앙 정렬
                                           child: Text(
                                             '크롭핏',
                                             style: TextStyle(
-                                              color: Color(0xFF5D5D5D),
+                                              color: _selectedBottomFit == 3 ? Color(0xFFFFFFFF) : Color(0xFF5D5D5D), // 글자 색상
                                               fontSize: 14,
                                               fontFamily: 'Pretendard',
                                               fontWeight: FontWeight.w400,
@@ -690,19 +854,24 @@ class _Test3State extends State<Test3> {
                                       ),
                                       SizedBox(width: 8),
                                       GestureDetector(
-                                        onTap: _showWarning6,
+                                        onTap: _showFitBottomWarning4,
                                         child: Container(
                                           width: 48,
                                           height: 32,
                                           decoration: BoxDecoration(
-                                            border: Border.all(width: 1, color: Color(0xFFE7E7E7)), // 테두리 색상
-                                            borderRadius: BorderRadius.circular(100), // 둥글게 만들기
+                                            color: _selectedBottomFit == 4 ? Color(0xFF3D3D3D) : Colors.transparent, // 컨테이너 색상
+                                            border: Border.all(
+                                              width: 1,
+                                              color: _selectedUpFit == 4 ? Colors.transparent : Color(0xFFE7E7E7), // 레귤러핏 클릭 시 테두리 색상
+                                            ),
+                                            borderRadius: BorderRadius.circular(100),
                                           ),
+
                                           alignment: Alignment.center, // 텍스트 중앙 정렬
                                           child: Text(
                                             '롱핏',
                                             style: TextStyle(
-                                              color: Color(0xFF5D5D5D),
+                                              color: _selectedBottomFit == 4 ? Color(0xFFFFFFFF) : Color(0xFF5D5D5D), // 글자 색상
                                               fontSize: 14,
                                               fontFamily: 'Pretendard',
                                               fontWeight: FontWeight.w400,
@@ -718,7 +887,7 @@ class _Test3State extends State<Test3> {
                               ),
                             ),
                             SizedBox(height: 16), // 필요 시 간격 추가
-                            if (_warningMessage.isNotEmpty) WarningContainer(_warningMessage),
+                            if (_warningBottomMessage.isNotEmpty) WarningContainer2(_warningBottomMessage), //여기
 
                           ],
                         ),
@@ -802,6 +971,86 @@ class _Test3State extends State<Test3> {
   }
 }
 Widget WarningContainer(String message) {
+  return Container(
+    width: 328,
+    height: 42,
+    color: Color(0xFFF1F0FF),
+    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+    child: Row(
+      children: [
+        Container(
+          width: 18,
+          height: 18,
+          alignment: Alignment.center,
+          child: Icon(
+            Icons.error_outline, // 공백 제거
+            size: 18,
+          ),
+        ),
+        SizedBox(width: 8),
+        Container(
+          width: 270,
+          height: 18,
+          child: Text(
+            message, // 매개변수로 받은 메시지 사용
+            style: TextStyle(
+              color: Color(0xFF5D5D5D),
+              fontSize: 12,
+              fontFamily: 'Pretendard',
+              fontWeight: FontWeight.w400,
+              height: 1.5,
+              letterSpacing: -0.30,
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+Widget WarningContainer1(String message) {
+  return Container(
+    width: 328,
+    height: 42,
+    color: Color(0xFFF1F0FF),
+    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+    child: Row(
+      children: [
+        Container(
+          width: 18,
+          height: 18,
+          alignment: Alignment.center,
+          child: Icon(
+            Icons.error_outline, // 공백 제거
+            size: 18,
+          ),
+        ),
+        SizedBox(width: 8),
+        Container(
+          width: 270,
+          height: 18,
+          child: Text(
+            message, // 매개변수로 받은 메시지 사용
+            style: TextStyle(
+              color: Color(0xFF5D5D5D),
+              fontSize: 12,
+              fontFamily: 'Pretendard',
+              fontWeight: FontWeight.w400,
+              height: 1.5,
+              letterSpacing: -0.30,
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+Widget WarningContainer2(String message) {
   return Container(
     width: 328,
     height: 42,
