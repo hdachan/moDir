@@ -3542,9 +3542,8 @@ class MyPageScreen extends StatelessWidget {
               children: [
                 Container(
                   width: 360,
-                  height: 250,
                   color: Color(0xFF4F4F4F),
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                  padding: EdgeInsets.only(top: 20, bottom: 24, left: 16, right: 16),
                   child: Column(
                     children: [
                       Row(
@@ -3821,6 +3820,85 @@ class MyPageScreen extends StatelessWidget {
                                 ],
                               ),
                             ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      Container(
+                        width: 328,
+                        height: 42,
+                        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        decoration: ShapeDecoration(
+                          color: Color(0xFF3D3D3D),
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(width: 1, color: Color(0xFF5D5D5D)),
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: const [
+                            SizedBox(
+                              width : 273,
+                              height: 14,
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text.rich(
+                                  TextSpan(
+                                    children: [
+                                      TextSpan(
+                                        text: '지금 ',
+                                        style: TextStyle(
+                                          color: Color(0xFFF6F6F6),
+                                          fontSize: 14,
+                                          fontFamily: 'Pretendard',
+                                          fontWeight: FontWeight.w500,
+                                          height: 1,
+                                          letterSpacing: -0.35,
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text: '리뷰',
+                                        style: TextStyle(
+                                          color: Color(0xFFFFD51B),
+                                          fontSize: 14,
+                                          fontFamily: 'Pretendard',
+                                          fontWeight: FontWeight.w500,
+                                          height: 1,
+                                          letterSpacing: -0.35,
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text: '를 관리해보세요',
+                                        style: TextStyle(
+                                          color: Color(0xFFF6F6F6),
+                                          fontSize: 14,
+                                          fontFamily: 'Pretendard',
+                                          fontWeight: FontWeight.w500,
+                                          height: 1,
+                                          letterSpacing: -0.35,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                '0건',
+                                style: TextStyle(
+                                  color: Color(0xFFF6F6F6),
+                                  fontSize: 14,
+                                  fontFamily: 'Pretendard',
+                                  fontWeight: FontWeight.w500,
+                                  height: 1,
+                                  letterSpacing: -0.35,
+                                ),
+                              ),
+                            )
                           ],
                         ),
                       )
