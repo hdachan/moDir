@@ -221,6 +221,12 @@ class QuotationImgSelectBottombar extends StatelessWidget {
             width: 360,
             height: 66,
             padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border(
+                top: BorderSide(width: 1, color: Color(0xFFE7E7E7)),
+              ),
+            ),
             child: MaterialButton(
               onPressed: () {},
               color: Color(0xFF888888),
