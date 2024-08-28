@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:test_qwe/test5.dart';
 
@@ -21,6 +23,8 @@ class _Test3State extends State<Test3> {
   int? _selectedFit; // 선택된 버튼을 저장하는 변수 (0: 슬림핏, 1: 레귤러핏)
   int? _selectedUpFit; // 선택된 버튼을 저장하는 변수 (0: 슬림핏, 1: 레귤러핏)
   int? _selectedBottomFit; // 선택된 버튼을 저장하는 변수 (0: 슬림핏, 1: 레귤러핏)
+
+  bool _isDataSaved = false; // 데이터 저장 여부
 
   void _showSlimFitWarning() {
     setState(() {
@@ -59,6 +63,154 @@ class _Test3State extends State<Test3> {
     });
   }
 
+  @override
+  void initState() {
+    super.initState();
+    _checkExistingData(); // 기존 데이터 확인
+  }
+
+  void _checkExistingData() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      var snapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .collection('Quotation')
+          .get();
+
+      if (snapshot.docs.isNotEmpty) {
+        setState(() {
+          _isDataSaved = true;
+          // 기존 데이터가 있다면 핏 타입을 설정
+          String fitTypeValue = snapshot.docs.first['fitType'];
+          _selectedFit = _mapFitTypeToIndex(fitTypeValue);
+
+          // 상의 핏 타입이 있는 경우 설정
+          String upFitTypeValue = snapshot.docs.first['upFitType'];
+          _selectedUpFit = _mapUpFitTypeToIndex(upFitTypeValue);
+        });
+      }
+    }
+  }
+
+
+  void _saveToServer(String userId) async {
+    if (_selectedFit != null || _selectedUpFit != null) {
+      String fitType;
+      String upFitType;
+
+      switch (_selectedFit) {
+        case 0:
+          fitType = '슬림핏';
+          break;
+        case 1:
+          fitType = '레귤러핏';
+          break;
+        case 2:
+          fitType = '루즈핏';
+          break;
+        case 3:
+          fitType = '오버핏';
+          break;
+        case 4:
+          fitType = '크롭핏';
+          break;
+        case 5:
+          fitType = '롱핏';
+          break;
+        default:
+          fitType = '선택되지 않음';
+          break;
+      }
+
+      switch (_selectedUpFit) {
+        case 0:
+          upFitType = '슬림핏';
+          break;
+        case 1:
+          upFitType = '레귤러핏';
+          break;
+        case 2:
+          upFitType = '루즈핏';
+          break;
+        case 3:
+          upFitType = '오버핏';
+          break;
+        case 4:
+          upFitType = '크롭핏';
+          break;
+        case 5:
+          upFitType = '롱핏';
+          break;
+        default:
+          upFitType = '선택되지 않음';
+          break;
+      }
+
+      try {
+        // 기존 데이터가 있으면 업데이트
+        var snapshot = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userId)
+            .collection('Quotation')
+            .get();
+
+        if (snapshot.docs.isNotEmpty) {
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(userId)
+              .collection('Quotation')
+              .doc(snapshot.docs.first.id) // 첫 번째 문서 업데이트
+              .update({
+            'fitType': fitType,
+            'upFitType': upFitType, // 추가된 부분
+            'timestamp': FieldValue.serverTimestamp(),
+          });
+          print('서버에서 업데이트: $fitType, $upFitType');
+        } else {
+          // 새 데이터 추가
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(userId)
+              .collection('Quotation')
+              .add({
+            'fitType': fitType,
+            'upFitType': upFitType, // 추가된 부분
+            'timestamp': FieldValue.serverTimestamp(),
+          });
+          setState(() {
+            _isDataSaved = true; // 데이터가 저장되었음을 표시
+          });
+          print('서버에 저장: $fitType, $upFitType');
+        }
+      } catch (e) {
+        print('저장 실패: $e');
+      }
+    } else {
+      print('핏이 선택되지 않았거나 이미 저장되었습니다.');
+    }
+  }
+
+
+  int _mapFitTypeToIndex(String fitType) { // 버튼색 불러오기용
+    switch (fitType) {
+      case '슬림핏':
+        return 0;
+      case '레귤러핏':
+        return 1;
+      case '루즈핏':
+        return 2;
+      case '오버핏':
+        return 3;
+      case '크롭핏':
+        return 4;
+      case '롱핏':
+        return 5;
+      default:
+        return -1; // 선택되지 않음
+    }
+  }
+
 
   void _showFitUpWarning0() {
     setState(() {
@@ -89,6 +241,25 @@ class _Test3State extends State<Test3> {
       _selectedUpFit = 4; // 크롭핏
       _warningUpMessage = '허리선 위로 잘린 형태로, 다리 길이를 강조'; // 레귤러핏 클릭 시 메시지 설정
     });
+  }
+
+  int _mapUpFitTypeToIndex(String upFitType) { // 상의 핏 타입 매핑
+    switch (upFitType) {
+      case '슬림핏':
+        return 0;
+      case '레귤러핏':
+        return 1;
+      case '루즈핏':
+        return 2;
+      case '오버핏':
+        return 3;
+      case '크롭핏':
+        return 4;
+      case '롱핏':
+        return 5;
+      default:
+        return -1; // 선택되지 않음
+    }
   }
 
   void _showFitBottomWarning0() {
@@ -302,7 +473,12 @@ class _Test3State extends State<Test3> {
                                     crossAxisAlignment: CrossAxisAlignment.start, // 상단 왼쪽 정렬
                                     children: [
                                       GestureDetector(
-                                        onTap: _showSlimFitWarning,
+                                        onTap: () {
+                                          setState(() {
+                                            _selectedFit = 0; // 슬림핏 선택
+                                          });
+                                          _showSlimFitWarning(); // 경고 메시지 표시
+                                        },
                                         child: Container(
                                           width: 60,
                                           height: 32,
@@ -330,7 +506,12 @@ class _Test3State extends State<Test3> {
                                       ),
                                       SizedBox(width: 8),
                                       GestureDetector(
-                                        onTap: _showRegularFitWarning,
+                                        onTap: () {
+                                          setState(() {
+                                            _selectedFit = 1; // 슬림핏 선택
+                                          });
+                                          _showRegularFitWarning(); // 경고 메시지 표시
+                                        },
                                         child: Container(
                                           width: 72,
                                           height: 32,
@@ -359,7 +540,13 @@ class _Test3State extends State<Test3> {
 
                                       SizedBox(width: 8),
                                       GestureDetector(
-                                        onTap: _showWarning3,
+                                        onTap: () {
+                                          setState(() {
+                                            _selectedFit = 3; // 슬림핏 선택
+                                          });
+                                          _showWarning3(); // 경고 메시지 표시
+                                        },
+
                                         child: Container(
                                           width: 60,
                                           height: 32,
@@ -387,7 +574,12 @@ class _Test3State extends State<Test3> {
                                       ),
                                       SizedBox(width: 8),
                                       GestureDetector(
-                                        onTap: _showWarning4,
+                                        onTap: () {
+                                          setState(() {
+                                            _selectedFit = 4; // 슬림핏 선택
+                                          });
+                                          _showWarning4(); // 경고 메시지 표시
+                                        },
                                         child: Container(
                                           width: 60,
                                           height: 32,
@@ -421,7 +613,12 @@ class _Test3State extends State<Test3> {
                                   Row(
                                     children: [
                                       GestureDetector(
-                                        onTap: _showWarning5,
+                                        onTap: () {
+                                          setState(() {
+                                            _selectedFit = 5; // 슬림핏 선택
+                                          });
+                                          _showWarning5(); // 경고 메시지 표시
+                                        },
                                         child: Container(
                                           width: 60,
                                           height: 32,
@@ -449,7 +646,12 @@ class _Test3State extends State<Test3> {
                                       ),
                                       SizedBox(width: 8),
                                       GestureDetector(
-                                        onTap: _showWarning6,
+                                        onTap: () {
+                                          setState(() {
+                                            _selectedFit = 6; // 슬림핏 선택
+                                          });
+                                          _showWarning6(); // 경고 메시지 표시
+                                        },
                                         child: Container(
                                           width: 48,
                                           height: 32,
@@ -523,7 +725,12 @@ class _Test3State extends State<Test3> {
                                     crossAxisAlignment: CrossAxisAlignment.start, // 상단 왼쪽 정렬
                                     children: [
                                       GestureDetector(
-                                        onTap: _showFitUpWarning0,
+                                        onTap: () {
+                                          setState(() {
+                                            _selectedUpFit = 0; // 슬림핏 선택
+                                          });
+                                          _showFitUpWarning0(); // 경고 메시지 표시
+                                        },
                                         child: Container(
                                           width: 60,
                                           height: 32,
@@ -551,7 +758,13 @@ class _Test3State extends State<Test3> {
                                       ),
                                       SizedBox(width: 8),
                                       GestureDetector(
-                                        onTap: _showFitUpWarning1,
+                                        onTap: () {
+                                          setState(() {
+                                            _selectedUpFit = 1; // 슬림핏 선택
+                                          });
+                                          _showFitUpWarning1(); // 경고 메시지 표시
+                                        },
+
                                         child: Container(
                                           width: 72,
                                           height: 32,
@@ -579,7 +792,13 @@ class _Test3State extends State<Test3> {
                                       ),
                                       SizedBox(width: 8),
                                       GestureDetector(
-                                        onTap: _showFitUpWarning2,
+                                        onTap: () {
+                                          setState(() {
+                                            _selectedUpFit = 2; // 슬림핏 선택
+                                          });
+                                          _showFitUpWarning2(); // 경고 메시지 표시
+                                        },
+
                                         child: Container(
                                           width: 60,
                                           height: 32,
@@ -607,7 +826,13 @@ class _Test3State extends State<Test3> {
                                       ),
                                       SizedBox(width: 8),
                                       GestureDetector(
-                                        onTap: _showFitUpWarning3,
+                                        onTap: () {
+                                          setState(() {
+                                            _selectedUpFit = 3; // 슬림핏 선택
+                                          });
+                                          _showFitUpWarning3(); // 경고 메시지 표시
+                                        },
+
                                         child: Container(
                                           width: 60,
                                           height: 32,
@@ -640,7 +865,13 @@ class _Test3State extends State<Test3> {
                                   Row(
                                     children: [
                                       GestureDetector(
-                                        onTap: _showFitUpWarning4,
+                                        onTap: () {
+                                          setState(() {
+                                            _selectedUpFit = 4; // 슬림핏 선택
+                                          });
+                                          _showFitUpWarning4(); // 경고 메시지 표시
+                                        },
+
                                         child: Container(
                                           width: 60,
                                           height: 32,
@@ -712,7 +943,7 @@ class _Test3State extends State<Test3> {
                                   Row(
                                     crossAxisAlignment: CrossAxisAlignment.start, // 상단 왼쪽 정렬
                                     children: [
-                                      GestureDetector(
+                                      GestureDetector( //여기
                                         onTap: _showFitBottomWarning0,
                                         child: Container(
                                           width: 60,
@@ -743,19 +974,19 @@ class _Test3State extends State<Test3> {
                                       GestureDetector(
                                         onTap: _showFitBottomWarning1,
                                         child: Container(
-                                          width: 72,
+                                          width: 122,
                                           height: 32,
                                           decoration: BoxDecoration(
                                             color: _selectedBottomFit == 1 ? Color(0xFF3D3D3D) : Colors.transparent, // 컨테이너 색상
                                             border: Border.all(
                                               width: 1,
-                                              color: _selectedUpFit == 1 ? Colors.transparent : Color(0xFFE7E7E7), // 레귤러핏 클릭 시 테두리 색상
+                                              color: _selectedBottomFit == 1 ? Colors.transparent : Color(0xFFE7E7E7), // 레귤러핏 클릭 시 테두리 색상
                                             ),
                                             borderRadius: BorderRadius.circular(100),
                                           ),
                                           alignment: Alignment.center, // 텍스트 중앙 정렬
                                           child: Text(
-                                            '레귤러핏',
+                                            '슬림 스트레이트핏',
                                             style: TextStyle(
                                               color: _selectedBottomFit == 1 ? Color(0xFFFFFFFF) : Color(0xFF5D5D5D), // 글자 색상
                                               fontSize: 14,
@@ -771,31 +1002,7 @@ class _Test3State extends State<Test3> {
                                       GestureDetector(
                                         onTap: _showFitBottomWarning2,
                                         child: Container(
-                                          width: 60,
-                                          height: 32,
-                                          decoration: BoxDecoration(
-                                            border: Border.all(width: 1, color: Color(0xFFE7E7E7)), // 테두리 색상
-                                            borderRadius: BorderRadius.circular(100), // 둥글게 만들기
-                                          ),
-                                          alignment: Alignment.center, // 텍스트 중앙 정렬
-                                          child: Text(
-                                            '루즈핏',
-                                            style: TextStyle(
-                                              color: Color(0xFF5D5D5D),
-                                              fontSize: 14,
-                                              fontFamily: 'Pretendard',
-                                              fontWeight: FontWeight.w400,
-                                              height: 1.1,
-                                              letterSpacing: -0.35,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(width: 8),
-                                      GestureDetector(
-                                        onTap: _showFitBottomWarning2,
-                                        child: Container(
-                                          width: 60,
+                                          width: 72,
                                           height: 32,
                                           decoration: BoxDecoration(
                                             color: _selectedBottomFit == 2 ? Color(0xFF3D3D3D) : Colors.transparent, // 컨테이너 색상
@@ -807,7 +1014,7 @@ class _Test3State extends State<Test3> {
                                           ),
                                           alignment: Alignment.center, // 텍스트 중앙 정렬
                                           child: Text(
-                                            '오버핏',
+                                            '레귤러핏',
                                             style: TextStyle(
                                               color: _selectedBottomFit == 2 ? Color(0xFFFFFFFF) : Color(0xFF5D5D5D), // 글자 색상
                                               fontSize: 14,
@@ -819,7 +1026,6 @@ class _Test3State extends State<Test3> {
                                           ),
                                         ),
                                       ),
-
                                     ],
                                   ),
                                   SizedBox(height: 8), // 버튼과 다음 Row 사이의 간격
@@ -828,19 +1034,19 @@ class _Test3State extends State<Test3> {
                                       GestureDetector(
                                         onTap: _showFitBottomWarning3,
                                         child: Container(
-                                          width: 60,
+                                          width: 84,
                                           height: 32,
                                           decoration: BoxDecoration(
                                             color: _selectedBottomFit == 3 ? Color(0xFF3D3D3D) : Colors.transparent, // 컨테이너 색상
                                             border: Border.all(
                                               width: 1,
-                                              color: _selectedUpFit == 3 ? Colors.transparent : Color(0xFFE7E7E7), // 레귤러핏 클릭 시 테두리 색상
+                                              color: _selectedBottomFit == 3 ? Colors.transparent : Color(0xFFE7E7E7),
                                             ),
                                             borderRadius: BorderRadius.circular(100),
                                           ),
                                           alignment: Alignment.center, // 텍스트 중앙 정렬
                                           child: Text(
-                                            '크롭핏',
+                                            '테이퍼드핏',
                                             style: TextStyle(
                                               color: _selectedBottomFit == 3 ? Color(0xFFFFFFFF) : Color(0xFF5D5D5D), // 글자 색상
                                               fontSize: 14,
@@ -856,7 +1062,7 @@ class _Test3State extends State<Test3> {
                                       GestureDetector(
                                         onTap: _showFitBottomWarning4,
                                         child: Container(
-                                          width: 48,
+                                          width: 99,
                                           height: 32,
                                           decoration: BoxDecoration(
                                             color: _selectedBottomFit == 4 ? Color(0xFF3D3D3D) : Colors.transparent, // 컨테이너 색상
@@ -866,12 +1072,40 @@ class _Test3State extends State<Test3> {
                                             ),
                                             borderRadius: BorderRadius.circular(100),
                                           ),
+                                          alignment: Alignment.center, // 텍스트 중앙 정렬
+                                          child: Text(
+                                            '세미 와이드핏',
+                                            style: TextStyle(
+                                              color: _selectedBottomFit == 4 ? Color(0xFFFFFFFF) : Color(0xFF5D5D5D), // 글자 색상
+                                              fontSize: 14,
+                                              fontFamily: 'Pretendard',
+                                              fontWeight: FontWeight.w400,
+                                              height: 1.1,
+                                              letterSpacing: -0.35,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(width: 8),
+                                      GestureDetector(
+                                        onTap: _showFitBottomWarning5,
+                                        child: Container(
+                                          width: 72,
+                                          height: 32,
+                                          decoration: BoxDecoration(
+                                            color: _selectedBottomFit == 5 ? Color(0xFF3D3D3D) : Colors.transparent, // 컨테이너 색상
+                                            border: Border.all(
+                                              width: 1,
+                                              color: _selectedUpFit == 5 ? Colors.transparent : Color(0xFFE7E7E7), // 레귤러핏 클릭 시 테두리 색상
+                                            ),
+                                            borderRadius: BorderRadius.circular(100),
+                                          ),
 
                                           alignment: Alignment.center, // 텍스트 중앙 정렬
                                           child: Text(
-                                            '롱핏',
+                                            '와이드핏',
                                             style: TextStyle(
-                                              color: _selectedBottomFit == 4 ? Color(0xFFFFFFFF) : Color(0xFF5D5D5D), // 글자 색상
+                                              color: _selectedBottomFit == 5 ? Color(0xFFFFFFFF) : Color(0xFF5D5D5D), // 글자 색상
                                               fontSize: 14,
                                               fontFamily: 'Pretendard',
                                               fontWeight: FontWeight.w400,
@@ -887,7 +1121,7 @@ class _Test3State extends State<Test3> {
                               ),
                             ),
                             SizedBox(height: 16), // 필요 시 간격 추가
-                            if (_warningBottomMessage.isNotEmpty) WarningContainer2(_warningBottomMessage), //여기
+                            if (_warningBottomMessage.isNotEmpty) WarningContainer2(_warningBottomMessage),
 
                           ],
                         ),
@@ -936,11 +1170,21 @@ class _Test3State extends State<Test3> {
               SizedBox(width: 20), // 버튼 사이 간격
               TextButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Test4()), // Test3 화면으로 이동
-                  );
+                  // 현재 사용자 가져오기
+                  User? user = FirebaseAuth.instance.currentUser;
+
+                  if (user != null) {
+                    String userId = user.uid; // 사용자 UID 가져오기
+                    _saveToServer(userId); // 서버에 저장
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Test4()), // Test4 화면으로 이동
+                    );
+                  } else {
+                    print('사용자가 로그인하지 않았습니다.');
+                  }
                 },
+
                 style: TextButton.styleFrom(
                   backgroundColor: Color(0xFF3D3D3D), // 버튼 배경색
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
