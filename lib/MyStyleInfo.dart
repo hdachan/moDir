@@ -1,4 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import 'Login.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -28,6 +32,86 @@ class _UserSetting extends State<MyStyleInfo> {
   int? _selectedIndex10;
   int? _selectedIndex11;
   int? _selectedIndex12;
+
+
+  final TextEditingController _controller = TextEditingController();
+  final TextEditingController _kgController = TextEditingController();
+  final TextEditingController _birthDateController = TextEditingController();
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadCmValue();
+  }
+
+  void _saveCmValue() async {
+    User? user = _auth.currentUser;
+    if (user != null) {
+      String uid = user.uid;
+      String cmValue = _controller.text;
+      String kgValue = _kgController.text;
+      String genderValue = _selectedIndex == 0 ? '남성' : '여성';
+      String birthDateValue = _birthDateController.text;
+
+      String topsizeValue = (_selectedIndex2 != null && _selectedIndex2! >= 0)
+      ? ['XS', 'S', 'M', 'L', 'XL', 'XXL', '기타'][_selectedIndex2!]
+        : '';
+
+    String bottomsizeValue = (_selectedIndex3 != null && _selectedIndex3! >= 0)
+    ? ['XS', 'S', 'M', 'L', 'XL', 'XXL', '기타'][_selectedIndex3!]
+        : '';
+
+    await _firestore.collection('users').doc(uid).set({
+    'cm': cmValue,
+    'kg': kgValue,
+    'gender': genderValue,
+    'birthDate': birthDateValue,
+    'topsize': topsizeValue,
+    'bottomsize': bottomsizeValue,
+    }, SetOptions(merge: true));
+    }
+  }
+
+
+  void _loadCmValue() async {
+    User? user = _auth.currentUser;
+    if (user != null) {
+      DocumentSnapshot doc = await _firestore.collection('users').doc(user.uid).get();
+      if (doc.exists) {
+        setState(() {
+          var data = doc.data() as Map<String, dynamic>?; // Map으로 캐스팅
+
+          _controller.text = data != null && data.containsKey('cm') ? data['cm'] : '';
+          _kgController.text = data != null && data.containsKey('kg') ? data['kg'] : '';
+
+          String gender = data != null && data.containsKey('gender') ? data['gender'] : '';
+          _selectedIndex = (gender == '남성') ? 0 : 1;
+
+          _birthDateController.text = data != null && data.containsKey('birthDate') ? data['birthDate'] : '';
+
+          String topsize = data != null && data.containsKey('topsize') ? data['topsize'] : '';
+          _selectedIndex2 = ['XS', 'S', 'M', 'L', 'XL', 'XXL', '기타'].indexOf(topsize);
+
+          String bottomsize = data != null && data.containsKey('bottomsize') ? data['bottomsize'] : '';
+          _selectedIndex3 = ['XS', 'S', 'M', 'L', 'XL', 'XXL', '기타'].indexOf(bottomsize);
+        });
+      }
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -106,6 +190,7 @@ class _UserSetting extends State<MyStyleInfo> {
                             width: 274,
                             height: 14,
                             child: TextFormField(
+                                controller: _controller,
                                 onChanged: (text) {
                                   setState(() {});
                                 },
@@ -182,6 +267,7 @@ class _UserSetting extends State<MyStyleInfo> {
                             width: 274,
                             height: 14,
                             child: TextFormField(
+                                controller:_kgController,
                                 onChanged: (text) {
                                   setState(() {});
                                 },
@@ -447,7 +533,7 @@ class _UserSetting extends State<MyStyleInfo> {
                         width: 274,
                         height: 14,
                         child: TextFormField(
-                            controller: _textController,
+                            controller: _birthDateController,
                             onChanged: (text) {
                               setState(() {});
                             },
@@ -865,7 +951,7 @@ class _UserSetting extends State<MyStyleInfo> {
                 width: 360,
                 height: 52,
                 child: MaterialButton(
-                  onPressed: () {},
+                  onPressed:_saveCmValue,
                   color: Color(0xFF5D5D5D),
                   child: Text(
                     '저장하기',
@@ -1405,7 +1491,12 @@ class MyStyleInfoAppBar extends StatelessWidget implements PreferredSizeWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Login()), // Test3 화면으로 이동
+                  );
+                },
                 icon: Icon(Icons.arrow_back),
                 iconSize: 24,
                 color: Colors.black,

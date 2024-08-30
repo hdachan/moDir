@@ -17,33 +17,7 @@ class _Test4State extends State<Test4> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-          title: Text(
-            '견적서 작성',
-            style: TextStyle(
-              color: Color(0xFF3D3D3D),
-              fontSize: 18,
-              fontFamily: 'Pretendard',
-              fontWeight: FontWeight.w700,
-              height: 1.4,
-              letterSpacing: -0.45,
-            ),
-          ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 4),
-              child: IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.refresh), // 새로고침 아이콘으로 변경
-                iconSize: 24,
-              ),
-            )
-          ],
-        ),
+        appBar: QuotationImgSelectAppBar(),
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -66,7 +40,20 @@ class _Test4State extends State<Test4> {
                                   side: BorderSide(width: 1, color: Color(0xFF3D3D3D)),
                                   borderRadius: BorderRadius.circular(100),
                                 ),
-
+                                color: Colors.white, // 내부 컨테이너 색상
+                              ),
+                              alignment: Alignment.center, // 텍스트 중앙 정렬
+                              child: Text(
+                                '1',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Color(0xFF3D3D3D),
+                                  fontSize: 10,
+                                  fontFamily: 'Pretendard',
+                                  fontWeight: FontWeight.w500,
+                                  height: 1.0,
+                                  letterSpacing: -0.25,
+                                ),
                               ),
                             ),
                             Container(
@@ -82,7 +69,20 @@ class _Test4State extends State<Test4> {
                                   side: BorderSide(width: 1, color: Color(0xFF3D3D3D)),
                                   borderRadius: BorderRadius.circular(100),
                                 ),
-
+                                color: Colors.white, // 내부 컨테이너 색상
+                              ),
+                              alignment: Alignment.center, // 텍스트 중앙 정렬
+                              child: Text(
+                                '2',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Color(0xFF3D3D3D),
+                                  fontSize: 10,
+                                  fontFamily: 'Pretendard',
+                                  fontWeight: FontWeight.w500,
+                                  height: 1.0,
+                                  letterSpacing: -0.25,
+                                ),
                               ),
                             ),
                             Container(
@@ -98,7 +98,20 @@ class _Test4State extends State<Test4> {
                                   side: BorderSide(width: 1, color: Color(0xFF3D3D3D)),
                                   borderRadius: BorderRadius.circular(100),
                                 ),
-                                color: Color(0xFFFF0000), // 내부 컨테이너 색상
+                                color: Color(0xFF3D3D3D), // 내부 컨테이너 색상
+                              ),
+                              alignment: Alignment.center, // 텍스트 중앙 정렬
+                              child: Text(
+                                '3',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 10,
+                                  fontFamily: 'Pretendard',
+                                  fontWeight: FontWeight.w500,
+                                  height: 1.0,
+                                  letterSpacing: -0.25,
+                                ),
                               ),
                             ),
                           ],
@@ -726,4 +739,64 @@ class _Test4State extends State<Test4> {
       ),
     );
   }
+}
+
+
+class QuotationImgSelectAppBar extends StatelessWidget
+    implements PreferredSizeWidget {
+  const QuotationImgSelectAppBar({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Align(
+        alignment: Alignment.center,
+        child: Container(
+          padding: EdgeInsets.only(left: 16),
+          width: 360,
+          height: kToolbarHeight,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              IconButton(
+                onPressed: () {},
+                icon: Icon(Icons.arrow_back),
+                iconSize: 24,
+                color: Colors.black,
+              ),
+              SizedBox(width: 8),
+              SizedBox(
+                width: 248,
+                height: 56,
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    '견적서 작성',
+                    style: TextStyle(
+                      color: Color(0xFF3D3D3D),
+                      fontSize: 18,
+                      fontFamily: 'Pretendard',
+                      fontWeight: FontWeight.w700,
+                      height: 1.4,
+                      letterSpacing: -0.45,
+                    ),
+                  ),
+                ),
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: Icon(Icons.refresh),
+                iconSize: 24,
+                color: Colors.black,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Size get preferredSize => Size(360, kToolbarHeight);
 }

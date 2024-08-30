@@ -6,9 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import 'package:image_picker/image_picker.dart';
+import 'package:test_qwe/MyStyleInfo.dart';
 import 'dart:io';
 
-import 'package:test_qwe/heeeee.dart';
+import 'heeeee.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -118,122 +120,123 @@ class HomeScreen extends StatelessWidget {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(96.0), // AppBar 높이를 96으로 설정 (탭바 높이 포함)
-          child: AppBar(
-            automaticallyImplyLeading: false, // 기본 leading 아이콘 제거
-            flexibleSpace: SizedBox(
-              width: 360,
-              height: 48,
-              child: Stack(
-                children: [
-                  Positioned(
-                    top: 14,
-                    left: 12,
-                    child: Image.asset(
-                      'assets/image/logo_modi.png', // 실제 로고 이미지
-                      width: 34,
-                      height: 20,
-                    ),
-                  ),
-                  Positioned(
-                    right: 0,
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.all(12.0),
-                          child: Icon(
-                            Icons.search,
-                            size: 24,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(12.0),
-                          child: Icon(
-                            Icons.notifications,
-                            size: 24,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            bottom: PreferredSize(
-              preferredSize: Size.fromHeight(44), // TabBar 높이
-              child: Column(
-                children: const [
-                  TabBar(
-                    padding: EdgeInsets.only(left: 16, right: 16, top: 16),
-                    isScrollable: true,
-                    tabAlignment: TabAlignment.start,
-                    tabs: [
-                      Tab(
-                        child: SizedBox(
-                          height: 14,
-                          width: 26,
-                          child: Text(
-                            '메인',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 14,
-                                fontFamily: 'NotoSansKR',
-                                fontWeight: FontWeight.w400,
-                                height: 1,
-                                letterSpacing: -0.35),
-                          ),
-                        ),
-                      ),
-                      Tab(
-                        child: SizedBox(
-                          height: 14,
-                          width: 51,
-                          child: Text(
-                            '커뮤니티',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 14,
-                                fontFamily: 'NotoSansKR',
-                                fontWeight: FontWeight.w400,
-                                height: 1,
-                                letterSpacing: -0.35),
-                          ),
-                        ),
-                      ),
-                      Tab(
-                        child: SizedBox(
-                          height: 14,
-                          width: 38,
-                          child: Text(
-                            '매거진',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 14,
-                                fontFamily: 'NotoSansKR',
-                                fontWeight: FontWeight.w400,
-                                height: 1,
-                                letterSpacing: -0.35),
-                          ),
-                        ),
-                      ),
-                    ],
-                    indicatorColor: Colors.black,
-                    indicatorSize: TabBarIndicatorSize.label,
-                    indicatorPadding: EdgeInsets.only(top: 12),
-                    labelPadding: EdgeInsets.only(left: 6, right: 6),
-                  ),
-                  Divider(
-                    // 구분선 추가
-                    color: Color(0xFFE3E3E3), // 구분선 색상 변경
-                    height: 1.0,
-                    thickness: 1.0,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
+        appBar: HomeAppBar(),
+        // appBar: PreferredSize(
+        //   preferredSize: Size.fromHeight(96.0), // AppBar 높이를 96으로 설정 (탭바 높이 포함)
+        //   child: AppBar(
+        //     automaticallyImplyLeading: false, // 기본 leading 아이콘 제거
+        //     flexibleSpace: SizedBox(
+        //       width: 360,
+        //       height: 48,
+        //       child: Stack(
+        //         children: [
+        //           Positioned(
+        //             top: 14,
+        //             left: 12,
+        //             child: Image.asset(
+        //               'assets/image/logo_modi.png', // 실제 로고 이미지
+        //               width: 34,
+        //               height: 20,
+        //             ),
+        //           ),
+        //           Positioned(
+        //             right: 0,
+        //             child: Row(
+        //               children: [
+        //                 Padding(
+        //                   padding: EdgeInsets.all(12.0),
+        //                   child: Icon(
+        //                     Icons.search,
+        //                     size: 24,
+        //                   ),
+        //                 ),
+        //                 Padding(
+        //                   padding: EdgeInsets.all(12.0),
+        //                   child: Icon(
+        //                     Icons.notifications,
+        //                     size: 24,
+        //                   ),
+        //                 ),
+        //               ],
+        //             ),
+        //           ),
+        //         ],
+        //       ),
+        //     ),
+        //     bottom: PreferredSize(
+        //       preferredSize: Size.fromHeight(44), // TabBar 높이
+        //       child: Column(
+        //         children: const [
+        //           TabBar(
+        //             padding: EdgeInsets.only(left: 16, right: 16, top: 16),
+        //             isScrollable: true,
+        //             tabAlignment: TabAlignment.start,
+        //             tabs: [
+        //               Tab(
+        //                 child: SizedBox(
+        //                   height: 14,
+        //                   width: 26,
+        //                   child: Text(
+        //                     '메인',
+        //                     style: TextStyle(
+        //                         color: Colors.black,
+        //                         fontSize: 14,
+        //                         fontFamily: 'NotoSansKR',
+        //                         fontWeight: FontWeight.w400,
+        //                         height: 1,
+        //                         letterSpacing: -0.35),
+        //                   ),
+        //                 ),
+        //               ),
+        //               Tab(
+        //                 child: SizedBox(
+        //                   height: 14,
+        //                   width: 51,
+        //                   child: Text(
+        //                     '커뮤니티',
+        //                     style: TextStyle(
+        //                         color: Colors.black,
+        //                         fontSize: 14,
+        //                         fontFamily: 'NotoSansKR',
+        //                         fontWeight: FontWeight.w400,
+        //                         height: 1,
+        //                         letterSpacing: -0.35),
+        //                   ),
+        //                 ),
+        //               ),
+        //               Tab(
+        //                 child: SizedBox(
+        //                   height: 14,
+        //                   width: 38,
+        //                   child: Text(
+        //                     '매거진',
+        //                     style: TextStyle(
+        //                         color: Colors.black,
+        //                         fontSize: 14,
+        //                         fontFamily: 'NotoSansKR',
+        //                         fontWeight: FontWeight.w400,
+        //                         height: 1,
+        //                         letterSpacing: -0.35),
+        //                   ),
+        //                 ),
+        //               ),
+        //             ],
+        //             indicatorColor: Colors.black,
+        //             indicatorSize: TabBarIndicatorSize.label,
+        //             indicatorPadding: EdgeInsets.only(top: 12),
+        //             labelPadding: EdgeInsets.only(left: 6, right: 6),
+        //           ),
+        //           Divider(
+        //             // 구분선 추가
+        //             color: Color(0xFFE3E3E3), // 구분선 색상 변경
+        //             height: 1.0,
+        //             thickness: 1.0,
+        //           ),
+        //         ],
+        //       ),
+        //     ),
+        //   ),
+        // ),
         body: TabBarView(
           children: [
             Center(child: Text('메인 화면 내용')),
@@ -1003,15 +1006,10 @@ Widget buildDesignerAnalysisContainer() {
                   '2024. 08. 09',
                   style: TextStyle(
                     color: Color(0xFF3D3D3D),
-                    // 텍스트 색상
                     fontSize: 16,
-                    // 글자 크기
                     fontFamily: 'Pretendard',
-                    // 폰트 패밀리
                     fontWeight: FontWeight.w500,
-                    // 글자 두께
                     height: 1.4,
-                    // 줄 높이
                     letterSpacing: -0.40, // 글자 사이 간격
                   ),
                 ),
@@ -1026,15 +1024,10 @@ Widget buildDesignerAnalysisContainer() {
                       '상세내역',
                       style: TextStyle(
                         color: Color(0xFF888888),
-                        // 텍스트 색상
                         fontSize: 14,
-                        // 글자 크기
                         fontFamily: 'Pretendard',
-                        // 폰트 패밀리
                         fontWeight: FontWeight.w400,
-                        // 글자 두께
                         height: 1.2,
-                        // 줄 높이
                         letterSpacing: -0.35, // 글자 사이 간격
                       ),
                     ),
@@ -1613,41 +1606,7 @@ class _Home extends State<_HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        flexibleSpace: Container(
-          width: 360,
-          height: 48,
-          child: Stack(
-            children: [
-              Positioned(
-                top: 14,
-                left: 12,
-                child: Image.asset(
-                  'assets/image/logo_modi.png',
-                  width: 34,
-                  height: 20,
-                ),
-              ),
-              Positioned(
-                right: 0,
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Icon(Icons.search, size: 24),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Icon(Icons.notifications, size: 24),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+      appBar: HomeAppBar(),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -3141,53 +3100,19 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          flexibleSpace: Container(
-            width: 360,
-            height: 48,
-            child: Stack(
-              children: [
-                Positioned(
-                  top: 14,
-                  left: 12,
-                  child: Image.asset(
-                    'assets/image/logo_modi.png',
-                    width: 34,
-                    height: 20,
-                  ),
-                ),
-                Positioned(
-                  right: 0,
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Icon(Icons.search, size: 24),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Icon(Icons.notifications, size: 24),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+        appBar: HomeAppBar(),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Column(
               children: [
                 Center(
                   child: Container(
-                    width: 428,
+                    width: 360,
                     child: Column(
                       children: [
                         Container(
                           height: 56,
-                          width: 428,
+                          width: 360,
                           child: Padding(
                             padding: EdgeInsets.only(
                                 left: 16, right: 16, top: 12, bottom: 12),
@@ -3615,10 +3540,15 @@ class MyPageScreen extends StatelessWidget {
                             ),
                           ),
                           SizedBox(
-                            width: 68,
+                            width: 68,//////////////////////여기여기
                             height: 20,
                             child: MaterialButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => MyStyleInfo()), // Test3 화면으로 이동
+                                );
+                              },
                               padding: EdgeInsets.zero,
                               child: Row(
                                 children: const [
@@ -4071,4 +4001,79 @@ class MyProfileButton extends StatelessWidget {
       ),
     );
   }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+class HomeAppBar extends StatelessWidget
+    implements PreferredSizeWidget {
+  const HomeAppBar({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Align(
+        alignment: Alignment.center,
+        child: Container(
+          padding: EdgeInsets.only(left: 16),
+          width: 360,
+          height: kToolbarHeight,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: 232,
+                height: 56,
+                child: Align(
+                  alignment: Alignment.centerLeft, // 왼쪽 정렬
+                  child: Image.asset(
+                    'assets/image/logo_modi.png', // 실제 로고 이미지
+                    width: 34,
+                    height: 20,
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 56,
+                height: 56,
+                child: Padding(
+                  padding: EdgeInsets.all(16), // 패딩 값 설정
+                  child: Icon(
+                    Icons.search, // 검색 아이콘
+                    size: 24, // 아이콘 크기
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 56,
+                height: 56,
+                child: Padding(
+                  padding: EdgeInsets.all(16), // 패딩 값 설정
+                  child: Icon(
+                    Icons.notifications, // 검색 아이콘
+                    size: 24, // 아이콘 크기
+                  ),
+                ),
+              ),
+
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+
+  @override
+  Size get preferredSize => Size(360, kToolbarHeight);
 }

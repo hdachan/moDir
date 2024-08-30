@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:test_qwe/test3.dart';
 import 'Quotation_img_select.dart';
 
@@ -13,37 +14,25 @@ class Test5 extends StatefulWidget {
 }
 
 class _Test5State extends State<Test5> {
+
+  int? _item;
+  List<int> _selectedItems = [];
+
+  void _toggleItem(int index) {
+    setState(() {
+      if (_selectedItems.contains(index)) {
+        _selectedItems.remove(index);
+      } else if (_selectedItems.length < 4) {
+        _selectedItems.add(index);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-          title: Text(
-            '견적서 작성',
-            style: TextStyle(
-              color: Color(0xFF3D3D3D),
-              fontSize: 18,
-              fontFamily: 'Pretendard',
-              fontWeight: FontWeight.w700,
-              height: 1.4,
-              letterSpacing: -0.45,
-            ),
-          ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 4),
-              child: IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.refresh), // 새로고침 아이콘으로 변경
-                iconSize: 24,
-              ),
-            )
-          ],
-        ),
+        appBar: QuotationImgSelectAppBar(),
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -66,9 +55,23 @@ class _Test5State extends State<Test5> {
                                   side: BorderSide(width: 1, color: Color(0xFF3D3D3D)),
                                   borderRadius: BorderRadius.circular(100),
                                 ),
-                                color: Color(0xFFFF0000), // 내부 컨테이너 색상
+                                color: Color(0xFF3D3D3D), // 내부 컨테이너 색상
+                              ),
+                              alignment: Alignment.center, // 텍스트 중앙 정렬
+                              child: Text(
+                                '1',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 10,
+                                  fontFamily: 'Pretendard',
+                                  fontWeight: FontWeight.w500,
+                                  height: 1.0,
+                                  letterSpacing: -0.25,
+                                ),
                               ),
                             ),
+
                             Container(
                               width: 128,
                               height: 1,
@@ -81,6 +84,20 @@ class _Test5State extends State<Test5> {
                                 shape: RoundedRectangleBorder(
                                   side: BorderSide(width: 1, color: Color(0xFF3D3D3D)),
                                   borderRadius: BorderRadius.circular(100),
+                                ),
+                                color: Colors.white, // 내부 컨테이너 색상
+                              ),
+                              alignment: Alignment.center, // 텍스트 중앙 정렬
+                              child: Text(
+                                '2',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Color(0xFF3D3D3D),
+                                  fontSize: 10,
+                                  fontFamily: 'Pretendard',
+                                  fontWeight: FontWeight.w500,
+                                  height: 1.0,
+                                  letterSpacing: -0.25,
                                 ),
                               ),
                             ),
@@ -96,6 +113,20 @@ class _Test5State extends State<Test5> {
                                 shape: RoundedRectangleBorder(
                                   side: BorderSide(width: 1, color: Color(0xFF3D3D3D)),
                                   borderRadius: BorderRadius.circular(100),
+                                ),
+                                color: Colors.white, // 내부 컨테이너 색상
+                              ),
+                              alignment: Alignment.center, // 텍스트 중앙 정렬
+                              child: Text(
+                                '3',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Color(0xFF3D3D3D),
+                                  fontSize: 10,
+                                  fontFamily: 'Pretendard',
+                                  fontWeight: FontWeight.w500,
+                                  height: 1.0,
+                                  letterSpacing: -0.25,
                                 ),
                               ),
                             ),
@@ -131,7 +162,7 @@ class _Test5State extends State<Test5> {
                                 width: 328,
                                 height: 17,
                                 child: Text(
-                                  '고객님이 선택하신 계절감에 맞게 아이템을 추천해드릴게요',
+                                  '고객님이 선택하신 스타일에 맞게 아이템을 추천해드릴게요 (최대4개)',
                                   // 원하는 텍스트로 변경 가능
                                   style: TextStyle(
                                     color: Color(0xFF888888),
@@ -156,18 +187,23 @@ class _Test5State extends State<Test5> {
                             Row(
                               children: [
                                 GestureDetector(
+                                  onTap: () => _toggleItem(0), // 여기서 인덱스를 13으로 설정
                                   child: Container(
                                     width: 48,
                                     height: 32,
                                     decoration: BoxDecoration(
-                                      border: Border.all(width: 1, color: Color(0xFFE7E7E7)), // 테두리 색상
-                                      borderRadius: BorderRadius.circular(100), // 둥글게 만들기
+                                      color: _selectedItems.contains(0) ? Color(0xFF3D3D3D) : Colors.transparent, // 컨테이너 색상
+                                      border: Border.all(
+                                        width: 1,
+                                        color: _selectedItems.contains(0) ? Colors.transparent : Color(0xFFE7E7E7), // 슬림핏 클릭 시 테두리 색상
+                                      ),
+                                      borderRadius: BorderRadius.circular(100),
                                     ),
                                     alignment: Alignment.center, // 텍스트 중앙 정렬
                                     child: Text(
-                                      '신발',
+                                      '반팔',
                                       style: TextStyle(
-                                        color: Color(0xFF5D5D5D),
+                                        color: _selectedItems.contains(0) ? Color(0xFFFFFFFF) : Color(0xFF5D5D5D), // 글자 색상
                                         fontSize: 14,
                                         fontFamily: 'Pretendard',
                                         fontWeight: FontWeight.w400,
@@ -179,18 +215,23 @@ class _Test5State extends State<Test5> {
                                 ),
                                 SizedBox(width: 8),
                                 GestureDetector(
+                                  onTap: () => _toggleItem(1),
                                   child: Container(
                                     width: 48,
                                     height: 32,
                                     decoration: BoxDecoration(
-                                      border: Border.all(width: 1, color: Color(0xFFE7E7E7)), // 테두리 색상
-                                      borderRadius: BorderRadius.circular(100), // 둥글게 만들기
+                                      color: _selectedItems.contains(1) ? Color(0xFF3D3D3D) : Colors.transparent, // 컨테이너 색상
+                                      border: Border.all(
+                                        width: 1,
+                                        color: _selectedItems.contains(1) ? Colors.transparent : Color(0xFFE7E7E7), // 슬림핏 클릭 시 테두리 색상
+                                      ),
+                                      borderRadius: BorderRadius.circular(100),
                                     ),
                                     alignment: Alignment.center, // 텍스트 중앙 정렬
                                     child: Text(
                                       '긴팔',
                                       style: TextStyle(
-                                        color: Color(0xFF5D5D5D),
+                                        color: _selectedItems.contains(1) ? Color(0xFFFFFFFF) : Color(0xFF5D5D5D), // 글자 색상
                                         fontSize: 14,
                                         fontFamily: 'Pretendard',
                                         fontWeight: FontWeight.w400,
@@ -202,18 +243,23 @@ class _Test5State extends State<Test5> {
                                 ),
                                 SizedBox(width: 8),
                                 GestureDetector(
+                                  onTap: () => _toggleItem(2),
                                   child: Container(
                                     width: 60,
                                     height: 32,
                                     decoration: BoxDecoration(
-                                      border: Border.all(width: 1, color: Color(0xFFE7E7E7)), // 테두리 색상
-                                      borderRadius: BorderRadius.circular(100), // 둥글게 만들기
+                                      color: _selectedItems.contains(2) ? Color(0xFF3D3D3D) : Colors.transparent, // 컨테이너 색상
+                                      border: Border.all(
+                                        width: 1,
+                                        color: _selectedItems.contains(2) ? Colors.transparent : Color(0xFFE7E7E7), // 슬림핏 클릭 시 테두리 색상
+                                      ),
+                                      borderRadius: BorderRadius.circular(100),
                                     ),
                                     alignment: Alignment.center, // 텍스트 중앙 정렬
                                     child: Text(
                                       '반바지',
                                       style: TextStyle(
-                                        color: Color(0xFF5D5D5D),
+                                        color: _selectedItems.contains(2) ? Color(0xFFFFFFFF) : Color(0xFF5D5D5D), // 글자 색상
                                         fontSize: 14,
                                         fontFamily: 'Pretendard',
                                         fontWeight: FontWeight.w400,
@@ -225,18 +271,23 @@ class _Test5State extends State<Test5> {
                                 ),
                                 SizedBox(width: 8),
                                 GestureDetector(
+                                  onTap: () => _toggleItem(3),
                                   child: Container(
                                     width: 60,
                                     height: 32,
                                     decoration: BoxDecoration(
-                                      border: Border.all(width: 1, color: Color(0xFFE7E7E7)), // 테두리 색상
-                                      borderRadius: BorderRadius.circular(100), // 둥글게 만들기
+                                      color: _selectedItems.contains(3) ? Color(0xFF3D3D3D) : Colors.transparent, // 컨테이너 색상
+                                      border: Border.all(
+                                        width: 1,
+                                        color: _selectedItems.contains(3) ? Colors.transparent : Color(0xFFE7E7E7), // 슬림핏 클릭 시 테두리 색상
+                                      ),
+                                      borderRadius: BorderRadius.circular(100),
                                     ),
                                     alignment: Alignment.center, // 텍스트 중앙 정렬
                                     child: Text(
                                       '긴바지',
                                       style: TextStyle(
-                                        color: Color(0xFF5D5D5D),
+                                        color: _selectedItems.contains(3) ? Color(0xFFFFFFFF) : Color(0xFF5D5D5D), // 글자 색상
                                         fontSize: 14,
                                         fontFamily: 'Pretendard',
                                         fontWeight: FontWeight.w400,
@@ -248,18 +299,23 @@ class _Test5State extends State<Test5> {
                                 ),
                                 SizedBox(width: 8),
                                 GestureDetector(
+                                  onTap: () => _toggleItem(4),
                                   child: Container(
                                     width: 60,
                                     height: 32,
                                     decoration: BoxDecoration(
-                                      border: Border.all(width: 1, color: Color(0xFFE7E7E7)), // 테두리 색상
-                                      borderRadius: BorderRadius.circular(100), // 둥글게 만들기
+                                      color: _selectedItems.contains(4) ? Color(0xFF3D3D3D) : Colors.transparent, // 컨테이너 색상
+                                      border: Border.all(
+                                        width: 1,
+                                        color: _selectedItems.contains(4) ? Colors.transparent : Color(0xFFE7E7E7), // 슬림핏 클릭 시 테두리 색상
+                                      ),
+                                      borderRadius: BorderRadius.circular(100),
                                     ),
                                     alignment: Alignment.center, // 텍스트 중앙 정렬
                                     child: Text(
                                       '아우터',
                                       style: TextStyle(
-                                        color: Color(0xFF5D5D5D),
+                                        color: _selectedItems.contains(4) ? Color(0xFFFFFFFF) : Color(0xFF5D5D5D), // 글자 색상
                                         fontSize: 14,
                                         fontFamily: 'Pretendard',
                                         fontWeight: FontWeight.w400,
@@ -268,7 +324,7 @@ class _Test5State extends State<Test5> {
                                       ),
                                     ),
                                   ),
-                                ), //60
+                                ),
 
                               ],
                             ),
@@ -276,18 +332,23 @@ class _Test5State extends State<Test5> {
                             Row(
                               children: [
                                 GestureDetector(
+                                  onTap: () => _toggleItem(5),
                                   child: Container(
                                     width: 48,
                                     height: 32,
                                     decoration: BoxDecoration(
-                                      border: Border.all(width: 1, color: Color(0xFFE7E7E7)), // 테두리 색상
-                                      borderRadius: BorderRadius.circular(100), // 둥글게 만들기
+                                      color: _selectedItems.contains(5) ? Color(0xFF3D3D3D) : Colors.transparent, // 컨테이너 색상
+                                      border: Border.all(
+                                        width: 1,
+                                        color: _selectedItems.contains(5) ? Colors.transparent : Color(0xFFE7E7E7), // 슬림핏 클릭 시 테두리 색상
+                                      ),
+                                      borderRadius: BorderRadius.circular(100),
                                     ),
                                     alignment: Alignment.center, // 텍스트 중앙 정렬
                                     child: Text(
                                       '신발',
                                       style: TextStyle(
-                                        color: Color(0xFF5D5D5D),
+                                        color: _selectedItems.contains(5) ? Color(0xFFFFFFFF) : Color(0xFF5D5D5D), // 글자 색상
                                         fontSize: 14,
                                         fontFamily: 'Pretendard',
                                         fontWeight: FontWeight.w400,
@@ -296,21 +357,26 @@ class _Test5State extends State<Test5> {
                                       ),
                                     ),
                                   ),
-                                ), //48
+                                ),
                                 SizedBox(width: 8),
                                 GestureDetector(
+                                  onTap: () => _toggleItem(6),
                                   child: Container(
                                     width: 48,
                                     height: 32,
                                     decoration: BoxDecoration(
-                                      border: Border.all(width: 1, color: Color(0xFFE7E7E7)), // 테두리 색상
-                                      borderRadius: BorderRadius.circular(100), // 둥글게 만들기
+                                      color: _selectedItems.contains(6) ? Color(0xFF3D3D3D) : Colors.transparent, // 컨테이너 색상
+                                      border: Border.all(
+                                        width: 1,
+                                        color: _selectedItems.contains(6) ? Colors.transparent : Color(0xFFE7E7E7), // 슬림핏 클릭 시 테두리 색상
+                                      ),
+                                      borderRadius: BorderRadius.circular(100),
                                     ),
                                     alignment: Alignment.center, // 텍스트 중앙 정렬
                                     child: Text(
                                       '안경',
                                       style: TextStyle(
-                                        color: Color(0xFF5D5D5D),
+                                        color: _selectedItems.contains(6) ? Color(0xFFFFFFFF) : Color(0xFF5D5D5D), // 글자 색상
                                         fontSize: 14,
                                         fontFamily: 'Pretendard',
                                         fontWeight: FontWeight.w400,
@@ -322,18 +388,23 @@ class _Test5State extends State<Test5> {
                                 ),
                                 SizedBox(width: 8),
                                 GestureDetector(
+                                  onTap: () => _toggleItem(7),
                                   child: Container(
                                     width: 48,
                                     height: 32,
                                     decoration: BoxDecoration(
-                                      border: Border.all(width: 1, color: Color(0xFFE7E7E7)), // 테두리 색상
-                                      borderRadius: BorderRadius.circular(100), // 둥글게 만들기
+                                      color: _selectedItems.contains(7) ? Color(0xFF3D3D3D) : Colors.transparent, // 컨테이너 색상
+                                      border: Border.all(
+                                        width: 1,
+                                        color: _selectedItems.contains(7) ? Colors.transparent : Color(0xFFE7E7E7), // 슬림핏 클릭 시 테두리 색상
+                                      ),
+                                      borderRadius: BorderRadius.circular(100),
                                     ),
                                     alignment: Alignment.center, // 텍스트 중앙 정렬
                                     child: Text(
                                       '팔찌',
                                       style: TextStyle(
-                                        color: Color(0xFF5D5D5D),
+                                        color: _selectedItems.contains(7) ? Color(0xFFFFFFFF) : Color(0xFF5D5D5D), // 글자 색상
                                         fontSize: 14,
                                         fontFamily: 'Pretendard',
                                         fontWeight: FontWeight.w400,
@@ -345,18 +416,23 @@ class _Test5State extends State<Test5> {
                                 ),
                                 SizedBox(width: 8),
                                 GestureDetector(
+                                  onTap: () => _toggleItem(8),
                                   child: Container(
                                     width: 48,
                                     height: 32,
                                     decoration: BoxDecoration(
-                                      border: Border.all(width: 1, color: Color(0xFFE7E7E7)), // 테두리 색상
-                                      borderRadius: BorderRadius.circular(100), // 둥글게 만들기
+                                      color: _selectedItems.contains(8) ? Color(0xFF3D3D3D) : Colors.transparent, // 컨테이너 색상
+                                      border: Border.all(
+                                        width: 1,
+                                        color: _selectedItems.contains(8) ? Colors.transparent : Color(0xFFE7E7E7), // 슬림핏 클릭 시 테두리 색상
+                                      ),
+                                      borderRadius: BorderRadius.circular(100),
                                     ),
                                     alignment: Alignment.center, // 텍스트 중앙 정렬
                                     child: Text(
                                       '반지',
                                       style: TextStyle(
-                                        color: Color(0xFF5D5D5D),
+                                        color: _selectedItems.contains(8) ? Color(0xFFFFFFFF) : Color(0xFF5D5D5D), // 글자 색상
                                         fontSize: 14,
                                         fontFamily: 'Pretendard',
                                         fontWeight: FontWeight.w400,
@@ -368,18 +444,23 @@ class _Test5State extends State<Test5> {
                                 ),
                                 SizedBox(width: 8),
                                 GestureDetector(
+                                  onTap: () => _toggleItem(9),
                                   child: Container(
                                     width: 60,
                                     height: 32,
                                     decoration: BoxDecoration(
-                                      border: Border.all(width: 1, color: Color(0xFFE7E7E7)), // 테두리 색상
-                                      borderRadius: BorderRadius.circular(100), // 둥글게 만들기
+                                      color: _selectedItems.contains(9) ? Color(0xFF3D3D3D) : Colors.transparent, // 컨테이너 색상
+                                      border: Border.all(
+                                        width: 1,
+                                        color: _selectedItems.contains(9) ? Colors.transparent : Color(0xFFE7E7E7), // 슬림핏 클릭 시 테두리 색상
+                                      ),
+                                      borderRadius: BorderRadius.circular(100),
                                     ),
                                     alignment: Alignment.center, // 텍스트 중앙 정렬
                                     child: Text(
                                       '목도리',
                                       style: TextStyle(
-                                        color: Color(0xFF5D5D5D),
+                                        color: _selectedItems.contains(9) ? Color(0xFFFFFFFF) : Color(0xFF5D5D5D), // 글자 색상
                                         fontSize: 14,
                                         fontFamily: 'Pretendard',
                                         fontWeight: FontWeight.w400,
@@ -395,18 +476,23 @@ class _Test5State extends State<Test5> {
                             Row(
                               children: [
                                 GestureDetector(
+                                  onTap: () => _toggleItem(10),
                                   child: Container(
                                     width: 48,
                                     height: 32,
                                     decoration: BoxDecoration(
-                                      border: Border.all(width: 1, color: Color(0xFFE7E7E7)), // 테두리 색상
-                                      borderRadius: BorderRadius.circular(100), // 둥글게 만들기
+                                      color: _selectedItems.contains(10) ? Color(0xFF3D3D3D) : Colors.transparent, // 컨테이너 색상
+                                      border: Border.all(
+                                        width: 1,
+                                        color: _selectedItems.contains(10) ? Colors.transparent : Color(0xFFE7E7E7), // 슬림핏 클릭 시 테두리 색상
+                                      ),
+                                      borderRadius: BorderRadius.circular(100),
                                     ),
                                     alignment: Alignment.center, // 텍스트 중앙 정렬
                                     child: Text(
                                       '모자',
                                       style: TextStyle(
-                                        color: Color(0xFF5D5D5D),
+                                        color: _selectedItems.contains(10) ? Color(0xFFFFFFFF) : Color(0xFF5D5D5D), // 글자 색상
                                         fontSize: 14,
                                         fontFamily: 'Pretendard',
                                         fontWeight: FontWeight.w400,
@@ -418,18 +504,23 @@ class _Test5State extends State<Test5> {
                                 ), //48
                                 SizedBox(width: 8),
                                 GestureDetector(
+                                  onTap: () => _toggleItem(11),
                                   child: Container(
                                     width: 60,
                                     height: 32,
                                     decoration: BoxDecoration(
-                                      border: Border.all(width: 1, color: Color(0xFFE7E7E7)), // 테두리 색상
-                                      borderRadius: BorderRadius.circular(100), // 둥글게 만들기
+                                      color: _selectedItems.contains(11) ? Color(0xFF3D3D3D) : Colors.transparent, // 컨테이너 색상
+                                      border: Border.all(
+                                        width: 1,
+                                        color: _selectedItems.contains(11) ? Colors.transparent : Color(0xFFE7E7E7), // 슬림핏 클릭 시 테두리 색상
+                                      ),
+                                      borderRadius: BorderRadius.circular(100),
                                     ),
                                     alignment: Alignment.center, // 텍스트 중앙 정렬
                                     child: Text(
                                       '목걸이',
                                       style: TextStyle(
-                                        color: Color(0xFF5D5D5D),
+                                        color: _selectedItems.contains(11) ? Color(0xFFFFFFFF) : Color(0xFF5D5D5D), // 글자 색상
                                         fontSize: 14,
                                         fontFamily: 'Pretendard',
                                         fontWeight: FontWeight.w400,
@@ -439,20 +530,26 @@ class _Test5State extends State<Test5> {
                                     ),
                                   ),
                                 ),
-                                SizedBox(width: 8),
+                                SizedBox(width: 8), //여기
+
                                 GestureDetector(
+                                  onTap: () => _toggleItem(12),
                                   child: Container(
                                     width: 48,
                                     height: 32,
                                     decoration: BoxDecoration(
-                                      border: Border.all(width: 1, color: Color(0xFFE7E7E7)), // 테두리 색상
-                                      borderRadius: BorderRadius.circular(100), // 둥글게 만들기
+                                      color: _selectedItems.contains(12) ? Color(0xFF3D3D3D) : Colors.transparent, // 컨테이너 색상
+                                      border: Border.all(
+                                        width: 1,
+                                        color: _selectedItems.contains(12) ? Colors.transparent : Color(0xFFE7E7E7), // 슬림핏 클릭 시 테두리 색상
+                                      ),
+                                      borderRadius: BorderRadius.circular(100),
                                     ),
                                     alignment: Alignment.center, // 텍스트 중앙 정렬
                                     child: Text(
                                       '벨트',
                                       style: TextStyle(
-                                        color: Color(0xFF5D5D5D),
+                                        color: _selectedItems.contains(12) ? Color(0xFFFFFFFF) : Color(0xFF5D5D5D), // 글자 색상
                                         fontSize: 14,
                                         fontFamily: 'Pretendard',
                                         fontWeight: FontWeight.w400,
@@ -464,18 +561,23 @@ class _Test5State extends State<Test5> {
                                 ),
                                 SizedBox(width: 8),
                                 GestureDetector(
+                                  onTap: () => _toggleItem(13),
                                   child: Container(
                                     width: 48,
                                     height: 32,
                                     decoration: BoxDecoration(
-                                      border: Border.all(width: 1, color: Color(0xFFE7E7E7)), // 테두리 색상
-                                      borderRadius: BorderRadius.circular(100), // 둥글게 만들기
+                                      color: _selectedItems.contains(13) ? Color(0xFF3D3D3D) : Colors.transparent, // 컨테이너 색상
+                                      border: Border.all(
+                                        width: 1,
+                                        color: _selectedItems.contains(13) ? Colors.transparent : Color(0xFFE7E7E7), // 슬림핏 클릭 시 테두리 색상
+                                      ),
+                                      borderRadius: BorderRadius.circular(100),
                                     ),
                                     alignment: Alignment.center, // 텍스트 중앙 정렬
                                     child: Text(
-                                      '반지',
+                                      '시계',
                                       style: TextStyle(
-                                        color: Color(0xFF5D5D5D),
+                                        color: _selectedItems.contains(13) ? Color(0xFFFFFFFF) : Color(0xFF5D5D5D), // 글자 색상
                                         fontSize: 14,
                                         fontFamily: 'Pretendard',
                                         fontWeight: FontWeight.w400,
@@ -487,18 +589,23 @@ class _Test5State extends State<Test5> {
                                 ),
                                 SizedBox(width: 8),
                                 GestureDetector(
+                                  onTap: () => _toggleItem(14),
                                   child: Container(
                                     width: 60,
                                     height: 32,
                                     decoration: BoxDecoration(
-                                      border: Border.all(width: 1, color: Color(0xFFE7E7E7)), // 테두리 색상
-                                      borderRadius: BorderRadius.circular(100), // 둥글게 만들기
+                                      color: _selectedItems.contains(14) ? Color(0xFF3D3D3D) : Colors.transparent, // 컨테이너 색상
+                                      border: Border.all(
+                                        width: 1,
+                                        color: _selectedItems.contains(14) ? Colors.transparent : Color(0xFFE7E7E7), // 슬림핏 클릭 시 테두리 색상
+                                      ),
+                                      borderRadius: BorderRadius.circular(100),
                                     ),
                                     alignment: Alignment.center, // 텍스트 중앙 정렬
                                     child: Text(
-                                      '목도리',
+                                      '귀걸이',
                                       style: TextStyle(
-                                        color: Color(0xFF5D5D5D),
+                                        color: _selectedItems.contains(14) ? Color(0xFFFFFFFF) : Color(0xFF5D5D5D), // 글자 색상
                                         fontSize: 14,
                                         fontFamily: 'Pretendard',
                                         fontWeight: FontWeight.w400,
@@ -514,18 +621,23 @@ class _Test5State extends State<Test5> {
                             Row(
                               children: [
                                 GestureDetector(
+                                  onTap: () => _toggleItem(15),
                                   child: Container(
                                     width: 48,
                                     height: 32,
                                     decoration: BoxDecoration(
-                                      border: Border.all(width: 1, color: Color(0xFFE7E7E7)), // 테두리 색상
-                                      borderRadius: BorderRadius.circular(100), // 둥글게 만들기
+                                      color: _selectedItems.contains(15) ? Color(0xFF3D3D3D) : Colors.transparent, // 컨테이너 색상
+                                      border: Border.all(
+                                        width: 1,
+                                        color: _selectedItems.contains(15) ? Colors.transparent : Color(0xFFE7E7E7), // 슬림핏 클릭 시 테두리 색상
+                                      ),
+                                      borderRadius: BorderRadius.circular(100),
                                     ),
                                     alignment: Alignment.center, // 텍스트 중앙 정렬
                                     child: Text(
                                       '키링',
                                       style: TextStyle(
-                                        color: Color(0xFF5D5D5D),
+                                        color: _selectedItems.contains(15) ? Color(0xFFFFFFFF) : Color(0xFF5D5D5D), // 글자 색상
                                         fontSize: 14,
                                         fontFamily: 'Pretendard',
                                         fontWeight: FontWeight.w400,
@@ -537,18 +649,23 @@ class _Test5State extends State<Test5> {
                                 ), //48
                                 SizedBox(width: 8),
                                 GestureDetector(
+                                  onTap: () => _toggleItem(16),
                                   child: Container(
                                     width: 48,
                                     height: 32,
                                     decoration: BoxDecoration(
-                                      border: Border.all(width: 1, color: Color(0xFFE7E7E7)), // 테두리 색상
-                                      borderRadius: BorderRadius.circular(100), // 둥글게 만들기
+                                      color: _selectedItems.contains(16) ? Color(0xFF3D3D3D) : Colors.transparent, // 컨테이너 색상
+                                      border: Border.all(
+                                        width: 1,
+                                        color: _selectedItems.contains(16) ? Colors.transparent : Color(0xFFE7E7E7), // 슬림핏 클릭 시 테두리 색상
+                                      ),
+                                      borderRadius: BorderRadius.circular(100),
                                     ),
                                     alignment: Alignment.center, // 텍스트 중앙 정렬
                                     child: Text(
                                       '치마',
                                       style: TextStyle(
-                                        color: Color(0xFF5D5D5D),
+                                        color: _selectedItems.contains(16) ? Color(0xFFFFFFFF) : Color(0xFF5D5D5D), // 글자 색상
                                         fontSize: 14,
                                         fontFamily: 'Pretendard',
                                         fontWeight: FontWeight.w400,
@@ -560,18 +677,23 @@ class _Test5State extends State<Test5> {
                                 ),
                                 SizedBox(width: 8),
                                 GestureDetector(
+                                  onTap: () => _toggleItem(17),
                                   child: Container(
                                     width: 60,
                                     height: 32,
                                     decoration: BoxDecoration(
-                                      border: Border.all(width: 1, color: Color(0xFFE7E7E7)), // 테두리 색상
-                                      borderRadius: BorderRadius.circular(100), // 둥글게 만들기
+                                      color: _selectedItems.contains(17) ? Color(0xFF3D3D3D) : Colors.transparent, // 컨테이너 색상
+                                      border: Border.all(
+                                        width: 1,
+                                        color: _selectedItems.contains(17) ? Colors.transparent : Color(0xFFE7E7E7), // 슬림핏 클릭 시 테두리 색상
+                                      ),
+                                      borderRadius: BorderRadius.circular(100),
                                     ),
                                     alignment: Alignment.center, // 텍스트 중앙 정렬
                                     child: Text(
                                       '원피스',
                                       style: TextStyle(
-                                        color: Color(0xFF5D5D5D),
+                                        color: _selectedItems.contains(17) ? Color(0xFFFFFFFF) : Color(0xFF5D5D5D), // 글자 색상
                                         fontSize: 14,
                                         fontFamily: 'Pretendard',
                                         fontWeight: FontWeight.w400,
@@ -1615,24 +1737,44 @@ class _Test5State extends State<Test5> {
                         width: 360,
                         height: 194,
                         padding: EdgeInsets.only(top: 32, left: 16, right: 16),
-                        child: Container(
+                        child:Container(
                           width: 328,
                           height: 162,
-
-                          padding: EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 16),
-                          color: Color(0xFFF6F6F6),
-                          child: Text(
-                            '해당 컬러에 대해 추가적인 요청사항을 적어주세요.',
+                          child: TextField(
+                            decoration: InputDecoration(
+                              hintText: '해당 컬러에 대해 추가적인 요청사항을 적어주세요.',
+                              hintStyle: TextStyle(
+                                color: Color(0xFFB0B0B0), // 힌트 텍스트 색상
+                                fontSize: 14,
+                                fontFamily: 'Pretendard',
+                                fontWeight: FontWeight.w400,
+                                height: 1.5,
+                                letterSpacing: -0.35,
+                              ),
+                              border: InputBorder.none, // 테두리 제거
+                              filled: true,
+                              fillColor: Color(0xFFF6F6F6), // 배경색 설정
+                              contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 16), // 내부 여백 설정
+                            ),
                             style: TextStyle(
-                              color: Color(0xFFB0B0B0), // 텍스트 색상 조정 (필요에 따라)
+                              color: Color(0xFF3D3D3D), // 입력 텍스트 색상
                               fontSize: 14,
                               fontFamily: 'Pretendard',
                               fontWeight: FontWeight.w400,
                               height: 1.5,
                               letterSpacing: -0.35,
                             ),
+                            maxLines: null, // 여러 줄 입력 가능
+                            minLines: 5, // 초기 줄 수 설정
+                            keyboardType: TextInputType.multiline, // 멀티라인 입력을 위한 키보드 타입
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(100), // 최대 글자 수 설정 (예: 100자)
+                            ],
                           ),
                         ),
+
+
+
 
                       ),
 
@@ -1712,4 +1854,63 @@ class _Test5State extends State<Test5> {
       ),
     );
   }
+}
+
+class QuotationImgSelectAppBar extends StatelessWidget
+    implements PreferredSizeWidget {
+  const QuotationImgSelectAppBar({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Align(
+        alignment: Alignment.center,
+        child: Container(
+          padding: EdgeInsets.only(left: 16),
+          width: 360,
+          height: kToolbarHeight,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              IconButton(
+                onPressed: () {},
+                icon: Icon(Icons.arrow_back),
+                iconSize: 24,
+                color: Colors.black,
+              ),
+              SizedBox(width: 8),
+              SizedBox(
+                width: 248,
+                height: 56,
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    '견적서 작성',
+                    style: TextStyle(
+                      color: Color(0xFF3D3D3D),
+                      fontSize: 18,
+                      fontFamily: 'Pretendard',
+                      fontWeight: FontWeight.w700,
+                      height: 1.4,
+                      letterSpacing: -0.45,
+                    ),
+                  ),
+                ),
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: Icon(Icons.refresh),
+                iconSize: 24,
+                color: Colors.black,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Size get preferredSize => Size(360, kToolbarHeight);
 }
