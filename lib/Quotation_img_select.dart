@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:test_qwe/StyleSelect.dart';
-import 'package:test_qwe/test5.dart';
 
 void main() {
   runApp(MaterialApp(
