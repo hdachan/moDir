@@ -160,7 +160,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     );
                   }
                   _controller.nextPage(
-                    duration: Duration(seconds: 1),
+                    duration: Duration(milliseconds: 250), // 250 고정
                     curve: Curves.easeInOut,
                   );
                 },
