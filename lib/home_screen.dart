@@ -3453,8 +3453,51 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
   }
 }
 
+
+class MyPageScreen extends StatefulWidget {
+  @override
+  _MyPageScreenState createState() => _MyPageScreenState();
+}
+
 // 마이페이지 화면 위젯
-class MyPageScreen extends StatelessWidget {
+class _MyPageScreenState extends State<MyPageScreen> {
+
+  String _nickname = "닉네임이없음"; // 기본값 설정
+  String _cmValue = "--";
+  String _kgValue = "--";
+  String _topsizeValue = "--";
+  String _bottomsizeValue = "--";
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData(); // 사용자 데이터 로드
+  }
+
+  Future<void> _loadUserData() async {
+    User? user = _auth.currentUser; // 현재 사용자 가져오기
+    if (user != null) {
+      try {
+        DocumentSnapshot doc = await _firestore.collection('users').doc(user.uid).get();
+        if (doc.exists) {
+          var data = doc.data() as Map<String, dynamic>?; // Map으로 캐스팅
+          setState(() {
+            _nickname = (data?['nickname'] ?? "").isNotEmpty ? data!['nickname'] : "닉네임이없음"; // 닉네임 로드 또는 기본값
+            _cmValue = data?['cm'] ?? "--";
+            _kgValue = data?['kg'] ?? "--";
+            _topsizeValue = data?['topsize'] ?? "--";
+            _bottomsizeValue = data?['bottomsize'] ?? "--";
+          });
+        }
+      } catch (e) {
+        // 예외 처리
+        print("Error loading user data: $e");
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -3472,11 +3515,11 @@ class MyPageScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       Row(
-                        children: const [
+                        children: [
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              '황대찬',
+                              _nickname,
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 22,
@@ -3590,7 +3633,7 @@ class MyPageScreen extends StatelessWidget {
                         padding:
                             EdgeInsets.symmetric(vertical: 20, horizontal: 16),
                         child: Row(
-                          children: const [
+                          children: [
                             SizedBox(
                               width: 62,
                               height: 44,
@@ -3615,7 +3658,7 @@ class MyPageScreen extends StatelessWidget {
                                   Align(
                                     alignment: Alignment.center,
                                     child: Text(
-                                      '--',
+                                      _cmValue,
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         color: Colors.black,
@@ -3655,7 +3698,7 @@ class MyPageScreen extends StatelessWidget {
                                   Align(
                                     alignment: Alignment.center,
                                     child: Text(
-                                      '--',
+                                      _kgValue,
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         color: Colors.black,
@@ -3695,7 +3738,7 @@ class MyPageScreen extends StatelessWidget {
                                   Align(
                                     alignment: Alignment.center,
                                     child: Text(
-                                      '--',
+                                      _topsizeValue,
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         color: Colors.black,
@@ -3735,7 +3778,7 @@ class MyPageScreen extends StatelessWidget {
                                   Align(
                                     alignment: Alignment.center,
                                     child: Text(
-                                      '--',
+                                      _bottomsizeValue,
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         color: Colors.black,
@@ -4005,15 +4048,6 @@ class MyProfileButton extends StatelessWidget {
 
 
 
-
-
-
-
-
-
-
-
-
 class HomeAppBar extends StatelessWidget
     implements PreferredSizeWidget {
   const HomeAppBar({Key? key}) : super(key: key);
@@ -4039,7 +4073,7 @@ class HomeAppBar extends StatelessWidget
                   child: Image.asset(
                     'assets/image/logo_modi.png', // 실제 로고 이미지
                     width: 34,
-                    height: 20,
+                    height: 34,
                   ),
                 ),
               ),

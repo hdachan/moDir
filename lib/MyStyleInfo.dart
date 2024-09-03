@@ -60,9 +60,65 @@ class _UserSetting extends State<MyStyleInfo> {
       ? ['XS', 'S', 'M', 'L', 'XL', 'XXL', '기타'][_selectedIndex2!]
         : '';
 
-    String bottomsizeValue = (_selectedIndex3 != null && _selectedIndex3! >= 0)
-    ? ['XS', 'S', 'M', 'L', 'XL', 'XXL', '기타'][_selectedIndex3!]
+      String bottomsizeValue = (_selectedIndex3 != null && _selectedIndex3! >= 0)
+      ? ['XS', 'S', 'M', 'L', 'XL', 'XXL', '기타'][_selectedIndex3!]
         : '';
+
+      String faceValue = (_selectedIndex5 != null && _selectedIndex5! >= 0)
+      ? ['웜톤', '뉴트럴톤', '쿨톤', '모르겠어요'][_selectedIndex5!]
+        : '';
+
+      String facesizeValue = (_selectedIndex6 != null && _selectedIndex6! >= 0)
+      ? ['긴형', '계란형', '둥근형', '하트형','사각형'][_selectedIndex6!]
+        : '';
+
+    String shoulderValue = (_selectedIndex7 != null && _selectedIndex7! >= 0)
+    ? ['상견', '증견', '하견'][_selectedIndex7!]
+        : '';
+
+    String shouldersizeValue = (_selectedIndex8 != null && _selectedIndex8! >= 0)
+    ? ['좁다', '보통', '넓다'][_selectedIndex8!]
+        : '';
+
+    String chestValue = (_selectedIndex9 != null && _selectedIndex9! >= 0)
+    ? ['얇다', '보통', '두껍다'][_selectedIndex9!]
+        : '';
+
+    String pelvisValue = (_selectedIndex10 != null && _selectedIndex10! >= 0)
+    ? ['좁다', '보통', '넓다'][_selectedIndex10!]
+        : '';
+    //thigh
+    String thighValue = (_selectedIndex11 != null && _selectedIndex11! >= 0)
+    ? ['얇다', '보통', '두껍다'][_selectedIndex11!]
+        : '';
+    //calf
+    String calfValue = (_selectedIndex12 != null && _selectedIndex12! >= 0)
+    ? ['얇다', '보통', '두껍다'][_selectedIndex12!]
+        : '';
+
+
+
+    // 선택된 옵션을 배열로 정의
+    List<String> options = [
+    "상체가 하체에 비해 두꺼운 편이에요",
+    "하체가 상체에 비해 두꺼운 편이에요",
+    "뼈와 관절이 커요",
+    "옷을 입으면 근육이 강조돼요",
+    "골격이 전체적으로 얇아요",
+    "프레임이 전체적으로 눈에 띄어요",
+    "정사이즈 옷은 왠만하면 잘 맞아요"
+    ];
+
+    // 선택된 옵션을 가져오기
+    List<String> selectedOptions = [];
+    for (int i = 0; i < options.length; i++) {
+    if (_selectedIndices4.contains(i)) {
+    selectedOptions.add(options[i]);
+    }
+    }
+
+    // 선택된 옵션들을 문자열로 변환
+    String selectedOptionsValue = selectedOptions.join(', ');
 
     await _firestore.collection('users').doc(uid).set({
     'cm': cmValue,
@@ -71,9 +127,20 @@ class _UserSetting extends State<MyStyleInfo> {
     'birthDate': birthDateValue,
     'topsize': topsizeValue,
     'bottomsize': bottomsizeValue,
+    'selectedOptions': selectedOptionsValue,
+    'faceValue': faceValue,
+    'facesizeValue':facesizeValue,
+    'shoulderValue':shoulderValue,
+    'shouldersizeValue':shouldersizeValue,
+    'chestValue':chestValue,
+    'pelvisValue':pelvisValue,
+    'thighValue':thighValue,
+    'calfValue':calfValue
     }, SetOptions(merge: true));
     }
   }
+
+
 
 
   void _loadCmValue() async {
@@ -84,23 +151,66 @@ class _UserSetting extends State<MyStyleInfo> {
         setState(() {
           var data = doc.data() as Map<String, dynamic>?; // Map으로 캐스팅
 
-          _controller.text = data != null && data.containsKey('cm') ? data['cm'] : '';
-          _kgController.text = data != null && data.containsKey('kg') ? data['kg'] : '';
+          _controller.text = data?['cm'] ?? '';
+          _kgController.text = data?['kg'] ?? '';
 
-          String gender = data != null && data.containsKey('gender') ? data['gender'] : '';
+          String gender = data?['gender'] ?? '';
           _selectedIndex = (gender == '남성') ? 0 : 1;
 
-          _birthDateController.text = data != null && data.containsKey('birthDate') ? data['birthDate'] : '';
+          _birthDateController.text = data?['birthDate'] ?? '';
 
-          String topsize = data != null && data.containsKey('topsize') ? data['topsize'] : '';
+          String topsize = data?['topsize'] ?? '';
           _selectedIndex2 = ['XS', 'S', 'M', 'L', 'XL', 'XXL', '기타'].indexOf(topsize);
 
-          String bottomsize = data != null && data.containsKey('bottomsize') ? data['bottomsize'] : '';
+          String bottomsize = data?['bottomsize'] ?? '';
           _selectedIndex3 = ['XS', 'S', 'M', 'L', 'XL', 'XXL', '기타'].indexOf(bottomsize);
+
+          String faceValue = data?['faceValue'] ?? '';
+          _selectedIndex5 = ['웜톤', '뉴트럴톤', '쿨톤', '모르겠어요'].indexOf(faceValue);
+
+          String facesizeValue = data?['facesizeValue'] ?? '';
+          _selectedIndex6 = ['긴형', '계란형', '둥근형', '하트형', '사각형'].indexOf(facesizeValue);
+
+          // shoulderValue 추가
+          String shoulderValue = data?['shoulderValue'] ?? '';
+          _selectedIndex7 = ['상견', '증견', '하견'].indexOf(shoulderValue);
+
+          // shoulderValue 추가
+          String shouldersizeValue = data?['shouldersizeValue'] ?? '';
+          _selectedIndex8 = ['좁다', '보통', '벏다'].indexOf(shouldersizeValue);
+
+
+          String chestValue = data?['chestValue'] ?? '';
+          _selectedIndex9 = ['얇다', '보통', '두껍다'].indexOf(chestValue);
+
+          String pelvisValue = data?['pelvisValue'] ?? '';
+          _selectedIndex10 = ['좁다', '보통', '넓다'].indexOf(pelvisValue);
+
+          String thighValue = data?['thighValue'] ?? '';
+          _selectedIndex11 = ['얇다', '보통', '두껍다'].indexOf(thighValue);
+
+          //calfValue
+          String calfValue = data?['calfValue'] ?? '';
+          _selectedIndex11 = ['얇다', '보통', '두껍다'].indexOf(calfValue);
+
+          // 선택된 옵션 로드
+          String selectedOptions = data?['selectedOptions'] ?? '';
+          List<String> options = selectedOptions.split(', ');
+
+          _selectedIndices4.clear(); // 이전 선택 초기화
+          for (int i = 0; i < options.length; i++) {
+            if (options[i].isNotEmpty) {
+              _selectedIndices4.add(i); // 해당 옵션이 선택되었다고 표시
+            }
+          }
         });
       }
     }
   }
+
+
+
+
 
 
 

@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:test_qwe/test3.dart';
@@ -15,7 +17,15 @@ class Test5 extends StatefulWidget {
 
 class _Test5State extends State<Test5> {
 
-  int? _item;
+  @override
+  void initState() {
+    super.initState();
+    _loadSelectedItems(); // 위젯이 생성될 때 아이템 로드
+  }
+
+  List<String> _itemTexts = ['반팔', '긴팔', '반바지', '긴바지','아우터','신발','안경','팔찌','반지','목도리','모자','목걸이','벨트','시계','귀걸이','키링','치마','원피스']; // 필요에 따라 아이템 추가
+
+  String? userId = FirebaseAuth.instance.currentUser?.uid;
   List<int> _selectedItems = [];
 
   void _toggleItem(int index) {
@@ -27,6 +37,60 @@ class _Test5State extends State<Test5> {
       }
     });
   }
+
+  Future<void> _saveSelectedItems() async {
+    if (userId != null && _selectedItems.isNotEmpty) {
+      // 선택된 인덱스를 텍스트 목록으로 변환
+      List<String> selectedTexts = _selectedItems.map((index) => _itemTexts[index]).toList();
+
+      await FirebaseFirestore.instance
+          .collection('designer')
+          .doc(userId) // 사용자 UID로 문서 이름 설정
+          .collection('Quotation')
+          .doc(userId) // Quotation 서브컬렉션 내에서 문서 이름도 사용자 UID로 설정
+          .set({ // set()을 사용하여 문서 데이터를 추가하거나 업데이트
+        'items': selectedTexts, // 텍스트 목록으로 저장
+        'fitType': '설정한 핏이 없습니다', // fitType 추가
+        'upFitType': '설정한 핏이 없습니다', // upFitType 추가
+        'bottomFitType': '설정한 핏이 없습니다', // bottomFitType 추가
+        'timestamp': FieldValue.serverTimestamp(),
+      });
+    }
+  }
+
+  Future<void> _loadSelectedItems() async {
+    if (userId != null) {
+      DocumentSnapshot snapshot = await FirebaseFirestore.instance
+          .collection('designer')
+          .doc(userId)
+          .collection('Quotation')
+          .doc(userId)
+          .get();
+
+      if (snapshot.exists) {
+        // Firestore에서 가져온 데이터에서 'items' 필드를 읽어옵니다.
+        Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
+
+        if (data != null && data['items'] != null) {
+          List<String> loadedItems = List<String>.from(data['items']);
+
+          // 로드된 아이템을 _selectedItems에 저장
+          _selectedItems = loadedItems.map((text) => _itemTexts.indexOf(text)).toList();
+
+          // 필요에 따라 UI 업데이트를 위한 setState 호출
+          setState(() {
+            // UI 업데이트 관련 코드
+          });
+        } else {
+          print("아이템이 존재하지 않습니다.");
+        }
+      } else {
+        print("문서가 존재하지 않습니다.");
+      }
+    }
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -1824,6 +1888,7 @@ class _Test5State extends State<Test5> {
               SizedBox(width: 20), // 버튼 사이 간격
               TextButton(
                 onPressed: () {
+                  _saveSelectedItems();
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => Test3()), // Test3 화면으로 이동

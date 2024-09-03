@@ -1323,7 +1323,8 @@ class _MyTabScrollAppState extends State<DesignerDetailScreen> with SingleTicker
                   ),
                 ),
               ),
-            )
+            ),
+
 
           ],
         ),

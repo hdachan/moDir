@@ -73,7 +73,7 @@ class _Test3State extends State<Test3> {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       var snapshot = await FirebaseFirestore.instance
-          .collection('users')
+          .collection('designer')
           .doc(user.uid)
           .collection('Quotation')
           .get();
@@ -182,34 +182,35 @@ class _Test3State extends State<Test3> {
       try {
         // 기존 데이터가 있으면 업데이트
         var snapshot = await FirebaseFirestore.instance
-            .collection('users')
-            .doc(userId)
+            .collection('designer')
+            .doc(userId) // UID로 문서 접근
             .collection('Quotation')
             .get();
 
         if (snapshot.docs.isNotEmpty) {
           await FirebaseFirestore.instance
-              .collection('users')
-              .doc(userId)
+              .collection('designer')
+              .doc(userId) // UID로 문서 접근
               .collection('Quotation')
               .doc(snapshot.docs.first.id) // 첫 번째 문서 업데이트
               .update({
             'fitType': fitType,
             'upFitType': upFitType,
-            'bottomFitType': bottomFitType, // 추가된 부분
+            'bottomFitType': bottomFitType,
             'timestamp': FieldValue.serverTimestamp(),
           });
           print('서버에서 업데이트: $fitType, $upFitType, $bottomFitType');
         } else {
           // 새 데이터 추가
           await FirebaseFirestore.instance
-              .collection('users')
-              .doc(userId)
+              .collection('designer')
+              .doc(userId) // UID로 문서 접근
               .collection('Quotation')
-              .add({
+              .doc(userId) // UID로 문서 ID 설정
+              .set({
             'fitType': fitType,
             'upFitType': upFitType,
-            'bottomFitType': bottomFitType, // 추가된 부분
+            'bottomFitType': bottomFitType,
             'timestamp': FieldValue.serverTimestamp(),
           });
           setState(() {
@@ -224,6 +225,7 @@ class _Test3State extends State<Test3> {
       print('핏이 선택되지 않았거나 이미 저장되었습니다.');
     }
   }
+
 
 
   int _mapFitTypeToIndex(String fitType) { // 버튼색 불러오기용
@@ -1241,10 +1243,10 @@ class _Test3State extends State<Test3> {
             children: [
               TextButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Test5()), // Test3 화면으로 이동
-                  );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Test5()), // Test3 화면으로 이동
+                    );
                 },
                 style: TextButton.styleFrom(
                   backgroundColor: Colors.white, // 버튼 배경색
