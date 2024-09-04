@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:test_qwe/tttt.dart';
 
 import 'Quotation_img_select.dart';
 
@@ -1300,7 +1301,11 @@ class _MyTabScrollAppState extends State<DesignerDetailScreen> with SingleTicker
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => QuotationImgSelect()), // Test3 화면으로 이동
+                  MaterialPageRoute(
+                    builder: (context) => QuotationImgSelect(
+                      designerId: widget.designerId, // 전달할 데이터
+                    ),
+                  ),
                 );
               },
               style: ElevatedButton.styleFrom(

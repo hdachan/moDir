@@ -192,7 +192,7 @@ class _UserSetting extends State<StyleSelect> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        QuotationImgSelect()),
+                                        QuotationImgSelect(designerId: '',)),
                               );
                             },
                             style: TextButton.styleFrom(
@@ -341,7 +341,7 @@ class _UserSetting extends State<StyleSelect> {
                               onPressed: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => Test5()), // Test3 화면으로 이동
+                                  MaterialPageRoute(builder: (context) => Test5(designerId: '',)), // Test3 화면으로 이동
                                 );
                               },
                               style: TextButton.styleFrom(

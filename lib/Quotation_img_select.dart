@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:test_qwe/test5.dart';
 
 void main() {
   runApp(MaterialApp(
-    home: QuotationImgSelect(),
+    home: QuotationImgSelect(designerId: 'example_id'),
   ));
 }
 
 class QuotationImgSelect extends StatefulWidget {
-  const QuotationImgSelect({super.key});
+  final String designerId; // 디자이너 ID 추가
+
+  const QuotationImgSelect({Key? key, required this.designerId}) : super(key: key);
+
 
   @override
-  State<QuotationImgSelect> createState() => _UserSetting();
+  State<QuotationImgSelect> createState() => _QuotationImgSelectState ();
 }
 
-class _UserSetting extends State<QuotationImgSelect> {
+class _QuotationImgSelectState  extends State<QuotationImgSelect> {
   List<bool> selectedImages = [
     false,
     false,
@@ -37,11 +41,11 @@ class _UserSetting extends State<QuotationImgSelect> {
                   height: 121,
                   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
                   child: Column(
-                    children: const [
+                    children: [
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          '원하는 스타일 선택',
+                          widget.designerId,
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 24,
@@ -98,7 +102,7 @@ class _UserSetting extends State<QuotationImgSelect> {
           ),
         ),
       ),
-      bottomNavigationBar: QuotationImgSelectBottombar(),
+      bottomNavigationBar: QuotationImgSelectBottombar(designerId: widget.designerId),
     );
   }
 
@@ -208,7 +212,9 @@ class QuotationImgSelectAppBar extends StatelessWidget
 }
 
 class QuotationImgSelectBottombar extends StatelessWidget {
-  const QuotationImgSelectBottombar({super.key});
+  final String designerId; // 디자이너 ID 추가
+
+  const QuotationImgSelectBottombar({Key? key, required this.designerId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -229,7 +235,11 @@ class QuotationImgSelectBottombar extends StatelessWidget {
             ),
             child: MaterialButton(
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Test5(designerId: designerId)), // designerId 사용
+                );
+
               },
               color: Color(0xFF888888),
               shape: RoundedRectangleBorder(

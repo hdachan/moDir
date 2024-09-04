@@ -6,11 +6,15 @@ import 'package:test_qwe/test5.dart';
 import 'test4.dart';
 
 void main() {
-  runApp(Test3());
+  runApp(Test3(designerId: '디자이너 아이디 전달하기 위한 변수'));
 }
 
 
 class Test3 extends StatefulWidget { // Test3를 StatefulWidget으로 변경
+
+  final String designerId; // 디자이너 ID 추가
+
+  const Test3({Key? key, required this.designerId}) : super(key: key);
   @override
   _Test3State createState() => _Test3State(); // 상태 클래스를 생성
 }
@@ -68,34 +72,37 @@ class _Test3State extends State<Test3> {
     super.initState();
     _checkExistingData(); // 기존 데이터 확인
   }
+  String? userId = FirebaseAuth.instance.currentUser?.uid;
 
   void _checkExistingData() async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       var snapshot = await FirebaseFirestore.instance
           .collection('designer')
-          .doc(user.uid)
+          .doc(widget.designerId)
           .collection('Quotation')
+          .doc(widget.designerId)
           .get();
 
-      if (snapshot.docs.isNotEmpty) {
+      if (snapshot.exists) { // 수정된 부분: 문서가 존재하는지 확인
         setState(() {
           _isDataSaved = true;
           // 기존 데이터가 있다면 핏 타입을 설정
-          String fitTypeValue = snapshot.docs.first['fitType'];
+          String fitTypeValue = snapshot['fitType'];
           _selectedFit = _mapFitTypeToIndex(fitTypeValue);
 
           // 상의 핏 타입이 있는 경우 설정
-          String upFitTypeValue = snapshot.docs.first['upFitType'];
+          String upFitTypeValue = snapshot['upFitType'];
           _selectedUpFit = _mapUpFitTypeToIndex(upFitTypeValue);
 
           // 하의 핏 타입 설정
-          String bottomFitTypeValue = snapshot.docs.first['bottomFitType'];
+          String bottomFitTypeValue = snapshot['bottomFitType'];
           _selectedBottomFit = _mapBottomFitTypeToIndex(bottomFitTypeValue); // 수정된 부분
         });
       }
     }
   }
+
 
 
   void _saveToServer(String userId) async {
@@ -1243,10 +1250,10 @@ class _Test3State extends State<Test3> {
             children: [
               TextButton(
                 onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Test5()), // Test3 화면으로 이동
-                    );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Test5(designerId: '',)), // Test3 화면으로 이동
+                  );
                 },
                 style: TextButton.styleFrom(
                   backgroundColor: Colors.white, // 버튼 배경색

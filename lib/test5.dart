@@ -6,11 +6,14 @@ import 'package:test_qwe/test3.dart';
 import 'Quotation_img_select.dart';
 
 void main() {
-  runApp(Test5()); // Test3 위젯을 홈으로 설정
+  runApp(Test5(designerId: '디자이너 아이디 전달하기 위한 변수')); // Test3 위젯을 홈으로 설정
 }
 
 class Test5 extends StatefulWidget {
   // Test3을 StatefulWidget으로 정의
+  final String designerId; // 디자이너 ID 추가
+
+  const Test5({Key? key, required this.designerId}) : super(key: key);
   @override
   _Test5State createState() => _Test5State(); // 상태 클래스를 생성
 }
@@ -45,7 +48,7 @@ class _Test5State extends State<Test5> {
 
       await FirebaseFirestore.instance
           .collection('designer')
-          .doc(userId) // 사용자 UID로 문서 이름 설정
+          .doc(widget.designerId)
           .collection('Quotation')
           .doc(userId) // Quotation 서브컬렉션 내에서 문서 이름도 사용자 UID로 설정
           .set({ // set()을 사용하여 문서 데이터를 추가하거나 업데이트
@@ -210,7 +213,7 @@ class _Test5State extends State<Test5> {
                                 width: 328,
                                 height: 28,
                                 child: Text(
-                                  '추천받고 싶은 아이템을 골라주세요',
+                                  widget.designerId,
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 20,
@@ -829,20 +832,35 @@ class _Test5State extends State<Test5> {
                               Container(
                                 width: 162,
                                 height: 216,
-                                color: Colors.red, // 원하는 색상으로 변경 가능
+                                color: Colors.black, // 원하는 색상
+                                child: Center(
+                                  child: IconButton(
+                                    icon: Icon(
+                                      Icons.add, // 플러스 아이콘
+                                      size: 72, // 아이콘 크기 설정
+                                      color: Colors.white, // 아이콘 색상 설정
+                                    ),
+                                    onPressed: () {
+                                      // 버튼 클릭 시 동작할 코드
+                                      print('플러스 버튼 클릭됨');
+                                    },
+                                  ),
+                                ),
                               ),
+
                               SizedBox(width: 4), // 사이 간격
                               Container(
                                 width: 162,
                                 height: 216,
-                                color: Colors.blue, // 원하는 색상으로 변경 가능
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10), // 모서리를 둥글게 만들기
+                                  child: Image.asset(
+                                    'assets/image/1111.png', // 이미지 파일 경로
+                                    fit: BoxFit.cover, // 이미지 크기 조정
+                                  ),
+                                ),
                               ),
-                              SizedBox(width: 4), // 사이 간격
-                              Container(
-                                width: 162,
-                                height: 216,
-                                color: Colors.brown, // 원하는 색상으로 변경 가능
-                              ),
+
                             ],
                           ),
                         ),
@@ -1862,7 +1880,8 @@ class _Test5State extends State<Test5> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => QuotationImgSelect()), // Test3 화면으로 이동
+                      //MaterialPageRoute(builder: (context) => QuotationImgSelect()),
+                    MaterialPageRoute(builder: (context) => QuotationImgSelect(designerId: '',)), // Test3 화면으로 이동
                   );
                 },
                 style: TextButton.styleFrom(
@@ -1891,7 +1910,8 @@ class _Test5State extends State<Test5> {
                   _saveSelectedItems();
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Test3()), // Test3 화면으로 이동
+                    MaterialPageRoute(builder: (context) => Test3(designerId: '',)
+                    ), // designerId 사용
                   );
                 },
                 style: TextButton.styleFrom(

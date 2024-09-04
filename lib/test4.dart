@@ -687,7 +687,7 @@ class _Test4State extends State<Test4> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Test3()), // Test3 화면으로 이동
+                    MaterialPageRoute(builder: (context) => Test3(designerId: '',)), // Test3 화면으로 이동
                   );
                 },
                 style: TextButton.styleFrom(
