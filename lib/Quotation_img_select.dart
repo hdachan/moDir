@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:test_qwe/test5.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -230,10 +229,7 @@ class QuotationImgSelectBottombar extends StatelessWidget {
             ),
             child: MaterialButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Test5()), // Test3 화면으로 이동
-                );
+                Navigator.pop(context);
               },
               color: Color(0xFF888888),
               shape: RoundedRectangleBorder(
