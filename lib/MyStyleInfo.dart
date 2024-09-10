@@ -6,12 +6,16 @@ import 'Login.dart';
 
 void main() {
   runApp(MaterialApp(
-    home: MyStyleInfo(),
+    home: MyStyleInfo(designerId: 'example_id'),
   ));
 }
 
 class MyStyleInfo extends StatefulWidget {
-  const MyStyleInfo({super.key});
+
+  final String designerId; // 디자이너 ID 추가
+
+  const MyStyleInfo({Key? key, required this.designerId}) : super(key: key);
+
 
   @override
   State<MyStyleInfo> createState() => _UserSetting();
@@ -207,18 +211,6 @@ class _UserSetting extends State<MyStyleInfo> {
       }
     }
   }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

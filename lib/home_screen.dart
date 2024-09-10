@@ -3589,7 +3589,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                               onPressed: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => MyStyleInfo()), // Test3 화면으로 이동
+                                  MaterialPageRoute(builder: (context) => MyStyleInfo(designerId: '',)), // Test3 화면으로 이동
                                 );
                               },
                               padding: EdgeInsets.zero,

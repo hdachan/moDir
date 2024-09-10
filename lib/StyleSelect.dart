@@ -5,12 +5,14 @@ import 'package:test_qwe/test5.dart';
 
 void main() {
   runApp(MaterialApp(
-    home: StyleSelect(),
+    home: StyleSelect(designerId: 'example_id'),
   ));
 }
 
 class StyleSelect extends StatefulWidget {
-  const StyleSelect({super.key});
+  final String designerId; // 디자이너 ID 추가
+
+  const StyleSelect({Key? key, required this.designerId}) : super(key: key);
 
   @override
   State<StyleSelect> createState() => _UserSetting();
@@ -57,7 +59,8 @@ class _UserSetting extends State<StyleSelect> {
                             child: Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                '견적서 작성',
+                                widget.designerId,
+                                //'견적서 작성',
                                 style: TextStyle(
                                   color: Color(0xFF3D3D3D),
                                   fontSize: 18,
@@ -192,7 +195,7 @@ class _UserSetting extends State<StyleSelect> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        QuotationImgSelect(designerId: '',)),
+                                        QuotationImgSelect(designerId:'')),
                               );
                             },
                             style: TextButton.styleFrom(
@@ -341,7 +344,7 @@ class _UserSetting extends State<StyleSelect> {
                               onPressed: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => Test5(designerId: '',)), // Test3 화면으로 이동
+                                  MaterialPageRoute(builder: (context) => Test5(designerId:widget.designerId)), // Test3 화면으로 이동
                                 );
                               },
                               style: TextButton.styleFrom(

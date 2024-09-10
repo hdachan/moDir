@@ -81,7 +81,7 @@ class _Test3State extends State<Test3> {
           .collection('designer')
           .doc(widget.designerId)
           .collection('Quotation')
-          .doc(widget.designerId)
+          .doc(userId) // Quotation 서브컬렉션 내에서 문서 이름도 사용자 UID로 설정
           .get();
 
       if (snapshot.exists) { // 수정된 부분: 문서가 존재하는지 확인
@@ -190,14 +190,14 @@ class _Test3State extends State<Test3> {
         // 기존 데이터가 있으면 업데이트
         var snapshot = await FirebaseFirestore.instance
             .collection('designer')
-            .doc(userId) // UID로 문서 접근
+            .doc(widget.designerId)
             .collection('Quotation')
             .get();
 
         if (snapshot.docs.isNotEmpty) {
           await FirebaseFirestore.instance
               .collection('designer')
-              .doc(userId) // UID로 문서 접근
+              .doc(widget.designerId)
               .collection('Quotation')
               .doc(snapshot.docs.first.id) // 첫 번째 문서 업데이트
               .update({
@@ -211,7 +211,7 @@ class _Test3State extends State<Test3> {
           // 새 데이터 추가
           await FirebaseFirestore.instance
               .collection('designer')
-              .doc(userId) // UID로 문서 접근
+              .doc(widget.designerId)
               .collection('Quotation')
               .doc(userId) // UID로 문서 ID 설정
               .set({

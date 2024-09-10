@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:test_qwe/test3.dart';
 import 'Quotation_img_select.dart';
 
@@ -65,9 +68,9 @@ class _Test5State extends State<Test5> {
     if (userId != null) {
       DocumentSnapshot snapshot = await FirebaseFirestore.instance
           .collection('designer')
-          .doc(userId)
+          .doc(widget.designerId) // 여기에서 디자이너 ID를 참조해야 합니다.
           .collection('Quotation')
-          .doc(userId)
+          .doc(userId) // 사용자 UID로 문서 선택
           .get();
 
       if (snapshot.exists) {
@@ -92,6 +95,32 @@ class _Test5State extends State<Test5> {
       }
     }
   }
+
+  List<File?> _images = [null, null, null]; // 최대 3개의 이미지를 저장
+
+  Future<void> _pickImage(int index) async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        _images[index] = File(pickedFile.path); // 선택한 이미지 저장
+      });
+    }
+  }
+
+  void _removeImage(int index) {
+    setState(() {
+      _images[index] = null; // 이미지 삭제
+    });
+  }
+
+  void _resetImages() {
+    setState(() {
+      _images = List<File?>.filled(_images.length, null); // 모든 이미지를 null로 초기화
+    });
+  }
+
 
 
 
@@ -213,7 +242,7 @@ class _Test5State extends State<Test5> {
                                 width: 328,
                                 height: 28,
                                 child: Text(
-                                  widget.designerId,
+                                  '추천받고 싶은 아이템을 골라주세요',
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 20,
@@ -829,38 +858,59 @@ class _Test5State extends State<Test5> {
                           scrollDirection: Axis.horizontal,
                           child: Row(
                             children: [
-                              Container(
-                                width: 162,
-                                height: 216,
-                                color: Colors.black, // 원하는 색상
-                                child: Center(
-                                  child: IconButton(
-                                    icon: Icon(
-                                      Icons.add, // 플러스 아이콘
-                                      size: 72, // 아이콘 크기 설정
-                                      color: Colors.white, // 아이콘 색상 설정
-                                    ),
-                                    onPressed: () {
-                                      // 버튼 클릭 시 동작할 코드
-                                      print('플러스 버튼 클릭됨');
+                              for (int i = 0; i < _images.length; i++)
+                                Container(
+                                  width: 162,
+                                  height: 216,
+                                  color: Colors.black, // 원하는 색상
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      if (_images[i] == null) {
+                                        _pickImage(i); // 이미지가 없으면 선택
+                                      }
                                     },
+                                    child: Stack(
+                                      children: [
+                                        if (_images[i] != null) ...[
+                                          ClipRRect(
+                                            borderRadius: BorderRadius.circular(10), // 모서리를 둥글게 만들기
+                                            child: Image.file(
+                                              _images[i]!,
+                                              fit: BoxFit.cover,
+                                              width: 162,
+                                              height: 216,
+                                            ),
+                                          ),
+                                          Positioned(
+                                            top: 8,
+                                            right: 8,
+                                            child: IconButton(
+                                              icon: Icon(
+                                                Icons.delete,
+                                                color: Colors.red,
+                                              ),
+                                              onPressed: () => _removeImage(i), // 삭제 버튼
+                                            ),
+                                          ),
+                                        ] else ...[
+                                          Center(
+                                            child: IconButton(
+                                              icon: Icon(
+                                                Icons.add, // 플러스 아이콘
+                                                size: 72, // 아이콘 크기 설정
+                                                color: Colors.white, // 아이콘 색상 설정
+                                              ),
+                                              onPressed: () {
+                                                _pickImage(i); // 이미지 선택
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-
                               SizedBox(width: 4), // 사이 간격
-                              Container(
-                                width: 162,
-                                height: 216,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10), // 모서리를 둥글게 만들기
-                                  child: Image.asset(
-                                    'assets/image/1111.png', // 이미지 파일 경로
-                                    fit: BoxFit.cover, // 이미지 크기 조정
-                                  ),
-                                ),
-                              ),
-
                             ],
                           ),
                         ),
@@ -870,29 +920,36 @@ class _Test5State extends State<Test5> {
                         height: 68,
                         padding: EdgeInsets.only(top: 24, left: 16, right: 16),
                         child: Center( // 중앙 정렬을 위해 Center 위젯 사용
-                          child: Container(
-                            width: 328,
-                            height: 44,
-                            alignment: Alignment.center, // 텍스트를 중앙 정렬
-                            decoration: BoxDecoration(
-                              border: Border.all(width: 1, color: Color(0xFFE7E7E7)), // 테두리 색상
-                              borderRadius: BorderRadius.circular(4), // 둥글게 만들기
-                            ),
-                            child: Text(
-                              '다시 선택하기',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Color(0xFF3D3D3D),
-                                fontSize: 14,
-                                fontFamily: 'Pretendard',
-                                fontWeight: FontWeight.w500,
-                                height: 1.4,
-                                letterSpacing: -0.35,
+                          child: GestureDetector(
+                            onTap: () {
+                              _resetImages();
+                              print('다시 선택하기 버튼 클릭됨');
+                            },
+                            child: Container(
+                              width: 328,
+                              height: 44,
+                              alignment: Alignment.center, // 텍스트를 중앙 정렬
+                              decoration: BoxDecoration(
+                                border: Border.all(width: 1, color: Color(0xFFE7E7E7)), // 테두리 색상
+                                borderRadius: BorderRadius.circular(4), // 둥글게 만들기
+                              ),
+                              child: Text(
+                                '다시 선택하기',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Color(0xFF3D3D3D),
+                                  fontSize: 14,
+                                  fontFamily: 'Pretendard',
+                                  fontWeight: FontWeight.w500,
+                                  height: 1.4,
+                                  letterSpacing: -0.35,
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
+
                       Container(
                         width: 360,
                         height: 85,
@@ -1880,8 +1937,7 @@ class _Test5State extends State<Test5> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                      //MaterialPageRoute(builder: (context) => QuotationImgSelect()),
-                    MaterialPageRoute(builder: (context) => QuotationImgSelect(designerId: '',)), // Test3 화면으로 이동
+                    MaterialPageRoute(builder: (context) => QuotationImgSelect(designerId: widget.designerId)), // Test3 화면으로 이동
                   );
                 },
                 style: TextButton.styleFrom(
@@ -1910,7 +1966,7 @@ class _Test5State extends State<Test5> {
                   _saveSelectedItems();
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Test3(designerId: '',)
+                    MaterialPageRoute(builder: (context) => Test3(designerId: widget.designerId,)
                     ), // designerId 사용
                   );
                 },

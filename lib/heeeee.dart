@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:test_qwe/tttt.dart';
 
-import 'Quotation_img_select.dart';
 
 class DesignerDetailScreen extends StatefulWidget {
 
@@ -1302,12 +1301,29 @@ class _MyTabScrollAppState extends State<DesignerDetailScreen> with SingleTicker
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => QuotationImgSelect(
-                      designerId: widget.designerId, // 전달할 데이터
+                    builder: (context) => DetailScreen(
+                      designerId: widget.designerId,
+                      name: widget.name,
+                      introduction: widget.introduction,
+                      classification: widget.classification,
+                      price: widget.price,
+                      imageUrl: widget.imageUrl,
+                      reviewCount: widget.reviewCount,
+                      gender: widget.gender,
                     ),
                   ),
                 );
               },
+              // onPressed: () {
+              //   // Navigator.push(
+              //   //   context,
+              //   //   MaterialPageRoute(
+              //   //     builder: (context) => QuotationImgSelect(
+              //   //       designerId: widget.designerId, // 전달할 데이터
+              //   //     ),
+              //   //   ),
+              //   // );
+              // },
               style: ElevatedButton.styleFrom(
                 primary: Color(0xFF3D3D3D), // 버튼 배경색
                 fixedSize: Size(244, 52), // 버튼 크기

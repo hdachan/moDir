@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test_qwe/test5.dart';
+import 'StyleSelect.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -45,7 +45,8 @@ class _QuotationImgSelectState  extends State<QuotationImgSelect> {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          widget.designerId,
+                          widget.designerId, //여기
+                          // '원하는 스타일 선택',
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 24,
@@ -154,7 +155,6 @@ class _QuotationImgSelectState  extends State<QuotationImgSelect> {
 
 class QuotationImgSelectAppBar extends StatelessWidget
     implements PreferredSizeWidget {
-  const QuotationImgSelectAppBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -170,7 +170,9 @@ class QuotationImgSelectAppBar extends StatelessWidget
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pop(context); // 뒤로가기
+                },
                 icon: Icon(Icons.arrow_back),
                 iconSize: 24,
                 color: Colors.black,
@@ -195,7 +197,9 @@ class QuotationImgSelectAppBar extends StatelessWidget
                 ),
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+
+                },
                 icon: Icon(Icons.refresh),
                 iconSize: 24,
                 color: Colors.black,
@@ -237,7 +241,7 @@ class QuotationImgSelectBottombar extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Test5(designerId: designerId)), // designerId 사용
+                  MaterialPageRoute(builder: (context) => StyleSelect(designerId: designerId)), // designerId 사용
                 );
 
               },
