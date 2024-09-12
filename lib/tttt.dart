@@ -1,7 +1,10 @@
+// 견적서 마이프로필 화면
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import 'MyStyleInfo.dart';
 import 'Quotation_img_select.dart';
 
 class DetailScreen extends StatefulWidget {
@@ -32,6 +35,14 @@ class DetailScreen extends StatefulWidget {
 class _DetailScreenState extends State<DetailScreen> {
   String? kgValue;
   String? cmValue;
+  String? facesizeValue;
+  String? faceValue;
+  String? shoulderValue;
+  String? pelvisValue;
+  String? thighValue;
+  String? calfValue;
+  String? chestValue;
+  String? shouldersizeValue;
 
   @override
   void initState() {
@@ -39,6 +50,8 @@ class _DetailScreenState extends State<DetailScreen> {
     fetchCmAndKgValue();
   }
 
+
+  List<String> selectedOptions = [];
 
   Future<void> fetchCmAndKgValue() async {
     try {
@@ -48,19 +61,58 @@ class _DetailScreenState extends State<DetailScreen> {
         String uid = user.uid;
         DocumentSnapshot doc = await FirebaseFirestore.instance.collection('users').doc(uid).get();
 
-        if (doc.exists) {
-          setState(() {
-            cmValue = doc['cm'] as String?;
-            kgValue = doc['kg'] as String?;
-          });
-        } else {
-          print('문서가 존재하지 않습니다.');
-        }
+        setState(() {
+          if (doc.exists) {
+            cmValue = _getFieldValue(doc, 'cm');
+            kgValue = _getFieldValue(doc, 'kg');
+            facesizeValue = _getFieldValue(doc, 'facesizeValue');
+            faceValue = _getFieldValue(doc, 'faceValue');
+            shoulderValue = _getFieldValue(doc, 'shoulderValue');
+            pelvisValue = _getFieldValue(doc, 'pelvisValue');
+            thighValue = _getFieldValue(doc, 'thighValue');
+            calfValue = _getFieldValue(doc, 'calfValue');
+            chestValue = _getFieldValue(doc, 'chestValue');
+            shouldersizeValue = _getFieldValue(doc, 'shouldersizeValue');
+
+            // selectedOptions 문자열을 리스트로 변환
+            String optionsString = _getFieldValue(doc, 'selectedOptions'); // selectedOptions 필드에서 값 가져오기
+            selectedOptions = optionsString.split(',').map((option) => option.trim()).toList(); // 공백 제거 및 리스트로 변환
+
+            // selectedOptions 출력
+            for (String option in selectedOptions) {
+              print(option);
+            }
+          } else {
+            print('문서가 존재하지 않습니다.');
+            _setDefaultValues();
+          }
+        });
       }
     } catch (e) {
       print('에러 발생: $e');
     }
   }
+
+
+  String _getFieldValue(DocumentSnapshot doc, String field) {
+    return doc[field] as String? ?? '';
+  }
+
+  void _setDefaultValues() {
+    cmValue = '';
+    kgValue = '';
+    facesizeValue = '';
+    faceValue = '';
+    shoulderValue = '';
+    pelvisValue = '';
+    thighValue = '';
+    calfValue = '';
+    chestValue = '';
+    shouldersizeValue = '';
+  }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -129,28 +181,37 @@ class _DetailScreenState extends State<DetailScreen> {
                               ),
                             ),
                             SizedBox(height: 24), // 사이즈박스 24
-                            Container(
-                              width: 328,
-                              height: 52,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                    width: 1, color: Color(0xFFE7E7E7)),
-                                borderRadius:
-                                    BorderRadius.circular(4), // 둥근 모서리
-                              ),
-                              child: Text(
-                                '프로필 수정',
-                                style: TextStyle(
-                                  color: Color(0xFF3D3D3D),
-                                  fontSize: 14,
-                                  fontFamily: 'Pretendard',
-                                  fontWeight: FontWeight.w500,
-                                  height: 1.4,
-                                  letterSpacing: -0.35,
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => MyStyleInfo(designerId: '',)),
+                                );
+                              },
+                              borderRadius: BorderRadius.circular(4), // 둥근 모서리
+                              child: Container(
+                                width: 328,
+                                height: 52,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  border: Border.all(width: 1, color: Color(0xFFE7E7E7)),
+                                  borderRadius: BorderRadius.circular(4), // 둥근 모서리
+                                ),
+                                child: Text(
+                                  '프로필 수정',
+                                  style: TextStyle(
+                                    color: Color(0xFF3D3D3D),
+                                    fontSize: 14,
+                                    fontFamily: 'Pretendard',
+                                    fontWeight: FontWeight.w500,
+                                    height: 1.4,
+                                    letterSpacing: -0.35,
+                                  ),
                                 ),
                               ),
                             ),
+
+
                           ],
                         ),
                       ),
@@ -168,33 +229,33 @@ class _DetailScreenState extends State<DetailScreen> {
                         weightDisplayWidget('몸무게', '$kgValue kg'),
                         weightDisplayWidget('키', '$cmValue cm'),
                         weightDisplayWidget(
-                            '체구', '하체가 상체에 비해 두꺼움\n정사이즈 옷은 웬만하면 잘 맞음'),
+                            '체구', '여기 넣어야됨'),
                       ]),
 
                       SizedBox(height: 24),
 
                       infoContainerWidget([
                         shapeTextWidget('얼굴'),
-                        weightDisplayWidget('얼굴형', '긴형'),
-                        weightDisplayWidget('피부톤', '모르겠어요'),
+                        weightDisplayWidget('얼굴형', '$facesizeValue'),
+                        weightDisplayWidget('피부톤', '$faceValue'),
                       ]),
 
                       SizedBox(height: 24),
 
                       infoContainerWidget([
                         shapeTextWidget('상의 사이즈'),
-                        weightDisplayWidget('어꺠넓이', '보통'),
-                        weightDisplayWidget('어깨모양', '하견'),
-                        weightDisplayWidget('흉부', '두꺼움'),
+                        weightDisplayWidget('어꺠넓이', '$shouldersizeValue'),
+                        weightDisplayWidget('어깨모양', '$shoulderValue'),
+                        weightDisplayWidget('흉부', '$chestValue'),
                       ]),
 
                       SizedBox(height: 24),
 
                       infoContainerWidget([
                         shapeTextWidget('하의 사이즈'),
-                        weightDisplayWidget('골반', '넓음'),
-                        weightDisplayWidget('허벅지', '보통'),
-                        weightDisplayWidget('종아리', '보통'),
+                        weightDisplayWidget('골반', '$pelvisValue'),
+                        weightDisplayWidget('허벅지', '$thighValue'),
+                        weightDisplayWidget('종아리', '$calfValue'),
                       ]),
 
                     ],

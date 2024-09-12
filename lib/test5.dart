@@ -1,7 +1,10 @@
+// 견적서 1번
+
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -56,13 +59,11 @@ class _Test5State extends State<Test5> {
           .doc(userId) // Quotation 서브컬렉션 내에서 문서 이름도 사용자 UID로 설정
           .set({ // set()을 사용하여 문서 데이터를 추가하거나 업데이트
         'items': selectedTexts, // 텍스트 목록으로 저장
-        'fitType': '설정한 핏이 없습니다', // fitType 추가
-        'upFitType': '설정한 핏이 없습니다', // upFitType 추가
-        'bottomFitType': '설정한 핏이 없습니다', // bottomFitType 추가
         'timestamp': FieldValue.serverTimestamp(),
-      });
+      }, SetOptions(merge: true)); // 기존 데이터와 병합
     }
   }
+
 
   Future<void> _loadSelectedItems() async {
     if (userId != null) {
@@ -119,6 +120,44 @@ class _Test5State extends State<Test5> {
     setState(() {
       _images = List<File?>.filled(_images.length, null); // 모든 이미지를 null로 초기화
     });
+  }
+
+  Future<void> _uploadImages() async {
+    final storageRef = FirebaseStorage.instance.ref();
+    List<String> imageUrls = []; // URL을 저장할 리스트
+
+    for (int i = 0; i < _images.length; i++) {
+      if (_images[i] != null) {
+        String fileName = 'images/${DateTime.now().millisecondsSinceEpoch}_$i.jpg';
+
+        try {
+          // Firebase Storage에 업로드
+          await storageRef.child(fileName).putFile(_images[i]!);
+          // 업로드 후 URL 가져오기
+          String downloadUrl = await storageRef.child(fileName).getDownloadURL();
+          imageUrls.add(downloadUrl); // URL을 리스트에 추가
+          print('Uploaded: $fileName, URL: $downloadUrl');
+        } catch (e) {
+          print('Error occurred while uploading: $e');
+        }
+      }
+    }
+
+    // Firestore에 URL 저장 로직 추가
+    await _saveImageUrlsToFirestore(imageUrls);
+  }
+
+  Future<void> _saveImageUrlsToFirestore(List<String> imageUrls) async {
+    if (userId != null) {
+      await FirebaseFirestore.instance
+          .collection('designer')
+          .doc(widget.designerId)
+          .collection('Quotation')
+          .doc(userId)
+          .set({
+        'imageUrls': imageUrls, // URL 리스트 저장
+      }, SetOptions(merge: true));
+    }
   }
 
 
@@ -1964,6 +2003,7 @@ class _Test5State extends State<Test5> {
               TextButton(
                 onPressed: () {
                   _saveSelectedItems();
+                  _uploadImages();
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => Test3(designerId: widget.designerId,)

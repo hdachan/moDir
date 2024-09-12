@@ -1,13 +1,19 @@
+// 견적서 3번
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:test_qwe/test3.dart';
 
 void main() {
-  runApp(Test4()); // Test3 위젯을 홈으로 설정
+  runApp(Test4(designerId: '디자이너 아이디 전달하기 위한 변수')); // Test3 위젯을 홈으로 설정
 }
 
 class Test4 extends StatefulWidget {
-  // Test3을 StatefulWidget으로 정의
+  final String designerId; // 디자이너 ID 추가
+
+  const Test4({Key? key, required this.designerId}) : super(key: key);
   @override
   _Test4State createState() => _Test4State(); // 상태 클래스를 생성
 }
@@ -15,6 +21,166 @@ class Test4 extends StatefulWidget {
 class _Test4State extends State<Test4> {
   int _selectedIndex1 = -1; // 선택된 인덱스 초기화
   int _selectedIndex2 = -1;
+
+  String Quotationpirce = ''; // TextField의 입력값을 저장할 변수
+  String Quotationinformation = ''; // TextField의 입력값을 저장할 변수
+
+  TextEditingController quotationPriceController = TextEditingController(); // 컨트롤러 선언
+  TextEditingController quotationinformationController = TextEditingController(); // 컨트롤러 선언
+
+  String? userId = FirebaseAuth.instance.currentUser?.uid;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSeasonFromFirebase(); // 데이터 불러오기 호출
+  }
+
+// Firebase에 데이터를 저장하는 메서드
+  Future<void> _saveSeasonToFirebase() async {
+    String selectedSeason;
+    switch (_selectedIndex1) {
+      case 0:
+        selectedSeason = '봄';
+        break;
+      case 1:
+        selectedSeason = '여름';
+        break;
+      case 2:
+        selectedSeason = '가을';
+        break;
+      case 3:
+        selectedSeason = '겨울';
+        break;
+      default:
+        return; // 선택된 계절이 없으면 종료
+    }
+
+    String selectedCombination;
+    switch (_selectedIndex2) {
+      case 0:
+        selectedCombination = '간단';
+        break;
+      case 1:
+        selectedCombination = '조합';
+        break;
+      case 2:
+        selectedCombination = '활용';
+        break;
+      case 3:
+        selectedCombination = '구축';
+        break;
+      default:
+        return; // 선택된 조합이 없으면 종료
+    }
+
+    try {
+      await FirebaseFirestore.instance
+          .collection('designer')
+          .doc(widget.designerId)
+          .collection('Quotation')
+          .doc(userId)
+          .set({
+        'season': selectedSeason,
+        'Quotationpirce': Quotationpirce, // 입력값
+        'combination': selectedCombination, // 선택된 조합 추가
+        'Quotationinformation' :Quotationinformation,
+        'timestamp': FieldValue.serverTimestamp(),
+      }, SetOptions(merge: true));
+
+      print('선택된 계절과 조합이 Firebase에 저장되었습니다: $selectedSeason, $selectedCombination');
+    } catch (e) {
+      print('Firebase 저장 오류: $e');
+    }
+  }
+
+  Future<void> _loadSeasonFromFirebase() async {
+    try {
+      DocumentSnapshot doc = await FirebaseFirestore.instance
+          .collection('designer')
+          .doc(widget.designerId)
+          .collection('Quotation')
+          .doc(userId)
+          .get();
+
+      if (doc.exists) {
+        String season = doc['season'];
+        String combination = doc['combination'];
+        String quotationPrice = doc['Quotationpirce'];
+
+        // doc.data()를 Map<String, dynamic>으로 캐스팅
+        Map<String, dynamic>? data = doc.data() as Map<String, dynamic>?;
+
+        String quotationinformation = data != null && data.containsKey('Quotationinformation')
+            ? data['Quotationinformation']
+            : ''; // 기본값 설정
+
+        // 선택된 계절과 조합에 따라 인덱스를 설정합니다.
+        _selectedIndex1 = _getSeasonIndex(season);
+        _selectedIndex2 = _getCombinationIndex(combination);
+
+        setState(() {
+          // UI 업데이트
+          quotationPriceController.text = quotationPrice;
+          quotationinformationController.text = quotationinformation;
+        });
+
+        print('불러온 계절과 조합: $season, $combination, Quotationpirce: $quotationPrice');
+      } else {
+        print('문서가 존재하지 않습니다.');
+      }
+    } catch (e) {
+      print('Firebase 불러오기 오류: $e');
+    }
+  }
+
+
+
+
+
+// 계절 인덱스를 반환하는 메소드
+  int _getSeasonIndex(String season) {
+    switch (season) {
+      case '봄':
+        return 0;
+      case '여름':
+        return 1;
+      case '가을':
+        return 2;
+      case '겨울':
+        return 3;
+      default:
+        return -1; // 유효하지 않은 경우
+    }
+  }
+
+// 조합 인덱스를 반환하는 메소드
+  int _getCombinationIndex(String combination) {
+    switch (combination) {
+      case '간단':
+        return 0;
+      case '조합':
+        return 1;
+      case '활용':
+        return 2;
+      case '구축':
+        return 3;
+      default:
+        return -1; // 유효하지 않은 경우
+    }
+  }
+
+
+
+
+// 다음 버튼을 눌렀을 때 호출하는 메서드
+  void onNextButtonPressed() {
+    _saveSeasonToFirebase();
+    // 추가적인 로직 (예: 다음 화면으로 이동 등)
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -188,113 +354,6 @@ class _Test4State extends State<Test4> {
                               _buildCustomButton(2, '가을'),
                               SizedBox(width: 8),
                               _buildCustomButton(3, '겨울'),
-                              // GestureDetector(
-                              //   child: Container(
-                              //     width: 37,
-                              //     height: 32,
-                              //     decoration: BoxDecoration(
-                              //       border: Border.all(
-                              //           width: 1, color: Color(0xFFE7E7E7)),
-                              //       // 테두리 색상
-                              //       borderRadius:
-                              //           BorderRadius.circular(100), // 둥글게 만들기
-                              //     ),
-                              //     alignment: Alignment.center,
-                              //     // 텍스트 중앙 정렬
-                              //     child: Text(
-                              //       '봄',
-                              //       style: TextStyle(
-                              //         color: Color(0xFF5D5D5D),
-                              //         fontSize: 14,
-                              //         fontFamily: 'Pretendard',
-                              //         fontWeight: FontWeight.w400,
-                              //         height: 1.14,
-                              //         letterSpacing: -0.35,
-                              //       ),
-                              //     ),
-                              //   ),
-                              // ),
-                              // SizedBox(width: 8),
-                              // GestureDetector(
-                              //   child: Container(
-                              //     width: 48,
-                              //     height: 32,
-                              //     decoration: BoxDecoration(
-                              //       border: Border.all(
-                              //           width: 1, color: Color(0xFFE7E7E7)),
-                              //       // 테두리 색상
-                              //       borderRadius:
-                              //           BorderRadius.circular(100), // 둥글게 만들기
-                              //     ),
-                              //     alignment: Alignment.center,
-                              //     // 텍스트 중앙 정렬
-                              //     child: Text(
-                              //       '여름',
-                              //       style: TextStyle(
-                              //         color: Color(0xFF5D5D5D),
-                              //         fontSize: 14,
-                              //         fontFamily: 'Pretendard',
-                              //         fontWeight: FontWeight.w400,
-                              //         height: 1.14,
-                              //         letterSpacing: -0.35,
-                              //       ),
-                              //     ),
-                              //   ),
-                              // ),
-                              // SizedBox(width: 8),
-                              // GestureDetector(
-                              //   child: Container(
-                              //     width: 48,
-                              //     height: 32,
-                              //     decoration: BoxDecoration(
-                              //       border: Border.all(
-                              //           width: 1, color: Color(0xFFE7E7E7)),
-                              //       // 테두리 색상
-                              //       borderRadius:
-                              //           BorderRadius.circular(100), // 둥글게 만들기
-                              //     ),
-                              //     alignment: Alignment.center,
-                              //     // 텍스트 중앙 정렬
-                              //     child: Text(
-                              //       '가을',
-                              //       style: TextStyle(
-                              //         color: Color(0xFF5D5D5D),
-                              //         fontSize: 14,
-                              //         fontFamily: 'Pretendard',
-                              //         fontWeight: FontWeight.w400,
-                              //         height: 1.14,
-                              //         letterSpacing: -0.35,
-                              //       ),
-                              //     ),
-                              //   ),
-                              // ),
-                              // SizedBox(width: 8),
-                              // GestureDetector(
-                              //   child: Container(
-                              //     width: 48,
-                              //     height: 32,
-                              //     decoration: BoxDecoration(
-                              //       border: Border.all(
-                              //           width: 1, color: Color(0xFFE7E7E7)),
-                              //       // 테두리 색상
-                              //       borderRadius:
-                              //           BorderRadius.circular(100), // 둥글게 만들기
-                              //     ),
-                              //     alignment: Alignment.center,
-                              //     // 텍스트 중앙 정렬
-                              //     child: Text(
-                              //       '겨울',
-                              //       style: TextStyle(
-                              //         color: Color(0xFF5D5D5D),
-                              //         fontSize: 14,
-                              //         fontFamily: 'Pretendard',
-                              //         fontWeight: FontWeight.w400,
-                              //         height: 1.14,
-                              //         letterSpacing: -0.35,
-                              //       ),
-                              //     ),
-                              //   ),
-                              // ),
                             ],
                           ),
                         ),
@@ -364,6 +423,7 @@ class _Test4State extends State<Test4> {
                                 width: 282,
                                 height: 14,
                                 child: TextField(
+                                  controller: quotationPriceController, // 컨트롤러 설정
                                   decoration: InputDecoration(
                                     hintText: 'ex) 100,000', // 힌트 텍스트
                                     hintStyle: TextStyle(
@@ -382,13 +442,15 @@ class _Test4State extends State<Test4> {
                                     fontFamily: 'Pretendard',
                                   ),
                                   inputFormatters: [
-                                    FilteringTextInputFormatter.digitsOnly,
-                                    // 숫자만 입력 가능
-                                    LengthLimitingTextInputFormatter(9),
-                                    // 최대 글자 수 10으로 제한
+                                    FilteringTextInputFormatter.digitsOnly, // 숫자만 입력 가능
+                                    LengthLimitingTextInputFormatter(9), // 최대 글자 수 9로 제한
                                   ],
+                                  onChanged: (value) {
+                                    Quotationpirce = value; // 입력값을 변수에 저장
+                                  },
                                 ),
                               ),
+
                             ),
                           ],
                         ),
@@ -516,6 +578,7 @@ class _Test4State extends State<Test4> {
                             width: 296,
                             height: 252, // 새로 추가한 컨테이너 크기
                             child: TextField(
+                              controller: quotationinformationController, // 컨트롤러 설정
                               maxLines: null, // 여러 줄 입력 가능
                               decoration: InputDecoration(
                                 hintText: '내용을 입력하세요\n\n금지 행위\n-타인의 권리를 침해하거나 불쾌감을 주는 행위\n-범죄, 불법, 행위 등 법령을 위반하는 행위\n-욕설, 비하, 차별, 혐오, 자살, 폭력 관련 내용을\n포함한 내용을 작성하는 행위\n    -음란물, 성적 수치심을 유발하는 행위\n    -스포일러, 공포, 속임, 놀라게 하는 내용\n\n등을 작성하는 분은 영구적으로 회원자격이 해지되며,\n관련 법률에 따라 처벌받을 수 있습니다.',
@@ -535,6 +598,9 @@ class _Test4State extends State<Test4> {
                                 fontFamily: 'Pretendard',
                                 fontWeight: FontWeight.w400,
                               ),
+                              onChanged: (value) {
+                                Quotationinformation = value; // 입력값을 변수에 저장
+                              },
                             ),
                           ),
 
@@ -592,6 +658,7 @@ class _Test4State extends State<Test4> {
               TextButton(
                 onPressed: () {
                   print("다음없음");
+                  _saveSeasonToFirebase();
                 },
                 style: TextButton.styleFrom(
                   backgroundColor: Color(0xFF3D3D3D), // 버튼 배경색

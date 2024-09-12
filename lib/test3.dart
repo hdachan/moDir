@@ -1,3 +1,5 @@
+// 견적서 2번
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -1286,7 +1288,7 @@ class _Test3State extends State<Test3> {
                     _saveToServer(userId); // 서버에 저장
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Test4()), // Test4 화면으로 이동
+                      MaterialPageRoute(builder: (context) => Test4(designerId:widget.designerId)), // Test4 화면으로 이동
                     );
                   } else {
                     print('사용자가 로그인하지 않았습니다.');
