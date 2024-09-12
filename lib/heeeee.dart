@@ -1262,93 +1262,15 @@ class _MyTabScrollAppState extends State<DesignerDetailScreen> with SingleTicker
           ],
         ),
       ),
-      bottomNavigationBar: Container(
-        height: 52,
-        width: 360,
-        color: Color(0xFF3D3D3D),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center, // Row를 중앙 정렬
-          children: [
-            Container(
-              width: 48,
-              height: 52,
-              color: Color(0xFF3D3D3D), // 하얀색 배경
-              child: Center(
-                child: Icon(
-                  Icons.share_outlined, // 윤곽선 공유 아이콘
-                  size: 24,
-                  color: Colors.white, // 원하는 색으로 변경 가능
-                ),
-              ),
-            ),
-
-            Container(
-              width: 48,
-              height: 52,
-              color: Color(0xFF3D3D3D), // 하얀색 배경
-              child: Center(
-                child: Icon(
-                  Icons.favorite_border, // 하트 아이콘
-                  size: 24,
-                  color: Colors.white, // 원하는 색으로 변경 가능
-                ),
-              ),
-            ),
-
-            // 세 번째 컨테이너: "견적서 작성하기" 텍스트 중앙에 표시
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => DetailScreen(
-                      designerId: widget.designerId,
-                      name: widget.name,
-                      introduction: widget.introduction,
-                      classification: widget.classification,
-                      price: widget.price,
-                      imageUrl: widget.imageUrl,
-                      reviewCount: widget.reviewCount,
-                      gender: widget.gender,
-                    ),
-                  ),
-                );
-              },
-              // onPressed: () {
-              //   // Navigator.push(
-              //   //   context,
-              //   //   MaterialPageRoute(
-              //   //     builder: (context) => QuotationImgSelect(
-              //   //       designerId: widget.designerId, // 전달할 데이터
-              //   //     ),
-              //   //   ),
-              //   // );
-              // },
-              style: ElevatedButton.styleFrom(
-                primary: Color(0xFF3D3D3D), // 버튼 배경색
-                fixedSize: Size(244, 52), // 버튼 크기
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8), // 모서리 둥글게
-                ),
-              ),
-              child: Center(
-                child: Text(
-                  '견적서 작성하기',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontFamily: 'Pretendard',
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: -0.40,
-                    height: 1.0,
-                  ),
-                ),
-              ),
-            ),
-
-
-          ],
-        ),
+      bottomNavigationBar: CustomBottomBar(
+        designerId: widget.designerId,
+        name: widget.name,
+        introduction: widget.introduction,
+        classification: widget.classification,
+        price: widget.price,
+        imageUrl: widget.imageUrl,
+        reviewCount: widget.reviewCount,
+        gender: widget.gender,
       ),
     );
 
@@ -1450,6 +1372,227 @@ Widget buildLabelContainer(String label) {
     ],
   );
 }
+
+
+class CustomBottomBar extends StatefulWidget implements PreferredSizeWidget {
+  final String designerId;
+  final String name;
+  final String introduction;
+  final String classification;
+  final String price;
+  final String imageUrl;
+  final int reviewCount;
+  final String gender;
+
+  const CustomBottomBar({
+    Key? key,
+    required this.designerId,
+    required this.name,
+    required this.introduction,
+    required this.classification,
+    required this.price,
+    required this.imageUrl,
+    required this.reviewCount,
+    required this.gender,
+  }) : super(key: key);
+
+  @override
+  _CustomBottomBarState createState() => _CustomBottomBarState();
+
+  @override
+  Size get preferredSize => Size.fromHeight(56); // 원하는 높이 설정
+}
+
+class _CustomBottomBarState extends State<CustomBottomBar> {
+  bool isFavorite = false; // 좋아요 상태 초기화
+
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance; // Firestore 인스턴스
+  final FirebaseAuth _auth = FirebaseAuth.instance; // Auth 인스턴스
+
+  void _onFavoritePressed() async {
+    setState(() {
+      isFavorite = !isFavorite; // 좋아요 상태 토글
+    });
+
+    if (isFavorite) {
+      print('눌러졌음'); // 하트를 누른 경우
+      await _saveDesignerIdToFavorites(widget.designerId); // designerId 저장
+    } else {
+      print('하트를 누르지 않음'); // 하트를 누르지 않은 경우
+      await _removeDesignerIdFromFavorites(widget.designerId); // designerId 삭제
+    }
+  }
+
+  Future<void> _saveDesignerIdToFavorites(String designerId) async {
+    User? user = _auth.currentUser;
+    if (user == null) {
+      print('사용자가 로그인되지 않았습니다.');
+      return;
+    }
+
+    String userId = user.uid; // 로그인된 사용자 UID
+
+    try {
+      await _firestore
+          .collection('users')
+          .doc(userId)
+          .collection('123') // 하위 컬렉션 이름
+          .doc(designerId) // designerId로 문서 생성
+          .set({'designerId': designerId}); // 데이터 저장
+      print('디자이너 ID가 성공적으로 저장되었습니다.');
+    } catch (e) {
+      print('오류 발생: $e');
+    }
+  }
+
+  Future<void> _removeDesignerIdFromFavorites(String designerId) async {
+    User? user = _auth.currentUser;
+    if (user == null) {
+      print('사용자가 로그인되지 않았습니다.');
+      return;
+    }
+
+    String userId = user.uid; // 로그인된 사용자 UID
+
+    try {
+      await _firestore
+          .collection('users')
+          .doc(userId)
+          .collection('123') // 하위 컬렉션 이름
+          .doc(designerId) // designerId로 문서 삭제
+          .delete(); // 데이터 삭제
+      print('디자이너 ID가 성공적으로 삭제되었습니다.');
+    } catch (e) {
+      print('오류 발생: $e');
+    }
+  }
+
+// 초기 상태 설정
+  void _checkIfFavorite(String designerId) async {
+    User? user = _auth.currentUser;
+    if (user == null) {
+      return;
+    }
+
+    String userId = user.uid; // 로그인된 사용자 UID
+
+    DocumentSnapshot doc = await _firestore
+        .collection('users')
+        .doc(userId)
+        .collection('123') // 하위 컬렉션 이름
+        .doc(designerId) // designerId로 문서 확인
+        .get();
+
+    if (doc.exists) {
+      setState(() {
+        isFavorite = true; // 디자이너 ID가 존재하면 하트를 빨간색으로 유지
+      });
+    }
+  }
+
+// 위젯이 빌드될 때 체크
+  @override
+  void initState() {
+    super.initState();
+    _checkIfFavorite(widget.designerId); // 초기 상태 확인
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 360, // 넓이를 360으로 설정
+      height: 52,
+      child: Center(
+        child: Container(
+          width: 360, // 내부 컨테이너 넓이 360
+          height: 52, // 내부 컨테이너 높이 52
+          color: const Color(0xFF3D3D3D),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: 48,
+                height: 52,
+                child: TextButton(
+                  onPressed: () {
+                    // 공유 버튼 클릭 시 동작
+                  },
+                  child: Center(
+                    child: Icon(
+                      Icons.share_outlined,
+                      size: 24,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                width: 48,
+                height: 52,
+                child: TextButton(
+                  onPressed: _onFavoritePressed, // 메서드 호출
+                  child: Center(
+                    child: Icon(
+                      isFavorite ? Icons.favorite : Icons.favorite_border,
+                      size: 24,
+                      color: isFavorite ? Colors.red : Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DetailScreen(
+                        designerId: widget.designerId,
+                        name: widget.name,
+                        introduction: widget.introduction,
+                        classification: widget.classification,
+                        price: widget.price,
+                        imageUrl: widget.imageUrl,
+                        reviewCount: widget.reviewCount,
+                        gender: widget.gender,
+                      ),
+                    ),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: const Color(0xFF3D3D3D),
+                  fixedSize: const Size(244, 52),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: Center(
+                  child: const Text(
+                    '견적서 작성하기',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontFamily: 'Pretendard',
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: -0.40,
+                      height: 1.0,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+
+
+
+
 
 
 // 나중에 넣을 앱바

@@ -9,7 +9,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:test_qwe/MyStyleInfo.dart';
 import 'dart:io';
 
+import 'DesignerCollection.dart';
 import 'heeeee.dart';
+import 'setting.dart';
 
 
 void main() async {
@@ -3467,6 +3469,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
   String _kgValue = "--";
   String _topsizeValue = "--";
   String _bottomsizeValue = "--";
+  String _formattedDate = "아직 작성된 스타일 정보가 없어요"; // formattedDate 변수 추가
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
@@ -3475,6 +3478,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
     super.initState();
     _loadUserData(); // 사용자 데이터 로드
   }
+
 
   Future<void> _loadUserData() async {
     User? user = _auth.currentUser; // 현재 사용자 가져오기
@@ -3489,6 +3493,12 @@ class _MyPageScreenState extends State<MyPageScreen> {
             _kgValue = data?['kg'] ?? "--";
             _topsizeValue = data?['topsize'] ?? "--";
             _bottomsizeValue = data?['bottomsize'] ?? "--";
+
+            // createdAt 가져오기 및 포맷팅
+            Timestamp? time = data?['time'];
+            if (time != null) {
+              _formattedDate = '작성일: ${DateFormat('yyyy.MM.dd').format(time.toDate())}'; // 작성일과 날짜를 합침
+            }
           });
         }
       } catch (e) {
@@ -3497,6 +3507,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
       }
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -3570,7 +3581,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                             child: Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                '아직 작성된 스타일 정보가 없어요',
+                                '$_formattedDate',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 14,
@@ -3580,10 +3591,11 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                   letterSpacing: -0.35,
                                 ),
                               ),
+
                             ),
                           ),
                           SizedBox(
-                            width: 68,//////////////////////여기여기
+                            width: 68,
                             height: 20,
                             child: MaterialButton(
                               onPressed: () {
@@ -3656,20 +3668,37 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                   ),
                                   SizedBox(height: 12),
                                   Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      _cmValue,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 20,
-                                        fontFamily: 'Pretendard',
-                                        fontWeight: FontWeight.w500,
-                                        height: 1,
-                                        letterSpacing: -0.50,
-                                      ),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min, // 내용에 맞춰 크기 조절
+                                      children: [
+                                        Text(
+                                          '$_cmValue',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 20,
+                                            fontFamily: 'Pretendard',
+                                            fontWeight: FontWeight.w500,
+                                            height: 1,
+                                            letterSpacing: -0.50,
+                                          ),
+                                        ),
+                                        SizedBox(width: 2), // 두 텍스트 사이의 간격 조절
+                                        Text(
+                                          'cm',
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 12,
+                                            fontFamily: 'Pretendard',
+                                            fontWeight: FontWeight.w400,
+                                            height: 1.0,
+                                            letterSpacing: -0.30,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
+
                                 ],
                               ),
                             ),
@@ -3696,20 +3725,36 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                   ),
                                   SizedBox(height: 12),
                                   Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      _kgValue,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 20,
-                                        fontFamily: 'Pretendard',
-                                        fontWeight: FontWeight.w500,
-                                        height: 1,
-                                        letterSpacing: -0.50,
-                                      ),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min, // 내용에 맞춰 크기 조절
+                                      children: [
+                                        Text(
+                                          '$_kgValue',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 20,
+                                            fontFamily: 'Pretendard',
+                                            fontWeight: FontWeight.w500,
+                                            height: 1,
+                                            letterSpacing: -0.50,
+                                          ),
+                                        ),
+                                        SizedBox(width: 2), // 두 텍스트 사이의 간격 조절
+                                        Text(
+                                          'kg',
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 12,
+                                            fontFamily: 'Pretendard',
+                                            fontWeight: FontWeight.w400,
+                                            height: 1.0,
+                                            letterSpacing: -0.30,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ),
+                                  )
                                 ],
                               ),
                             ),
@@ -3736,20 +3781,36 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                   ),
                                   SizedBox(height: 12),
                                   Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      _topsizeValue,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 20,
-                                        fontFamily: 'Pretendard',
-                                        fontWeight: FontWeight.w500,
-                                        height: 1,
-                                        letterSpacing: -0.50,
-                                      ),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min, // 내용에 맞춰 크기 조절
+                                      children: [
+                                        Text(
+                                          '$_topsizeValue',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 20,
+                                            fontFamily: 'Pretendard',
+                                            fontWeight: FontWeight.w500,
+                                            height: 1,
+                                            letterSpacing: -0.50,
+                                          ),
+                                        ),
+                                        SizedBox(width: 2), // 두 텍스트 사이의 간격 조절
+                                        Text(
+                                          'size',
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 12,
+                                            fontFamily: 'Pretendard',
+                                            fontWeight: FontWeight.w400,
+                                            height: 1.0,
+                                            letterSpacing: -0.30,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ),
+                                  )
                                 ],
                               ),
                             ),
@@ -3776,20 +3837,36 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                   ),
                                   SizedBox(height: 12),
                                   Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      _bottomsizeValue,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 20,
-                                        fontFamily: 'Pretendard',
-                                        fontWeight: FontWeight.w500,
-                                        height: 1,
-                                        letterSpacing: -0.50,
-                                      ),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min, // 내용에 맞춰 크기 조절
+                                      children: [
+                                        Text(
+                                          '$_bottomsizeValue',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 20,
+                                            fontFamily: 'Pretendard',
+                                            fontWeight: FontWeight.w500,
+                                            height: 1,
+                                            letterSpacing: -0.50,
+                                          ),
+                                        ),
+                                        SizedBox(width: 2), // 두 텍스트 사이의 간격 조절
+                                        Text(
+                                          'size',
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 12,
+                                            fontFamily: 'Pretendard',
+                                            fontWeight: FontWeight.w400,
+                                            height: 1.0,
+                                            letterSpacing: -0.30,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ),
+                                  )
                                 ],
                               ),
                             ),
@@ -3905,7 +3982,15 @@ class _MyPageScreenState extends State<MyPageScreen> {
                           ),
                         ),
                       ),
-                      MyProfileButton(text: '관심 디자이너', onPressed: () {}),
+                      MyProfileButton(
+                        text: '관심 디자이너',
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => DesignerCollection()), // 관심 디자이너 화면으로 이동
+                          );
+                        },
+                      ),
                       MyProfileButton(text: '관심 스타일', onPressed: () {}),
                       MyProfileButton(text: '관심 아이템', onPressed: () {}),
                       MyProfileButton(text: '관심 매거진', onPressed: () {}),
@@ -3980,7 +4065,8 @@ class MyProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
                   )),
               SizedBox(width: 10),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                },
                 icon: Icon(Icons.notifications_none),
                 iconSize: 24,
                 color: Colors.white,
@@ -3988,7 +4074,12 @@ class MyProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
               SizedBox(width: 16),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Setting()), // Test3 화면으로 이동
+                  );
+                },
                 icon: Icon(Icons.settings_outlined),
                 iconSize: 24,
                 color: Colors.white,

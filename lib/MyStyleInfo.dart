@@ -57,8 +57,11 @@ class _UserSetting extends State<MyStyleInfo> {
       String uid = user.uid;
       String cmValue = _controller.text;
       String kgValue = _kgController.text;
-      String genderValue = _selectedIndex == 0 ? '남성' : '여성';
       String birthDateValue = _birthDateController.text;
+
+      String genderValue = (_selectedIndex != null && _selectedIndex! >= 0)
+      ? ['남성', '여성'][_selectedIndex!]
+        : '';
 
       String topsizeValue = (_selectedIndex2 != null && _selectedIndex2! >= 0)
       ? ['XS', 'S', 'M', 'L', 'XL', 'XXL', '기타'][_selectedIndex2!]
@@ -139,7 +142,8 @@ class _UserSetting extends State<MyStyleInfo> {
     'chestValue':chestValue,
     'pelvisValue':pelvisValue,
     'thighValue':thighValue,
-    'calfValue':calfValue
+    'calfValue':calfValue,
+    'time': FieldValue.serverTimestamp(), // 서버 타임스탬프 저장
     }, SetOptions(merge: true));
     }
   }
@@ -159,7 +163,7 @@ class _UserSetting extends State<MyStyleInfo> {
           _kgController.text = data?['kg'] ?? '';
 
           String gender = data?['gender'] ?? '';
-          _selectedIndex = (gender == '남성') ? 0 : 1;
+          _selectedIndex2 = ['남성', '여성'].indexOf(gender);
 
           _birthDateController.text = data?['birthDate'] ?? '';
 
@@ -195,7 +199,7 @@ class _UserSetting extends State<MyStyleInfo> {
 
           //calfValue
           String calfValue = data?['calfValue'] ?? '';
-          _selectedIndex11 = ['얇다', '보통', '두껍다'].indexOf(calfValue);
+          _selectedIndex12 = ['얇다', '보통', '두껍다'].indexOf(calfValue);
 
           // 선택된 옵션 로드
           String selectedOptions = data?['selectedOptions'] ?? '';
